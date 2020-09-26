@@ -1,0 +1,3 @@
+class LayerOptions {
+  const LayerOptions();
+}
