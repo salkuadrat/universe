@@ -1,7 +1,8 @@
 import 'dart:math';
 
 class UPoint extends UniversalPoint<double> {
-  UPoint(double x, double y) : super(x, y);
+  
+  const UPoint(double x, double y) : super(x, y);
   
   @override
   int get hashCode => x.hashCode ^ y.hashCode;

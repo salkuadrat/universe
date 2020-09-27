@@ -1,11 +1,8 @@
 import 'dart:math' as Math;
 import 'package:tuple/tuple.dart';
 
-import '../../core/latlng/latlng.dart';
 import '../../shared.dart';
-import '../geometry/bounds.dart';
-import '../geometry/point.dart';
-import 'projection.dart';
+import '../core.dart';
 
 class Mercator extends Projection {
   

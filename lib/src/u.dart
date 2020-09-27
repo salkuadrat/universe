@@ -1,55 +1,27 @@
 import 'package:flutter/painting.dart';
 
-import 'core/crs/crs.dart';
-import 'core/geometry/latlng_bounds.dart';
-import 'core/geometry/size.dart';
-import 'core/latlng/latlng.dart';
-import 'layer/base/layer.dart';
-import 'layer/circle/layer.dart';
-import 'layer/circle/marker.dart';
-import 'layer/circle/options.dart';
-import 'layer/group/layer.dart';
-import 'layer/group/options.dart';
-import 'layer/image/layer.dart';
-import 'layer/marker/icon.dart';
-import 'layer/marker/layer.dart';
-import 'layer/marker/marker.dart';
-import 'layer/marker/options.dart';
-import 'layer/polygon/layer.dart';
-import 'layer/polygon/marker.dart';
-import 'layer/polygon/options.dart';
-import 'layer/polyline/layer.dart';
-import 'layer/polyline/marker.dart';
-import 'layer/polyline/options.dart';
-import 'layer/rectangle/layer.dart';
-import 'layer/rectangle/marker.dart';
-import 'layer/rectangle/options.dart';
-import 'layer/tile/layer.dart';
-import 'layer/tile/options.dart';
-import 'layer/video/layer.dart';
-import 'map/controller/base.dart';
-import 'map/options/map.dart';
-import 'map/universe.dart';
-import 'map/options/zoom.dart';
+import 'core/core.dart';
+import 'layer/layer.dart';
+import 'map/map.dart';
 import 'shared.dart';
 
 class U {
   static const CrsList CRS = const CrsList();
 
   static Universe map(dynamic center, {
-    num zoom = 13.0,
-    double rotation = 0.0,
+    num zoom,
+    double rotation,
     num minZoom,
     num maxZoom,
     MapController controller,
     LatLngBounds bounds,
-    TileLayer baseLayer,
+    TileLayer base,
     MarkerLayer marker,
-    List<UniverseLayer> layers,
+    List<SingleLayer> layers,
     Crs crs,
     Size size,
-    bool slideOnBoundaries = false,
-    bool adaptiveBoundaries = false,
+    bool slideOnBoundaries,
+    bool adaptiveBoundaries,
     LatLng swPanBoundary,
     LatLng nePanBoundary,
     Function(LatLng) onTap,
@@ -62,7 +34,7 @@ class U {
       size: size,
       bounds: bounds,
       center: LatLng.from(center),
-      zoomOptions: ZoomOptions(zoom: zoom, minZoom: minZoom, maxZoom: maxZoom),
+      zoomOptions: ZoomOptions(zoom: zoom ?? 13.0, minZoom: minZoom, maxZoom: maxZoom),
       rotation: rotation ?? 0.0,
       slideOnBoundaries: slideOnBoundaries ?? false,
       adaptiveBoundaries: adaptiveBoundaries ?? false,
@@ -76,7 +48,7 @@ class U {
     return Universe(
       controller: controller,
       options: options,
-      baseLayer: baseLayer,
+      base: base,
       marker: marker,
       layers: layers ?? [],
     );
@@ -101,7 +73,9 @@ class U {
     String attribution,
   }) {
     return TileLayer(
-      options: TileLayerOptions(templateUrl),
+      templateUrl, 
+      subdomains: parseSubdomains(subdomains),
+      options: TileLayerOptions(),
     );
   }
 
@@ -121,9 +95,9 @@ class U {
 
   static CircleLayer circle(dynamic latlng, num radius, {
     bool stroke = strokeDef,
-    Color color,
-    num weight = weightDef,
-    double opacity = opacityDef,
+    Color strokeColor,
+    num strokeWidth = strokeWidthDef,
+    double strokeOpacity = strokeOpacityDef,
     StrokeCap strokeCap = strokeCapDef,
     StrokeJoin strokeJoin = strokeJoinDef,
     bool fill,
@@ -131,15 +105,14 @@ class U {
     double fillOpacity = fillOpacityDef,
     PathFillType fillType = fillTypeDef,
     bool interactive = interactiveDef,
-    String attribution = attributionDef,
   }) {
     return CircleLayer(
+      Circle(latlng, radius), 
       options: CircleLayerOptions(
-        Circle(latlng, radius), 
         stroke: stroke,
-        color: color,
-        weight: weight,
-        opacity: opacity,
+        strokeColor: strokeColor,
+        strokeWidth: strokeWidth,
+        strokeOpacity: strokeOpacity,
         strokeCap: strokeCap,
         strokeJoin: strokeJoin,
         fill: fill,
@@ -147,17 +120,16 @@ class U {
         fillOpacity: fillOpacity,
         fillType: fillType,
         interactive: interactive,
-        attribution: attribution,
       ),
     );
   }
 
-  static CirclesLayer circles(List<Circle> circles, {
+  static CircleLayer circles(List<dynamic> circles, {
     num radius,
     bool stroke = strokeDef,
-    Color color,
-    num weight = weightDef,
-    double opacity = opacityDef,
+    Color strokeColor,
+    num strokeWidth = strokeWidthDef,
+    double strokeOpacity = strokeOpacityDef,
     StrokeCap strokeCap = strokeCapDef,
     StrokeJoin strokeJoin = strokeJoinDef,
     bool fill,
@@ -165,20 +137,18 @@ class U {
     double fillOpacity = fillOpacityDef,
     PathFillType fillType = fillTypeDef,
     bool interactive = interactiveDef,
-    String attribution = attributionDef,
   }) {
-    circles.forEach((circle) { 
-      if(radius != null && radius > 0.0) {
-        circle.radius = radius.toDouble();
-      }
-    });
-    return CirclesLayer(
-      options: CirclesLayerOptions(
-        circles,
+    return CircleLayer(
+      circles.map((value) {
+        Circle circle = Circle.from(value);
+        if(radius != null && radius > 0.0) circle.radius = radius.toDouble();
+        return circle;
+      }).toList(),
+      options: CircleLayerOptions(
         stroke: stroke,
-        color: color,
-        weight: weight,
-        opacity: opacity,
+        strokeColor: strokeColor,
+        strokeWidth: strokeWidth,
+        strokeOpacity: strokeOpacity,
         strokeCap: strokeCap,
         strokeJoin: strokeJoin,
         fill: fill,
@@ -186,53 +156,95 @@ class U {
         fillOpacity: fillOpacity,
         fillType: fillType,
         interactive: interactive,
-        attribution: attribution,
     ));
   }
 
-  static PolylineLayer polyline(Polyline polyline, {bool noClip=false}) {
-    return PolylineLayer(options: PolylineLayerOptions(polyline, noClip: noClip));   
+  static PolylineLayer polyline(dynamic polyline) {
+    return PolylineLayer(
+      Polyline.from(polyline), 
+      options: PolylineLayerOptions(),
+    );
   }
 
-  static MultiPolylineLayer polylines(List<Polyline> polylines, {bool noClip=false}) {
-    return MultiPolylineLayer(
-      options: MultiPolylineLayerOptions(polylines, noClip: noClip),
-    );   
+  static PolylineLayer polylines(List<dynamic> polylines) {
+    return PolylineLayer(
+      polylines.map((polyline) => Polyline.from(polyline)).toList(), 
+      options: PolylineLayerOptions(),
+    );
   }
 
-  static PolygonLayer polygon(Polygon polygon) {
+  static PolygonLayer polygon(dynamic polygon) {
     return PolygonLayer(
-      options: PolygonLayerOptions(polygon),
+      Polygon.from(polygon), 
+      options: PolygonLayerOptions(),
     );
   }
 
-  static MultiPolygonLayer polygons(List<Polygon> polygons) {
-    return MultiPolygonLayer(
-      options: MultiPolygonLayerOptions(polygons),
+  static PolygonLayer polygons(List<dynamic> polygons) {
+    return PolygonLayer(
+      polygons.map((polygon) => Polygon.from(polygon)).toList(),
+      options: PolygonLayerOptions(),
     );
   }
 
-  static RectangleLayer rectangle(Rectangle rectangle) {
+  static RectangleLayer rectangle(dynamic rectangle) {
     return RectangleLayer(
-      options: RectangleLayerOptions(rectangle),
+      Rectangle.from(rectangle),
+      options: RectangleLayerOptions(),
     );
   }
 
-  static MultiRectangleLayer rectangles(List<Rectangle> rectangles) {
-    return MultiRectangleLayer(
-      options: MultiRectangleLayerOptions(rectangles),
+  static RectangleLayer rectangles(List<dynamic> rectangles) {
+    return RectangleLayer(
+      rectangles.map((rectangle) => Rectangle.from(rectangle)).toList(),
+      options: RectangleLayerOptions(),
     );
   }
 
-  static ImageOverlay image() {
-    return ImageOverlay();
+  static ImageOverlayLayer image(dynamic image, [dynamic bounds]) {
+    return ImageOverlayLayer(
+      ImageOverlay.from(image, bounds),
+    );
   }
 
-  static VideoOverlay video() {
-    return VideoOverlay();
+  static ImageOverlayLayer images(List<dynamic> images) {
+    return ImageOverlayLayer(
+      images.map((image) {
+        if(image is ImageOverlay) {
+          return image;
+        }
+
+        if(image is List && image.length == 2) {
+          return ImageOverlay.from(image[0], image[1]);
+        }
+      }).toList(),
+    );
   }
 
-  static GroupLayer group(List<UniverseLayer> layers) {
-    return GroupLayer(options: GroupLayerOptions(layers));
+  static VideoOverlayLayer video(dynamic video, [dynamic bounds]) {
+    return VideoOverlayLayer(
+      VideoOverlay.from(video, bounds),
+    );
+  }
+
+  static VideoOverlayLayer videos(List<dynamic> videos) {
+    return VideoOverlayLayer(
+      videos.map((video) {
+        if(video is VideoOverlay) {
+          return video;
+        }
+        
+        if(video is List && video.length == 2) {
+          return VideoOverlay.from(video[0], video[1]);
+        }
+      }).toList(),
+    );
+  }
+
+  static GroupLayer group(List<SingleLayer> layers) {
+    return GroupLayer(
+      layers, 
+      options: GroupLayerOptions(),
+    );
   }
 }

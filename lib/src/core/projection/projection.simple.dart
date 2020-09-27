@@ -1,9 +1,6 @@
 import 'package:tuple/tuple.dart';
 
-import '../../core/latlng/latlng.dart';
-import '../geometry/bounds.dart';
-import '../geometry/point.dart';
-import 'projection.dart';
+import '../core.dart';
 
 /// Equirectangular, or Plate Carree projection — the most simple projection, 
 /// mostly used by GIS enthusiasts. 

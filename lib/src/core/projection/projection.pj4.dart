@@ -2,10 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:proj4dart/proj4dart.dart' as pj4;
 import 'package:tuple/tuple.dart';
 
-import '../../core/latlng/latlng.dart';
-import '../geometry/bounds.dart';
-import '../geometry/point.dart';
-import 'projection.dart';
+import '../core.dart';
 
 class Pj4Projection extends Projection {
 

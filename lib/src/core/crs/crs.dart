@@ -14,6 +14,14 @@ import 'crs.epsg4326.dart';
 import 'crs.earth.dart';
 import 'crs.simple.dart';
 
+export 'crs.dart';
+export 'crs.earth.dart';
+export 'crs.epsg3395.dart';
+export 'crs.epsg3857.dart';
+export 'crs.epsg4326.dart';
+export 'crs.simple.dart';
+export 'crs.proj4.dart';
+
 /// Object that defines coordinate reference systems for projecting 
 /// geographical points into pixel (screen) coordinates and back 
 /// (and to coordinates in other units for [WMS](https://en.wikipedia.org/wiki/Web_Map_Service) services). 

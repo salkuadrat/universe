@@ -1,12 +1,10 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:logging/logging.dart';
 import 'package:validate/validate.dart';
 
 import '../../shared.dart';
-import 'distance/distance.dart';
-import 'latlng.dart';
-import 'spline/catmullrom.dart';
+import '../core.dart';
 
 typedef LatLng GeoPositionFactory(double lat, double lng);
 
@@ -91,9 +89,9 @@ class Path<T extends LatLng> {
       double lat = coordinate.latitudeInRad;
       double lng = coordinate.longitudeInRad;
 
-      X += cos(lat) * cos(lng);
-      Y += cos(lat) * sin(lng);
-      Z += sin(lat);
+      X += math.cos(lat) * math.cos(lng);
+      Y += math.cos(lat) * math.sin(lng);
+      Z += math.sin(lat);
     });
     
     int numCoordinates = coordinates.length;
@@ -101,9 +99,9 @@ class Path<T extends LatLng> {
     Y = Y / numCoordinates;
     Z = Z / numCoordinates;
 
-    double hyp = sqrt(X * X + Y * Y);
-    double latitude = atan2(Z, hyp);
-    double longitude = atan2(Y, X);
+    double hyp = math.sqrt(X * X + Y * Y);
+    double latitude = math.atan2(Z, hyp);
+    double longitude = math.atan2(Y, X);
 
     latitude = round(radianToDeg(latitude));
     longitude = round(radianToDeg(longitude));

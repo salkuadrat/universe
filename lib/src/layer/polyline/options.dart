@@ -1,77 +1,37 @@
 import 'package:flutter/rendering.dart';
 
 import '../../shared.dart';
-import '../path/options.dart';
-import 'marker.dart';
+import '../layer.dart';
 
 class PolylineLayerOptions extends PathLayerOptions {
-  final Polyline polyline;
-  final num smoothFactor;
-  final bool noClip;
 
-  const PolylineLayerOptions(this.polyline, {
+  final List<Color> gradientStrokeColors;
+  final List<double> gradientStrokeStops;
+  final bool isDotted;
+  final num smoothFactor;
+  final bool culling;
+
+  const PolylineLayerOptions({
     bool stroke = strokeDef,
-    Color color,
-    num weight = weightDef,
-    double opacity = opacityDef,
+    Color strokeColor,
+    num strokeWidth = strokeWidthDef,
+    double strokeOpacity = strokeOpacityDef,
     StrokeCap strokeCap = strokeCapDef,
     StrokeJoin strokeJoin = strokeJoinDef,
-    bool fill = false,
-    Color fillColor,
-    double fillOpacity = fillOpacityDef,
-    PathFillType fillType = fillTypeDef,
+    this.gradientStrokeColors = gradientColorsDef,
+    this.gradientStrokeStops = gradientStopsDef,
+    this.isDotted = isDottedDef,
     this.smoothFactor = smoothFactorDef,
-    this.noClip = noClipDef,
+    this.culling = cullingDef,
     bool interactive = interactiveDef,
-    String attribution = attributionDef,
   }) : super(
     stroke: stroke,
-    color: color,
-    weight: weight,
-    opacity: opacity,
+    strokeColor: strokeColor,
+    strokeWidth: strokeWidth,
+    strokeOpacity: strokeOpacity,
     strokeCap: strokeCap,
     strokeJoin: strokeJoin,
     fill: false,
-    fillColor: fillColor,
-    fillOpacity: fillOpacity,
-    fillType: fillType,
-    interactive: interactive, 
-    attribution: attribution,
-  );
-}
-
-class MultiPolylineLayerOptions extends PathLayerOptions {
-  final List<Polyline> polylines;
-  final num smoothFactor;
-  final bool noClip;
-
-  const MultiPolylineLayerOptions(this.polylines, {
-    bool stroke = strokeDef,
-    Color color,
-    num weight = weightDef,
-    double opacity = opacityDef,
-    StrokeCap strokeCap = strokeCapDef,
-    StrokeJoin strokeJoin = strokeJoinDef,
-    bool fill = false,
-    Color fillColor,
-    double fillOpacity = fillOpacityDef,
-    PathFillType fillType = fillTypeDef,
-    this.smoothFactor = smoothFactorDef,
-    this.noClip = noClipDef,
-    bool interactive = interactiveDef,
-    String attribution = attributionDef,
-  }) : super(
-    stroke: stroke,
-    color: color,
-    weight: weight,
-    opacity: opacity,
-    strokeCap: strokeCap,
-    strokeJoin: strokeJoin,
-    fill: false,
-    fillColor: fillColor,
-    fillOpacity: fillOpacity,
-    fillType: fillType,
-    interactive: interactive, 
-    attribution: attribution,
+    interactive: interactive,
   );
 }

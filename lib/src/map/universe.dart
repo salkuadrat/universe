@@ -1,69 +1,61 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
 
-import '../core/geometry/point.dart';
-import '../core/geometry/size.dart';
-import '../core/latlng/latlng.dart';
-import '../layer/base/layer.dart';
-import '../layer/marker/layer.dart';
-import '../layer/tile/layer.dart';
-import 'controller/base.dart';
-import 'controller/default.dart';
-import 'interactive/gesture.dart';
-import 'interactive/tap_position.dart';
-import 'options/map.dart';
-import 'manager.dart';
-import 'state.dart';
+import '../core/core.dart';
+import '../layer/layer.dart';
+import 'map.dart';
 
 class Universe extends StatelessWidget {
 
   final MapOptions options;
   final MapController controller;
-  final TileLayer baseLayer;
+  final TileLayer base;
   final MarkerLayer marker;
-  final List<UniverseLayer> layers;
+  final List<SingleLayer> layers;
 
   const Universe({
     Key key, 
     this.options, 
     this.controller, 
-    this.baseLayer,
+    this.base,
     this.marker,
     this.layers,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     MapOptions opts = options ?? MapOptions();
-    MapOptions mapOptions;
 
     // set default size to follow screen size
     if(opts.size == null) {
-      var _size = MediaQuery.of(context).size;
-      mapOptions = opts.copyWith(size: Size(_size.width, _size.height));
-    } else {
-      mapOptions = opts;
+      opts = opts.copyWith(
+        size: Size(
+          screenSize.width, 
+          screenSize.height,
+        ),
+      );
     }
 
     MapState initialState = MapState(
       controller: controller ?? UMapController(),
-      options: mapOptions,
+      options: opts,
     );
 
     return CubitProvider(
       create: (_) => MapManager(initialState),
-      child: _UniverseContainer(baseLayer: baseLayer, marker: marker, layers: layers),
+      child: _UniverseContainer(base: base, marker: marker, layers: layers),
     );
   }
 }
 
 class _UniverseContainer extends StatefulWidget {
 
-  final TileLayer baseLayer;
+  final TileLayer base;
   final MarkerLayer marker;
-  final List<UniverseLayer> layers;
+  final List<SingleLayer> layers;
 
-  _UniverseContainer({Key key, this.baseLayer, this.marker, this.layers}) : super(key: key);
+  _UniverseContainer({Key key, this.base, this.marker, this.layers}) : super(key: key);
 
   @override
   _UniverseContainerState createState() => _UniverseContainerState();
@@ -76,7 +68,7 @@ class _UniverseContainerState extends State<_UniverseContainer>
   MapState get state => manager.state;
   MapController get controller => manager.state.controller;
 
-  bool get hasBaseLayer => widget.baseLayer != null;
+  bool get hasBaseLayer => widget.base != null;
   bool get hasMarker => widget.marker != null;
   bool get hasLayers => widget.layers != null && widget.layers.isNotEmpty;
 
@@ -104,7 +96,7 @@ class _UniverseContainerState extends State<_UniverseContainer>
   }
 
   List<Widget> get _layers => [
-    if(hasBaseLayer) widget.baseLayer,
+    if(hasBaseLayer) widget.base,
     if(hasLayers) ...widget.layers,
     if(hasMarker) widget.marker,
   ];
@@ -168,31 +160,31 @@ class _UniverseContainerState extends State<_UniverseContainer>
 
   @override
   void handleOnTapUp(TapUpDetails details) {
-    // TODO: implement handleOnTapUp
+
   }
 
   @override
   void handleDoubleTap(TapPosition tapPosition) {
-    // TODO: implement handleDoubleTap
+
   }
 
   @override
   void handleLongPress(TapPosition position) {
-    // TODO: implement handleLongPress
+
   }
 
   @override
   void handleScaleEnd(ScaleEndDetails details) {
-    // TODO: implement handleScaleEnd
+
   }
 
   @override
   void handleScaleStart(ScaleStartDetails details) {
-    // TODO: implement handleScaleStart
+
   }
 
   @override
   void handleScaleUpdate(ScaleUpdateDetails details) {
-    // TODO: implement handleScaleUpdate
+
   }
 }

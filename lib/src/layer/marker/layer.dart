@@ -1,11 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import '../../map/controller/base.dart';
-import '../../map/state.dart';
-import '../base/layer.dart';
-import 'options.dart';
+import '../../map/map.dart';
+import '../layer.dart';
 
-class MarkerLayer extends UniverseLayer {
+class MarkerLayer extends SingleLayer {
 
   final MarkerLayerOptions options;
 

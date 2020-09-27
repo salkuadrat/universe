@@ -62,15 +62,43 @@ String decimal2sexagesimal(double decimal) {
   return "$degree° ${minutes.floor()}' ${seconds.toStringAsFixed(2)}\"";
 }
 
+List<String> parseSubdomains(dynamic subdomains) {
+  if(subdomains is List<String>) return subdomains;
+  if(subdomains is String) return subdomains.split('');
+  return [];
+}
+
 /// default parameter values
 const bool strokeDef = true;
-const double weightDef = 3.0;
-const double opacityDef = 1.0;
+const double strokeWidthDef = 3.0;
+const double strokeOpacityDef = 1.0;
 const StrokeCap strokeCapDef = StrokeCap.round;
 const StrokeJoin strokeJoinDef = StrokeJoin.round;
 const double fillOpacityDef = 0.2;
 const PathFillType fillTypeDef = PathFillType.evenOdd;
+const bool isDottedDef = false;
+const List<Color> gradientColorsDef = [];
+const List<double> gradientStopsDef = [];
+const double smoothFactorDef = 1.0;
+const bool cullingDef = true;
 const bool interactiveDef = true;
 const String attributionDef = '';
-const double smoothFactorDef = 1.0;
-const bool noClipDef = false;
+
+const double tileSizeDef = 256.0;
+const double minZoomDef = 0.0;
+const double maxZoomDef = 18.0;
+const bool zoomReverseDef = false;
+const double zoomOffsetDef = 0.0;
+const Map<String, String> additionalOptionsDef = const <String, String>{};
+const List<String> subdomainsDef = const <String>['a', 'b', 'c'];
+const int keepBufferDef = 2;
+const double tileOpacityDef = 1.0;
+const int updateTileIntervalDef = 200;
+const int tileFadeInDurationDef = 100;
+const double tileFadeInStartDef = 0.0;
+const double tileFadeInStartWhenOverrideDef = 0.0;
+const bool overrideTilesWhenUrlChangesDef = false;
+const bool retinaModeDef = false;
+
+const double overlayOpacityDef = 1.0;
+const bool overlayGaplessPlaybackDef = false;

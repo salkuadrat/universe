@@ -1,76 +1,47 @@
 import 'package:flutter/rendering.dart';
 
-import '../polyline/options.dart';
-import 'marker.dart';
+import '../../shared.dart';
+import '../layer.dart';
 
-class PolygonLayerOptions extends PolylineLayerOptions {
+class PolygonLayerOptions extends PathLayerOptions {
 
-  final Polygon polygon;
+  final bool isDotted;
+  final List<Color> gradientStrokeColors;
+  final List<double> gradientStrokeStops;
+  final List<Color> gradientFillColors;
+  final List<double> gradientFillStops;
+  final num smoothFactor;
+  final bool culling;
 
-  const PolygonLayerOptions(this.polygon, {
-    bool stroke = true,
-    Color color,
-    num weight = 3,
-    double opacity = 1.0,
+  const PolygonLayerOptions({
+    bool stroke = strokeDef,
+    Color strokeColor,
+    num strokeWidth = strokeWidthDef,
+    double strokeOpacity = strokeOpacityDef,
     StrokeCap strokeCap = StrokeCap.round,
     StrokeJoin strokeJoin = StrokeJoin.round,
-    bool fill,
     Color fillColor,
-    double fillOpacity = 0.2,
-    PathFillType fillType = PathFillType.evenOdd,
-    num smoothFactor=1.0,
-    bool noClip=false,
-    bool interactive = true,
-    String attribution='',
+    double fillOpacity = fillOpacityDef,
+    PathFillType fillType = fillTypeDef,
+    this.isDotted = isDottedDef,
+    this.gradientStrokeColors = gradientColorsDef,
+    this.gradientStrokeStops = gradientStopsDef,
+    this.gradientFillColors = gradientColorsDef,
+    this.gradientFillStops = gradientStopsDef,
+    this.smoothFactor = smoothFactorDef,
+    this.culling = cullingDef,
+    bool interactive = interactiveDef,
   }) : super(
-    null,
     stroke: stroke,
-    color: color,
-    weight: weight,
-    opacity: opacity,
+    strokeColor: strokeColor,
+    strokeWidth: strokeWidth,
+    strokeOpacity: strokeOpacity,
     strokeCap: strokeCap,
     strokeJoin: strokeJoin,
-    fill: fill,
+    fill: true,
     fillColor: fillColor,
     fillOpacity: fillOpacity,
     fillType: fillType,
-    interactive: interactive, 
-    attribution: attribution,
-  );
-}
-
-class MultiPolygonLayerOptions extends MultiPolylineLayerOptions {
-
-  final List<Polygon> polygons;
-
-  const MultiPolygonLayerOptions(this.polygons, {
-    bool stroke = true,
-    Color color,
-    num weight = 3,
-    double opacity = 1.0,
-    StrokeCap strokeCap = StrokeCap.round,
-    StrokeJoin strokeJoin = StrokeJoin.round,
-    bool fill,
-    Color fillColor,
-    double fillOpacity = 0.2,
-    PathFillType fillType = PathFillType.evenOdd,
-    num smoothFactor=1.0,
-    bool noClip=false,
-    bool interactive = true,
-    String attribution='',
-  }) : super(
-    null,
-    stroke: stroke,
-    color: color,
-    weight: weight,
-    opacity: opacity,
-    strokeCap: strokeCap,
-    strokeJoin: strokeJoin,
-    fill: fill,
-    fillColor: fillColor,
-    fillOpacity: fillOpacity,
-    fillType: fillType,
-    interactive: interactive, 
-    attribution: attribution,
+    interactive: interactive,
   );
 }

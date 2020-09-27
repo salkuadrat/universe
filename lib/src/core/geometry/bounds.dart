@@ -1,7 +1,6 @@
 import 'dart:math' as math;
-import 'package:universe/src/core/geometry/size.dart';
 
-import 'point.dart';
+import 'geometry.dart';
 
 /// Rectangular bound delimited by orthogonal lines passing through two points.
 class Bounds {

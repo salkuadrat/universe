@@ -1,18 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
 
-import '../core/crs/crs.dart';
-import '../core/geometry/latlng_bounds.dart';
-import '../core/geometry/bounds.dart';
-import '../core/geometry/point.dart';
-import '../core/geometry/size.dart';
-import '../core/latlng/latlng.dart';
-import '../core/geometry/centerzoom.dart';
+import '../core/core.dart';
 import '../shared.dart';
-import 'controller/base.dart';
-import 'manager.dart';
-import 'options/fitbounds.dart';
-import 'options/map.dart';
+import 'map.dart';
 
 class MapState {
   final MapController controller;

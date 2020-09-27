@@ -1,7 +1,5 @@
-import '../../core/latlng/latlng.dart';
-import '../base/options.dart';
-import 'icon.dart';
-import 'marker.dart';
+import '../../core/core.dart';
+import '../layer.dart';
 
 class MarkerLayerOptions extends LayerOptions {
   final LatLng latlng;

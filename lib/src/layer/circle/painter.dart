@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'marker.dart';
-import 'options.dart';
+import 'circle.dart';
 
 class CirclePainter extends CustomPainter {
   
@@ -29,9 +28,9 @@ class CirclePainter extends CustomPainter {
       canvas.drawCircle(circle.center, circle.radius, paint);
     }
 
-    final strokeColor = circle.color ?? options.color;
-    final strokeOpacity = circle.opacity ?? options.opacity;
-    final strokeWidth = circle.weight ?? options.weight;
+    final strokeColor = circle.strokeColor ?? options.strokeColor;
+    final strokeOpacity = circle.strokeOpacity ?? options.strokeOpacity;
+    final strokeWidth = circle.strokeWidth ?? options.strokeWidth;
     final applyStrokeColor = strokeColor?.withOpacity(strokeOpacity ?? 1.0);
 
     // always check for strokeWidth and strokeColor

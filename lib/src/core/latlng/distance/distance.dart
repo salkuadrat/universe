@@ -1,12 +1,9 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:validate/validate.dart';
 
 import '../../../shared.dart';
-import '../latlng.dart';
-import '../unit/length.dart';
-import 'algorithm/haversine.dart';
-import 'algorithm/vincenty.dart';
+import '../../core.dart';
 
 abstract class DistanceAlgorithm {
   double distance(LatLng position, LatLng destination);
@@ -72,12 +69,12 @@ class Distance implements DistanceAlgorithm {
   double bearing(LatLng position, LatLng destination) {
     final longDiff = position.longitudeInRad - position.longitudeInRad;
     
-    final y = sin(longDiff);
+    final y = math.sin(longDiff);
     final x = 
-      (cos(position.latitudeInRad) * tan(destination.latitudeInRad)) - 
-      (sin(position.latitudeInRad) * cos(longDiff));
+      (math.cos(position.latitudeInRad) * math.tan(destination.latitudeInRad)) - 
+      (math.sin(position.latitudeInRad) * math.cos(longDiff));
 
-    return radianToDeg(atan2(y, x));
+    return radianToDeg(math.atan2(y, x));
   }
 
   double _round(double value) => isRound ? value.round().toDouble() : value;

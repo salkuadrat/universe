@@ -1,9 +1,12 @@
-import '../base/layer.dart';
-import '../base/options.dart';
+import '../../shared.dart';
+import '../layer.dart';
 
 class GroupLayerOptions extends LayerOptions {
-
-  final List<UniverseLayer> layers;
-
-  GroupLayerOptions(this.layers);
+  const GroupLayerOptions({
+    bool interactive = interactiveDef,
+    String attribution = attributionDef,
+  }) : super(
+    interactive: interactive, 
+    attribution: attribution,
+  );
 }

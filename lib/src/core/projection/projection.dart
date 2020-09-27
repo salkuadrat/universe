@@ -1,8 +1,12 @@
 import 'package:tuple/tuple.dart';
 
-import '../../core/latlng/latlng.dart';
-import '../geometry/bounds.dart';
-import '../geometry/point.dart';
+import '../core.dart';
+
+export 'projection.dart';
+export 'projection.mercator.dart';
+export 'projection.pj4.dart';
+export 'projection.simple.dart';
+export 'projection.spherical.mercator.dart';
 
 abstract class Projection {
 

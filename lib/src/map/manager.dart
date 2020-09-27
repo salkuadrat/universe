@@ -1,16 +1,13 @@
-import 'dart:math';
+import 'dart:math' as math;
 import 'package:cubit/cubit.dart';
 import 'package:flutter/rendering.dart';
 
-import '../core/geometry/point.dart';
-import '../core/geometry/size.dart';
-import '../core/geometry/latlng_bounds.dart';
-import '../core/latlng/latlng.dart';
-import '../map/options/fitbounds.dart';
+import '../core/core.dart';
 import '../shared.dart';
-import 'state.dart';
+import 'map.dart';
 
 class MapManager extends Cubit<MapState> {
+  
   MapManager(MapState state) : super(state);
   
   init() {
@@ -117,8 +114,8 @@ class MapManager extends Cubit<MapState> {
     if(degree != 0.0) {
       double angle = degToRadian(degree);
       double rad90 = 90.0 * PI / 180.0;
-      double rangle90 = sin(rad90 - angle).abs();
-      double sinangle = sin(angle).abs();
+      double rangle90 = math.sin(rad90 - angle).abs();
+      double sinangle = math.sin(angle).abs();
 
       double width = (state.width * rangle90) + (state.height * sinangle);
       double height = (state.height * rangle90) + (state.width * sinangle);

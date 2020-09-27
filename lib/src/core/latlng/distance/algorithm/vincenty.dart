@@ -1,9 +1,7 @@
 import 'dart:math';
 
 import '../../../../shared.dart';
-import '../../latlng.dart';
-import '../distance.dart';
-
+import '../../../core.dart';
 
 class Vincenty implements DistanceAlgorithm {
 

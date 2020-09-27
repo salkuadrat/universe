@@ -1,10 +1,9 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:validate/validate.dart';
 
 import '../../../../shared.dart';
-import '../../latlng.dart';
-import '../distance.dart';
+import '../../../core.dart';
 
 class Haversine implements DistanceAlgorithm {
   const Haversine();
@@ -15,12 +14,15 @@ class Haversine implements DistanceAlgorithm {
   /// More on [Wikipedia](https://en.wikipedia.org/wiki/Haversine_formula)
   @override
   double distance(LatLng position, LatLng destination) {
-    final sinLatDist = sin((destination.latitudeInRad - position.latitudeInRad) / 2);
-    final sinLngDist = sin((destination.longitudeInRad - position.longitudeInRad) / 2);
+    final sinLatDist = math.sin((destination.latitudeInRad - position.latitudeInRad) / 2);
+    final sinLngDist = math.sin((destination.longitudeInRad - position.longitudeInRad) / 2);
     
     // Sides
-    final a = (sinLatDist * sinLatDist) + (sinLngDist * sinLngDist) * cos(position.latitudeInRad) * cos(destination.latitudeInRad);
-    final c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    final a = 
+      (sinLatDist * sinLatDist) + 
+      (sinLngDist * sinLngDist) * math.cos(position.latitudeInRad) * math.cos(destination.latitudeInRad);
+
+    final c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
     
     return EQUATOR_RADIUS * c;
   }
@@ -45,11 +47,15 @@ class Haversine implements DistanceAlgorithm {
     
     double h = degToRadian(bearing);
     double a = distanceInMeter / EQUATOR_RADIUS;
-    double latitude = asin( sin(from.latitudeInRad) * cos(a) + cos(from.latitudeInRad) * sin(a) * cos(h) );
+    double latitude = math.asin(
+      math.sin(from.latitudeInRad) * math.cos(a) + 
+      math.cos(from.latitudeInRad) * math.sin(a) * math.cos(h) 
+    );
+
     double longitude = from.longitudeInRad + 
-      atan2(
-        sin(h) * sin(a) * cos(from.latitudeInRad), 
-        cos(a) - sin(from.latitudeInRad) * sin(latitude),
+      math.atan2(
+        math.sin(h) * math.sin(a) * math.cos(from.latitudeInRad), 
+        math.cos(a) - math.sin(from.latitudeInRad) * math.sin(latitude),
       );
     
     return LatLng(radianToDeg(latitude), radianToDeg(longitude));

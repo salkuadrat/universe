@@ -17,16 +17,22 @@ class LatLngBounds {
 
   // can accept parameter as [LatLng(20,30), LatLng(10, 10), ...] or 
   // [[20, 30], [10, 10], ...]
-  LatLngBounds.from(List<dynamic> positions) {
-    if(positions != null && positions.isNotEmpty) {
+  LatLngBounds.from(dynamic latlngs) {
+    
+    if(latlngs is LatLngBounds) {
+      _sw = latlngs.southWest;
+      _ne = latlngs.northEast;
+    }
+
+    if(latlngs is List && latlngs.isNotEmpty) {
 
       num minX;
       num maxX;
       num minY;
       num maxY;
 
-      for(var position in positions) {
-        LatLng pos = LatLng.from(position);
+      for(var latlng in latlngs) {
+        LatLng pos = LatLng.from(latlng);
         double x = pos.longitudeInRad;
         double y = pos.latitudeInRad;
 
@@ -52,11 +58,11 @@ class LatLngBounds {
     }
   }
 
-  extend(dynamic _position) {
-    LatLng position = LatLng.from(_position);
+  extend(dynamic _latlng) {
+    LatLng latlng = LatLng.from(_latlng);
 
-    if(position != null) {
-      _extend(position, position);
+    if(latlng != null) {
+      _extend(latlng, latlng);
     }
   }
 
@@ -94,9 +100,9 @@ class LatLngBounds {
   bool get isValid => southWest != null && northEast != null;
   bool get isNotValid => !isValid;
 
-  bool contains(LatLng point) {
+  bool contains(LatLng latlng) {
     if(isValid) {
-      return containsBounds(LatLngBounds(point, point));
+      return containsBounds(LatLngBounds(latlng, latlng));
     }
 
     return false;
@@ -127,5 +133,7 @@ class LatLngBounds {
     }
 
     return true;
-  }  
+  }
+
+  bool isNotOverlapping(LatLngBounds bounds) => !isOverlapping(bounds);
 }

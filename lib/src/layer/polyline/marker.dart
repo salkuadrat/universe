@@ -1,31 +1,39 @@
-import 'package:colours/colours.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../core/geometry/latlng_bounds.dart';
-import '../../core/latlng/latlng.dart';
+import '../../core/core.dart';
 
 class Polyline {
-  final List<LatLng> positions;
   
-  final Color color;
-  final Color borderColor;
+  final List<LatLng> latlngs;
+  final Color strokeColor;
   final double strokeWidth;
-  final double borderStrokeWidth;
-  final List<Color> gradientColors;
-  final List<double> gradientStops;
+  final double strokeOpacity;
+  final StrokeCap strokeCap;
+  final StrokeJoin strokeJoin;
+  final List<Color> gradientStrokeColors;
+  final List<double> gradientStrokeStops;
   final bool isDotted;
 
-  List<Offset> offsets = [];
-  LatLngBounds bounds;
+  bool get isEmpty => latlngs == null || latlngs.isEmpty;
+  bool get isNotEmpty => latlngs != null && latlngs.isNotEmpty;
 
-  Polyline({
-    this.positions, 
-    this.color = Colours.white54, 
-    this.borderColor = Colours.black26, 
-    this.strokeWidth = 1.0, 
-    this.borderStrokeWidth = 0.0, 
-    this.gradientColors, 
-    this.gradientStops,
-    this.isDotted = false,
-  });
+  LatLngBounds get bounds => LatLngBounds.from(latlngs);
+
+  // can accept Polyline([LatLng(), LatLng(), ...]) or Polygon([[], [], ...])
+  Polyline(List<dynamic> latlngs, {
+    this.strokeColor, 
+    this.strokeWidth, 
+    this.strokeOpacity,
+    this.strokeCap,
+    this.strokeJoin,
+    this.gradientStrokeColors, 
+    this.gradientStrokeStops,
+    this.isDotted,
+  }): this.latlngs = latlngs.map((latlng) => LatLng.from(latlng)).toList();
+
+  factory Polyline.from(dynamic value) {
+    if(value is Polyline) return value;
+    if(value is List<dynamic>) return Polyline(value);
+    return Polyline([]);
+  }
 }

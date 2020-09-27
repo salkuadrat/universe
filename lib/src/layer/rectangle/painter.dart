@@ -1,12 +1,14 @@
 import 'package:flutter/rendering.dart';
 
-import 'marker.dart';
+import 'rectangle.dart';
 
+/// use PolygonPainter to paint Rectangle
 class RectanglePainter extends CustomPainter {
 
   final Rectangle rectangle;
+  final RectangleLayerOptions options;
 
-  RectanglePainter(this.rectangle);
+  RectanglePainter(this.rectangle, {this.options});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -14,7 +16,6 @@ class RectanglePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
+  bool shouldRepaint(RectanglePainter oldPainter) => false;
 
-  }
 }

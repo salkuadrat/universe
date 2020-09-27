@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../core/latlng/latlng.dart';
+import '../../core/core.dart';
 
 /// Circle can have their own style to override style from LayerOptions.
 /// 
@@ -12,10 +12,10 @@ import '../../core/latlng/latlng.dart';
 /// 
 class Circle {
   final LatLng latlng;
-  final double opacity;
-  final Color color;
   final bool stroke;
-  final num weight;
+  final Color strokeColor;
+  final num strokeWidth;
+  final double strokeOpacity;
   final bool fill;
   final Color fillColor;
   final double fillOpacity;
@@ -28,10 +28,10 @@ class Circle {
   
   Circle(dynamic latlng, num radius, {
     this.isRadiusInMeter=false,
-    this.color, 
     this.stroke,
-    this.weight, 
-    this.opacity,
+    this.strokeColor, 
+    this.strokeWidth, 
+    this.strokeOpacity,
     this.fill = false, 
     Color fillColor, 
     this.fillOpacity,
@@ -39,5 +39,11 @@ class Circle {
     this.strokeJoin,
   }) : this.latlng = LatLng.from(latlng),
        this.radius = radius?.toDouble(),
-       this.fillColor = fillColor ?? color;
+       this.fillColor = fillColor ?? strokeColor;
+  
+  factory Circle.from(dynamic value) {
+    if(value is Circle) return value;
+    if(value is LatLng) return Circle(value, 0.0);
+    return Circle(LatLng.from(value), 0.0);
+  }
 }

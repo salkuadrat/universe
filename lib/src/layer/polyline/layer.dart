@@ -1,75 +1,67 @@
 import 'package:flutter/widgets.dart';
-import 'package:universe/src/layer/polyline/options.dart';
 
-import '../../core/geometry/latlng_bounds.dart';
 import '../../core/geometry/point.dart';
 import '../../core/latlng/latlng.dart';
-import '../../layer/polyline/painter.dart';
-import '../../map/controller/base.dart';
-import '../../map/state.dart';
-import '../base/layer.dart';
-import 'marker.dart';
+import '../../map/map.dart';
+import '../layer.dart';
 
-class PolylineLayer extends UniverseLayer {
+class PolylineLayer extends SingleLayer {
   
+  final Polyline polyline;
+  final List<Polyline> polylines;
   final PolylineLayerOptions options;
 
-  const PolylineLayer({Key key, this.options}) 
-    : super(key: key, options: options);
+  bool get hasPolyline => polyline != null;
+  bool get hasPolylines => polylines != null && polylines.isNotEmpty;
 
+  // can accept a single polyline or list of polylines
+  const PolylineLayer(dynamic polyline, {Key key, this.options}) : 
+    assert(polyline is Polyline || (polyline is List<Polyline> && polyline.length > 0)), 
+    this.polyline = polyline is Polyline ? polyline : null,
+    this.polylines = polyline is List<Polyline> ? polyline : const <Polyline>[],
+    super(key: key, options: options);
+  
   @override 
   Widget buildLayer(BuildContext context, MapController controller, MapState map) {
     return LayoutBuilder(
       builder: (_, BoxConstraints c) {
         Size size = Size(c.maxWidth, c.maxHeight);
-        Polyline polyline = options.polyline;
-        polyline.bounds = LatLngBounds.from(polyline.positions);
-
-        if(options.noClip && !polyline.bounds.isOverlapping(map.bounds)) {
-          return Container();
-        }
-
-        polyline.offsets = _offsets(map, polyline.positions);
-
-        return CustomPaint(
-          painter: PolylinePainter(polyline),
-          size: size,
-        );
+        if(hasPolylines) return _polylines(map, size);
+        if(hasPolyline) return _polyline(map, size, polyline);
+        return Container();
       },
     );
   }
 
-  _offsets(MapState map, List<LatLng> positions) {
-    List<Offset> offsets = [];
+  Widget _polylines(MapState map, Size size) => Stack(
+    children: [
+      for(Polyline polyline in polylines) _polyline(map, size, polyline),
+    ],
+  );
 
-    for(LatLng position in positions) {
-      UPoint pos = map.project(position);
-      double scale = map.getZoomScale(map.zoom, map.zoom);
-      pos = (pos * scale) - map.pixelOrigin;
-      offsets.add(Offset(pos.x.toDouble(), pos.y.toDouble()));
-      /* if (i > 0) {
-        offsets.add(Offset(pos.x.toDouble(), pos.y.toDouble()));
-      } */
+  Widget _polyline(MapState map, Size size, Polyline polyline) {
+
+    if(options.culling && polyline.bounds.isNotOverlapping(map.bounds)) {
+      return Container();
     }
 
-    return offsets;
-  } 
-}
+    final points = _points(map, polyline.latlngs);
 
-class MultiPolylineLayer extends StatelessWidget {
-
-  final MultiPolylineLayerOptions options;
-  
-  MultiPolylineLayer({Key key, this.options}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        for(Polyline polyline in options.polylines) PolylineLayer(
-          options: PolylineLayerOptions(polyline, noClip: options.noClip),
-        ),
-      ],
+    return CustomPaint(
+      painter: PolylinePainter(polyline, points, options: options),
+      size: size,
     );
+  }
+
+  List<Offset> _points(MapState map, List<LatLng> latlngs) {
+    List<Offset> points = [];
+
+    for(LatLng latlng in latlngs) {
+      double scale = map.getZoomScale(map.zoom, map.zoom);
+      UPoint point = (map.project(latlng) * scale) -  map.pixelOrigin;
+      points.add(Offset(point.x, point.y));
+    }
+
+    return points;
   }
 }

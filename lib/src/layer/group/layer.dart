@@ -1,21 +1,20 @@
 import 'package:flutter/widgets.dart';
 
-import '../../map/controller/base.dart';
-import '../../map/state.dart';
-import '../../layer/base/layer.dart';
-import 'options.dart';
+import '../../map/map.dart';
+import '../layer.dart';
 
-class GroupLayer extends UniverseLayer {
+class GroupLayer extends SingleLayer {
 
+  final List<SingleLayer> layers;
   final GroupLayerOptions options;
   
-  GroupLayer({Key key, this.options}) 
+  GroupLayer(this.layers, {Key key, this.options}) 
     : super(key: key, options: options);
 
   @override
   Widget buildLayer(BuildContext context, MapController controller, MapState map) {
     return Stack(
-      children: options.layers,
+      children: layers,
     );
   }
 }

@@ -1,8 +1,17 @@
 import 'dart:math' as math;
 
 import 'package:intl/intl.dart';
-import 'package:universe/src/core/geometry/point.dart';
 import 'package:universe/src/shared.dart' as s;
+
+import '../core.dart';
+
+export 'latlng.dart';
+export 'path.dart';
+export 'distance/algorithm/haversine.dart';
+export 'distance/algorithm/vincenty.dart';
+export 'distance/distance.dart';
+export 'spline/catmullrom.dart';
+export 'unit/length.dart';
 
 /// Geographic coordinates in degrees.
 /// 

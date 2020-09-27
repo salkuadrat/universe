@@ -1,4 +1,4 @@
-import '../base/options.dart';
+import '../layer.dart';
 
 class VideoOverlayOptions extends LayerOptions {
   

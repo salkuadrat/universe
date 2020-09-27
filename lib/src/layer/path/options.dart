@@ -1,14 +1,14 @@
 import 'package:flutter/rendering.dart';
-import 'package:universe/src/shared.dart';
 
-import '../base/options.dart';
+import '../../shared.dart';
+import '../layer.dart';
 
 class PathLayerOptions extends LayerOptions {
 
   final bool stroke;
-  final Color color;
-  final double weight;
-  final double opacity;
+  final Color strokeColor;
+  final double strokeWidth;
+  final double strokeOpacity;
   final StrokeCap strokeCap;
   final StrokeJoin strokeJoin;
   final bool fill;
@@ -17,17 +17,16 @@ class PathLayerOptions extends LayerOptions {
   final PathFillType fillType;
 
   const PathLayerOptions({
-    this.stroke=strokeDef, 
-    this.color, 
-    this.weight=weightDef, 
-    this.opacity=opacityDef, 
-    this.strokeCap=strokeCapDef, 
-    this.strokeJoin=strokeJoinDef, 
-    this.fill=false, 
+    this.stroke = strokeDef, 
+    this.strokeColor, 
+    this.strokeWidth = strokeWidthDef, 
+    this.strokeOpacity = strokeOpacityDef, 
+    this.strokeCap = strokeCapDef, 
+    this.strokeJoin = strokeJoinDef, 
+    this.fill = false, 
     this.fillColor, 
-    this.fillOpacity=fillOpacityDef, 
-    this.fillType=fillTypeDef,
-    bool interactive=interactiveDef,
-    String attribution=attributionDef,
-  }) : super(interactive: interactive, attribution: attribution);
+    this.fillOpacity = fillOpacityDef, 
+    this.fillType = fillTypeDef,
+    bool interactive = interactiveDef,
+  }) : super(interactive: interactive);
 }
