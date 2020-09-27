@@ -18,7 +18,7 @@ class Size extends UniversalPoint<double> {
   String toString() => 'Size($width, $height)';
 
   factory Size.from(dynamic value) {
-    if(value is Size) return Size(Math.max(0, value.width), Math.max(0, value.height));
-    return (UniversalPoint<double>.from(value) as Size);
+    final size = UniversalPoint.from(value);
+    return Size(Math.max(0, size.x.toDouble()), Math.max(0, size.y.toDouble()));
   }
 }

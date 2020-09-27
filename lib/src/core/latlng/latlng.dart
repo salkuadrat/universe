@@ -27,7 +27,7 @@ class LatLng extends UniversalPoint<double> {
   double get lng => longitude;
   double get alt => altitude;
 
-  LatLng(this.latitude, this.longitude, [this.altitude=0]) 
+  LatLng(this.latitude, this.longitude, [this.altitude=0.0]) 
     : super(latitude, longitude, altitude);
 
   factory LatLng.from(dynamic value) {
@@ -87,7 +87,7 @@ class LatLng extends UniversalPoint<double> {
 
   @override
   String toString() => 
-    'LatLng (Latitude:$latitudeStr, Longitude:$longitudeStr, Altitude:$altitudeStr)';
+    'LatLng(Latitude:$latitudeStr, Longitude:$longitudeStr, Altitude:$altitudeStr)';
   
   @override
   int get hashCode => lat.hashCode ^ lng.hashCode ^ alt.hashCode;

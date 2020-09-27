@@ -8,7 +8,9 @@ class Vincenty implements DistanceAlgorithm {
   const Vincenty();
 
   @override
-  double distance(LatLng position, LatLng destination) {
+  double distance(dynamic position, dynamic destination) {
+    position = LatLng.from(position);
+    destination = LatLng.from(destination);
     
     double a = EQUATOR_RADIUS, b = POLAR_RADIUS, f = FLATTENING;
     double L = destination.longitudeInRad - position.longitudeInRad;
@@ -70,7 +72,8 @@ class Vincenty implements DistanceAlgorithm {
   }
 
   @override
-  LatLng offset(LatLng from, double distanceInMeter, double bearing) {
+  LatLng offset(dynamic from, double distanceInMeter, double bearing) {
+    from = LatLng.from(from);
 
     double equatorialRadius = EQUATOR_RADIUS;
     double polarRadius = POLAR_RADIUS;

@@ -8,7 +8,9 @@ class Coordinates extends UniversalPoint<num> {
 
   factory Coordinates.from(dynamic value) {
     if(value is Coordinates) return value;
-    return (UniversalPoint<num>.from(value) as Coordinates);
+
+    final point = UniversalPoint.from(value);
+    return Coordinates(point.x, point.y, point.z);
   }
 
   @override

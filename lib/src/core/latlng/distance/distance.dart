@@ -6,8 +6,8 @@ import '../../../shared.dart';
 import '../../core.dart';
 
 abstract class DistanceAlgorithm {
-  double distance(LatLng position, LatLng destination);
-  LatLng offset(LatLng from, double distanceInMeter, double bearing);
+  double distance(dynamic position, dynamic destination);
+  LatLng offset(dynamic from, double distanceInMeter, double bearing);
 }
 
 class Distance implements DistanceAlgorithm {
@@ -26,13 +26,15 @@ class Distance implements DistanceAlgorithm {
   }
 
   /// Shortcut for [distance]
-  num call(LatLng position, LatLng destination) {
+  num call(dynamic position, dynamic destination) {
     return distance(position, destination);
   }
 
   /// Computes the distance between two points.
   @override
-  double distance(LatLng position, LatLng destination, {LengthUnit unit=LengthUnit.M}) {
+  double distance(dynamic position, dynamic destination, {LengthUnit unit=LengthUnit.M}) {
+    position = LatLng.from(position);
+    destination = LatLng.from(destination);
     double distance = algorithm.distance(position, destination);
     return _round(LengthUnit.M.to(unit, distance));
   }
@@ -52,8 +54,8 @@ class Distance implements DistanceAlgorithm {
   ///
   /// Bearing: Left - 270°, right - 90°, up - 0°, down - 180°
   @override
-  LatLng offset(LatLng from, double distanceInMeter, double bearing) 
-    => algorithm.offset(from, distanceInMeter, bearing);
+  LatLng offset(dynamic from, double distanceInMeter, double bearing) 
+    => algorithm.offset(LatLng.from(from), distanceInMeter, bearing);
 
   /// Returns the great circle bearing (direction) in degrees to the next point ([p2])
   ///
@@ -66,14 +68,17 @@ class Distance implements DistanceAlgorithm {
   /// LatLng destination = new LatLng(-90.0, 0.0);
   ///
   /// expect(distance.bearing(position, destination), equals(180));
-  double bearing(LatLng position, LatLng destination) {
-    final longDiff = position.longitudeInRad - position.longitudeInRad;
+  double bearing(dynamic position, dynamic destination) {
+    position = LatLng.from(position);
+    destination = LatLng.from(destination);
+    
+    final longDiff = destination.longitudeInRad - position.longitudeInRad;
     
     final y = math.sin(longDiff);
     final x = 
       (math.cos(position.latitudeInRad) * math.tan(destination.latitudeInRad)) - 
       (math.sin(position.latitudeInRad) * math.cos(longDiff));
-
+    
     return radianToDeg(math.atan2(y, x));
   }
 
@@ -84,18 +89,20 @@ class Distance implements DistanceAlgorithm {
 /// Distance distance = Distance(algorithm: Vincenty());
 ///
 class DistanceVincenty extends Distance {
-  DistanceVincenty({bool isRound=true}): super(isRound: isRound, algorithm: Vincenty());
+  DistanceVincenty({bool isRound=true}): 
+    super(isRound: isRound, algorithm: Vincenty());
 
-  DistanceVincenty.withRadius(double radius, {bool isRound=true}): super.withRadius(radius, 
-    isRound: isRound, algorithm: Vincenty());
+  DistanceVincenty.withRadius(double radius, {bool isRound=true}): 
+    super.withRadius(radius, isRound: isRound, algorithm: Vincenty());
 }
 
 /// Shortcut for:
 /// Distance distance = Distance(algorithm: Haversine());
 ///
 class DistanceHaversine extends Distance {
-  DistanceHaversine({bool isRound=true}): super(isRound: isRound, algorithm: Haversine());
+  DistanceHaversine({bool isRound=true}): 
+    super(isRound: isRound, algorithm: Haversine());
 
-  DistanceHaversine.withRadius(double radius, {bool isRound=true}): super.withRadius(radius, 
-    isRound: isRound, algorithm: Haversine());
+  DistanceHaversine.withRadius(double radius, {bool isRound=true}): 
+    super.withRadius(radius, isRound: isRound, algorithm: Haversine());
 }

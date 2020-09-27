@@ -13,7 +13,10 @@ class Haversine implements DistanceAlgorithm {
   /// Accuracy can be out by 0.3%
   /// More on [Wikipedia](https://en.wikipedia.org/wiki/Haversine_formula)
   @override
-  double distance(LatLng position, LatLng destination) {
+  double distance(dynamic position, dynamic destination) {
+    position = LatLng.from(position);
+    destination = LatLng.from(destination);
+
     final sinLatDist = math.sin((destination.latitudeInRad - position.latitudeInRad) / 2);
     final sinLngDist = math.sin((destination.longitudeInRad - position.longitudeInRad) / 2);
     
@@ -40,7 +43,8 @@ class Haversine implements DistanceAlgorithm {
   /// LatLng destination = distance.offset(position, distanceInMeter, 180);
   ///
   @override
-  LatLng offset(LatLng from, double distanceInMeter, double bearing) {
+  LatLng offset(dynamic from, double distanceInMeter, double bearing) {
+    from = LatLng.from(from);
     
     Validate.inclusiveBetween(-180.0, 180.0, bearing, 
       "Bearing angle must be between -180 and 180 degrees");

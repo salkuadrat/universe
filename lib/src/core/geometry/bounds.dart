@@ -11,7 +11,7 @@ class Bounds {
   // can accept Bounds(GeoPoint(20,30), GeoPoint(10, 10)) or 
   // Bounds([20, 30], [10, 10])
   factory Bounds(dynamic min, dynamic max) {
-    Bounds bounds1 = Bounds._(min, max);
+    Bounds bounds1 = Bounds._(UPoint.from(min), UPoint.from(max));
     Bounds bounds2 = bounds1.extend(min);
     return bounds2.extend(max);
   }
@@ -65,9 +65,7 @@ class Bounds {
   UPoint get bottomRight => max;
 
   bool contains(UPoint point) {
-    var min = point;
-    var max = point;
-    return containsBounds(Bounds(min, max));
+    return containsBounds(Bounds(point, point));
   }
 
   bool containsBounds(Bounds b) {
@@ -87,5 +85,13 @@ class Bounds {
   }
 
   @override
+  int get hashCode => min.hashCode ^ max.hashCode;
+  
+  @override
+  bool operator ==(other) => other is Bounds && 
+    min == other.min && max == other.max;
+
+  @override
   String toString() => 'Bounds($min, $max)';
+
 }

@@ -13,7 +13,9 @@ class UPoint extends UniversalPoint<double> {
 
   factory UPoint.from(dynamic value) {
     if(value is UPoint) return value;
-    return (UniversalPoint<double>.from(value) as UPoint);
+
+    final point = UniversalPoint.from(value);
+    return UPoint(point.x.toDouble(), point.y.toDouble());
   }
 
   @override
@@ -59,6 +61,7 @@ class UniversalPoint<T extends num> extends Point<T> {
   }
 
   UniversalPoint<T> operator /(num factor) {
+    if(factor == 0) throw Exception("Cannot divide by zero!");
     return UniversalPoint<T>(x / factor, y / factor, z / factor);
   }
 

@@ -19,5 +19,4 @@ class LengthUnit {
     // convert to the desired length unit
     return unit.scaleToMeter * (value / scaleToMeter);
   }
-
 }
