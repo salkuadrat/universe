@@ -1,3 +1,11 @@
+import '../../shared.dart';
+
 class LayerOptions {
-  const LayerOptions();
+  final bool interactive;
+  final String attribution;
+  
+  const LayerOptions({
+    this.interactive=interactiveDef, 
+    this.attribution=attributionDef,
+  });
 }

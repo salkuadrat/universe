@@ -5,9 +5,10 @@ import 'point.dart';
 
 /// Rectangular bound delimited by orthogonal lines passing through two points.
 class Bounds {
-  final GeoPoint min;
-  final GeoPoint max;
 
+  final UPoint min;
+  final UPoint max;
+  
   // can accept Bounds(GeoPoint(20,30), GeoPoint(10, 10)) or 
   // Bounds([20, 30], [10, 10])
   factory Bounds(dynamic min, dynamic max) {
@@ -21,9 +22,9 @@ class Bounds {
   /// Creates a new [Bounds] obtained by expanding the current ones 
   /// with a new point.
   Bounds extend(dynamic _point) {
-    GeoPoint point = GeoPoint.from(_point);
-    GeoPoint _min;
-    GeoPoint _max;
+    UPoint point = UPoint.from(_point);
+    UPoint _min;
+    UPoint _max;
 
     if(min == null && max == null) {
       _min = point;
@@ -34,37 +35,37 @@ class Bounds {
       double minY = math.min(point.y, min.y);
       double maxY = math.max(point.y, max.y);
 
-      _min = GeoPoint(minX, minY);
-      _max = GeoPoint(maxX, maxY);
+      _min = UPoint(minX, minY);
+      _max = UPoint(maxX, maxY);
     }
 
     return Bounds._(_min, _max);
   }
 
   /// This [Bounds] central point.
-  GeoPoint get center => GeoPoint(
+  UPoint get center => UPoint(
     (min.x + max.x) / 2,
     (min.y + max.y) / 2,
   );
 
-  /// A point that contains the difference between the point's axis projections.
+  /// Size of bounds.
   Size get size {
     return Size.from(max - min);
   }
 
-  /// Bottom-Left corner's point.
-  GeoPoint get bottomLeft => GeoPoint(min.x, max.y);
+  /// Bottom left corner's point.
+  UPoint get bottomLeft => UPoint(min.x, max.y);
 
-  /// Top-Right corner's point.
-  GeoPoint get topRight => GeoPoint(max.x, min.y);
+  /// Top right corner's point.
+  UPoint get topRight => UPoint(max.x, min.y);
 
-  /// Top-Left corner's point.
-  GeoPoint get topLeft => min;
+  /// Top left corner's point.
+  UPoint get topLeft => min;
 
-  /// Bottom-Right corner's point.
-  GeoPoint get bottomRight => max;
+  /// Bottom right corner's point.
+  UPoint get bottomRight => max;
 
-  bool contains(GeoPoint point) {
+  bool contains(UPoint point) {
     var min = point;
     var max = point;
     return containsBounds(Bounds(min, max));

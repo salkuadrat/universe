@@ -21,11 +21,12 @@ abstract class Projection {
 
   /// Projects geographical coordinates into coordinates in units accepted for 
   /// this CRS (e.g. meters for EPSG:3857, for passing it to WMS services).
-  GeoPoint project(LatLng position);
+  UPoint project(LatLng position);
 
   /// Given a projected coordinate returns the corresponding GeoPosition. 
   /// The inverse of `project`.
-  LatLng unproject(GeoPoint point);
+  LatLng unproject(UPoint point);
+  
   
   double _wrap(Comparable start, Comparable end, double value) {
     if(value.compareTo(start) < 0) return start;

@@ -13,7 +13,7 @@ class GeoCircle {
   final double radius;
   final DistanceAlgorithm algorithm;
 
-  // can accept center => GeoPosition(20.0, 30.0) or center => [20.0, 30.0]
+  // can accept center => LatLng(20.0, 30.0) or center => [20.0, 30.0]
   GeoCircle(dynamic center, this.radius, {this.algorithm= const Vincenty()})
     : this.center = LatLng.from(center);
 
@@ -30,9 +30,7 @@ class GeoCircle {
   /// 
   bool isPointInside(LatLng point) {
     Validate.notNull(point);
-    
     Distance distance = new Distance(algorithm: algorithm);
-    double dist = distance.distance(center, point);
-    return dist <= radius;
+    return distance(center, point) <= radius;
   }
 }

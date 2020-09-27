@@ -25,17 +25,17 @@ class Pj4Projection extends Projection {
         super(bounds: bounds, latBounds: latBounds, lngBounds: lngBounds);
 
   @override
-  GeoPoint project(LatLng position) {
+  UPoint project(LatLng position) {
     pj4.Point point = epsg4326.transform(pj4Projection, pj4.Point(
       x: position.longitude, 
       y: position.latitude,
     ));
     
-    return GeoPoint(point.x, point.y);
+    return UPoint(point.x, point.y);
   }
 
   @override
-  LatLng unproject(GeoPoint point) {
+  LatLng unproject(UPoint point) {
     pj4.Point position = pj4Projection.transform(epsg4326, pj4.Point(x: point.x, y: point.y));
     return LatLng(wrapLat(position.y), wrapLng(position.x));
   }

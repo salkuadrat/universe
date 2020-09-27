@@ -18,17 +18,17 @@ class SimpleProjection extends Projection {
 
   @override
   Bounds get bounds => Bounds(
-    GeoPoint(-180.0, -90.0), 
-    GeoPoint(180.0, 90.0),
+    UPoint(-180.0, -90.0), 
+    UPoint(180.0, 90.0),
   );
   
   @override
-  GeoPoint project(LatLng position) {
-    return GeoPoint(position.longitude, position.latitude);
+  UPoint project(LatLng position) {
+    return UPoint(position.longitude, position.latitude);
   }
 
   @override
-  LatLng unproject(GeoPoint point) {
+  LatLng unproject(UPoint point) {
     return LatLng(wrapLat(point.y), wrapLng(point.x));
   }
 }

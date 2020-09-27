@@ -1,22 +1,22 @@
 import 'dart:math';
 
-class GeoPoint extends UniversalPoint<double> {
-  GeoPoint(double x, double y) : super(x, y);
+class UPoint extends UniversalPoint<double> {
+  UPoint(double x, double y) : super(x, y);
   
   @override
   int get hashCode => x.hashCode ^ y.hashCode;
   
   @override
-  bool operator ==(other) => other is GeoPoint && 
+  bool operator ==(other) => other is UPoint && 
     x == other.x && y == other.y;
 
-  factory GeoPoint.from(dynamic value) {
-    if(value is GeoPoint) return value;
-    return (UniversalPoint<double>.from(value) as GeoPoint);
+  factory UPoint.from(dynamic value) {
+    if(value is UPoint) return value;
+    return (UniversalPoint<double>.from(value) as UPoint);
   }
 
   @override
-  String toString() => 'GeoPoint($x, $y)';
+  String toString() => 'UPoint($x, $y)';
 }
 
 class UniversalPoint<T extends num> extends Point<T> {

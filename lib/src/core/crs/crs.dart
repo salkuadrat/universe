@@ -31,20 +31,20 @@ abstract class Crs {
   Transformation get transformation;
 
   /// Projects latlng coordinates into pixel coordinates for a given zoom.
-  GeoPoint latlngToPoint(LatLng position, double zoom);
+  UPoint latlngToPoint(LatLng position, double zoom);
 
   /// The inverse of `latlngToPoint`. 
   /// Projects pixel coordinates on a given zoom into latlng coordinates.
-  LatLng pointToLatLng(GeoPoint point, double zoom);
+  LatLng pointToLatLng(UPoint point, double zoom);
 
   /// Projects geographical coordinates into coordinates 
   /// in units accepted for this CRS (e.g. meters for EPSG:3857,
   /// for passing it to WMS services).
-  GeoPoint project(LatLng latlng);
+  UPoint project(LatLng latlng);
 
   /// Given a projected coordinate returns the corresponding LatLng. 
   /// The inverse of project.
-  LatLng unproject(GeoPoint point);
+  LatLng unproject(UPoint point);
 
   /// Returns the scale used when transforming projected coordinates into 
   /// pixel coordinates for a particular zoom. 
@@ -102,20 +102,20 @@ class BaseCrs extends Crs {
 
   /// Projects latlng coordinates into pixel coordinates for a given zoom.
   @override
-  GeoPoint latlngToPoint(LatLng position, double zoom) {
+  UPoint latlngToPoint(LatLng position, double zoom) {
     try {
       var projectedPoint = projection.project(position);
       double scale = this.scale(zoom);
       return transformation?.transform(projectedPoint, scale);
     } catch (e) {
-      return GeoPoint(0.0, 0.0);
+      return UPoint(0.0, 0.0);
     }
   }
 
   /// The inverse of `latlngToPoint`. 
   /// Projects pixel coordinates on a given zoom into latlng coordinates.
   @override
-  LatLng pointToLatLng(GeoPoint point, double zoom) {
+  LatLng pointToLatLng(UPoint point, double zoom) {
     try {
       double scale = this.scale(zoom);
       var untransformedPoint = transformation?.untransform(point, scale);
@@ -129,14 +129,14 @@ class BaseCrs extends Crs {
   /// in units accepted for this CRS (e.g. meters for EPSG:3857,
   /// for passing it to WMS services).
   @override
-  GeoPoint project(LatLng latlng) {
+  UPoint project(LatLng latlng) {
     return this.projection?.project(latlng);
   }
 
   /// Given a projected coordinate returns the corresponding LatLng. 
   /// The inverse of project.
   @override
-  LatLng unproject(GeoPoint point) {
+  LatLng unproject(UPoint point) {
     return this.projection?.unproject(point);
   }
 

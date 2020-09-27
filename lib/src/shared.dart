@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
 /// Equator radius in meter (WGS84 ellipsoid)
@@ -60,3 +61,16 @@ String decimal2sexagesimal(double decimal) {
 
   return "$degree° ${minutes.floor()}' ${seconds.toStringAsFixed(2)}\"";
 }
+
+/// default parameter values
+const bool strokeDef = true;
+const double weightDef = 3.0;
+const double opacityDef = 1.0;
+const StrokeCap strokeCapDef = StrokeCap.round;
+const StrokeJoin strokeJoinDef = StrokeJoin.round;
+const double fillOpacityDef = 0.2;
+const PathFillType fillTypeDef = PathFillType.evenOdd;
+const bool interactiveDef = true;
+const String attributionDef = '';
+const double smoothFactorDef = 1.0;
+const bool noClipDef = false;

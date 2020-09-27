@@ -18,12 +18,12 @@ class Mercator extends Projection {
 
   @override
   Bounds get bounds => Bounds(
-    GeoPoint(-20037508.34279, -15496570.73972),
-    GeoPoint(20037508.34279, 18764656.23138),
+    UPoint(-20037508.34279, -15496570.73972),
+    UPoint(20037508.34279, 18764656.23138),
   );
 
   @override
-  GeoPoint project(LatLng position) {
+  UPoint project(LatLng position) {
     double d = PI / 180;
     double y = position.latitude * d;
     double tmp = R_MINOR / R;
@@ -33,11 +33,11 @@ class Mercator extends Projection {
     double ts = Math.tan(PI / 4 - y / 2) / Math.pow((1 - con) / (1 + con), e / 2);
     y = -R * Math.log(Math.max(ts, 1E-10));
 
-    return GeoPoint(position.longitude * d * R, y);
+    return UPoint(position.longitude * d * R, y);
   }
 
   @override
-  LatLng unproject(GeoPoint point) {
+  LatLng unproject(UPoint point) {
     double d = 180 / PI;
     double tmp = R_MINOR / R;
     double e = Math.sqrt(1 - tmp * tmp);

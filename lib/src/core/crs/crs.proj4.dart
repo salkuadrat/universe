@@ -46,7 +46,7 @@ class Proj4Crs extends BaseCrs {
     @required String code,
     @required pj4.Projection pj4Projection,
     Transformation transformation,
-    List<GeoPoint> origins,
+    List<UPoint> origins,
     Bounds bounds,
     List<double> scales,
     List<double> resolutions,
@@ -100,25 +100,25 @@ class Proj4Crs extends BaseCrs {
   /// Converts a point on the sphere surface (with a certain zoom) in a
   /// map point.
   @override
-  GeoPoint latlngToPoint(LatLng position, double zoom) {
+  UPoint latlngToPoint(LatLng position, double zoom) {
     try {
-      GeoPoint projectedPoint = projection.project(position);
+      UPoint projectedPoint = projection.project(position);
       double scale = this.scale(zoom);
       Transformation transformation = _getTransformationByZoom(zoom);
 
       return transformation.transform(projectedPoint, scale);
     } catch (e) {
-      return GeoPoint(0.0, 0.0);
+      return UPoint(0.0, 0.0);
     }
   }
 
   /// Converts a map point to the sphere coordinate (at a certain zoom).
   @override
-  LatLng pointToLatLng(GeoPoint point, double zoom) {
+  LatLng pointToLatLng(UPoint point, double zoom) {
     try {
       Transformation transformation = _getTransformationByZoom(zoom);
       double scale = this.scale(zoom);
-      GeoPoint untransformedPoint = transformation.untransform(point, scale);
+      UPoint untransformedPoint = transformation.untransform(point, scale);
       
       return projection.unproject(untransformedPoint);
     } catch (e) {

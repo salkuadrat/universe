@@ -85,7 +85,7 @@ class _UniverseContainerState extends State<_UniverseContainer>
   LatLng _centerStart;
   double _zoomStart;
   LatLng _focalStartGlobal;
-  GeoPoint _focalStartLocal;
+  UPoint _focalStartLocal;
 
   RenderBox get render => context.findRenderObject() as RenderBox;
   double get renderWidth => render?.size?.width ?? 0.0;
@@ -162,7 +162,7 @@ class _UniverseContainerState extends State<_UniverseContainer>
   void handleTap(TapPosition position) {
     if(state?.options?.onTap is Function) {
       state?.options?.onTap(
-        state.offsetToPosition(position.local, renderWidth, renderHeight));
+        state.offsetToLatLng(position.local, renderWidth, renderHeight));
     }
   }
 

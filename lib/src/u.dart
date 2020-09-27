@@ -31,6 +31,7 @@ import 'map/controller/base.dart';
 import 'map/options/map.dart';
 import 'map/universe.dart';
 import 'map/options/zoom.dart';
+import 'shared.dart';
 
 class U {
   static const CrsList CRS = const CrsList();
@@ -119,40 +120,83 @@ class U {
   }
 
   static CircleLayer circle(dynamic latlng, num radius, {
-    bool stroke = true,
+    bool stroke = strokeDef,
     Color color,
-    num weight = 3,
-    double opacity = 1.0,
-    String lineCap = 'round',
-    String lineJoin = 'round',
+    num weight = weightDef,
+    double opacity = opacityDef,
+    StrokeCap strokeCap = strokeCapDef,
+    StrokeJoin strokeJoin = strokeJoinDef,
     bool fill,
     Color fillColor,
-    double fillOpacity = 0.2,
-    String fillRule = 'evenodd',
-    bool interactive = true,
-    String attribution,
+    double fillOpacity = fillOpacityDef,
+    PathFillType fillType = fillTypeDef,
+    bool interactive = interactiveDef,
+    String attribution = attributionDef,
   }) {
     return CircleLayer(
-      options: CircleLayerOptions(Circle(latlng, radius)),
+      options: CircleLayerOptions(
+        Circle(latlng, radius), 
+        stroke: stroke,
+        color: color,
+        weight: weight,
+        opacity: opacity,
+        strokeCap: strokeCap,
+        strokeJoin: strokeJoin,
+        fill: fill,
+        fillColor: fillColor,
+        fillOpacity: fillOpacity,
+        fillType: fillType,
+        interactive: interactive,
+        attribution: attribution,
+      ),
     );
   }
 
-  static CirclesLayer circles(List<Circle> circles, {num radius}) {
+  static CirclesLayer circles(List<Circle> circles, {
+    num radius,
+    bool stroke = strokeDef,
+    Color color,
+    num weight = weightDef,
+    double opacity = opacityDef,
+    StrokeCap strokeCap = strokeCapDef,
+    StrokeJoin strokeJoin = strokeJoinDef,
+    bool fill,
+    Color fillColor,
+    double fillOpacity = fillOpacityDef,
+    PathFillType fillType = fillTypeDef,
+    bool interactive = interactiveDef,
+    String attribution = attributionDef,
+  }) {
     circles.forEach((circle) { 
       if(radius != null && radius > 0.0) {
         circle.radius = radius.toDouble();
       }
     });
-    return CirclesLayer(options: CirclesLayerOptions(circles));
+    return CirclesLayer(
+      options: CirclesLayerOptions(
+        circles,
+        stroke: stroke,
+        color: color,
+        weight: weight,
+        opacity: opacity,
+        strokeCap: strokeCap,
+        strokeJoin: strokeJoin,
+        fill: fill,
+        fillColor: fillColor,
+        fillOpacity: fillOpacity,
+        fillType: fillType,
+        interactive: interactive,
+        attribution: attribution,
+    ));
   }
 
-  static PolylineLayer polyline(Polyline polyline, {bool culling=false}) {
-    return PolylineLayer(options: PolylineLayerOptions(polyline, culling: culling));   
+  static PolylineLayer polyline(Polyline polyline, {bool noClip=false}) {
+    return PolylineLayer(options: PolylineLayerOptions(polyline, noClip: noClip));   
   }
 
-  static MultiPolylineLayer polylines(List<Polyline> polylines, {bool culling=false}) {
+  static MultiPolylineLayer polylines(List<Polyline> polylines, {bool noClip=false}) {
     return MultiPolylineLayer(
-      options: MultiPolylineLayerOptions(polylines, culling: culling),
+      options: MultiPolylineLayerOptions(polylines, noClip: noClip),
     );   
   }
 

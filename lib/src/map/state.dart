@@ -7,7 +7,7 @@ import '../core/geometry/bounds.dart';
 import '../core/geometry/point.dart';
 import '../core/geometry/size.dart';
 import '../core/latlng/latlng.dart';
-import '../core/geometry/zoom.dart';
+import '../core/geometry/centerzoom.dart';
 import '../shared.dart';
 import 'controller/base.dart';
 import 'manager.dart';
@@ -26,6 +26,9 @@ class MapState {
   final double rotation;
   final Size size;
 
+  /// current user's location from MapManager locate()
+  LatLng location;
+
   Crs get crs => options.crs;
 
   bool get hasRotation => rotation != null && rotation > 0.0;
@@ -39,6 +42,7 @@ class MapState {
     this.options,
     LatLng center,
     LatLngBounds bounds,
+    this.location,
     double zoom,
     double minZoom,
     double maxZoom,
@@ -60,6 +64,7 @@ class MapState {
     MapController controller,
     LatLng center,
     LatLngBounds bounds,
+    LatLng location,
     double zoom,
     double minZoom,
     double maxZoom,
@@ -70,6 +75,7 @@ class MapState {
     options: this.options,
     center: center,
     bounds: bounds,
+    location: location,
     zoom: zoom,
     minZoom: minZoom,
     maxZoom: maxZoom,
@@ -85,13 +91,22 @@ class MapState {
   
   MapState withMinZoom(double minZoom) => copyWith(minZoom: minZoom);
   MapState withMaxZoom(double maxZoom) => copyWith(maxZoom: maxZoom);
+  MapState updateLocation(LatLng location) => copyWith(location: location);
 
-  GeoPoint get centerPoint => GeoPoint.from(size / 2);
-  GeoPoint get pixelCenterOrigin => getPixelCenterOrigin(center);
+  UPoint get halfSize => UPoint.from(size / 2);
 
-  GeoPoint getPixelCenterOrigin(LatLng center, [double zoom]) {
+  /// TODO: Check semantics - 
+  /// isn't the pixel origin the 0,0 coord relative to the map pane? 
+  /// "left point of the map layer" can be confusing, specially 
+  /// since there can be negative offsets. 
+  /// 
+  /// Returns the projected pixel coordinates of the top left point of 
+  /// the map layer (useful in custom layer and overlay implementations).
+  UPoint get pixelOrigin => getPixelOrigin(center);
+
+  UPoint getPixelOrigin(LatLng center, [double zoom]) {
     zoom ??= this.zoom;
-    return (project(center, zoom) - centerPoint).round();
+    return (project(center, zoom) - halfSize).round();
   }
 
   Bounds getPixelWorldBounds(double zoom) {
@@ -102,9 +117,9 @@ class MapState {
   Bounds getPixelBounds(double zoom) {
     double scale = getZoomScale(zoom, this.zoom);
 
-    GeoPoint centerPoint = project(center, zoom).floor();
+    UPoint centerPoint = project(center, zoom).floor();
     Size halfSize = size / (scale * 2);
-    GeoPoint offset = GeoPoint.from(halfSize);
+    UPoint offset = UPoint.from(halfSize);
 
     return Bounds(centerPoint - offset, centerPoint + offset);
   }
@@ -114,39 +129,39 @@ class MapState {
     return math.max(minZoom, math.min(maxZoom, zoom));
   }
 
-  GeoPoint project(LatLng position, [double zoom]) {
+  UPoint project(LatLng position, [double zoom]) {
     zoom ??= this.zoom;
     return crs.latlngToPoint(position, zoom);
   }
 
-  GeoPoint latlngToPoint(LatLng position) {
+  UPoint latlngToPoint(LatLng position) {
     return project(position);
   }
 
-  LatLng unproject(GeoPoint point, [double zoom]) {
+  LatLng unproject(UPoint point, [double zoom]) {
     zoom ??= this.zoom;
     return crs.pointToLatLng(point, zoom);
   }
 
-  LatLng pointToLatLng(GeoPoint point) {
+  LatLng pointToLatLng(UPoint point) {
     return unproject(point);
   }
 
-  GeoPoint offsetToPoint(Offset offset) {
-    return GeoPoint(offset.dx, offset.dy);
+  UPoint offsetToPoint(Offset offset) {
+    return UPoint(offset.dx, offset.dy);
   }
 
-  Offset pointToOffset(GeoPoint point) {
+  Offset pointToOffset(UPoint point) {
     return Offset(point.x, point.y);
   }
 
-  LatLng offsetToPosition(Offset offset, [double width, double height]) {
+  LatLng offsetToLatLng(Offset offset, [double width, double height]) {
     width ??= size.width;
     height ??= size.height;
 
-    GeoPoint mapCenter = project(center);
-    GeoPoint localPoint = offsetToPoint(offset);
-    GeoPoint localPointOffsetCenter = GeoPoint(
+    UPoint mapCenter = project(center);
+    UPoint localPoint = offsetToPoint(offset);
+    UPoint localPointOffsetCenter = UPoint(
       (width / 2) - localPoint.x, 
       (height / 2) - localPoint.y,
     );
@@ -192,11 +207,11 @@ class MapState {
       return CenterZoom(center: bounds.center, zoom: zoom);
     }
 
-    GeoPoint swPoint = project(bounds.southWest, zoom);
-    GeoPoint nePoint = project(bounds.northEast, zoom);
+    UPoint swPoint = project(bounds.southWest, zoom);
+    UPoint nePoint = project(bounds.northEast, zoom);
     UniversalPoint<double> offset = (paddingBR - paddingTL) / 2;
 
-    GeoPoint centerPoint = ((swPoint + nePoint) / 2) + offset;
+    UPoint centerPoint = ((swPoint + nePoint) / 2) + offset;
     LatLng center = unproject(centerPoint, zoom);
 
     return CenterZoom(center: center, zoom: zoom);

@@ -25,7 +25,7 @@ class PolylineLayer extends UniverseLayer {
         Polyline polyline = options.polyline;
         polyline.bounds = LatLngBounds.from(polyline.positions);
 
-        if(options.culling && !polyline.bounds.isOverlapping(map.bounds)) {
+        if(options.noClip && !polyline.bounds.isOverlapping(map.bounds)) {
           return Container();
         }
 
@@ -43,9 +43,9 @@ class PolylineLayer extends UniverseLayer {
     List<Offset> offsets = [];
 
     for(LatLng position in positions) {
-      GeoPoint pos = map.project(position);
+      UPoint pos = map.project(position);
       double scale = map.getZoomScale(map.zoom, map.zoom);
-      pos = (pos * scale) - map.pixelCenterOrigin;
+      pos = (pos * scale) - map.pixelOrigin;
       offsets.add(Offset(pos.x.toDouble(), pos.y.toDouble()));
       /* if (i > 0) {
         offsets.add(Offset(pos.x.toDouble(), pos.y.toDouble()));
@@ -67,7 +67,7 @@ class MultiPolylineLayer extends StatelessWidget {
     return Stack(
       children: [
         for(Polyline polyline in options.polylines) PolylineLayer(
-          options: PolylineLayerOptions(polyline, culling: options.culling),
+          options: PolylineLayerOptions(polyline, noClip: options.noClip),
         ),
       ],
     );

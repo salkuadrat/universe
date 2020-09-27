@@ -2,35 +2,42 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/latlng/latlng.dart';
 
+/// Circle can have their own style to override style from LayerOptions.
+/// 
+/// This is to to handle the case when you use CirclesLayer 
+/// with many circle take their style from CirclesLayerOptions,
+/// but some small part of them need to have its own style.
+/// 
+/// Otherwise, it's better to use CircleLayerOptions to set circle style.
+/// 
 class Circle {
   final LatLng latlng;
   final double opacity;
   final Color color;
   final bool stroke;
-  final double weight;
+  final num weight;
   final bool fill;
   final Color fillColor;
   final double fillOpacity;
+  final StrokeCap strokeCap;
+  final StrokeJoin strokeJoin;
   final bool isRadiusInMeter;
-  final bool interactive;
 
   double radius;
   Offset center = Offset.zero;
   
   Circle(dynamic latlng, num radius, {
-    this.color=const Color(0xff3388ff), 
-    this.stroke = true,
-    num weight = 3, 
-    num opacity = 1,
+    this.isRadiusInMeter=false,
+    this.color, 
+    this.stroke,
+    this.weight, 
+    this.opacity,
     this.fill = false, 
     Color fillColor, 
-    num fillOpacity = 0.2,
-    this.interactive = true,
-    this.isRadiusInMeter=false,
-  }) : this.latlng = LatLng.from(latlng), 
-       this.radius = radius.toDouble(),
-       this.weight = weight.toDouble(),
-       this.opacity = opacity?.toDouble(),
-       this.fillColor = fillColor ?? color,
-       this.fillOpacity = fillOpacity?.toDouble();
+    this.fillOpacity,
+    this.strokeCap,
+    this.strokeJoin,
+  }) : this.latlng = LatLng.from(latlng),
+       this.radius = radius?.toDouble(),
+       this.fillColor = fillColor ?? color;
 }

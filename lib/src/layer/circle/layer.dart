@@ -24,16 +24,16 @@ class CircleLayer extends UniverseLayer {
         Size size = Size(c.maxWidth, c.maxHeight);
         Circle circle = options.circle;
 
-        GeoPoint point = map.project(circle.latlng);
+        UPoint point = map.project(circle.latlng);
         double scale = map.getZoomScale(map.zoom, map.zoom);
-        point = (point * scale) - map.pixelCenterOrigin;
+        point = (point * scale) - map.pixelOrigin;
         circle.center = Offset(point.x, point.y);
 
         if(circle.isRadiusInMeter) {
           Distance D = Distance();
           LatLng r = D.offset(circle.latlng, circle.radius, 180);
-          GeoPoint radius = map.project(r);
-          radius = (radius * scale) - map.pixelCenterOrigin;
+          UPoint radius = map.project(r);
+          radius = (radius * scale) - map.pixelOrigin;
           circle.radius = radius.y - point.y;
         }
 

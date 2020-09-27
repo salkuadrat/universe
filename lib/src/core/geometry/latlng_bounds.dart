@@ -8,14 +8,14 @@ class LatLngBounds {
   LatLng _sw;
   LatLng _ne;
 
-  // can accept GeoBounds([GeoPosition(20,30), GeoPosition(10, 10)]) or 
-  // GeoBounds([[20, 30], [10, 10]])
+  // can accept LatLngBounds([LatLng(20,30), LatLng(10, 10)]) or 
+  // LatLngBounds([[20, 30], [10, 10]])
   LatLngBounds([dynamic southWest, dynamic northEast]) {
     extend(southWest);
     extend(northEast);
   }
 
-  // can accept parameter as [GeoPosition(20,30), GeoPosition(10, 10), ...] or 
+  // can accept parameter as [LatLng(20,30), LatLng(10, 10), ...] or 
   // [[20, 30], [10, 10], ...]
   LatLngBounds.from(List<dynamic> positions) {
     if(positions != null && positions.isNotEmpty) {

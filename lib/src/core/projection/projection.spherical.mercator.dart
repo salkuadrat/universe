@@ -17,25 +17,25 @@ class SphericalMercator extends Projection {
 
   @override
   Bounds get bounds => Bounds(
-    GeoPoint(-D, -D),
-    GeoPoint(D, D),
+    UPoint(-D, -D),
+    UPoint(D, D),
   );
 
   @override
-  GeoPoint project(LatLng position) {
+  UPoint project(LatLng position) {
     double d = PI / 180;
     double max = MAX_LATITUDE;
     double lat = Math.max(Math.min(max, position.latitude), -max);
     double sin = Math.sin(lat * d);
 
-    return GeoPoint(
+    return UPoint(
       R * position.longitude * d, 
       R * Math.log((1 + sin) / (1 - sin)) / 2,
     );
   }
 
   @override
-  LatLng unproject(GeoPoint point) {
+  LatLng unproject(UPoint point) {
     double d = 180 / PI;
 
     return LatLng(

@@ -32,7 +32,7 @@ class UMapController implements MapController {
   }
 
   @override
-  void fitBounds(LatLngBounds bounds, [FitBoundsOptions options]) {
+  void fitBounds(dynamic bounds, [FitBoundsOptions options]) {
     _manager?.fitBounds(bounds, options);
   }
 

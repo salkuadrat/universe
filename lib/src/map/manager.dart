@@ -47,6 +47,7 @@ class MapManager extends Cubit<MapState> {
 
   fitBounds(dynamic bounds, 
     [FitBoundsOptions options=const FitBoundsOptions(padding: EdgeInsets.all(12.0))]) {
+      
     bounds = LatLngBounds.from(bounds);
 
     if(bounds.isNotValid) {
@@ -81,12 +82,12 @@ class MapManager extends Cubit<MapState> {
   }
 
   setZoomAround(dynamic position, double zoom, [options]) {
-    GeoPoint centerPoint = state.centerPoint;
-    GeoPoint containerPoint;
-
+    UPoint halfSize = state.halfSize;
+    UPoint containerPoint;
+    
     double scale = state.getZoomScale(zoom);
 
-    if(position is GeoPoint) {
+    if(position is UPoint) {
       containerPoint = position;
     } else if(position is LatLng) {
       containerPoint = state.latlngToPoint(position);
@@ -96,9 +97,8 @@ class MapManager extends Cubit<MapState> {
     }
 
     if(containerPoint != null) {
-      GeoPoint offset = (containerPoint - centerPoint) * (1 - (1  / scale));
-      centerPoint = centerPoint + offset;
-      LatLng center = state.pointToLatLng(centerPoint);
+      UPoint offset = (containerPoint - halfSize) * (1 - (1  / scale));
+      LatLng center = state.pointToLatLng(halfSize + offset);
       move(center, zoom);
     }
   }
@@ -126,6 +126,22 @@ class MapManager extends Cubit<MapState> {
       Size size = Size(width, height);
       emit(state.copyWith(size: size, rotation: degree));
     }
+  }
+
+  /// Tries to locate the user using the Geolocation API, 
+  /// firing a [`locationfound`](#map-locationfound) event with location data on success 
+  /// or a [`locationerror`](#map-locationerror) event on failure, 
+  /// and optionally sets the map view to the user's location with respect to 
+  /// detection accuracy (or to the world view if geolocation failed).
+  locate({bool watch=true}) {
+
+  }
+
+  /// Stops watching location previously initiated by `map.locate({watch: true})` 
+  /// and aborts resetting the map view if map.locate was called 
+  /// with `{setView: true}`
+  stopLocate() {
+
   }
 
   dispose() {

@@ -14,7 +14,7 @@ import 'default.dart';
 abstract class MapController {
 
   /// Moves the map to a specific location and zoom level
-  /// can accept center: GeoPosition(20.0, 30.0) or center: [20.0, 30.0]
+  /// can accept center: LatLng(20.0, 30.0) or center: [20.0, 30.0]
   void move(dynamic center, double zoom);
 
   /// Sets the map rotation to a certain degrees angle (in decimal).
@@ -22,7 +22,11 @@ abstract class MapController {
 
   /// Fits the map bounds. Optional constraints can be defined
   /// through the [FitBoundsOptions] parameter.
-  void fitBounds(LatLngBounds bounds, FitBoundsOptions options);
+  /// 
+  /// can accept center: LatLngBounds([[20.0, 30.0], [10, 10]]) 
+  /// LatLngBounds([LatLng(20.0, 30.0), LatLng(10.0, 10.0)]) 
+  /// or [[20.0, 30.0], [10, 10]]
+  void fitBounds(dynamic bounds, FitBoundsOptions options);
 
   set manager(MapManager manager);
 
