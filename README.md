@@ -1,6 +1,6 @@
 # Universe
 
-Easy-to-use Flutter package for interactive maps.
+An easy way to use interactive maps in Flutter.
 
 ## Getting Started
 
