@@ -5,6 +5,7 @@ import '../layer.dart';
 
 class Polygon extends Polyline{
 
+  final bool stroke;
   final Color fillColor;
   final double fillOpacity;
   final PathFillType fillType;
@@ -16,10 +17,14 @@ class Polygon extends Polyline{
   bool get isEmpty => latlngs == null || latlngs.isEmpty;
   bool get isNotEmpty => latlngs != null && latlngs.isNotEmpty;
 
+  bool get isValid => isNotEmpty && latlngs.length > 2;
+  bool get isNotValid => !isValid;
+  
   LatLngBounds get bounds => LatLngBounds.from(latlngs);
 
   // can accept Polygon([LatLng(), LatLng(), ...]) or Polygon([[], [], ...])
   Polygon(List<dynamic> latlngs, {
+    this.stroke,
     Color strokeColor, 
     double strokeWidth, 
     StrokeCap strokeCap,
@@ -50,4 +55,8 @@ class Polygon extends Polyline{
     if(value is List<dynamic>) return Polygon(value);
     return Polygon([]);
   }
+
+  @override
+  String toString() => 'Polygon($latlngs)';
+
 }

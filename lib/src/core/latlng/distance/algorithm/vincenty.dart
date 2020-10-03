@@ -73,17 +73,16 @@ class Vincenty implements DistanceAlgorithm {
 
   @override
   LatLng offset(dynamic from, double distanceInMeter, double bearing) {
-    from = LatLng.from(from);
+    final latlng = LatLng.from(from);
 
-    double equatorialRadius = EQUATOR_RADIUS;
-    double polarRadius = POLAR_RADIUS;
-    double flattening = FLATTENING;
-
+    final latInRad = latlng.latitudeInRad;
+    final lngInRad = latlng.longitudeInRad;
+    
     double alpha1 = degToRadian(bearing);
     double sinAlpha1 = sin(alpha1);
     double cosAlpha1 = cos(alpha1);
 
-    double tanU1 = (1 - flattening) * tan(from.latitude);
+    double tanU1 = (1 - FLATTENING) * tan(latInRad);
     double cosU1 = 1 / sqrt((1 + tanU1 * tanU1));
     double sinU1 = tanU1 * cosU1;
 
@@ -91,13 +90,13 @@ class Vincenty implements DistanceAlgorithm {
     double sinAlpha = cosU1 * sinAlpha1;
     double cosSqAlpha = 1 - sinAlpha * sinAlpha;
     double dfUSq = 
-      cosSqAlpha * (equatorialRadius * equatorialRadius - polarRadius * polarRadius) / 
-      (polarRadius * polarRadius);
+      cosSqAlpha * (EQUATOR_RADIUS * EQUATOR_RADIUS - POLAR_RADIUS * POLAR_RADIUS) / 
+      (POLAR_RADIUS * POLAR_RADIUS);
 
     double a = 1 + dfUSq / 16384 * (4096 + dfUSq * (-768 + dfUSq * (320 - 175 * dfUSq)));
     double b = dfUSq / 1024 * (256 + dfUSq * (-128 + dfUSq * (74 - 47 * dfUSq)));
 
-    double sigma = distanceInMeter / (polarRadius * a);
+    double sigma = distanceInMeter / (POLAR_RADIUS * a);
     double sigmaP = 2 * PI;
 
     double sinSigma = 0.0;
@@ -117,7 +116,7 @@ class Vincenty implements DistanceAlgorithm {
         (-3 + 4 * cos2SigmaM * cos2SigmaM)));
       
       sigmaP = sigma;
-      sigma = distanceInMeter / (polarRadius * a) + deltaSigma;
+      sigma = distanceInMeter / (POLAR_RADIUS * a) + deltaSigma;
     
     } while((sigma - sigmaP).abs() > 1e-12 && --maxIterations > 0);
 
@@ -128,16 +127,16 @@ class Vincenty implements DistanceAlgorithm {
     double tmp = sinU1 * sinSigma - cosU1 * cosSigma * cosAlpha1;
     double latitude = atan2(
       sinU1 * cosSigma + cosU1 * sinSigma * cosAlpha1, 
-      (1 - flattening) * sqrt(sinAlpha * sinAlpha + tmp * tmp),
+      (1 - FLATTENING) * sqrt(sinAlpha * sinAlpha + tmp * tmp),
     );
     
     double lambda = atan2(sinSigma * sinAlpha1, cosU1 * cosSigma - sinU1 * sinSigma * cosAlpha1);
-    double c = flattening / 16 * cosSqAlpha * (4 + flattening * (4 - 3 * cosSqAlpha));
+    double c = FLATTENING / 16 * cosSqAlpha * (4 + FLATTENING * (4 - 3 * cosSqAlpha));
     double l = 
-      lambda - (1 - c) * flattening * sinAlpha * 
+      lambda - (1 - c) * FLATTENING * sinAlpha * 
       (sigma + c * sinSigma * (cos2SigmaM + c * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
       
-    double longitude = from.longitude + l;
+    double longitude = lngInRad + l;
     
     if (longitude > PI) {
       longitude = longitude - 2 * PI;

@@ -14,13 +14,13 @@ class PolygonLayerOptions extends PathLayerOptions {
   final bool culling;
 
   const PolygonLayerOptions({
-    bool stroke = strokeDef,
-    Color strokeColor,
-    num strokeWidth = strokeWidthDef,
+    bool stroke = strokePolygonDef,
+    Color strokeColor = strokeColorDef,
+    num strokeWidth = strokeWidthPolygonDef,
     double strokeOpacity = strokeOpacityDef,
     StrokeCap strokeCap = StrokeCap.round,
     StrokeJoin strokeJoin = StrokeJoin.round,
-    Color fillColor,
+    Color fillColor = fillColorDef,
     double fillOpacity = fillOpacityDef,
     PathFillType fillType = fillTypeDef,
     this.isDotted = isDottedDef,

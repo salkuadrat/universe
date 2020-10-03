@@ -3,11 +3,12 @@ import 'package:flutter/foundation.dart';
 import '../../core/core.dart';
 
 class WMSTileLayerOptions {
+
   final service = 'WMS';
   final request = 'GetMap';
 
   /// url of WMS service.
-  /// Ex.: 'http://ows.mundialis.de/services/service?'
+  /// 'http://ows.mundialis.de/services/service?'
   final String baseUrl;
 
   /// list of WMS layers to show
@@ -25,16 +26,11 @@ class WMSTileLayerOptions {
   /// tile transperency flag
   final bool transparent;
 
-  // TODO find a way to implicit pass of current map [Crs]
-  final Crs crs;
-
   /// other request parameters
   final Map<String, String> otherParameters;
 
-  String _encodedBaseUrl;
-
-  double _versionNumber;
-
+  double versionNumber;
+  
   WMSTileLayerOptions({
     @required this.baseUrl,
     this.layers = const [],
@@ -42,15 +38,13 @@ class WMSTileLayerOptions {
     this.format = 'image/png',
     this.version = '1.1.1',
     this.transparent = true,
-    this.crs = const Epsg3857(),
     this.otherParameters = const {},
   }) {
-    _versionNumber = double.tryParse(version.split('.').take(2).join('.')) ?? 0;
-    _encodedBaseUrl = _buildEncodedBaseUrl();
+    versionNumber = double.tryParse(version.split('.').take(2).join('.')) ?? 0;
   }
 
-  String _buildEncodedBaseUrl() {
-    final projectionKey = _versionNumber >= 1.3 ? 'crs' : 'srs';
+  String encodedBaseUrl(Crs crs) {
+    final projectionKey = versionNumber >= 1.3 ? 'crs' : 'srs';
     final buffer = StringBuffer(baseUrl)
       ..write('&service=$service')
       ..write('&request=$request')
@@ -65,25 +59,25 @@ class WMSTileLayerOptions {
     return buffer.toString();
   }
 
-  String getUrl(Coordinates coordinates, num tileSize, bool retinaMode) {
+  String getUrl(Crs crs, Coordinate coordinate, num tileSize, bool retinaMode) {
     final tileSizePoint = UPoint(tileSize.toDouble(), tileSize.toDouble());
 
-    final nwPoint = coordinates.scaleBy(tileSizePoint);
+    final nwPoint = coordinate.scaleBy(tileSizePoint);
     final sePoint = nwPoint + tileSizePoint;
 
-    final nwLatLng = crs.pointToLatLng(nwPoint, coordinates.z);
-    final seLatLng = crs.pointToLatLng(sePoint, coordinates.z);
+    final nwLatLng = crs.pointToLatLng(UPoint.from(nwPoint), coordinate.z);
+    final seLatLng = crs.pointToLatLng(UPoint.from(sePoint), coordinate.z);
 
     final nw = crs.project(nwLatLng);
     final se = crs.project(seLatLng);
 
     final bounds = Bounds(nw, se);
 
-    final bbox = (_versionNumber >= 1.3 && crs is Epsg4326)
+    final bbox = (versionNumber >= 1.3 && crs is Epsg4326)
         ? [bounds.min.y, bounds.min.x, bounds.max.y, bounds.max.x]
         : [bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y];
     
-    final buffer = StringBuffer(_encodedBaseUrl);
+    final buffer = StringBuffer(encodedBaseUrl(crs));
     buffer.write('&width=${retinaMode ? tileSize * 2 : tileSize}');
     buffer.write('&height=${retinaMode ? tileSize * 2 : tileSize}');
     buffer.write('&bbox=${bbox.join(',')}');

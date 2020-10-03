@@ -3,9 +3,9 @@ import 'package:flutter/rendering.dart';
 import '../../core/core.dart';
 
 class ImageOverlay {
-
-  final LatLngBounds bounds;
+  
   final String imageUrl;
+  final LatLngBounds bounds;
   final ImageProvider imageProvider;
   final ImageProvider imagePlaceholder;
   final ImageProvider imageError;

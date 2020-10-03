@@ -5,7 +5,7 @@ import '../../core/latlng/latlng.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 
-class RectangleLayer extends SingleLayer {
+class RectangleLayer extends MapLayer {
   
   final Rectangle rectangle;
   final List<Rectangle> rectangles;
@@ -44,7 +44,7 @@ class RectangleLayer extends SingleLayer {
       return Container();
     }
     
-    if(options.culling && rectangle.bounds.isNotOverlapping(map.bounds)) {
+    if(options.culling && rectangle.bounds.isNotOverlaps(map.bounds)) {
       return Container();
     }
 

@@ -1,9 +1,11 @@
-import '../../core/geometry/latlng_bounds.dart';
-import '../../core/latlng/latlng.dart';
-import '../manager.dart';
-import '../options/fitbounds.dart';
-import '../state.dart';
-import 'default.dart';
+import '../../core/core.dart';
+import '../map.dart';
+
+typedef MapChangedCallback = void Function(
+  LatLng center,
+  double zoom,
+  double rotation,
+);
 
 /// Controller to programmatically interact with [UMap].
 ///
@@ -15,10 +17,12 @@ abstract class MapController {
 
   /// Moves the map to a specific location and zoom level
   /// can accept center: LatLng(20.0, 30.0) or center: [20.0, 30.0]
-  void move(dynamic center, double zoom);
+  void move(dynamic center, [double zoom]);
 
-  /// Sets the map rotation to a certain degrees angle (in decimal).
-  void rotate(double degree);
+  void zoomTo(double zoom);
+
+  /// Sets the map rotation to a certain degrees (in decimal, not radian).
+  // void rotate(double rotation);
 
   /// Fits the map bounds. Optional constraints can be defined
   /// through the [FitBoundsOptions] parameter.
@@ -28,23 +32,24 @@ abstract class MapController {
   /// or [[20.0, 30.0], [10, 10]]
   void fitBounds(dynamic bounds, FitBoundsOptions options);
 
-  set manager(MapManager manager);
+  void locate();
+
+  set manager(MapStateManager manager);
 
   MapState get map;
 
-  bool get isReady;
-
-  Future<void> get onReady;
+  LatLngBounds get bounds;
 
   LatLng get center;
-  
-  LatLngBounds get bounds;
 
   double get zoom;
 
-  //ValueChanged<double> onRotationChanged;
+  double get rotation;
 
-  //Stream<MapPosition> get position;
+  MapChangedCallback onChanged;
 
+  Stream<MapData> get positionStream;
+  
   factory MapController() => UMapController();
+  
 }

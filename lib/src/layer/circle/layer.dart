@@ -6,7 +6,7 @@ import '../../core/latlng/latlng.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 
-class CircleLayer extends SingleLayer {
+class CircleLayer extends MapLayer {
   
   final Circle circle;
   final List<Circle> circles;
@@ -41,21 +41,20 @@ class CircleLayer extends SingleLayer {
   );
 
   Widget _circle(MapState map, Size size, Circle circle) {
-    UPoint point = map.project(circle.latlng);
     double scale = map.getZoomScale(map.zoom, map.zoom);
-    point = (point * scale) - map.pixelOrigin;
-    circle.center = Offset(point.x, point.y);
+    UPoint centerPoint = map.project(circle.latlng) * scale - map.pixelOrigin;
+    Offset center = map.pointToOffset(centerPoint);
+    double radius = circle.radius;
 
-    if(circle.isRadiusInMeter) {
+    if(circle.radiusInMeter != null) {
       Distance D = Distance();
-      LatLng r = D.offset(circle.latlng, circle.radius, 180);
-      UPoint radius = map.project(r);
-      radius = (radius * scale) - map.pixelOrigin;
-      circle.radius = radius.y - point.y;
+      LatLng r = D.offset(circle.latlng, circle.radiusInMeter, 180);
+      UPoint radiusPoint = map.project(r) * scale - map.pixelOrigin;
+      radius = radiusPoint.y - centerPoint.y;
     }
 
     return CustomPaint(
-      painter: CirclePainter(circle, options: options), 
+      painter: CirclePainter(circle, center, radius: radius, options: options), 
       size: size,
     );
   }

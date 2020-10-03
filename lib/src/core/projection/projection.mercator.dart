@@ -48,9 +48,6 @@ class Mercator extends Projection {
 			phi += dphi;
 		}
 
-    return LatLng(
-      wrapLat(phi * d),
-      wrapLng(point.x * d / R),
-    );
+    return LatLng(wrapLat(phi * d), wrapLng(point.x * d / R));
   }
 }

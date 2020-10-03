@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 
-class VideoOverlayLayer extends SingleLayer {
+class VideoOverlayLayer extends MapLayer {
   
   final VideoOverlay video;
   final List<VideoOverlay> videos;

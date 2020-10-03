@@ -1,13 +1,17 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
 
+import '../../core/core.dart';
 import '../../shared.dart';
 import '../layer.dart';
 
 class GridLayerOptions extends LayerOptions {
    
   /// Size for the tile.
-  /// Default is 256
-  final double tileSize;
+  /// Default is 256 x 256
+  final Size tileSize;
+
+  final LatLngBounds bounds;
 
   // The minimum zoom level down to which this layer will be
   // displayed (inclusive).
@@ -28,6 +32,8 @@ class GridLayerOptions extends LayerOptions {
   /// from maxNativeZoom level and auto-scaled.
   final double maxNativeZoom;
 
+  final double opacity;
+
   /// If set to true, the zoom number used in tile URLs will be reversed (`maxZoom - zoom` instead of `zoom`)
   final bool zoomReverse;
 
@@ -44,6 +50,13 @@ class GridLayerOptions extends LayerOptions {
   /// Tile image to show in place of the tile that failed to load.
   final ImageProvider errorImage;
 
+  /// By default, a smooth zoom animation (during a [touch zoom](#map-touchzoom) 
+  /// or a [`flyTo()`](#map-flyto)) will update grid layers every integer zoom level. 
+  /// 
+  /// Setting this option to `false` will update the grid layer 
+  /// only when the smooth animation ends.
+	final bool updateWhenZooming;
+
   /// Tiles will not update more than once every `updateInterval`
   /// (default 200 milliseconds) when panning.
   /// It can be null (but it will calculating for loading tiles every frame when panning / zooming, flutter is fast)
@@ -54,6 +67,10 @@ class GridLayerOptions extends LayerOptions {
   /// Tiles fade in duration in milliseconds (default 100),
   /// it can be null to avoid fade in
   final Duration tileFadeInDuration;
+
+  /// Tiles fade in curve.
+  /// Default: Curves.easeInOut
+  final Curve tileFadeInCurve;
 
   /// Opacity start value when Tile starts fade in (0.0 - 1.0)
   /// Takes effect if `tileFadeInDuration` is not null
@@ -85,19 +102,30 @@ class GridLayerOptions extends LayerOptions {
   /// This callback will be execute if some errors by getting tile
   final Function(Tile, dynamic) onTileError;
 
+  bool get hasMinZoom => minZoom != null;
+  bool get hasMaxZoom => maxZoom != null;
+  bool get hasMinNativeZoom => minNativeZoom != null;
+  bool get hasMaxNativeZoom => maxNativeZoom != null;
+
+  bool get hasBounds => bounds != null;
+  
   GridLayerOptions({
     num tileSize = tileSizeDef, 
     this.minZoom = minZoomDef, 
     this.maxZoom = maxZoomDef, 
+    this.opacity = tileOpacityDef,
     this.minNativeZoom, 
     this.maxNativeZoom, 
+    this.bounds,
     this.zoomReverse = zoomReverseDef, 
     this.zoomOffset = zoomOffsetDef, 
     this.keepBuffer = keepBufferDef, 
     this.placeholderImage, 
     this.errorImage, 
+    this.updateWhenZooming = updateWhenZoomingDef,
     int updateInterval = updateTileIntervalDef, 
     int tileFadeInDuration = tileFadeInDurationDef, 
+    this.tileFadeInCurve = tileFadeInCurveDef,
     this.tileFadeInStart = tileFadeInStartDef, 
     this.tileFadeInStartWhenOverride = tileFadeInStartWhenOverrideDef, 
     this.overrideTilesWhenUrlChanges = overrideTilesWhenUrlChangesDef, 
@@ -106,7 +134,7 @@ class GridLayerOptions extends LayerOptions {
     bool interactive = interactiveDef,
     String attribution = attributionDef,
   }) : 
-    this.tileSize = tileSize?.toDouble() ?? tileSizeDef, 
+    this.tileSize = Size.from([tileSize ?? tileSizeDef, tileSize ?? tileSizeDef]), 
     this.updateInterval = Duration(milliseconds: updateInterval),
     this.tileFadeInDuration = Duration(milliseconds: tileFadeInDuration),
     super(interactive: interactive, attribution: attribution);

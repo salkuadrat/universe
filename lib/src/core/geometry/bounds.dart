@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'geometry.dart';
 
@@ -85,7 +86,7 @@ class Bounds {
   }
 
   @override
-  int get hashCode => min.hashCode ^ max.hashCode;
+  int get hashCode => hashValues(min.hashCode, max.hashCode);
   
   @override
   bool operator ==(other) => other is Bounds && 

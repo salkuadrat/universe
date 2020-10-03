@@ -17,11 +17,11 @@ class Distance implements DistanceAlgorithm {
   final bool isRound;
 
   const Distance({
-    this.algorithm = const Vincenty(),  
+    this.algorithm = const Haversine(),  
     this.isRound = true,
   }) : radius = EARTH_RADIUS;
 
-  Distance.withRadius(this.radius, {this.algorithm = const Vincenty(), this.isRound=true}) {
+  Distance.withRadius(this.radius, {this.algorithm = const Haversine(), this.isRound=true}) {
     Validate.isTrue(radius > 0, "Radius must be greater than 0");
   }
 

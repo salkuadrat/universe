@@ -4,16 +4,25 @@ import 'package:flutter_cubit/flutter_cubit.dart';
 import '../../map/map.dart';
 import 'options.dart';
 
-class SingleLayer extends StatelessWidget {
-  const SingleLayer({Key key, LayerOptions options}) : super(key: key);
+class MapLayer extends StatelessWidget {
+  
+  const MapLayer({Key key, LayerOptions options}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
-    return CubitBuilder<MapManager, MapState>(
-      builder: (context, state) => buildLayer(
+    return CubitBuilder<MapStateManager, MapState>(
+      buildWhen: (old, current) {
+        return 
+          old.center == null || old.zoom == null || 
+          (current.center.notEqual(old.center)) ||  
+          (current.isNotEqualZoom(old.zoom)) || 
+          (current.bounds != old.bounds) || 
+          (current.rotation != old.rotation);
+      },
+      builder: (context, map) => buildLayer(
         context, 
-        state.controller, 
-        state,
+        map.controller, 
+        map,
       ),
     );
   }

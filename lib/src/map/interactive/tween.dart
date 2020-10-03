@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 
 import '../../core/latlng/latlng.dart';
 
-class GeoPositionTween extends Tween<LatLng> {
-  GeoPositionTween({
+class LatLngTween extends Tween<LatLng> {
+  LatLngTween({
     @required LatLng begin, 
     @required LatLng end,
   }) : super(begin: begin, end: end);

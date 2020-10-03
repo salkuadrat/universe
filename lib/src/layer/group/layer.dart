@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 
-class GroupLayer extends SingleLayer {
+class GroupLayer extends MapLayer {
 
-  final List<SingleLayer> layers;
+  final List<MapLayer> layers;
   final GroupLayerOptions options;
   
   GroupLayer(this.layers, {Key key, this.options}) 

@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 
-class PathLayer extends SingleLayer {
+class PathLayer extends MapLayer {
 
   final PathLayerOptions options;
 

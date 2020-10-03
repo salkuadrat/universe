@@ -8,13 +8,13 @@ import '../path/path.dart';
 class CircleLayerOptions extends PathLayerOptions {
   const CircleLayerOptions({
     bool stroke = strokeDef,
-    Color strokeColor,
-    num strokeWidth = strokeWidthDef,
+    Color strokeColor = strokeColorDef,
+    num strokeWidth = strokeWidthCircleDef,
     double strokeOpacity = strokeOpacityDef,
     StrokeCap strokeCap = strokeCapDef,
     StrokeJoin strokeJoin = strokeJoinDef,
-    bool fill = true,
-    Color fillColor,
+    bool fill = fillCircleDef,
+    Color fillColor = fillColorDef,
     double fillOpacity = fillOpacityDef,
     PathFillType fillType = fillTypeDef,
     bool interactive = interactiveDef,

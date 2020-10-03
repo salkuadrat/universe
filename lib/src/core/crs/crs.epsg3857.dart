@@ -24,7 +24,7 @@ class Epsg3857 extends Earth {
   Transformation get transformation => 
     Transformation(SCALE, 0.5, -SCALE, 0.5);
 
-  // TODO Epsg3857 have latitude limits?? https://epsg.io/3857
-  //@override
-  //Tuple2<double, double> get wrapLat => const Tuple2(-85.06, 85.06);
+  // Epsg3857 latitude limits: https://epsg.io/3857
+  // @override
+  // Tuple2<double, double> get wrapLat => const Tuple2(-85.06, 85.06);
 }

@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:intl/intl.dart';
 import 'package:universe/src/shared.dart' as s;
@@ -6,7 +7,9 @@ import 'package:universe/src/shared.dart' as s;
 import '../core.dart';
 
 export 'latlng.dart';
+export 'latlng_bounds.dart';
 export 'path.dart';
+export 'safe_bounds.dart';
 export 'distance/algorithm/haversine.dart';
 export 'distance/algorithm/vincenty.dart';
 export 'distance/distance.dart';
@@ -17,7 +20,7 @@ export 'unit/length.dart';
 /// 
 /// LatLng latlng = LatLng(51.519475, -19.37555556); or with altitude
 /// LatLng latlng = LatLng(51.519475, -19.37555556, 20.0); 
-class LatLng extends UniversalPoint<double> {
+class LatLng extends Coordinate {
 
   double latitude;
   double longitude;
@@ -27,8 +30,15 @@ class LatLng extends UniversalPoint<double> {
   double get lng => longitude;
   double get alt => altitude;
 
-  LatLng(this.latitude, this.longitude, [this.altitude=0.0]) 
-    : super(latitude, longitude, altitude);
+  LatLng(num latitude, num longitude, [num altitude = 0.0]) : 
+    this.latitude = latitude != null ? latitude.toDouble() : 0.0,
+    this.longitude = longitude != null ? longitude.toDouble() : 0.0,
+    this.altitude = altitude != null ? altitude.toDouble() : 0.0, 
+    super(
+      latitude != null ? latitude.toDouble() : 0.0, 
+      longitude != null ? longitude.toDouble() : 0.0, 
+      altitude != null ? altitude.toDouble() : 0.0,
+    );
 
   factory LatLng.from(dynamic value) {
     if(value is LatLng) {
@@ -74,7 +84,11 @@ class LatLng extends UniversalPoint<double> {
   /// The margin of error can be overridden by setting `maxMargin` to a small number.
   /// 
   /// can accept other: GeoPosition(20.0, 30.0) or other: [20.0, 30.0]
-  bool equal(other, {maxMargin=1.0E-9}) {
+  bool equal(other, [maxMargin=0.0001]) {
+    if(other == null) {
+      return false;
+    }
+    
     LatLng o = LatLng.from(other);
 
     double margin = math.max(
@@ -82,15 +96,21 @@ class LatLng extends UniversalPoint<double> {
       (this.lng - o.lng).abs(),
     );
 
+    margin = math.max(margin, (this.alt - o.alt).abs());
+
     return margin <= maxMargin;
+  }
+
+  bool notEqual(other, [maxMargin=0.0001]) {
+    return !equal(other, maxMargin);
   }
 
   @override
   String toString() => 
-    'LatLng(Latitude:$latitudeStr, Longitude:$longitudeStr, Altitude:$altitudeStr)';
+    'LatLng($latitudeStr, $longitudeStr, $altitudeStr)';
   
   @override
-  int get hashCode => lat.hashCode ^ lng.hashCode ^ alt.hashCode;
+  int get hashCode => hashValues(latitudeStr.hashCode, longitudeStr.hashCode, altitudeStr.hashCode);
   
   @override
   bool operator ==(other) => other is LatLng && 

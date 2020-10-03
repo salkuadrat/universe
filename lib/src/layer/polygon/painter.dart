@@ -45,6 +45,7 @@ class PolygonPainter extends CustomPainter {
     final rect = Offset.zero & size;
     canvas.clipRect(rect);
 
+    final stroke = polygon.stroke ?? options.stroke;
     final fillColor = polygon.fillColor ?? options.fillColor;
     final fillOpacity = polygon.fillOpacity ?? options.fillOpacity;
 
@@ -54,7 +55,7 @@ class PolygonPainter extends CustomPainter {
     hasGradientFill 
       ? paint.shader = _gradientFill() 
       : paint.color = fillColor?.withOpacity(fillOpacity ?? 1.0);
-
+    
     if(holePointsList != null) {
       canvas.saveLayer(rect, paint);
 
@@ -69,14 +70,20 @@ class PolygonPainter extends CustomPainter {
       final path = Path();
       path.addPolygon(points, true);
       canvas.drawPath(path, paint);
-      _paintStroke(canvas);
 
+      if(stroke) {
+        _paintStroke(canvas);
+      }
+      
       canvas.restore();
     } else {
       final path = Path();
       path.addPolygon(points, true);
       canvas.drawPath(path, paint);
-      _paintStroke(canvas);
+
+      if(stroke) {
+        _paintStroke(canvas);
+      }
     }
   }
 
@@ -85,6 +92,7 @@ class PolygonPainter extends CustomPainter {
     final strokeColor = polygon.strokeColor ?? options.strokeColor;
     final strokeWidth = polygon.strokeWidth ?? options.strokeWidth;
     final strokeOpacity = polygon.strokeOpacity ?? options.strokeOpacity;
+    final isDotted = polygon.isDotted ?? options.isDotted;
     final radius = strokeWidth / 2;
     final spacing = strokeWidth * 1.5;
 
@@ -98,10 +106,8 @@ class PolygonPainter extends CustomPainter {
     hasGradientStroke 
       ? paint.shader = _gradientStroke() 
       : paint.color = strokeColor?.withOpacity(strokeOpacity ?? 1.0);
-
-    // TODO research more about filter and border, why use them?
-
-    if(polygon.isDotted) {
+    
+    if(isDotted) {
       paint.style = PaintingStyle.fill;
       _paintDottedLine(canvas, points, radius, spacing, paint);
     } else {
@@ -109,16 +115,15 @@ class PolygonPainter extends CustomPainter {
     }
   }
 
-  void _paintLine(Canvas canvas, List<Offset> offsets, Paint paint) {
-    if(offsets != null && offsets.isNotEmpty) {
-      final start = offsets.first;
+  void _paintLine(Canvas canvas, List<Offset> points, Paint paint) {
+    if(points != null && points.isNotEmpty) {
       final path = Path();
-      
-      path.moveTo(start.dx, start.dy);
-      offsets.removeAt(0);
+      final start = points.first;
 
-      for(Offset offset in offsets) {
-        path.lineTo(offset.dx, offset.dy);
+      path.moveTo(start.dx, start.dy);
+
+      for(var i = 1; i < points.length; i++) {
+        path.lineTo(points[i].dx, points[i].dy);
       }
 
       path.close();
@@ -127,17 +132,17 @@ class PolygonPainter extends CustomPainter {
   }
 
   void _paintDottedLine(
-    Canvas canvas, List<Offset> offsets, 
+    Canvas canvas, List<Offset> points, 
     double radius, double stepLength, Paint paint) {
-
-    offsets.add(offsets.first);
-    num startDistance = 0.0;
-
+    
     final path = Path();
 
-    for (var i = 0; i < offsets.length - 1; i++) {
-      var current = offsets[i];
-      var next = offsets[i + 1];
+    double startDistance = 0.0;
+    points = [points.first, ...points];
+
+    for (var i = 0; i < points.length - 1; i++) {
+      var current = points[i];
+      var next = points[i + 1];
       var totalDistance = _distance(current, next);
       var distance = startDistance;
 
@@ -159,7 +164,7 @@ class PolygonPainter extends CustomPainter {
         : distance - totalDistance;
     }
 
-    path.addOval(Rect.fromCircle(center: offsets.last, radius: radius));
+    path.addOval(Rect.fromCircle(center: points.last, radius: radius));
     canvas.drawPath(path, paint);
   }
 
@@ -200,8 +205,9 @@ class PolygonPainter extends CustomPainter {
     }
 
     final stopInterval = 1.0 / gradientStrokeColors.length;
-    return gradientStrokeColors.map(
-      (color) => gradientStrokeColors.indexOf(color) * stopInterval).toList();
+    return gradientStrokeColors
+      .map((c) => gradientStrokeColors.indexOf(c) * stopInterval)
+      .toList();
   }
 
   @override

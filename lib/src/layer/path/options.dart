@@ -18,13 +18,13 @@ class PathLayerOptions extends LayerOptions {
 
   const PathLayerOptions({
     this.stroke = strokeDef, 
-    this.strokeColor, 
+    this.strokeColor = strokeColorDef, 
     this.strokeWidth = strokeWidthDef, 
     this.strokeOpacity = strokeOpacityDef, 
     this.strokeCap = strokeCapDef, 
     this.strokeJoin = strokeJoinDef, 
-    this.fill = false, 
-    this.fillColor, 
+    this.fill = fillDef, 
+    this.fillColor = fillColorDef, 
     this.fillOpacity = fillOpacityDef, 
     this.fillType = fillTypeDef,
     bool interactive = interactiveDef,

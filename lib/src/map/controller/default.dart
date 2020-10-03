@@ -1,34 +1,26 @@
-import 'dart:async';
-
-import '../../core/geometry/latlng_bounds.dart';
-import '../../core/latlng/latlng.dart';
-import '../../map/manager.dart';
-import '../options/fitbounds.dart';
-import '../state.dart';
-import 'base.dart';
+import '../../core/core.dart';
+import '../../shared.dart';
+import '../map.dart';
 
 class UMapController implements MapController {
-  final Completer<Null> _ready = Completer<Null>();
 
-  MapManager _manager;
+  MapStateManager _manager;
 
-  set manager(MapManager manager) {
+  set manager(MapStateManager manager) {
     _manager = manager;
-
-    if(!_ready.isCompleted) {
-      _ready.complete();
-    }
   }
 
   @override 
   MapState get map => _manager?.state;
 
   @override
-  Future<void> get onReady => _ready.future;
+  void move(center, [double zoom]) {
+    _manager?.move(center, zoom ?? this.zoom);
+  }
 
-  @override
-  void move(center, double zoom) {
-    _manager?.move(center, zoom);
+  @override 
+  void zoomTo(double zoom) {
+    _manager?.zoom(zoom);
   }
 
   @override
@@ -36,13 +28,23 @@ class UMapController implements MapController {
     _manager?.fitBounds(bounds, options);
   }
 
-  @override
-  void rotate(double degree) {
-    _manager?.rotate(degree);
+  void zoomIn([double zoomDelta = zoomDeltaDef]) {
+    _manager?.zoomIn(zoomDelta);
   }
 
-  @override
-  bool get isReady => _manager != null && _manager.state != null;
+  void zoomOut([double zoomDelta = zoomDeltaDef]) {
+    _manager?.zoomOut(zoomDelta);
+  }
+
+  @override 
+  void locate() {
+    _manager?.locate();
+  }
+
+  /* 
+  void rotate(double rotation) {
+    _manager?.rotate(rotation);
+  } */
 
   @override
   LatLngBounds get bounds => _manager?.state?.bounds;
@@ -53,9 +55,13 @@ class UMapController implements MapController {
   @override
   double get zoom => _manager?.state?.zoom;
 
-  /* @override
-  ValueChanged<double> onRotationChanged;
+  @override 
+  double get rotation => _manager?.state?.rotation;
 
-  @override
-  Stream<MapPosition> get position => throw UnimplementedError(); */
+  @override 
+  MapChangedCallback onChanged;
+
+  @override 
+  Stream<MapData> get positionStream => _manager?.positionStream?.stream;
+  
 }

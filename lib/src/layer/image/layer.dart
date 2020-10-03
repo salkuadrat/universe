@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 
-class ImageOverlayLayer extends SingleLayer {
+class ImageOverlayLayer extends MapLayer {
   
   final ImageOverlay image;
   final List<ImageOverlay> images;

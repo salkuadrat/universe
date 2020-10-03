@@ -36,4 +36,7 @@ class Polyline {
     if(value is List<dynamic>) return Polyline(value);
     return Polyline([]);
   }
+
+  @override
+  String toString() => 'Polyline($latlngs)';
 }

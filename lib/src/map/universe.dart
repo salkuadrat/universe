@@ -1,92 +1,153 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:universe/src/layer/control/attribution/layer.dart';
+import 'package:universe/src/layer/control/locator/layer.dart';
+import 'package:universe/src/layer/control/locator/marker.dart';
 
 import '../core/core.dart';
 import '../layer/layer.dart';
+import '../shared.dart';
 import 'map.dart';
 
 class Universe extends StatelessWidget {
 
   final MapOptions options;
   final MapController controller;
+  final Color background;
   final TileLayer base;
-  final MarkerLayer marker;
-  final List<SingleLayer> layers;
+  final MarkerLayer markers;
+  final CircleLayer circles;
+  final PolylineLayer polylines;
+  final PolygonLayer polygons;
+  final RectangleLayer rectangles;
+  final List<MapLayer> layers;
+  final List<LayerOptions> layerOptions;
 
   const Universe({
     Key key, 
     this.options, 
     this.controller, 
+    this.background,
     this.base,
-    this.marker,
-    this.layers,
-  }) : super(key: key);
-
+    this.markers,
+    this.circles,
+    this.polylines,
+    this.polygons,
+    this.rectangles,
+    List layers,
+  }) : 
+    assert(base != null || layers is List<MapLayer> || layers is List<LayerOptions>),
+    this.layers = layers is List<MapLayer> ? layers : const [],
+    this.layerOptions = layers is List<LayerOptions> ? layers : const [],
+    super(key: key);
+  
+  bool get hasCircles => circles != null;
+  bool get hasPolylines => polylines != null;
+  bool get hasPolygons => polygons != null;
+  bool get hasRectangles => rectangles != null;
+  
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    MapOptions opts = options ?? MapOptions();
 
-    // set default size to follow screen size
-    if(opts.size == null) {
-      opts = opts.copyWith(
-        size: Size(
-          screenSize.width, 
-          screenSize.height,
-        ),
+    MapOptions mapOptions = options ?? MapOptions();
+
+    if(mapOptions.noSize) {
+      final screenSize = MediaQuery.of(context).size;
+
+      mapOptions = mapOptions.copyWith(
+        size: Size(screenSize.width, screenSize.height),
       );
     }
 
     MapState initialState = MapState(
       controller: controller ?? UMapController(),
-      options: opts,
+      options: mapOptions,
     );
 
+    String attribution = '';
+
+    if(base != null) {
+      attribution = base.options.attribution;
+    } else {
+      attribution = options.attribution;
+    }
+
     return CubitProvider(
-      create: (_) => MapManager(initialState),
-      child: _UniverseContainer(base: base, marker: marker, layers: layers),
+      create: (_) => MapStateManager(initialState),
+      child: Container(
+        color: background,
+        child: _Map(
+          base: base, 
+          markers: markers, 
+          layers: [
+            if(hasCircles) circles,
+            if(hasPolylines) polylines,
+            if(hasPolygons) polygons,
+            if(hasRectangles) rectangles,
+            ...layers,
+          ], 
+          layerOptions: layerOptions,
+          attribution: attribution,
+        ),
+      ),
     );
   }
 }
 
-class _UniverseContainer extends StatefulWidget {
+class _Map extends StatefulWidget {
 
   final TileLayer base;
-  final MarkerLayer marker;
-  final List<SingleLayer> layers;
+  final MarkerLayer markers;
+  final List<MapLayer> layers;
+  final List<LayerOptions> layerOptions;
+  final String attribution;
 
-  _UniverseContainer({Key key, this.base, this.marker, this.layers}) : super(key: key);
+  _Map({
+    Key key, 
+    this.base, 
+    this.markers, 
+    this.layers,
+    this.layerOptions,
+    this.attribution,
+  }) : super(key: key);
 
   @override
-  _UniverseContainerState createState() => _UniverseContainerState();
+  __MapState createState() => __MapState();
 }
 
-class _UniverseContainerState extends State<_UniverseContainer> 
-  with TickerProviderStateMixin, MapGestureMixin {
+class __MapState extends State<_Map> {
 
-  MapManager get manager => context.cubit<MapManager>();
-  MapState get state => manager.state;
-  MapController get controller => manager.state.controller;
+  MapStateManager get manager => context.cubit<MapStateManager>();
+  MapState get map => manager.state;
 
   bool get hasBaseLayer => widget.base != null;
-  bool get hasMarker => widget.marker != null;
+  bool get hasMarkers => widget.markers != null;
   bool get hasLayers => widget.layers != null && widget.layers.isNotEmpty;
-
-  final TapPositionController _tapPositionController = TapPositionController();
-
-  LatLng _centerStart;
-  double _zoomStart;
-  LatLng _focalStartGlobal;
-  UPoint _focalStartLocal;
+  bool get hasLayerOptions => widget.layerOptions != null && widget.layerOptions.isNotEmpty;
 
   RenderBox get render => context.findRenderObject() as RenderBox;
   double get renderWidth => render?.size?.width ?? 0.0;
   double get renderHeight => render?.size?.height ?? 0.0;
 
+  ValueNotifier<double> rotationNotifier = ValueNotifier(0.0);
+
+  double _originalWidth;
+  double _originalHeight;
+  double _width;
+  double _height;
+
   @override
   void initState() {
+    _originalWidth = map.width;
+    _originalHeight = map.height;
+    _width = map.width;
+    _height = map.height;
     super.initState();
     manager?.init();
+
+    rotationNotifier.value = manager.angle;
+    manager?.setAngleListener(_onChanged);
   }
 
   @override
@@ -95,96 +156,62 @@ class _UniverseContainerState extends State<_UniverseContainer>
     super.dispose();
   }
 
-  List<Widget> get _layers => [
-    if(hasBaseLayer) widget.base,
-    if(hasLayers) ...widget.layers,
-    if(hasMarker) widget.marker,
-  ];
+  Widget _layer(options) {
+    return Container();
+  }
 
-  Widget get _stack => Stack(
-    children: _layers,
-  );
-
-  Widget get _interactive => TapPositionDetector(
-    controller: _tapPositionController,
-    onLongPress: handleLongPress,
-    onDoubleTap: handleDoubleTap,
-    onTap: handleTap,
-    child: GestureDetector(
-      onScaleStart: handleScaleStart,
-      onScaleUpdate: handleScaleUpdate,
-      onScaleEnd: handleScaleEnd,
-      onLongPress: _tapPositionController.onLongPress,
-      onTapDown: _tapPositionController.onTapDown,
-      onTap: _tapPositionController.onTap,
-      onTapUp: handleOnTapUp,
-      child: _stack,
+  Widget get _layers => Center(
+    child: Stack(
+      children: [
+        if(hasBaseLayer) widget.base,
+        if(hasLayers) ...widget.layers,
+        if(hasLayerOptions) ...widget.layerOptions
+          .map((options) => _layer(options))
+          .toList(),
+        if(hasMarkers) widget.markers,
+      ],
     ),
   );
 
-  Widget get _map => state.options.interactive ? _interactive : _stack;
-
-  Widget get _rotatedMap => CubitBuilder<MapManager, MapState>(
-    builder: (_, __) => ClipRect(
-      child: Transform.rotate(
-        angle: state.angle,
-        child: OverflowBox(
-          minWidth: state.width,
-          maxWidth: state.width,
-          minHeight: state.height,
-          maxHeight: state.height,
-        ),
+  Widget get _interactive => MapGestureDetector(
+    child: Transform.rotate(
+      angle: rotationNotifier.value,
+      alignment: FractionalOffset.center,
+      child: OverflowBox(
+        minWidth: _width,
+        minHeight: _height,
+        maxWidth: _width,
+        maxHeight: _height,
+        child: _layers,
       ),
     ),
   );
 
-  Widget get _root => state.hasRotation ? _rotatedMap : _map;
+  Widget get _map => map.options.interactive ? _interactive : _layers;
+
+  void _onChanged() {
+    rotationNotifier.value = manager.angle;
+
+    final angle = manager.angle;
+    final originalSize = Size(_originalWidth, _originalHeight);
+    final size = projectedSize(originalSize, angle);
+    
+    setState(() {
+      _width = size.width;
+      _height = size.height;
+    });
+
+    manager?.resize(size.width, size.height);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, BoxConstraints c) {
-        //manager?.resize(c.maxWidth, c.maxHeight);
-        return _root;
-      },
+    return Stack(
+      children: [
+        _map,
+        AttributionLayer(widget.attribution),
+        if(map.options.locator) LocatorLayer(Locator(icon: Icons.location_searching)),
+      ],
     );
-  }
-
-  @override
-  void handleTap(TapPosition position) {
-    if(state?.options?.onTap is Function) {
-      state?.options?.onTap(
-        state.offsetToLatLng(position.local, renderWidth, renderHeight));
-    }
-  }
-
-  @override
-  void handleOnTapUp(TapUpDetails details) {
-
-  }
-
-  @override
-  void handleDoubleTap(TapPosition tapPosition) {
-
-  }
-
-  @override
-  void handleLongPress(TapPosition position) {
-
-  }
-
-  @override
-  void handleScaleEnd(ScaleEndDetails details) {
-
-  }
-
-  @override
-  void handleScaleStart(ScaleStartDetails details) {
-
-  }
-
-  @override
-  void handleScaleUpdate(ScaleUpdateDetails details) {
-
   }
 }

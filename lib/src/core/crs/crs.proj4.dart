@@ -55,8 +55,8 @@ class Proj4Crs extends BaseCrs {
     Projection projection = Pj4Projection(
       pj4Projection: pj4Projection, 
       bounds: bounds, 
-      latBounds: Tuple2(90.0, -90.0),
-      lngBounds: Tuple2(180.0, -180.0),
+      latBounds: Tuple2(-90.0, 90.0),
+      lngBounds: Tuple2(-180.0, 180.0),
     );
     
     List<Transformation> transformations;
@@ -214,9 +214,9 @@ class Proj4Crs extends BaseCrs {
   }
 
   @override
-  Tuple2<double, double> get latBounds => Tuple2(90.0, -90.0);
+  Tuple2<double, double> get latBounds => Tuple2(-90.0, 90.0);
 
   @override
-  Tuple2<double, double> get lngBounds => Tuple2(180.0, -180.0);
+  Tuple2<double, double> get lngBounds => Tuple2(-180.0, 180.0);
   
 }

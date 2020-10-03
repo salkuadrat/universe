@@ -1,18 +1,7 @@
 import 'dart:math' as math;
 import 'package:tuple/tuple.dart';
 
-import '../../core/latlng/latlng.dart';
-import '../geometry/bounds.dart';
-import '../geometry/latlng_bounds.dart';
-import '../geometry/point.dart';
-import '../geometry/transformation.dart';
-import '../latlng/distance/distance.dart';
-import '../projection/projection.dart';
-import 'crs.epsg3395.dart';
-import 'crs.epsg3857.dart';
-import 'crs.epsg4326.dart';
-import 'crs.earth.dart';
-import 'crs.simple.dart';
+import '../core.dart';
 
 export 'crs.dart';
 export 'crs.earth.dart';
@@ -114,7 +103,7 @@ class BaseCrs extends Crs {
     try {
       var projectedPoint = projection.project(position);
       double scale = this.scale(zoom);
-      return transformation?.transform(projectedPoint, scale);
+      return transformation.transform(projectedPoint, scale);
     } catch (e) {
       return UPoint(0.0, 0.0);
     }
@@ -126,8 +115,8 @@ class BaseCrs extends Crs {
   LatLng pointToLatLng(UPoint point, double zoom) {
     try {
       double scale = this.scale(zoom);
-      var untransformedPoint = transformation?.untransform(point, scale);
-      return projection?.unproject(untransformedPoint);
+      UPoint untransformedPoint = transformation.untransform(point, scale);
+      return projection.unproject(untransformedPoint);
     } catch (e) {
       return null;
     }
@@ -174,8 +163,9 @@ class BaseCrs extends Crs {
 
     Bounds bounds = projection.bounds;
     double scale = this.scale(zoom);
-    var min = transformation?.transform(bounds.min, scale);
-    var max = transformation?.transform(bounds.max, scale);
+
+    final min = transformation.transform(bounds.min, scale);
+    final max = transformation.transform(bounds.max, scale);
     return Bounds(min, max);
   }
 
@@ -198,18 +188,6 @@ class BaseCrs extends Crs {
     double longitude = projection != null && projection.hasLngBounds 
       ? projection.wrapLng(latlng.lng) 
       : latlng.lng;
-
-    /* if(projection.hasLatBounds) {
-      double min = latBounds.item1;
-      double max = latBounds.item2;
-      latitude = math.max(min, math.min(max, latitude));
-    }
-
-    if(lngBounds != null) {
-      double min = lngBounds.item1;
-      double max = lngBounds.item2;
-      longitude = math.max(min, math.min(max, longitude));
-    } */
 
     return LatLng(latitude, longitude);
   }
@@ -248,8 +226,8 @@ class BaseCrs extends Crs {
 
 }
 
-class CrsList {
-  const CrsList();
+class CRSS {
+  const CRSS();
   
   // ignore: non_constant_identifier_names
   Crs get BASE => BaseCrs();

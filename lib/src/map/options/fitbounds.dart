@@ -8,7 +8,7 @@ class FitBoundsOptions {
   bool get hasMaxZoom => maxZoom != null;
 
   const FitBoundsOptions({
-    this.padding = const EdgeInsets.all(0.0),
+    this.padding = const EdgeInsets.all(12.0),
     this.maxZoom,
     this.zoom,
   });

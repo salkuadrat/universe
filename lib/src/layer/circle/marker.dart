@@ -21,29 +21,38 @@ class Circle {
   final double fillOpacity;
   final StrokeCap strokeCap;
   final StrokeJoin strokeJoin;
-  final bool isRadiusInMeter;
 
   double radius;
-  Offset center = Offset.zero;
+  double radiusInMeter;
+
+  LatLng get center => latlng;
   
   Circle(dynamic latlng, num radius, {
-    this.isRadiusInMeter=false,
+    num radiusInMeter,
     this.stroke,
     this.strokeColor, 
     this.strokeWidth, 
     this.strokeOpacity,
-    this.fill = false, 
+    this.fill, 
     Color fillColor, 
     this.fillOpacity,
     this.strokeCap,
     this.strokeJoin,
   }) : this.latlng = LatLng.from(latlng),
        this.radius = radius?.toDouble(),
+       this.radiusInMeter = radiusInMeter?.toDouble(),
        this.fillColor = fillColor ?? strokeColor;
   
-  factory Circle.from(dynamic value) {
-    if(value is Circle) return value;
-    if(value is LatLng) return Circle(value, 0.0);
-    return Circle(LatLng.from(value), 0.0);
+  factory Circle.from(dynamic value, [num radius = 0.0]) {
+    if(value is Circle) {
+      if(radius > 0.0) value.radius = radius;
+      return value;
+    }
+    
+    if(value is LatLng) return Circle(value, radius);
+    return Circle(LatLng.from(value), radius);
   }
+
+  @override
+  String toString() => 'Circle($latlng, radius $radius)';
 }

@@ -1,5 +1,5 @@
 import '../../base/layer.dart';
 
-class ScaleLayer extends SingleLayer {
+class ScaleLayer extends MapLayer {
 
 }

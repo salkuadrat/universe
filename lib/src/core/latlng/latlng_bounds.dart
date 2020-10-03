@@ -1,7 +1,7 @@
 import 'dart:math';
+import 'dart:ui';
 
-import '../../shared.dart';
-import '../latlng/latlng.dart';
+import 'latlng.dart';
 
 class LatLngBounds {
 
@@ -10,54 +10,29 @@ class LatLngBounds {
 
   // can accept LatLngBounds([LatLng(20,30), LatLng(10, 10)]) or 
   // LatLngBounds([[20, 30], [10, 10]])
-  LatLngBounds([dynamic southWest, dynamic northEast]) {
-    extend(southWest);
-    extend(northEast);
+  LatLngBounds(dynamic southWest, [dynamic northEast]) {
+    if(northEast != null) {
+      extend(southWest);
+      extend(northEast);
+    } else if(southWest is List && southWest.length > 1) {
+      for(dynamic corner in southWest) {
+        extend(LatLng.from(corner));
+      }
+    }
   }
 
   // can accept parameter as [LatLng(20,30), LatLng(10, 10), ...] or 
   // [[20, 30], [10, 10], ...]
-  LatLngBounds.from(dynamic latlngs) {
-    
-    if(latlngs is LatLngBounds) {
-      _sw = latlngs.southWest;
-      _ne = latlngs.northEast;
+  factory LatLngBounds.from(dynamic latlngs) {
+    if(latlngs is LatLngBounds) return latlngs;
+
+    if(latlngs is List && latlngs.length > 1) {
+      return LatLngBounds(latlngs);
     }
 
-    if(latlngs is List && latlngs.isNotEmpty) {
-
-      num minX;
-      num maxX;
-      num minY;
-      num maxY;
-
-      for(var latlng in latlngs) {
-        LatLng pos = LatLng.from(latlng);
-        double x = pos.longitudeInRad;
-        double y = pos.latitudeInRad;
-
-        if(minX == null || minX > x) {
-          minX = x;
-        }
-
-        if(minY == null || minY > y) {
-          minY = y;
-        }
-
-        if(maxX == null || maxX < x) {
-          maxX = x;
-        }
-
-        if(maxY == null || maxY < y) {
-          maxY = y;
-        }
-      }
-
-      _sw = LatLng(radianToDeg(minY), radianToDeg(minX));
-      _ne = LatLng(radianToDeg(maxY), radianToDeg(maxX));
-    }
+    throw Exception("Invalid values!");
   }
-
+  
   extend(dynamic _latlng) {
     LatLng latlng = LatLng.from(_latlng);
 
@@ -118,7 +93,7 @@ class LatLngBounds {
         (ne.longitude <= _ne.longitude);
   }
 
-  bool isOverlapping(LatLngBounds bounds) {
+  bool isOverlaps(LatLngBounds bounds) {
     if (!isValid) {
       return false;
     }
@@ -135,5 +110,16 @@ class LatLngBounds {
     return true;
   }
 
-  bool isNotOverlapping(LatLngBounds bounds) => !isOverlapping(bounds);
+  bool isNotOverlaps(LatLngBounds bounds) => !isOverlaps(bounds);
+
+  @override
+  int get hashCode => hashValues(southWest.hashCode, northEast.hashCode);
+  
+  @override
+  bool operator ==(other) => other is LatLngBounds && 
+    southWest == other.southWest && northEast == other.northEast;
+
+  @override
+  String toString() => 'LatLngBounds($southWest, $northEast)';
+
 }

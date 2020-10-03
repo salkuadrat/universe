@@ -1,3 +1,5 @@
+import 'dart:ui';
+import 'package:curved_animation_controller/curved_animation_controller.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -5,68 +7,71 @@ import 'package:flutter/scheduler.dart';
 import '../../core/core.dart';
 import 'grid.dart';
 
-class Tile {
+class Tile implements Comparable<Tile> {
 
-  final Coordinates coordinates;
+  final Coordinate coordinate;
   final UPoint position;
   final Level level;
-  final Function(Coordinates, Tile, dynamic) onTileReady;
-
-  /* final bool isCurrent;
-  final bool isRetain; */
-
+  
   ImageProvider imageProvider;
   ImageInfo imageInfo;
   ImageStream _imageStream;
   ImageStreamListener _listener;
 
-  AnimationController _animController;
+  CurvedAnimationController _animController;
   DateTime loaded;
-  bool isLoadError;
+
+  bool isCurrent = false;
+  bool isRetain = false;
   bool isActive = false;
+  bool isLoadError = false;
+  double maxOpacity;
+  Function(Coordinate, Tile, dynamic) onTileReady;
 
   Tile({
-    this.coordinates,
+    this.coordinate,
     this.position,
     this.imageProvider,
     this.onTileReady,
     this.level,
-    //this.isCurrent = false,
-    //this.isRetain = false,
+    this.isCurrent = false,
+    this.isRetain = false,
+    this.maxOpacity = 1.0,
   });
+
+  String get key => coordinate.key;
 
   bool get hasAnimController => _animController != null;
   bool get hasImageProvider => imageProvider != null;
   bool get hasImage => imageInfo != null && imageInfo.image != null;
 
-  double get opacity => 
-    hasAnimController ? _animController.value : (isActive ? 1.0 : 0.0);
-  
-  void loadTile() {
-    try {
-      final oldImageStream = _imageStream;
-      _imageStream = imageProvider.resolve(ImageConfiguration());
-      
-      if (_imageStream.key != oldImageStream?.key) {
-        oldImageStream?.removeListener(_listener);
+  bool get isLoaded => loaded != null;
+  bool get isNotLoaded => !isLoaded;
 
-        _listener = ImageStreamListener(_onTileLoaded, onError: _onTileError);
-        _imageStream.addListener(_listener);
-      }
+  double get opacity => hasAnimController 
+    ? (_animController.value * maxOpacity) 
+    : (isActive ? maxOpacity : 0.0);
+
+  void loadImageWith(ImageProvider imageProvider) {
+    this.imageProvider = imageProvider;
+    loadImage();
+  }
+  
+  void loadImage() {
+    try {
+      _imageStream?.removeListener(_listener);
+
+      _imageStream = imageProvider.resolve(ImageConfiguration());
+      _listener = ImageStreamListener(_onTileLoaded, onError: _onTileError);
+      _imageStream.addListener(_listener);
     } catch (e, s) {
       _onTileError(e, s);
     }
   }
 
-  Future dispose([bool evict = false]) async {
+  void dispose([bool evict = false]) {
     if(hasImageProvider && evict) {
-      bool evicted = await imageProvider.evict();
-
-      if(evicted) {
-        print('evict tile success: $coordinates');
-      } else {
-        print('evict tile failed: $coordinates');
-      }
+      imageProvider.evict();
     }
 
     _imageStream?.removeListener(_listener);
@@ -74,24 +79,22 @@ class Tile {
     _animController?.dispose();
   }
 
-  void show(Duration duration, TickerProvider vsync, {double from}) {
+  void show({Duration duration, TickerProvider vsync, double from, Curve curve}) {
     _animController?.removeStatusListener(_onAnimateEnd);
-
-    _animController = AnimationController(duration: duration, vsync: vsync);
+    
+    _animController = CurvedAnimationController(
+      duration: duration, vsync: vsync, curve: curve);
+    
     _animController.addStatusListener(_onAnimateEnd);
-    _animController.forward(from: from);
+    _animController..reset()..forward(from: from);
   }
 
   void addAnimationListener(Function listener) {
-    if(hasAnimController) {
-      _animController.addListener(listener);
-    }
+    _animController?.addListener(listener);
   }
 
   void removeAnimationListener(Function listener) {
-    if(hasAnimController) {
-      _animController.removeListener(listener);
-    }
+    _animController?.removeListener(listener);
   }
 
   void _onAnimateEnd(AnimationStatus status) {
@@ -102,21 +105,23 @@ class Tile {
     this.imageInfo = imageInfo;
     this.isLoadError = false;
     this.loaded = DateTime.now();
-    onTileReady?.call(coordinates, this, null);
+    onTileReady?.call(coordinate, this, null);
   }
 
   void _onTileError(dynamic error, StackTrace trace) {
-    isLoadError = true;
-    onTileReady?.call(
-      coordinates, this, error ?? "Unknown error during loadTileImage");
+    this.isLoadError = true;
+    onTileReady?.call(coordinate, this, 
+      error ?? "Unknown error during loadTileImage");
   }
+
+  @override
+  int compareTo(Tile other) => level.zIndex.compareTo(other.level.zIndex);
   
   @override
-  int get hashCode => coordinates.hashCode;
+  int get hashCode => hashValues(coordinate.hashCode, level.zIndex.hashCode);
 
   @override
   bool operator ==(other) => other is Tile && 
-    coordinates == other.coordinates && 
+    coordinate == other.coordinate && 
     level.zIndex == other.level.zIndex;
-  
 }

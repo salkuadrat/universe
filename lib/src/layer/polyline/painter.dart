@@ -35,6 +35,7 @@ class PolylinePainter extends CustomPainter {
     final strokeColor = polyline.strokeColor ?? options.strokeColor;
     final strokeWidth = polyline.strokeWidth ?? options.strokeWidth;
     final strokeOpacity = polyline.strokeOpacity ?? options.strokeOpacity;
+    final isDotted = polyline.isDotted ?? options.isDotted;
     final radius = strokeWidth / 2;
     final spacing = strokeWidth * 1.5;
 
@@ -48,12 +49,10 @@ class PolylinePainter extends CustomPainter {
     hasGradient 
       ? paint.shader = _gradient() 
       : paint.color = strokeColor?.withOpacity(strokeOpacity ?? 1.0);
-
-    // TODO research more about filter and border, why use them?
-
+    
     canvas.saveLayer(rect, Paint());
 
-    if(polyline.isDotted) {
+    if(isDotted) {
       paint.style = PaintingStyle.fill;
       _paintDottedLine(canvas, radius, spacing, paint);
     } else {

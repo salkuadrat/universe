@@ -19,7 +19,12 @@ class Rectangle extends Polygon {
 
   List<LatLng> get validLatLngs {
     LatLngBounds bounds = this.bounds;
-    return [ bounds.northWest, bounds.northEast, bounds.southEast ];
+    return [ 
+      bounds.northWest, 
+      bounds.northEast, 
+      bounds.southEast, 
+      bounds.southWest,
+    ];
   }
 
   Rectangle(List<dynamic> latlngs, {
@@ -53,11 +58,17 @@ class Rectangle extends Polygon {
     gradientFillStops: gradientFillStops,
     holeLatLngList: holeLatLngList,
     disableHoles: disableHoles,
-  );
+  ) {
+    assert(latlngs != null && latlngs.length == 2);
+  }
 
   factory Rectangle.from(dynamic value) {
     if(value is Rectangle) return value;
     if(value is List<dynamic>) return Rectangle(value);
     return Rectangle([]);
   }
+
+  @override
+  String toString() => 'Rectangle($latlngs)';
+
 }

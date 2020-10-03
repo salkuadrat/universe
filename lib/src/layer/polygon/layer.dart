@@ -5,7 +5,7 @@ import '../../core/latlng/latlng.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 
-class PolygonLayer extends SingleLayer {
+class PolygonLayer extends MapLayer {
 
   final Polygon polygon;
   final List<Polygon> polygons;
@@ -40,8 +40,11 @@ class PolygonLayer extends SingleLayer {
   );
 
   Widget _polygon(MapState map, Size size, Polygon polygon) {
+    if(polygon.isNotValid) {
+      return Container();
+    }
 
-    if(options.culling && polygon.bounds.isNotOverlapping(map.bounds)) {
+    if(options.culling && polygon.bounds.isNotOverlaps(map.bounds)) {
       return Container();
     }
 

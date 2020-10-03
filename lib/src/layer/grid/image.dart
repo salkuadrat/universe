@@ -1,20 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'tile.dart';
 
-class AnimatedTile extends StatefulWidget {
+class TileImage extends StatefulWidget {
 
   final Tile tile;
-  final ImageProvider placeholder;
+  final ImageProvider errorImage;
 
-  AnimatedTile({Key key, @required this.tile, this.placeholder}) 
+  TileImage({Key key, @required this.tile, this.errorImage}) 
     : super(key: key);
   
   @override
-  _AnimatedTileState createState() => _AnimatedTileState();
+  _TileImageState createState() => _TileImageState();
 }
 
-class _AnimatedTileState extends State<AnimatedTile> {
+class _TileImageState extends State<TileImage> {
   
   @override
   void initState() {
@@ -29,8 +30,9 @@ class _AnimatedTileState extends State<AnimatedTile> {
   }
 
   @override
-  void didUpdateWidget(AnimatedTile oldWidget) {
+  void didUpdateWidget(TileImage oldWidget) {
     super.didUpdateWidget(oldWidget);
+    oldWidget?.tile?.removeAnimationListener(_refresh);
     widget.tile.removeAnimationListener(_refresh);
     widget.tile.addAnimationListener(_refresh);
   }
@@ -41,16 +43,18 @@ class _AnimatedTileState extends State<AnimatedTile> {
 
   bool get isShowError => 
     widget.tile.isLoadError && 
-    widget.placeholder != null;
+    widget.errorImage != null;
 
   Widget get _errorTile => Image(
-    image: widget.placeholder,
+    image: widget.errorImage,
     fit: BoxFit.fill,
+    filterQuality: FilterQuality.medium,
   );
 
-  Widget get _tile => RawImage(
-    image: widget.tile.imageInfo.image,
+  Widget get _tile => Image(
+    image: widget.tile.imageProvider,
     fit: BoxFit.fill,
+    filterQuality: FilterQuality.high,
   );
 
   @override
@@ -59,7 +63,9 @@ class _AnimatedTileState extends State<AnimatedTile> {
       opacity: widget.tile.opacity,
       child: widget.tile.hasImage 
         ? _tile 
-        : (isShowError ? _errorTile : Container()),
+        : (isShowError 
+          ? _errorTile 
+          : Container()),
     );
   }
 }

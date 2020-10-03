@@ -5,7 +5,7 @@ import '../../core/latlng/latlng.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 
-class PolylineLayer extends SingleLayer {
+class PolylineLayer extends MapLayer {
   
   final Polyline polyline;
   final List<Polyline> polylines;
@@ -41,7 +41,7 @@ class PolylineLayer extends SingleLayer {
 
   Widget _polyline(MapState map, Size size, Polyline polyline) {
 
-    if(options.culling && polyline.bounds.isNotOverlapping(map.bounds)) {
+    if(options.culling && polyline.bounds.isNotOverlaps(map.bounds)) {
       return Container();
     }
 

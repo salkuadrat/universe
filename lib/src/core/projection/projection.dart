@@ -1,4 +1,5 @@
 import 'package:tuple/tuple.dart';
+import 'dart:math' as math;
 
 import '../core.dart';
 
@@ -39,10 +40,14 @@ abstract class Projection {
   }
 
   double wrapLat(double value) {
-    return _wrap(latBounds.item1, latBounds.item2, value);
+    final min = math.min(latBounds.item1, latBounds.item2);
+    final max = math.max(latBounds.item1, latBounds.item2);
+    return _wrap(min, max, value);
   }
 
   double wrapLng(double value) {
-    return _wrap(lngBounds.item1, lngBounds.item2, value);
+    final min = math.min(lngBounds.item1, lngBounds.item2);
+    final max = math.max(lngBounds.item1, lngBounds.item2);
+    return _wrap(min, max, value);
   }
 }

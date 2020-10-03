@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 
-class GridLayer extends SingleLayer {
+class GridLayer extends MapLayer {
 
   final GridLayerOptions options;
 

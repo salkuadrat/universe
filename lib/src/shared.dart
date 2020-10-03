@@ -1,7 +1,11 @@
 import 'dart:math' as math;
 
+import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
+import 'core/core.dart';
+import 'layer/layer.dart';
 
 /// Equator radius in meter (WGS84 ellipsoid)
 const double EQUATOR_RADIUS = 6378137.0;
@@ -68,13 +72,107 @@ List<String> parseSubdomains(dynamic subdomains) {
   return [];
 }
 
+final _templatePattern = RegExp(r'\{ *([\w_-]+) *\}');
+
+/// Replaces the templating placeholders with the provided data map.
+///
+/// Throws an [Exception] if any placeholder remains unresolved.
+String urlFromTemplate(String str, Map<String, String> data) {
+  return str.replaceAllMapped(_templatePattern, (Match match) {
+    var value = data[match.group(1)];
+    if (value == null) {
+      throw Exception('No value provided for variable ${match.group(1)}');
+    } else {
+      return value;
+    }
+  });
+}
+
+double wrap(double value, List<num> range, [bool includeMax=false]) {
+  if(range == null || range.length != 2) {
+    return value;
+  }
+
+  final min = math.min(range[0], range[1]);
+  final max = math.max(range[0], range[1]);
+  final d = max - min;
+
+  if(value == max && includeMax) {
+    return value;
+  }
+
+  return ((value - min) % d + d) % d + min;
+}
+
+Size projectedSize(Size size, double angle) {
+  if(angle == 0.0) {
+    return size;
+  }
+
+  final oWidth = size.width;
+  final oHeight = size.height;
+
+  final rad90 = PI / 2;
+  final sinangle = math.sin(angle).abs();
+  final sinrest = math.sin(rad90 - angle).abs();
+  
+  final width = (oWidth * sinrest) + (oHeight * sinangle) + 20;
+  final height = (oHeight * sinrest) + (oWidth * sinangle) + 20;
+
+  return Size(width, height).round();
+}
+
+Offset projectedPoint(Offset point, Size size, double angle) {
+  if(angle == 0.0) {
+    return point;
+  }
+
+  Size nSize = projectedSize(size, angle);
+  Size halfSize = size / 2;
+
+  Offset pointFromCenter = Offset(
+    point.dx - halfSize.width, 
+    halfSize.height - point.dy,
+  );
+
+  final cos = math.cos(-angle);
+  final sin = math.sin(-angle);
+  final pcx = pointFromCenter.dx;
+  final pcy = pointFromCenter.dy;
+
+  pointFromCenter = Offset(
+    pcx * cos + pcy * sin,
+    pcy * cos - pcx * sin,
+  );
+  
+  Size sizeOffset = (nSize - size) / 2;
+
+  final x = halfSize.width + pointFromCenter.dx + sizeOffset.x;
+  final y = halfSize.height - pointFromCenter.dy + sizeOffset.y;
+
+  return Offset(x, y);
+}
+
 /// default parameter values
+const double opacityDef = 1.0;
+
 const bool strokeDef = true;
+const bool strokePolygonDef = false;
+const bool strokeRectangleDef = strokePolygonDef;
+const Color strokeColorDef = Colors.blueGrey;
 const double strokeWidthDef = 3.0;
-const double strokeOpacityDef = 1.0;
+const double strokeWidthCircleDef = 2.0;
+const double strokeWidthPolygonDef = 2.0;
+const double strokeWidthRectangleDef = strokeWidthPolygonDef;
+const double strokeOpacityDef = opacityDef;
+const double strokeOpacityPolygonDef = 0.8;
+const double strokeOpacityRectangleDef = strokeOpacityPolygonDef;
 const StrokeCap strokeCapDef = StrokeCap.round;
 const StrokeJoin strokeJoinDef = StrokeJoin.round;
-const double fillOpacityDef = 0.2;
+const double fillOpacityDef = 0.25;
+const bool fillDef = true;
+const bool fillCircleDef = false;
+const Color fillColorDef = Colors.white24;
 const PathFillType fillTypeDef = PathFillType.evenOdd;
 const bool isDottedDef = false;
 const List<Color> gradientColorsDef = [];
@@ -85,20 +183,35 @@ const bool interactiveDef = true;
 const String attributionDef = '';
 
 const double tileSizeDef = 256.0;
+const double zoomDef = 13.0;
 const double minZoomDef = 0.0;
 const double maxZoomDef = 18.0;
+const double zoomDeltaDef = 1.0;
+const bool liveDef = false;
+const bool locatorDef = true;
 const bool zoomReverseDef = false;
 const double zoomOffsetDef = 0.0;
 const Map<String, String> additionalOptionsDef = const <String, String>{};
 const List<String> subdomainsDef = const <String>['a', 'b', 'c'];
 const int keepBufferDef = 2;
-const double tileOpacityDef = 1.0;
-const int updateTileIntervalDef = 200;
-const int tileFadeInDurationDef = 100;
+const double tileOpacityDef = opacityDef;
+const bool updateWhenZoomingDef = true;
+const int updateTileIntervalDef = 100;
+const int tileFadeInDurationDef = 200;
+const Curve tileFadeInCurveDef = Curves.slowMiddle;
 const double tileFadeInStartDef = 0.0;
 const double tileFadeInStartWhenOverrideDef = 0.0;
-const bool overrideTilesWhenUrlChangesDef = false;
-const bool retinaModeDef = false;
+const bool overrideTilesWhenUrlChangesDef = true;
+const bool retinaModeDef = true;
+const TileProvider tileProviderDef = const CachedNetworkTileProvider();
+const bool tmsDef = false;
 
-const double overlayOpacityDef = 1.0;
+const double overlayOpacityDef = opacityDef;
 const bool overlayGaplessPlaybackDef = false;
+
+const double markerSizeDef = 54;
+const MarkerAlignment markerAlignDef = MarkerAlignment.top;
+const MarkerIcon markerIconDef = const MarkerIcon(
+  icon: Icons.pin_drop,
+  color: Colors.lightBlue,
+);

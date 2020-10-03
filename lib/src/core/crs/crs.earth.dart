@@ -33,9 +33,9 @@ class Earth extends BaseCrs {
   }
   
   @override
-  Tuple2<double, double> get latBounds => Tuple2(90.0, -90.0);
+  Tuple2<double, double> get latBounds => Tuple2(-90.0, 90.0);
 
   @override
-  Tuple2<double, double> get lngBounds => Tuple2(180.0, -180.0);
+  Tuple2<double, double> get lngBounds => Tuple2(-180.0, 180.0);
 
 }

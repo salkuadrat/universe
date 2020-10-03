@@ -18,12 +18,17 @@ dependencies:
   tuple: ^1.0.3
   validate: ^1.7.0
   logging: ^0.11.4
+  vector_math: ^2.0.8
   proj4dart: any
   colour: ^1.0.3
   colours: ^0.0.1+1
   cubit: ^0.1.2
   flutter_cubit: ^0.1.0
+  flutter_image: ^3.0.0
+  html_unescape: ^1.0.2
   cached_network_image: ^2.3.2+1
+  curved_animation_controller: ^1.0.1
+  location: ^3.0.0
 
 dev_dependencies:
   flutter_test:
