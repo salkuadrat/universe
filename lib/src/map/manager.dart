@@ -344,7 +344,7 @@ class MapStateManager extends Cubit<MapState> {
   Future<LatLng?> findLocation(String query) async {
     List<Address>? locations = await Geocoder.local.findAddressesFromQuery(query);
 
-    if(locations is List && locations!.length > 0) {
+    if(locations != null && locations.length > 0) {
       Address location = locations.first;
       return LatLng(
         location.coordinates!.latitude, 

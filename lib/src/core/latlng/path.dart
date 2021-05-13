@@ -197,7 +197,7 @@ class Path<T extends LatLng> {
           
           if(smoothPath) {
             // Now - split it
-            CatmullRomSpline2D<double?> spline;
+            CatmullRomSpline2D<double> spline;
             
             if(path.numCoordinates == 3) {
               spline = _createSpline(path[0],path[0],path[1],path[2]);
@@ -237,7 +237,7 @@ class Path<T extends LatLng> {
       int baseIndex = path.numCoordinates - 1;
       
       if(baseIndex > 3) {
-        CatmullRomSpline2D<double?> spline = _createSpline(
+        CatmullRomSpline2D<double> spline = _createSpline(
           path[baseIndex - 3], 
           path[baseIndex - 2], 
           path[baseIndex - 1], 
@@ -251,7 +251,7 @@ class Path<T extends LatLng> {
       // Could be because of reminder from path divisions
       baseIndex = path.numCoordinates - 1;
       if(getDistance(path[baseIndex - 1], path[baseIndex]) >= stepDistance) {
-        CatmullRomSpline2D<double?> spline = _createSpline(
+        CatmullRomSpline2D<double> spline = _createSpline(
           path[baseIndex - 1], 
           path[baseIndex - 1], 
           path[baseIndex - 0], 
@@ -266,20 +266,21 @@ class Path<T extends LatLng> {
   }
   
   /// 4 Points are necessary to create a [CatmullRomSpline2D]
-  CatmullRomSpline2D<double?> _createSpline(LatLng p0, LatLng p1, LatLng p2, LatLng p3) {
+  CatmullRomSpline2D<double> _createSpline(LatLng p0, LatLng p1, LatLng p2, LatLng p3) {
     Validate.notNull(p0);
     Validate.notNull(p1);
     Validate.notNull(p2);
     Validate.notNull(p3);
 
     return CatmullRomSpline2D(
-      Point2D(p0.latitude,p0.longitude),
-      Point2D(p1.latitude,p1.longitude),
-      Point2D(p2.latitude,p2.longitude),
-      Point2D(p3.latitude,p3.longitude)
+      Point2D(p0.latitude!, p0.longitude!),
+      Point2D(p1.latitude!, p1.longitude!),
+      Point2D(p2.latitude!, p2.longitude!),
+      Point2D(p3.latitude!, p3.longitude!)
     );
   }
   
   /// Convert [Point2D] to [LatLng]
-  LatLng _pointToPosition(Point2D point) => geoPositionFactory(point.x as double?,point.y as double?);
+  LatLng _pointToPosition(Point2D point) => 
+    geoPositionFactory(point.x as double?, point.y as double?);
 }
