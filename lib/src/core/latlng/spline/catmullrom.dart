@@ -1,6 +1,6 @@
 import 'package:validate/validate.dart';
 
-class Point2D<T extends num> {
+class Point2D<T extends num?> {
   final T x;
   final T y;
   
@@ -14,7 +14,7 @@ abstract class CatmullRom<T> {
   T percentage(num percent) => position(percent / 100);
 }
 
-class CatmullRomSpline<T extends num> extends CatmullRom<double> {
+class CatmullRomSpline<T extends num?> extends CatmullRom<double> {
   
   final T _p0, _p1, _p2, _p3;
   
@@ -25,13 +25,13 @@ class CatmullRomSpline<T extends num> extends CatmullRom<double> {
   double position(final double distance) {
     Validate.inclusiveBetween(0, 1, distance, "Distance must be beteen 0 and 1 but was $distance");
     
-    return 0.5 * ((2 * _p1) + (_p2 - _p0) * distance +
-      (2 * _p0 - 5 * _p1 + 4 * _p2 - _p3) * distance * distance +
-      (3 * _p1 - _p0 - 3 * _p2 + _p3) * distance * distance * distance);
+    return 0.5 * ((2 * _p1!) + (_p2! - _p0!) * distance +
+      (2 * _p0! - 5 * _p1! + 4 * _p2! - _p3!) * distance * distance +
+      (3 * _p1! - _p0! - 3 * _p2! + _p3!) * distance * distance * distance);
   }
 }
 
-class CatmullRomSpline2D<T extends num> extends CatmullRom<Point2D<double>> {
+class CatmullRomSpline2D<T extends num?> extends CatmullRom<Point2D<double>> {
   final Point2D<T> _p0;
   final Point2D<T> _p1;
   final Point2D<T> _p2;

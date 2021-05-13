@@ -88,4 +88,5 @@ class UPoint extends Point<double> {
 
   @override
   String toString() => 'UPoint($x, $y)';
+  
 }

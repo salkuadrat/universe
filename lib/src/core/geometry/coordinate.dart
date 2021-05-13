@@ -12,9 +12,12 @@ class Coordinate extends UPoint {
     super(x.toDouble(), y.toDouble());
 
   factory Coordinate.from(dynamic value) {
-    if(value is Coordinate) {
-      return value;
-    }
+
+    assert(
+      value is Coordinate || 
+      value is UPoint || 
+      (value is List<num> && (value.length == 2 || value.length == 3))
+    );
 
     if(value is UPoint) {
       return Coordinate(value.x, value.y, 0);
@@ -31,7 +34,7 @@ class Coordinate extends UPoint {
       }
     }
 
-    throw Exception("Invalid values!");
+    return value;
   }
   
   factory Coordinate.fromKey(String key) {

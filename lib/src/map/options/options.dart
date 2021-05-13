@@ -1,4 +1,4 @@
-export 'centerzoom.dart';
+export 'data.dart';
 export 'fitbounds.dart';
 export 'map.dart';
 export 'zoom.dart';

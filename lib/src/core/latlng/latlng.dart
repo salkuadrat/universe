@@ -22,15 +22,15 @@ export 'unit/length.dart';
 /// LatLng latlng = LatLng(51.519475, -19.37555556, 20.0); 
 class LatLng extends Coordinate {
 
-  double latitude;
-  double longitude;
-  double altitude;
+  double? latitude;
+  double? longitude;
+  double? altitude;
 
-  double get lat => latitude;
-  double get lng => longitude;
-  double get alt => altitude;
+  double? get lat => latitude;
+  double? get lng => longitude;
+  double? get alt => altitude;
 
-  LatLng(num latitude, num longitude, [num altitude = 0.0]) : 
+  LatLng(latitude, longitude, [altitude = 0.0]) : 
     this.latitude = latitude != null ? latitude.toDouble() : 0.0,
     this.longitude = longitude != null ? longitude.toDouble() : 0.0,
     this.altitude = altitude != null ? altitude.toDouble() : 0.0, 
@@ -41,11 +41,18 @@ class LatLng extends Coordinate {
     );
 
   factory LatLng.from(dynamic value) {
-    if(value is LatLng) {
-      return value;
-    }
     
-    if(value is List<num>) {
+    assert(
+      value is LatLng || 
+      (
+        value is List && 
+        value.isNotEmpty && 
+        (value.first is int || value.first is double) && 
+        (value.length == 2 || value.length == 3)
+      )
+    );
+
+    if(value is List && value.isNotEmpty && (value.first is int || value.first is double)) {
       if(value.length == 3) 
         return LatLng(
           value[0].toDouble(), 
@@ -60,17 +67,17 @@ class LatLng extends Coordinate {
         );
     }
 
-    throw Exception("Invalid values!");
+    return value;
   }
 
-  double get latitudeInRad => s.degToRadian(latitude);
+  double get latitudeInRad => s.degToRadian(latitude!);
 
-  double get longitudeInRad => s.degToRadian(longitude);
+  double get longitudeInRad => s.degToRadian(longitude!);
 
   LatLng round({int decimals = 6}) => LatLng(
-    s.round(lat, decimals: decimals),
-    s.round(lng, decimals: decimals),
-    s.round(alt, decimals: decimals),
+    s.round(lat!, decimals: decimals),
+    s.round(lng!, decimals: decimals),
+    s.round(alt!, decimals: decimals),
   );
 
   NumberFormat get formatter => NumberFormat('0.0#####');
@@ -83,7 +90,7 @@ class LatLng extends Coordinate {
   /// 
   /// The margin of error can be overridden by setting `maxMargin` to a small number.
   /// 
-  /// can accept other: GeoPosition(20.0, 30.0) or other: [20.0, 30.0]
+  /// can accept other: LatLng(20.0, 30.0) or other: [20.0, 30.0]
   bool equal(other, [maxMargin=0.0001]) {
     if(other == null) {
       return false;
@@ -92,11 +99,11 @@ class LatLng extends Coordinate {
     LatLng o = LatLng.from(other);
 
     double margin = math.max(
-      (this.lat - o.lat).abs(), 
-      (this.lng - o.lng).abs(),
+      (this.lat! - o.lat!).abs(), 
+      (this.lng! - o.lng!).abs(),
     );
 
-    margin = math.max(margin, (this.alt - o.alt).abs());
+    margin = math.max(margin, (this.alt! - o.alt!).abs());
 
     return margin <= maxMargin;
   }
@@ -108,6 +115,8 @@ class LatLng extends Coordinate {
   @override
   String toString() => 
     'LatLng($latitudeStr, $longitudeStr, $altitudeStr)';
+
+  String toSimpleString() => '$latitudeStr, $longitudeStr';
   
   @override
   int get hashCode => hashValues(latitudeStr.hashCode, longitudeStr.hashCode, altitudeStr.hashCode);
@@ -123,10 +132,10 @@ class LatLng extends Coordinate {
   ///     
   /// Result: 51° 31' 10.11" N, 19° 22' 32.00" W
   String toSexagesimal() {
-    String latDirection = lat >= 0 ? "N" : "S";
-    String longDirection = lng >= 0 ? "O" : "W";
-    String latSexagesimal = s.decimal2sexagesimal(lat);
-    String longSexagesimal = s.decimal2sexagesimal(lng);
+    String latDirection = lat! >= 0 ? "N" : "S";
+    String longDirection = lng! >= 0 ? "O" : "W";
+    String latSexagesimal = s.decimal2sexagesimal(lat!);
+    String longSexagesimal = s.decimal2sexagesimal(lng!);
 
     return "$latSexagesimal $latDirection, $longSexagesimal $longDirection";
   }

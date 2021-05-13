@@ -1,17 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-import '../../map/map.dart';
 import '../layer.dart';
 
-class PathLayer extends MapLayer {
+class PathLayer extends InteractiveLayer {
 
-  final PathLayerOptions options;
+  final PathLayerOptions? options;
 
-  PathLayer({Key key, this.options}) 
-    : super(key: key, options: options);
-  
-  @override
-  Widget buildLayer(BuildContext context, MapController controller, MapState map) {
-    return Container();
-  }
+  const PathLayer({Key? key, this.options}) : super(key: key, options: options);
 }

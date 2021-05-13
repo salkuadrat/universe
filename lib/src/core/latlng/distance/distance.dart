@@ -6,8 +6,16 @@ import '../../../shared.dart';
 import '../../core.dart';
 
 abstract class DistanceAlgorithm {
+
   double distance(dynamic position, dynamic destination);
-  LatLng offset(dynamic from, double distanceInMeter, double bearing);
+
+  LatLng offset(dynamic from, double? distanceInMeter, double bearing);
+  
+}
+
+enum DistanceAlgorithmType {
+  Haversine,
+  Vincenty,
 }
 
 class Distance implements DistanceAlgorithm {
@@ -26,8 +34,8 @@ class Distance implements DistanceAlgorithm {
   }
 
   /// Shortcut for [distance]
-  num call(dynamic position, dynamic destination) {
-    return distance(position, destination);
+  num call(dynamic position, dynamic destination, {LengthUnit unit=LengthUnit.M}) {
+    return distance(position, destination, unit: unit);
   }
 
   /// Computes the distance between two points.
@@ -54,7 +62,7 @@ class Distance implements DistanceAlgorithm {
   ///
   /// Bearing: Left - 270°, right - 90°, up - 0°, down - 180°
   @override
-  LatLng offset(dynamic from, double distanceInMeter, double bearing) 
+  LatLng offset(dynamic from, double? distanceInMeter, double bearing) 
     => algorithm.offset(LatLng.from(from), distanceInMeter, bearing);
 
   /// Returns the great circle bearing (direction) in degrees to the next point ([p2])

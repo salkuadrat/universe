@@ -10,7 +10,7 @@ import '../core.dart';
 /// Used by the `EPSG:4326` and `Simple` CRS.
 class SimpleProjection extends Projection {
   
-  const SimpleProjection({Tuple2<double, double> latBounds, Tuple2<double, double> lngBounds}) 
+  const SimpleProjection({Tuple2<double, double>? latBounds, Tuple2<double, double>? lngBounds}) 
     : super(latBounds: latBounds, lngBounds: lngBounds);
 
   @override
@@ -20,8 +20,8 @@ class SimpleProjection extends Projection {
   );
   
   @override
-  UPoint project(LatLng position) {
-    return UPoint(position.longitude, position.latitude);
+  UPoint project(LatLng? position) {
+    return UPoint(position!.longitude!, position.latitude!);
   }
 
   @override

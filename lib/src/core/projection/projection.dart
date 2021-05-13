@@ -11,9 +11,9 @@ export 'projection.spherical.mercator.dart';
 
 abstract class Projection {
 
-  final Tuple2<double, double> latBounds;
-  final Tuple2<double, double> lngBounds;
-  final Bounds bounds;
+  final Tuple2<double, double>? latBounds;
+  final Tuple2<double, double>? lngBounds;
+  final Bounds? bounds;
 
   bool get hasLatBounds => latBounds != null;
   bool get hasLngBounds => lngBounds != null;
@@ -26,7 +26,7 @@ abstract class Projection {
 
   /// Projects geographical coordinates into coordinates in units accepted for 
   /// this CRS (e.g. meters for EPSG:3857, for passing it to WMS services).
-  UPoint project(LatLng position);
+  UPoint project(LatLng? position);
 
   /// Given a projected coordinate returns the corresponding GeoPosition. 
   /// The inverse of `project`.
@@ -34,20 +34,20 @@ abstract class Projection {
   
   
   double _wrap(Comparable start, Comparable end, double value) {
-    if(value.compareTo(start) < 0) return start;
-    if(value.compareTo(end) > 0) return end;
+    if(value.compareTo(start as num) < 0) return start as double;
+    if(value.compareTo(end as num) > 0) return end as double;
     return value;
   }
 
   double wrapLat(double value) {
-    final min = math.min(latBounds.item1, latBounds.item2);
-    final max = math.max(latBounds.item1, latBounds.item2);
+    final min = math.min(latBounds!.item1, latBounds!.item2);
+    final max = math.max(latBounds!.item1, latBounds!.item2);
     return _wrap(min, max, value);
   }
 
   double wrapLng(double value) {
-    final min = math.min(lngBounds.item1, lngBounds.item2);
-    final max = math.max(lngBounds.item1, lngBounds.item2);
+    final min = math.min(lngBounds!.item1, lngBounds!.item2);
+    final max = math.max(lngBounds!.item1, lngBounds!.item2);
     return _wrap(min, max, value);
   }
 }

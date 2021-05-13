@@ -14,6 +14,8 @@ import '../geometry/transformation.dart';
 /// `distance()` returns simple euclidean distance.
 class CrsSimple extends BaseCrs {
   
+  const CrsSimple();
+  
   @override
   String get code => 'CRS.Simple';
 
@@ -26,8 +28,8 @@ class CrsSimple extends BaseCrs {
     Transformation(1, 0, -1, 0);
 
   @override
-  double scale(double zoom) {
-    return math.pow(2, zoom).toDouble();
+  double scale(double? zoom) {
+    return math.pow(2, zoom!).toDouble();
   }
 
   @override
@@ -37,8 +39,8 @@ class CrsSimple extends BaseCrs {
 
   @override
   double distance(LatLng position, LatLng destination) {
-    double dx = destination.lng - position.lng;
-		double dy = destination.lat - position.lat;
+    double dx = destination.lng! - position.lng!;
+		double dy = destination.lat! - position.lat!;
 		return math.sqrt(dx * dx + dy * dy);
   }
 
@@ -46,9 +48,9 @@ class CrsSimple extends BaseCrs {
   bool get infinite => true;
 
   @override
-  Tuple2<double, double> get latBounds => null;
+  Tuple2<double, double>? get latBounds => null;
 
   @override
-  Tuple2<double, double> get lngBounds => null;
+  Tuple2<double, double>? get lngBounds => null;
 
 }

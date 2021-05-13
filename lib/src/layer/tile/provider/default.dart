@@ -10,41 +10,39 @@ class DefaultTileProvider extends TileProvider {
   _getZoomForUrl(Coordinate coordinate, TileLayerOptions options) {
     var zoom = coordinate.z;
     final maxZoom = options.maxZoom;
-    final zoomReverse = options.zoomReverse;
-    final zoomOffset = options.zoomOffset;
+    final zoomReverse = options.zoomReverse!;
+    final zoomOffset = options.zoomOffset!;
 
     if(zoomReverse) {
-      zoom = maxZoom - zoom;
+      zoom = maxZoom! - zoom;
     }
 
     return zoom + zoomOffset;
   }
 
   @override
-  String getTileUrl(Crs crs, Coordinate coordinate, TileLayerOptions options) {
-    final templateUrl = options.wmsOptions != null 
-      ? options.wmsOptions.getUrl(crs, coordinate, options.tileSize.width, options.retinaMode) 
-      : options.templateUrl;
-    
-    final zoom = _getZoomForUrl(coordinate, options);
+  String getTileUrl(String? templateUrl, Bounds? globalTileRange, Coordinate coordinate, TileLayerOptions? options) {
+    //final templateUrl = options.getTemplateUrl(crs, coordinate);
+    final zoom = _getZoomForUrl(coordinate, options!);
     final x = coordinate.x.round();
     final y = coordinate.y.round();
     final z = zoom.round();
-    final invertY = ((1 << z) - 1) - y;
+    final inverseY = globalTileRange!.max.y - y;
 
-    final data = <String, String>{
+    Map<String, dynamic> data = <String, dynamic>{
       's': getSubdomain(coordinate, options),
       'x': x.toString(),
-      'y': options.tms ? invertY.toString() : y.toString(),
+      'y': options.tms ? inverseY.toString() : y.toString(),
       'z': z.toString(),
-      'r': options.retinaMode ? '@2x' : '',
-    }..addAll(options.additionalOptions);
+      'r': options.retinaMode! ? '@2x' : '',
+      '-y': inverseY.toString(),
+    }..addAll(options.additionalOptions!);
 
-    return urlFromTemplate(templateUrl, data);
+    return urlFromTemplate(templateUrl!, data);
   }
 
   @override
-  ImageProvider getImage(Crs crs, Coordinate coordinate, TileLayerOptions options) => 
+  ImageProvider getImage(String? templateUrl, Bounds? globalTileRange, Coordinate coordinate, TileLayerOptions? options) => 
     throw UnimplementedError();
 
   @override
@@ -57,7 +55,5 @@ class DefaultTileProvider extends TileProvider {
   }
 
   @override
-  void dispose() {
-
-  }
+  void dispose() {}
 }

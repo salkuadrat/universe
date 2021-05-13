@@ -10,7 +10,7 @@ class Mercator extends Projection {
   static const double R_MINOR = POLAR_RADIUS;
   static const double MAX_LATITUDE = 85.0511287798;
 
-  const Mercator({Tuple2<double, double> latBounds, Tuple2<double, double> lngBounds}) 
+  const Mercator({Tuple2<double, double>? latBounds, Tuple2<double, double>? lngBounds}) 
     : super(latBounds: latBounds, lngBounds: lngBounds);
 
   @override
@@ -20,9 +20,9 @@ class Mercator extends Projection {
   );
 
   @override
-  UPoint project(LatLng position) {
+  UPoint project(LatLng? position) {
     double d = PI / 180;
-    double y = position.latitude * d;
+    double y = position!.latitude! * d;
     double tmp = R_MINOR / R;
     double e = Math.sqrt(1 - tmp * tmp);
     double con = e * Math.sin(y);
@@ -30,7 +30,7 @@ class Mercator extends Projection {
     double ts = Math.tan(PI / 4 - y / 2) / Math.pow((1 - con) / (1 + con), e / 2);
     y = -R * Math.log(Math.max(ts, 1E-10));
 
-    return UPoint(position.longitude * d * R, y);
+    return UPoint(position.longitude! * d * R, y);
   }
 
   @override
@@ -41,10 +41,10 @@ class Mercator extends Projection {
     double ts = Math.exp(-point.y / R);
 		double phi = PI / 2 - 2 * Math.atan(ts);
 
-    for (var i = 0, dphi = 0.1, con; i < 15 && dphi.abs() > 1e-7; i++) {
-			con = e * Math.sin(phi);
-			con = Math.pow((1 - con) / (1 + con), e / 2);
-			dphi = PI / 2 - 2 * Math.atan(ts * con) - phi;
+    for (int i = 0, dphi = 0.1 as int, con; i < 15 && dphi.abs() > 1e-7; i++) {
+			con = e * Math.sin(phi) as int;
+			con = Math.pow((1 - con) / (1 + con), e / 2) as int;
+			dphi = PI / 2 - 2 * Math.atan(ts * con) - phi as int;
 			phi += dphi;
 		}
 

@@ -90,7 +90,7 @@ void main() {
   test('Map State', () {
     MapState map = MapState(
       options: MapOptions(
-        crs: U.CRS.EPSG3857,
+        crs: CRS.EPSG3857,
         size: Size(480, 640),
         center: LatLng(120, 120),
         zoomOptions: ZoomOptions(
@@ -116,7 +116,7 @@ void main() {
     assert(map.limitZoom(-10) == map.minZoom);
     assert(map.limitZoom(200) == map.maxZoom);
     assert(map.limitZoom(map.zoom) == map.zoom);
-    assert(map.unproject(map.project(LatLng(10.5, 10.5))).equal(LatLng(10.5, 10.5)));
+    assert(map.unproject(map.project(LatLng(10.5, 10.5)))!.equal(LatLng(10.5, 10.5)));
     assert(map.project(map.unproject(UPoint(10.5, 10.5))).equal(UPoint(10.5, 10.5)));
     assert(map.offsetToSize(Offset(200, 200)) == Size(200, 200));
     assert(map.sizeToOffset(Size(200, 200)) == Offset(200, 200));
@@ -150,12 +150,12 @@ void main() {
     assert(distance(from, to) == dh(from, to));
     print(dv(from, to));
     print(dv.bearing(from, to));
-    print(dv.offset(from, dv(from, to), dv.bearing(from, to)));
-    assert(dv.offset(from, dv(from, to), dv.bearing(from, to)).equal(LatLng.from(to)));
+    print(dv.offset(from, dv(from, to) as double?, dv.bearing(from, to)));
+    assert(dv.offset(from, dv(from, to) as double?, dv.bearing(from, to)).equal(LatLng.from(to)));
 
     print(dh(from, to));
     print(dh.bearing(from, to));
-    print(dh.offset(from, dh(from, to), dh.bearing(from, to)));
-    assert(dh.offset(from, dh(from, to), dh.bearing(from, to)).equal(LatLng.from(to)));
+    print(dh.offset(from, dh(from, to) as double?, dh.bearing(from, to)));
+    assert(dh.offset(from, dh(from, to) as double?, dh.bearing(from, to)).equal(LatLng.from(to)));
   });
 }

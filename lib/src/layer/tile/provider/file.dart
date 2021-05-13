@@ -8,7 +8,7 @@ class FileTileProvider extends DefaultTileProvider {
   const FileTileProvider();
 
   @override
-  ImageProvider getImage(Crs crs, Coordinate coordinate, TileLayerOptions options) {
-    return FileImage(File(getTileUrl(crs, coordinate, options)));
+  ImageProvider getImage(String? templateUrl, Bounds? globalTileRange, Coordinate coordinate, TileLayerOptions? options) {
+    return FileImage(File(getTileUrl(templateUrl, globalTileRange, coordinate, options)));
   }
 }

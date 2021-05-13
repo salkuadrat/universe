@@ -1,119 +1,288 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
 
+import '../../core/core.dart';
 import '../../shared.dart';
 import '../layer.dart';
 
-class TileLayerOptions extends GridLayerOptions {
+class TileLayerOptions extends InteractiveLayerOptions {
 
   /// Defines the structure to create the URLs for the tiles.
   /// `{s}` means one of the available subdomains (can be omitted)
   /// `{z}` zoom level
   /// `{x}` and `{y}` — tile coordinates
-  /// `{r}` can be used to add "&commat;2x" to the URL to load retina tiles (can be omitted)
+  /// `{r}` can be used to add "@2x" to the URL to load retina tiles (can be omitted)
   ///
   /// Example:
   ///
   /// https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
   ///
-  /// Is translated to this:
+  /// It will translate to this:
   ///
   /// https://a.tile.openstreetmap.org/12/2177/1259.png
-  final String templateUrl;
-  
+  /// 
+  final String? templateUrl;
+
+  /// Subdomains of the tile service. 
+  /// Can be passed in the form of one string 
+  /// (where each letter is a subdomain name) or an array of strings.
   final List<String> subdomains;
 
-  final TileProvider tileProvider;
+  /// The type of tile provider used to load tiles.
+  /// 
+  /// Available TileProvider:
+  /// [DefaultTileProvider]
+  /// [NetworkTileProvider]
+  /// [CachedNetworkTileProvider]
+  /// [NetworkRetryTileProvider]
+  /// [AssetTileProvider]
+  /// [FileTileProvider]
+  final TileProvider? tileProvider;
 
-  final WMSTileLayerOptions wmsOptions;
+  /// Size for the tile.
+  /// Default is 256 x 256
+  final Size tileSize;
+
+  /// If set, tiles will only be loaded inside the set `LatLngBounds`.
+  final LatLngBounds? bounds;
+
+  /// The minimum zoom level down to which this layer 
+  /// will be displayed (inclusive).
+  final double? minZoom;
+
+  /// The maximum zoom level up to which this layer will be
+  /// displayed (inclusive).
+  /// In most tile providers goes from 0 to 19.
+  final double? maxZoom;
+
+  /// Minimum zoom number the tile source has available. If it is specified,
+  /// the tiles on all zoom levels lower than minNativeZoom will be loaded
+  /// from minNativeZoom level and auto-scaled.
+  final double? minNativeZoom;
+
+  /// Maximum zoom number the tile source has available. If it is specified,
+  /// the tiles on all zoom levels higher than maxNativeZoom will be loaded
+  /// from maxNativeZoom level and auto-scaled.
+  final double? maxNativeZoom;
+
+  /// Opacity of the tiles.
+  final double? opacity;
+
+  /// If set to true, the zoom number used in tile URLs will be reversed 
+  /// (`maxZoom - zoom` instead of `zoom`)
+  final bool? zoomReverse;
+
+  /// The zoom number used in tile URLs will be offset with this value.
+  final double? zoomOffset;
+
+  /// When panning the map, keep this many rows and columns of tiles before
+  /// unloading them.
+  final int? keepBuffer;
+
+  /// Placeholder to show until tile images are fetched by the provider.
+  final ImageProvider? placeholderImage;
+
+  /// Tile image to show in place of the tile that failed to load.
+  final ImageProvider? errorImage;
+
+  /// By default, a smooth zoom animation (during a [touch zoom](#map-touchzoom) 
+  /// or a [`flyTo()`](#map-flyto)) will update grid layers every integer zoom level. 
+  /// 
+  /// Setting this option to `false` will update the grid layer 
+  /// only when the smooth animation ends.
+	final bool updateWhenZooming;
+
+  /// Tiles will not update more than once every `updateInterval`
+  /// (default 200 milliseconds) when panning.
+  /// It can be null (but it will calculating for loading tiles every frame when panning / zooming, flutter is fast)
+  /// This can save some fps and even bandwidth
+  /// (ie. when fast panning / animating between long distances in short time)
+  final Duration updateInterval;
+
+  /// Tiles fade in duration in milliseconds (default 100),
+  /// it can be null to avoid fade in
+  final Duration tileFadeInDuration;
+
+  /// Tiles fade in curve.
+  /// Default: Curves.easeInOut
+  final Curve tileFadeInCurve;
+
+  /// Opacity start value when Tile starts fade in (0.0 - 1.0)
+  /// Takes effect if `tileFadeInDuration` is not null
+  final double? tileFadeInStart;
+
+  /// Opacity start value when an exists Tile starts fade in with different Url (0.0 - 1.0)
+  /// Takes effect when `tileFadeInDuration` is not null and if `overrideTilesWhenUrlChanges` if true
+  final double? tileFadeInStartWhenOverride;
+
+  /// `false`: current Tiles will be first dropped and then reload via new url (default)
+  /// `true`: current Tiles will be visible until new ones aren't loaded (new Tiles are loaded independently)
+  final bool? overrideTilesWhenUrlChanges;
+
+  /// If `true`, it will request four tiles of half the specified size and a
+  /// bigger zoom level in place of one to utilize the high resolution.
+  ///
+  /// If `true` then MapOptions's `maxZoom` should be `maxZoom - 1` since retinaMode
+  /// just simulates retina display by playing with `zoomOffset`.
+  /// If geoserver supports retina `@2` tiles then it it advised to use them
+  /// instead of simulating it (use {r} in the [urlTemplate])
+  ///
+  /// It is advised to use retinaMode if display supports it, write code like this:
+  /// TileLayerOptions(
+  ///   retinaMode: true && MediaQuery.of(context).devicePixelRatio > 1.0,
+  /// )
+  final bool? retinaMode;
+  
+  /// This callback will be execute if some errors by getting tile
+  final Function(Tile, dynamic)? onTileError;
 
   /// If `true`, inverses Y axis numbering for tiles (turn this on for
   /// [TMS](https://en.wikipedia.org/wiki/Tile_Map_Service) services).
   final bool tms;
 
-  final Map<String, String> additionalOptions;
+  final Map<String, dynamic>? additionalOptions;
+
+  
+  bool get hasMinZoom => minZoom != null;
+  bool get hasMaxZoom => maxZoom != null;
+  bool get hasMinNativeZoom => minNativeZoom != null;
+  bool get hasMaxNativeZoom => maxNativeZoom != null;
+  bool get hasBounds => bounds != null;
+
+  String? getBaseUrl(Crs crs) => templateUrl;
+  String? getTemplateUrl(Crs crs, Coordinate? coordinate) => templateUrl;
 
   TileLayerOptions({
     this.templateUrl,
+    dynamic bounds,
     dynamic subdomains = 'abc',
-    num tileSize = tileSizeDef, 
-    double minZoom = minZoomDef, 
-    double maxZoom = maxZoomDef, 
-    double opacity = tileOpacityDef,
-    double minNativeZoom, 
-    double maxNativeZoom, 
-    bool zoomReverse = zoomReverseDef, 
-    double zoomOffset = zoomOffsetDef, 
-    int keepBuffer = keepBufferDef, 
-    ImageProvider placeholderImage, 
-    ImageProvider errorImage, 
+    num? tileSize = tileSizeDef, 
+    this.minZoom = minZoomDef, 
+    this.maxZoom = maxZoomDef, 
+    this.opacity = tileOpacityDef,
+    this.minNativeZoom, 
+    this.maxNativeZoom, 
+    this.zoomReverse = zoomReverseDef, 
+    this.zoomOffset = zoomOffsetDef, 
+    this.keepBuffer = keepBufferDef, 
+    this.placeholderImage, 
+    this.errorImage, 
+    this.updateWhenZooming = updateWhenZoomingDef,
     int updateInterval = updateTileIntervalDef, 
     int tileFadeInDuration = tileFadeInDurationDef, 
-    double tileFadeInStart = tileFadeInStartDef, 
-    double tileFadeInStartWhenOverride = tileFadeInStartWhenOverrideDef, 
-    bool overrideTilesWhenUrlChanges = overrideTilesWhenUrlChangesDef, 
-    bool retinaMode = retinaModeDef, 
-    Function(Tile, dynamic) onTileError,
+    this.tileFadeInCurve = tileFadeInCurveDef,
+    this.tileFadeInStart = tileFadeInStartDef, 
+    this.tileFadeInStartWhenOverride = tileFadeInStartWhenOverrideDef, 
+    this.overrideTilesWhenUrlChanges = overrideTilesWhenUrlChangesDef, 
+    this.retinaMode = retinaModeDef, 
+    this.onTileError,
     this.tileProvider = tileProviderDef,
-    this.wmsOptions,
     this.tms = tmsDef,
-    this.additionalOptions = const {},
+    this.additionalOptions = const <String, dynamic>{},
     bool interactive = interactiveDef,
     String attribution = attributionDef,
-  }) : this.subdomains = parseSubdomains(subdomains), super(
-      tileSize: tileSize,
-      minZoom: minZoom,
-      maxZoom: maxZoom,
-      opacity: opacity,
-      minNativeZoom: minNativeZoom,
-      maxNativeZoom: maxNativeZoom,
-      zoomReverse: zoomReverse,
-      zoomOffset: zoomOffset,
-      keepBuffer: keepBuffer,
-      placeholderImage: placeholderImage,
-      errorImage: errorImage,
-      updateInterval: updateInterval,
-      tileFadeInDuration: tileFadeInDuration,
-      tileFadeInStart: tileFadeInStart,
-      tileFadeInStartWhenOverride: tileFadeInStartWhenOverride,
-      overrideTilesWhenUrlChanges: overrideTilesWhenUrlChanges,
-      retinaMode: retinaMode,
-      onTileError: onTileError,
+    TapLayerCallback? onTap,
+    TapUpLayerCallback? onTapUp,
+    TapDownLayerCallback? onTapDown,
+    TapLayerCallback? onTapCancel,
+    TapLayerCallback? onSecondaryTap,
+    TapDownLayerCallback? onSecondaryTapDown,
+    TapUpLayerCallback? onSecondaryTapUp,
+    TapLayerCallback? onSecondaryTapCancel,
+    DoubleTapLayerCallback? onDoubleTap,
+    LongPressLayerCallback? onLongPress,
+    LongPressStartLayerCallback? onLongPressStart,
+    LongPressMoveUpdateLayerCallback? onLongPressMoveUpdate,
+    LongPressUpLayerCallback? onLongPressUp,
+    LongPressEndLayerCallback? onLongPressEnd,
+    LongPressLayerCallback? onSecondaryLongPress,
+    LongPressStartLayerCallback? onSecondaryLongPressStart,
+    LongPressMoveUpdateLayerCallback? onSecondaryLongPressMoveUpdate,
+    LongPressUpLayerCallback? onSecondaryLongPressUp,
+    LongPressEndLayerCallback? onSecondaryLongPressEnd,
+  }) : 
+    this.subdomains = parseSubdomains(subdomains), 
+    this.tileSize = Size.from([tileSize ?? tileSizeDef, tileSize ?? tileSizeDef]), 
+    this.bounds = bounds != null ? LatLngBounds.from(bounds) : null,
+    this.updateInterval = Duration(milliseconds: updateInterval),
+    this.tileFadeInDuration = Duration(milliseconds: tileFadeInDuration),
+    super(
       interactive: interactive, 
       attribution: attribution,
+      onTap: onTap,
+      onTapUp: onTapUp,
+      onTapDown: onTapDown,
+      onTapCancel: onTapCancel,
+      onSecondaryTap: onSecondaryTap,
+      onSecondaryTapDown: onSecondaryTapDown,
+      onSecondaryTapUp: onSecondaryTapUp,
+      onSecondaryTapCancel: onSecondaryTapCancel,
+      onDoubleTap: onDoubleTap,
+      onLongPress: onLongPress,
+      onLongPressStart: onLongPressStart,
+      onLongPressMoveUpdate: onLongPressMoveUpdate,
+      onLongPressUp: onLongPressUp,
+      onLongPressEnd: onLongPressEnd,
+      onSecondaryLongPress: onSecondaryLongPress,
+      onSecondaryLongPressStart: onSecondaryLongPressStart,
+      onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
+      onSecondaryLongPressUp: onSecondaryLongPressUp,
+      onSecondaryLongPressEnd: onSecondaryLongPressEnd,
     );
 
   TileLayerOptions copy({
-    String templateUrl,
+    String? templateUrl,
     dynamic subdomains,
-    num tileSize, 
-    double minZoom, 
-    double maxZoom, 
-    double opacity,
-    double minNativeZoom, 
-    double maxNativeZoom, 
-    bool zoomReverse, 
-    double zoomOffset, 
-    int keepBuffer, 
-    ImageProvider placeholderImage, 
-    ImageProvider errorImage, 
-    int updateInterval, 
-    int tileFadeInDuration, 
-    double tileFadeInStart, 
-    double tileFadeInStartWhenOverride, 
-    bool overrideTilesWhenUrlChanges, 
-    bool retinaMode, 
-    Function(Tile, dynamic) onTileError,
-    TileProvider tileProvider,
-    WMSTileLayerOptions wmsOptions,
-    bool tms = tmsDef,
-    Map<String, String> additionalOptions = const {},
-    bool interactive = interactiveDef,
-    String attribution = attributionDef,
+    dynamic bounds,
+    num? tileSize, 
+    double? minZoom, 
+    double? maxZoom, 
+    double? opacity,
+    double? minNativeZoom, 
+    double? maxNativeZoom, 
+    bool? zoomReverse, 
+    double? zoomOffset, 
+    int? keepBuffer, 
+    ImageProvider? placeholderImage, 
+    ImageProvider? errorImage, 
+    int? updateInterval, 
+    int? tileFadeInDuration, 
+    Curve? tileFadeInCurve,
+    double? tileFadeInStart, 
+    double? tileFadeInStartWhenOverride, 
+    bool? overrideTilesWhenUrlChanges, 
+    bool? retinaMode, 
+    Function(Tile, dynamic)? onTileError,
+    TileProvider? tileProvider,
+    bool? tms,
+    Map<String, String>? additionalOptions,
+    bool? interactive = interactiveDef,
+    String? attribution = attributionDef,
+    TapLayerCallback? onTap,
+    TapUpLayerCallback? onTapUp,
+    TapDownLayerCallback? onTapDown,
+    TapLayerCallback? onTapCancel,
+    TapLayerCallback? onSecondaryTap,
+    TapDownLayerCallback? onSecondaryTapDown,
+    TapUpLayerCallback? onSecondaryTapUp,
+    TapLayerCallback? onSecondaryTapCancel,
+    DoubleTapLayerCallback? onDoubleTap,
+    LongPressLayerCallback? onLongPress,
+    LongPressStartLayerCallback? onLongPressStart,
+    LongPressMoveUpdateLayerCallback? onLongPressMoveUpdate,
+    LongPressUpLayerCallback? onLongPressUp,
+    LongPressEndLayerCallback? onLongPressEnd,
+    LongPressLayerCallback? onSecondaryLongPress,
+    LongPressStartLayerCallback? onSecondaryLongPressStart,
+    LongPressMoveUpdateLayerCallback? onSecondaryLongPressMoveUpdate,
+    LongPressUpLayerCallback? onSecondaryLongPressUp,
+    LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) {
     return TileLayerOptions(
       templateUrl: templateUrl ?? this.templateUrl,
       subdomains: subdomains ?? this.subdomains,
       tileSize: tileSize ?? this.tileSize.width,
+      bounds: bounds ?? this.bounds,
       minZoom: minZoom ?? this.minZoom,
       maxZoom: maxZoom ?? this.maxZoom,
       opacity: opacity ?? this.opacity,
@@ -126,13 +295,36 @@ class TileLayerOptions extends GridLayerOptions {
       errorImage: errorImage ?? this.errorImage,
       updateInterval: updateInterval ?? this.updateInterval.inMilliseconds,
       tileFadeInDuration: tileFadeInDuration ?? this.tileFadeInDuration.inMilliseconds,
+      tileFadeInCurve: tileFadeInCurve ?? this.tileFadeInCurve,
       tileFadeInStart: tileFadeInStart ?? this.tileFadeInStart,
       tileFadeInStartWhenOverride: tileFadeInStartWhenOverride ?? this.tileFadeInStartWhenOverride,
       overrideTilesWhenUrlChanges: overrideTilesWhenUrlChanges ?? this.overrideTilesWhenUrlChanges,
       retinaMode: retinaMode ?? this.retinaMode,
+      tileProvider: tileProvider ?? this.tileProvider,
       onTileError: onTileError ?? this.onTileError,
       interactive: interactive ?? this.interactive, 
       attribution: attribution ?? this.attribution,
+      additionalOptions: additionalOptions ?? this.additionalOptions,
+      tms: tms ?? this.tms,
+      onTapDown: onTapDown ?? this.onTapDown,
+      onTapUp: onTapUp ?? this.onTapUp,
+      onTap: onTap ?? this.onTap,
+      onTapCancel: onTapCancel ?? this.onTapCancel,
+      onSecondaryTap: onSecondaryTap ?? this.onSecondaryTap,
+      onSecondaryTapDown: onSecondaryTapDown ?? this.onSecondaryTapDown,
+      onSecondaryTapUp: onSecondaryTapUp ?? this.onSecondaryTapUp,
+      onSecondaryTapCancel: onSecondaryTapCancel ?? this.onSecondaryTapCancel,
+      onDoubleTap: onDoubleTap ?? this.onDoubleTap,
+      onLongPress: onLongPress ?? this.onLongPress,
+      onLongPressStart: onLongPressStart ?? this.onLongPressStart,
+      onLongPressMoveUpdate: onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
+      onLongPressUp: onLongPressUp ?? this.onLongPressUp,
+      onLongPressEnd: onLongPressEnd ?? this.onLongPressEnd,
+      onSecondaryLongPress: onSecondaryLongPress ?? this.onSecondaryLongPress,
+      onSecondaryLongPressStart: onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
+      onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
+      onSecondaryLongPressUp: onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
+      onSecondaryLongPressEnd: onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
     );
   }
 }

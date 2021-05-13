@@ -1,15 +1,16 @@
 import 'package:flutter/rendering.dart';
 
+import '../../shared.dart';
+
 class FitBoundsOptions {
+
   final EdgeInsets padding;
   final double maxZoom;
   final double zoom;
 
-  bool get hasMaxZoom => maxZoom != null;
-
   const FitBoundsOptions({
     this.padding = const EdgeInsets.all(12.0),
-    this.maxZoom,
-    this.zoom,
+    this.maxZoom = maxZoomDef,
+    this.zoom = zoomDef,
   });
 }

@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'point.dart';
 
 class Size extends UPoint {
-  Size(double width, double height) : super(width, height);
+
+  const Size(double width, double height) 
+    : super(width, height);
 
   double get width => x;
   double get height => y;

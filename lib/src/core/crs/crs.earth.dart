@@ -23,10 +23,10 @@ class Earth extends BaseCrs {
   @override
   double distance(LatLng position, LatLng destination) {
     double rad = PI / 180;
-		double lat1 = position.lat * rad;
-		double lat2 = destination.lat * rad;
-		double sinDLat = math.sin((destination.lat - position.lat) * rad / 2);
-		double sinDLon = math.sin((destination.lng - position.lng) * rad / 2);
+		double lat1 = position.lat! * rad;
+		double lat2 = destination.lat! * rad;
+		double sinDLat = math.sin((destination.lat! - position.lat!) * rad / 2);
+		double sinDLon = math.sin((destination.lng! - position.lng!) * rad / 2);
 		double a = sinDLat * sinDLat + math.cos(lat1) * math.cos(lat2) * sinDLon * sinDLon;
 		double c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
 		return R * c;

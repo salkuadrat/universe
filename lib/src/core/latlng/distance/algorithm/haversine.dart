@@ -43,14 +43,14 @@ class Haversine implements DistanceAlgorithm {
   /// LatLng destination = distance.offset(position, distanceInMeter, 180);
   ///
   @override
-  LatLng offset(dynamic from, double distanceInMeter, double bearing) {
+  LatLng offset(dynamic from, double? distanceInMeter, double bearing) {
     from = LatLng.from(from);
     
     Validate.inclusiveBetween(-180.0, 180.0, bearing, 
       "Bearing angle must be between -180 and 180 degrees");
     
     double h = degToRadian(bearing);
-    double a = distanceInMeter / EQUATOR_RADIUS;
+    double a = distanceInMeter! / EQUATOR_RADIUS;
     double latitude = math.asin(
       math.sin(from.latitudeInRad) * math.cos(a) + 
       math.cos(from.latitudeInRad) * math.sin(a) * math.cos(h) 

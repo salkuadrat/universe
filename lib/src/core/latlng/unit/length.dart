@@ -1,5 +1,6 @@
 // Length of unit relative to meter
 class LengthUnit {
+  
   static const LengthUnit MM = const LengthUnit(1000.0); 
   static const LengthUnit CM = const LengthUnit(100.0);
   static const LengthUnit M = const LengthUnit(1.0);
@@ -13,7 +14,7 @@ class LengthUnit {
   double to(LengthUnit unit, num value) {
     // don't need to convert if the same scale unit
     if(unit.scaleToMeter == scaleToMeter) {
-      return value;
+      return value as double;
     }
 
     // convert to the desired length unit

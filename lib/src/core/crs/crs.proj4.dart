@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:proj4dart/proj4dart.dart' as pj4;
 import 'package:tuple/tuple.dart';
 
@@ -25,31 +24,27 @@ class Proj4Crs extends BaseCrs {
   @override
   final bool infinite;
 
-  final List<Transformation> transformations;
+  final List<Transformation>? transformations;
 
-  final List<double> scales;
+  final List<double?> scales;
 
   Proj4Crs._({
-    @required this.code,
-    @required this.projection,
-    @required this.transformation,
-    @required this.infinite,
-    @required this.transformations,
-    @required this.scales,
-  }): assert(code != code),
-      assert(projection != null),
-      assert(transformation != null || transformations != null),
-      assert(scales != null),
-      assert(infinite != null);
+    required this.code,
+    required this.projection,
+    required this.transformation,
+    required this.infinite,
+    this.transformations,
+    required this.scales,
+  });
   
   factory Proj4Crs.fromFactory({
-    @required String code,
-    @required pj4.Projection pj4Projection,
-    Transformation transformation,
-    List<UPoint> origins,
-    Bounds bounds,
-    List<double> scales,
-    List<double> resolutions,
+    required String code,
+    required pj4.Projection pj4Projection,
+    Transformation? transformation,
+    List<UPoint>? origins,
+    Bounds? bounds,
+    List<double>? scales,
+    List<double>? resolutions,
   }) {
     
     Projection projection = Pj4Projection(
@@ -59,7 +54,7 @@ class Proj4Crs extends BaseCrs {
       lngBounds: Tuple2(-180.0, 180.0),
     );
     
-    List<Transformation> transformations;
+    List<Transformation>? transformations;
     bool infinite = null == bounds;
     List<double> finalScales;
 
@@ -90,7 +85,7 @@ class Proj4Crs extends BaseCrs {
     return Proj4Crs._(
       code: code,
       projection: projection,
-      transformation: transformation,
+      transformation: transformation!,
       infinite: infinite,
       transformations: transformations,
       scales: finalScales,
@@ -100,10 +95,10 @@ class Proj4Crs extends BaseCrs {
   /// Converts a point on the sphere surface (with a certain zoom) in a
   /// map point.
   @override
-  UPoint latlngToPoint(LatLng position, double zoom) {
+  UPoint latlngToPoint(LatLng? position, double? zoom) {
     try {
       UPoint projectedPoint = projection.project(position);
-      double scale = this.scale(zoom);
+      double? scale = this.scale(zoom);
       Transformation transformation = _getTransformationByZoom(zoom);
 
       return transformation.transform(projectedPoint, scale);
@@ -114,10 +109,10 @@ class Proj4Crs extends BaseCrs {
 
   /// Converts a map point to the sphere coordinate (at a certain zoom).
   @override
-  LatLng pointToLatLng(UPoint point, double zoom) {
+  LatLng? pointToLatLng(UPoint point, double? zoom) {
     try {
       Transformation transformation = _getTransformationByZoom(zoom);
-      double scale = this.scale(zoom);
+      double? scale = this.scale(zoom);
       UPoint untransformedPoint = transformation.untransform(point, scale);
       
       return projection.unproject(untransformedPoint);
@@ -128,13 +123,13 @@ class Proj4Crs extends BaseCrs {
 
   /// Rescales the bounds to a given zoom value.
   @override
-  Bounds getProjectedBounds(double zoom) {
+  Bounds? getProjectedBounds(double? zoom) {
     if(infinite) {
       return null;
     }
 
-    Bounds bounds = projection.bounds;
-    double scale = this.scale(zoom);
+    Bounds bounds = projection.bounds!;
+    double? scale = this.scale(zoom);
     Transformation transformation = _getTransformationByZoom(zoom);
 
     var min = transformation.transform(bounds.min, scale);
@@ -144,14 +139,14 @@ class Proj4Crs extends BaseCrs {
 
   /// Zoom to Scale function.
   @override
-  double scale(double zoom) {
-    var zoomInt = zoom.floor();
+  double? scale(double? zoom) {
+    var zoomInt = zoom!.floor();
 
     if (zoom == zoomInt) {
       return scales[zoomInt];
     } else {
-      var baseScale = scales[zoomInt];
-      var nextScale = scales[zoomInt + 1];
+      var baseScale = scales[zoomInt]!;
+      var nextScale = scales[zoomInt + 1]!;
       var scaleDiff = nextScale - baseScale;
       var zoomDiff = (zoom - zoomInt);
       return baseScale + scaleDiff * zoomDiff;
@@ -162,7 +157,7 @@ class Proj4Crs extends BaseCrs {
   @override
   double zoom(double scale) {
     // Find closest number in _scales, down
-    double downScale = _closestElement(scales, scale);
+    double? downScale = _closestElement(scales, scale);
     int downZoom = scales.indexOf(downScale);
 
     // Check if scale is downScale => return array index
@@ -176,7 +171,7 @@ class Proj4Crs extends BaseCrs {
 
     // Interpolate
     int nextZoom = downZoom + 1;
-    double nextScale = scales[nextZoom];
+    double? nextScale = scales[nextZoom];
 
     if (nextScale == null) {
       return double.infinity;
@@ -187,11 +182,11 @@ class Proj4Crs extends BaseCrs {
   }
 
   /// Get the closest lowest element in an array
-  double _closestElement(List<double> array, double element) {
-    double low;
+  double? _closestElement(List<double?> array, double element) {
+    double? low;
 
     for (var i = array.length - 1; i >= 0; i--) {
-      var curr = array[i];
+      var curr = array[i]!;
 
       if (curr <= element && (null == low || low < curr)) {
         low = curr;
@@ -202,15 +197,15 @@ class Proj4Crs extends BaseCrs {
   }
 
   /// returns Transformation object based on zoom
-  Transformation _getTransformationByZoom(double zoom) {
+  Transformation _getTransformationByZoom(double? zoom) {
     if (transformations == null) {
       return transformation;
     }
 
-    int zoomInt = zoom.round();
-    int lastIdx = transformations.length - 1;
+    int zoomInt = zoom!.round();
+    int lastIdx = transformations!.length - 1;
     
-    return transformations[zoomInt > lastIdx ? lastIdx : zoomInt];
+    return transformations![zoomInt > lastIdx ? lastIdx : zoomInt];
   }
 
   @override

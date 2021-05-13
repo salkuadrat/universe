@@ -1,121 +1,142 @@
 import 'dart:ui' as ui;
 import 'dart:math' as math;
-import 'package:flutter/rendering.dart';
 
-import 'polygon.dart';
+import 'package:flutter/rendering.dart';
 
 class PolygonPainter extends CustomPainter {
 
-  final Polygon polygon;
-  final List<Offset> points;
-  final List<List<Offset>> holePointsList;
-  final PolygonLayerOptions options;
+  final List<Offset>? points;
+  final List<List<Offset>>? holesPoints;
 
-  PolygonPainter(this.polygon, this.points, this.holePointsList, {this.options});
+  final bool? culling;
+  final bool? stroke;
+  final bool? isDotted;
+  final Color? strokeColor;
+  final double? strokeWidth;
+  final double? strokeOpacity;
+  final StrokeCap? strokeCap;
+  final StrokeJoin? strokeJoin;
+  final PathFillType? pathFillType;
+  final Color? fillColor;
+  final double? fillOpacity;
+  final List<Color>? gradientStrokeColors;
+  final List<double>? gradientStrokeStops;
+  final List<Color>? gradientFillColors;
+  final List<double>? gradientFillStops;
+  
+  PolygonPainter({
+    this.points, 
+    this.holesPoints,
+    this.culling,
+    this.stroke,
+    this.isDotted,
+    this.strokeColor, 
+    this.strokeWidth,
+    this.strokeOpacity,
+    this.strokeCap,
+    this.strokeJoin,
+    this.pathFillType,
+    this.fillColor,
+    this.fillOpacity,
+    this.gradientStrokeColors,
+    this.gradientStrokeStops,
+    this.gradientFillColors,
+    this.gradientFillStops,
+  });
 
-  bool get hasPoints => points != null && points.isNotEmpty;
+  bool get hasPoints => points != null && points!.isNotEmpty;
   bool get noPoints => !hasPoints;
 
-  get gradientFillColors => polygon.gradientFillColors ?? options.gradientFillColors;
-  get gradientFillStops => polygon.gradientFillStops ?? options.gradientFillStops;
-
   bool get hasGradientFill => 
-    gradientFillColors != null && gradientFillColors.isNotEmpty;
+    gradientFillColors != null && 
+    gradientFillColors!.isNotEmpty;
 
   bool get hasGradientFillStops => 
     gradientFillStops != null && 
-    gradientFillStops.length == gradientFillStops.length;
-
-  get gradientStrokeColors => polygon.gradientStrokeColors ?? options.gradientStrokeColors;
-  get gradientStrokeStops => polygon.gradientStrokeStops ?? options.gradientStrokeStops;
+    gradientFillStops!.length == gradientFillColors!.length;
 
   bool get hasGradientStroke => 
-    gradientStrokeColors != null && gradientStrokeColors.isNotEmpty;
+    gradientStrokeColors != null && 
+    gradientStrokeColors!.isNotEmpty;
 
   bool get hasGradientStrokeStops => 
     gradientStrokeStops != null && 
-    gradientStrokeStops.length == gradientStrokeColors.length;
+    gradientStrokeStops!.length == gradientStrokeColors!.length;
 
   @override
   void paint(Canvas canvas, Size size) {
-    if(noPoints) {
-      return;
-    }
-
     final rect = Offset.zero & size;
     canvas.clipRect(rect);
 
-    final stroke = polygon.stroke ?? options.stroke;
-    final fillColor = polygon.fillColor ?? options.fillColor;
-    final fillOpacity = polygon.fillOpacity ?? options.fillOpacity;
+    if(noPoints) {
+      return;
+    }
+    
+    final isPaintStroke = stroke! && (strokeWidth! > 0) && (strokeColor != null);
+    final isPaintHoles = holesPoints is List && holesPoints!.length > 0;
 
     final paint = Paint()
       ..style = PaintingStyle.fill;
     
     hasGradientFill 
       ? paint.shader = _gradientFill() 
-      : paint.color = fillColor?.withOpacity(fillOpacity ?? 1.0);
+      : paint.color = fillColor!.withOpacity(fillOpacity ?? 1.0);
     
-    if(holePointsList != null) {
+    if(isPaintHoles) {
       canvas.saveLayer(rect, paint);
 
-      for(final hpoints in holePointsList) {
+      for(final hole in holesPoints!) {
         final path = Path();
-        path.addPolygon(hpoints, true);
+        path.addPolygon(hole, true);
         canvas.drawPath(path, paint);
       }
 
       paint.blendMode = BlendMode.srcOut;
 
       final path = Path();
-      path.addPolygon(points, true);
+      path.addPolygon(points!, true);
       canvas.drawPath(path, paint);
 
-      if(stroke) {
+      if(isPaintStroke) {
         _paintStroke(canvas);
       }
       
       canvas.restore();
     } else {
       final path = Path();
-      path.addPolygon(points, true);
+      path.addPolygon(points!, true);
       canvas.drawPath(path, paint);
 
-      if(stroke) {
+      if(isPaintStroke) {
         _paintStroke(canvas);
       }
     }
   }
 
   void _paintStroke(Canvas canvas) {
-
-    final strokeColor = polygon.strokeColor ?? options.strokeColor;
-    final strokeWidth = polygon.strokeWidth ?? options.strokeWidth;
-    final strokeOpacity = polygon.strokeOpacity ?? options.strokeOpacity;
-    final isDotted = polygon.isDotted ?? options.isDotted;
-    final radius = strokeWidth / 2;
-    final spacing = strokeWidth * 1.5;
+    final radius = strokeWidth! / 2;
+    final spacing = strokeWidth! * 1.5;
 
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth
-      ..strokeCap = polygon.strokeCap ?? options.strokeCap
-      ..strokeJoin = polygon.strokeJoin ?? options.strokeJoin
+      ..strokeWidth = strokeWidth!
+      ..strokeCap = strokeCap!
+      ..strokeJoin = strokeJoin!
       ..blendMode = BlendMode.srcOver;
 
     hasGradientStroke 
       ? paint.shader = _gradientStroke() 
-      : paint.color = strokeColor?.withOpacity(strokeOpacity ?? 1.0);
+      : paint.color = strokeColor!.withOpacity(strokeOpacity ?? 1.0);
     
-    if(isDotted) {
+    if(isDotted!) {
       paint.style = PaintingStyle.fill;
-      _paintDottedLine(canvas, points, radius, spacing, paint);
+      _paintDottedLine(canvas, points!, radius, spacing, paint);
     } else {
       _paintLine(canvas, points, paint);
     }
   }
 
-  void _paintLine(Canvas canvas, List<Offset> points, Paint paint) {
+  void _paintLine(Canvas canvas, List<Offset>? points, Paint paint) {
     if(points != null && points.isNotEmpty) {
       final path = Path();
       final start = points.first;
@@ -176,37 +197,37 @@ class PolygonPainter extends CustomPainter {
   }
 
   ui.Gradient _gradientFill() => ui.Gradient.linear(
-    points.first, 
-    points.last, 
-    gradientFillColors,
+    points!.first, 
+    points!.last, 
+    gradientFillColors!,
     _stopsFill(),
   );
 
-  List<double> _stopsFill() {
+  List<double>? _stopsFill() {
     if(hasGradientFillStops) {
       return gradientFillStops;
     }
 
-    final stopInterval = 1.0 / gradientFillColors.length;
-    return gradientFillColors.map(
-      (color) => gradientFillColors.indexOf(color) * stopInterval).toList();
+    final stopInterval = 1.0 / gradientFillColors!.length;
+    return gradientFillColors!.map(
+      (color) => gradientFillColors!.indexOf(color) * stopInterval).toList();
   }
 
   ui.Gradient _gradientStroke() => ui.Gradient.linear(
-    points.first, 
-    points.last, 
-    gradientStrokeColors,
+    points!.first, 
+    points!.last, 
+    gradientStrokeColors!,
     _stopsStroke(),
   );
 
-  List<double> _stopsStroke() {
+  List<double>? _stopsStroke() {
     if(hasGradientStrokeStops) {
       return gradientStrokeStops;
     }
 
-    final stopInterval = 1.0 / gradientStrokeColors.length;
-    return gradientStrokeColors
-      .map((c) => gradientStrokeColors.indexOf(c) * stopInterval)
+    final stopInterval = 1.0 / gradientStrokeColors!.length;
+    return gradientStrokeColors!
+      .map((c) => gradientStrokeColors!.indexOf(c) * stopInterval)
       .toList();
   }
 

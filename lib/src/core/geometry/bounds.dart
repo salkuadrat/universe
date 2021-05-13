@@ -23,21 +23,14 @@ class Bounds {
   /// with a new point.
   Bounds extend(dynamic _point) {
     UPoint point = UPoint.from(_point);
-    UPoint _min;
-    UPoint _max;
 
-    if(min == null && max == null) {
-      _min = point;
-      _max = point;
-    } else {
-      double minX = math.min(point.x, min.x);
-      double maxX = math.max(point.x, max.x);
-      double minY = math.min(point.y, min.y);
-      double maxY = math.max(point.y, max.y);
+    double minX = math.min(point.x, min.x);
+    double maxX = math.max(point.x, max.x);
+    double minY = math.min(point.y, min.y);
+    double maxY = math.max(point.y, max.y);
 
-      _min = UPoint(minX, minY);
-      _max = UPoint(maxX, maxY);
-    }
+    UPoint _min = UPoint(minX, minY);
+    UPoint _max = UPoint(maxX, maxY);
 
     return Bounds._(_min, _max);
   }

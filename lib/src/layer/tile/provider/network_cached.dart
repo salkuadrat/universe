@@ -8,7 +8,7 @@ class CachedNetworkTileProvider extends DefaultTileProvider {
   const CachedNetworkTileProvider();
   
   @override
-  ImageProvider getImage(Crs crs, Coordinate coordinate, TileLayerOptions options) {
-    return CachedNetworkImageProvider(getTileUrl(crs, coordinate, options));
+  ImageProvider getImage(String? templateUrl, Bounds? globalTileRange, Coordinate coordinate, TileLayerOptions? options) {
+    return CachedNetworkImageProvider(getTileUrl(templateUrl, globalTileRange, coordinate, options));
   }
 }

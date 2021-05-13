@@ -30,6 +30,16 @@ double degToRadian(double deg) => deg * (PI / 180.0);
 /// Radian to degree
 double radianToDeg(double rad) => rad * (180.0 / PI);
 
+double normalizeDeg(double deg) {
+  deg = deg % 360.0;
+
+  if(deg > 180.0) {
+    deg = deg - 360.0;
+  }
+
+  return deg;
+}
+
 /// Rounds [value] to given number of [decimals]
 double round(double value, { int decimals: 6 })
     => (value * math.pow(10, decimals)).round() / math.pow(10, decimals);
@@ -77,9 +87,9 @@ final _templatePattern = RegExp(r'\{ *([\w_-]+) *\}');
 /// Replaces the templating placeholders with the provided data map.
 ///
 /// Throws an [Exception] if any placeholder remains unresolved.
-String urlFromTemplate(String str, Map<String, String> data) {
+String urlFromTemplate(String str, Map<String, dynamic> data) {
   return str.replaceAllMapped(_templatePattern, (Match match) {
-    var value = data[match.group(1)];
+    var value = data[match.group(1)!];
     if (value == null) {
       throw Exception('No value provided for variable ${match.group(1)}');
     } else {
@@ -88,7 +98,7 @@ String urlFromTemplate(String str, Map<String, String> data) {
   });
 }
 
-double wrap(double value, List<num> range, [bool includeMax=false]) {
+double wrap(double value, List<num>? range, [bool includeMax=false]) {
   if(range == null || range.length != 2) {
     return value;
   }
@@ -122,7 +132,7 @@ Size projectedSize(Size size, double angle) {
   return Size(width, height).round();
 }
 
-Offset projectedPoint(Offset point, Size size, double angle) {
+Offset? projectedPoint(Offset? point, Size size, double angle) {
   if(angle == 0.0) {
     return point;
   }
@@ -131,7 +141,7 @@ Offset projectedPoint(Offset point, Size size, double angle) {
   Size halfSize = size / 2;
 
   Offset pointFromCenter = Offset(
-    point.dx - halfSize.width, 
+    point!.dx - halfSize.width, 
     halfSize.height - point.dy,
   );
 
@@ -159,59 +169,74 @@ const double opacityDef = 1.0;
 const bool strokeDef = true;
 const bool strokePolygonDef = false;
 const bool strokeRectangleDef = strokePolygonDef;
-const Color strokeColorDef = Colors.blueGrey;
+const Color strokeColorDef = Colors.lightBlue;
 const double strokeWidthDef = 3.0;
 const double strokeWidthCircleDef = 2.0;
 const double strokeWidthPolygonDef = 2.0;
 const double strokeWidthRectangleDef = strokeWidthPolygonDef;
 const double strokeOpacityDef = opacityDef;
-const double strokeOpacityPolygonDef = 0.8;
+const double strokeOpacityPolygonDef = 0.9;
 const double strokeOpacityRectangleDef = strokeOpacityPolygonDef;
 const StrokeCap strokeCapDef = StrokeCap.round;
 const StrokeJoin strokeJoinDef = StrokeJoin.round;
-const double fillOpacityDef = 0.25;
 const bool fillDef = true;
-const bool fillCircleDef = false;
-const Color fillColorDef = Colors.white24;
-const PathFillType fillTypeDef = PathFillType.evenOdd;
+const bool fillCircleDef = true;
+const double fillOpacityDef = 0.5;
+const PathFillType pathFillTypeDef = PathFillType.evenOdd;
 const bool isDottedDef = false;
 const List<Color> gradientColorsDef = [];
 const List<double> gradientStopsDef = [];
 const double smoothFactorDef = 1.0;
+const bool withHolesDef = true;
 const bool cullingDef = true;
 const bool interactiveDef = true;
 const String attributionDef = '';
+const bool slideOnBoundariesDef = false;
+const bool adaptiveBoundariesDef = false;
 
 const double tileSizeDef = 256.0;
 const double zoomDef = 13.0;
 const double minZoomDef = 0.0;
 const double maxZoomDef = 18.0;
 const double zoomDeltaDef = 1.0;
+const double rotationDef = 0.0;
+const bool disableRotationDef = false;
+const bool showCenterMarkerDef = false;
 const bool liveDef = false;
-const bool locatorDef = true;
+const bool moveWhenLiveDef = true;
+const bool showLocatorDef = true;
+const bool showLocationMarkerDef = false;
+const bool showLocationIndicatorDef = false;
+const bool showCompassDef = true;
+const bool showScaleDef = true;
 const bool zoomReverseDef = false;
 const double zoomOffsetDef = 0.0;
-const Map<String, String> additionalOptionsDef = const <String, String>{};
+const Map<String, dynamic> additionalOptionsDef = const <String, dynamic>{};
 const List<String> subdomainsDef = const <String>['a', 'b', 'c'];
 const int keepBufferDef = 2;
 const double tileOpacityDef = opacityDef;
 const bool updateWhenZoomingDef = true;
-const int updateTileIntervalDef = 100;
-const int tileFadeInDurationDef = 200;
-const Curve tileFadeInCurveDef = Curves.slowMiddle;
+const int updateTileIntervalDef = 150;
+const int tileFadeInDurationDef = 50;
+const Curve tileFadeInCurveDef = Curves.easeInOut;
 const double tileFadeInStartDef = 0.0;
 const double tileFadeInStartWhenOverrideDef = 0.0;
-const bool overrideTilesWhenUrlChangesDef = true;
-const bool retinaModeDef = true;
+const bool overrideTilesWhenUrlChangesDef = false;
 const TileProvider tileProviderDef = const CachedNetworkTileProvider();
+const bool retinaModeDef = false;
 const bool tmsDef = false;
+const bool hideAttributionDef = false;
 
-const double overlayOpacityDef = opacityDef;
+const double overlayOpacityDef = 0.75;
+const double overlayRotationDef = 0.0;
+const BoxFit overlayFitDef = BoxFit.contain;
 const bool overlayGaplessPlaybackDef = false;
 
-const double markerSizeDef = 54;
+const double markerSizeDef = 42;
 const MarkerAlignment markerAlignDef = MarkerAlignment.top;
-const MarkerIcon markerIconDef = const MarkerIcon(
-  icon: Icons.pin_drop,
-  color: Colors.lightBlue,
-);
+
+const Color markerColorDef = Colors.lightBlue;
+
+const MarkerSvg markerDef = const MarkerSvg('packages/universe/assets/marker2.svg');
+
+const bool loopingVideoDef = true;

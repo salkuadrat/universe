@@ -7,7 +7,8 @@ class AssetTileProvider extends DefaultTileProvider {
   const AssetTileProvider();
   
   @override
-  ImageProvider getImage(Crs crs, Coordinate coordinate, TileLayerOptions options) {
-    return AssetImage(getTileUrl(crs, coordinate, options));
+  ImageProvider getImage(String? templateUrl, Bounds? globalTileRange, Coordinate coordinate, TileLayerOptions? options) {
+    String tileUrl = getTileUrl(templateUrl, globalTileRange, coordinate, options);
+    return AssetImage(tileUrl);
   }
 }

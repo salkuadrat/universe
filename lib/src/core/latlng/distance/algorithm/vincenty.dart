@@ -13,7 +13,7 @@ class Vincenty implements DistanceAlgorithm {
     destination = LatLng.from(destination);
     
     double a = EQUATOR_RADIUS, b = POLAR_RADIUS, f = FLATTENING;
-    double L = destination.longitudeInRad - position.longitudeInRad;
+    double? L = destination.longitudeInRad - position.longitudeInRad;
     double u1 = atan((1 - f) * tan(position.latitudeInRad));
     double u2 = atan((1 - f) * tan(destination.latitudeInRad));
 
@@ -21,11 +21,11 @@ class Vincenty implements DistanceAlgorithm {
     double sinU2 = sin(u2), cosU2 = cos(u2);
 
     double sinLambda, cosLambda, sinSigma, cosSigma, sigma, sinAlpha, cosSqAlpha, cos2SigmaM;
-    double lambda = L, lambdaP;
+    double? lambda = L, lambdaP;
     int maxIterations = 200;
     
     do {
-      sinLambda = sin(lambda);
+      sinLambda = sin(lambda!);
       cosLambda = cos(lambda);
       sinSigma = sqrt(
         (cosU2 * sinLambda) * (cosU2 * sinLambda) + 
@@ -50,7 +50,7 @@ class Vincenty implements DistanceAlgorithm {
       double C = f / 16 * cosSqAlpha * (4 + f * (4 - 3 * cosSqAlpha));
       lambdaP = lambda;
       lambda = 
-        L + (1 - C) * f * sinAlpha * 
+        L! + (1 - C) * f * sinAlpha * 
         (sigma + C * sinSigma * (cos2SigmaM + C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
     
     } while ((lambda - lambdaP).abs() > 1e-12 && --maxIterations > 0);
@@ -72,7 +72,7 @@ class Vincenty implements DistanceAlgorithm {
   }
 
   @override
-  LatLng offset(dynamic from, double distanceInMeter, double bearing) {
+  LatLng offset(dynamic from, double? distanceInMeter, double bearing) {
     final latlng = LatLng.from(from);
 
     final latInRad = latlng.latitudeInRad;
@@ -96,7 +96,7 @@ class Vincenty implements DistanceAlgorithm {
     double a = 1 + dfUSq / 16384 * (4096 + dfUSq * (-768 + dfUSq * (320 - 175 * dfUSq)));
     double b = dfUSq / 1024 * (256 + dfUSq * (-128 + dfUSq * (74 - 47 * dfUSq)));
 
-    double sigma = distanceInMeter / (POLAR_RADIUS * a);
+    double sigma = distanceInMeter! / (POLAR_RADIUS * a);
     double sigmaP = 2 * PI;
 
     double sinSigma = 0.0;

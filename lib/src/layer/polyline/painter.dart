@@ -2,57 +2,69 @@ import 'dart:ui' as ui;
 import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
 
-import 'polyline.dart';
-
 class PolylinePainter extends CustomPainter {
 
-  final Polyline polyline;
-  final List<Offset> points;
-  final PolylineLayerOptions options;
+  final List<Offset>? points;
+  final Color? strokeColor;
+  final double? strokeWidth;
+  final double? strokeOpacity;
+  final StrokeCap? strokeCap;
+  final StrokeJoin? strokeJoin;
+  final PathFillType? pathFillType;
+  final bool? isDotted;
+  final bool? culling;
+  final List<Color>? gradientStrokeColors;
+  final List<double>? gradientStrokeStops;
+  
+  PolylinePainter({
+    this.points,
+    this.strokeColor, 
+    this.strokeWidth,
+    this.strokeOpacity,
+    this.strokeCap,
+    this.strokeJoin,
+    this.pathFillType,
+    this.isDotted,
+    this.culling,
+    this.gradientStrokeColors,
+    this.gradientStrokeStops,
+  });
 
-  PolylinePainter(this.polyline, this.points, {this.options});
-
-  bool get hasPoints => points != null && points.isNotEmpty;
+  bool get hasPoints => points != null && points!.isNotEmpty;
   bool get noPoints => !hasPoints;
 
-  get gradientColors => polyline.gradientStrokeColors ?? options.gradientStrokeColors;
-  get gradientStops => polyline.gradientStrokeStops ?? options.gradientStrokeStops;
+  bool get hasGradient => gradientStrokeColors != null && 
+    gradientStrokeColors!.isNotEmpty;
 
-  bool get hasGradient => gradientColors != null && gradientColors.isNotEmpty;
-  bool get hasGradientStops => 
-    gradientStops != null && 
-    gradientStops.length == gradientColors.length;
+  bool get hasGradientStops => gradientStrokeStops != null && 
+    gradientStrokeStops!.length == gradientStrokeColors!.length;
   
   @override
   void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    canvas.clipRect(rect);
+
     if(noPoints) {
       return;
     }
 
-    final rect = Offset.zero & size;
-    canvas.clipRect(rect);
-
-    final strokeColor = polyline.strokeColor ?? options.strokeColor;
-    final strokeWidth = polyline.strokeWidth ?? options.strokeWidth;
-    final strokeOpacity = polyline.strokeOpacity ?? options.strokeOpacity;
-    final isDotted = polyline.isDotted ?? options.isDotted;
-    final radius = strokeWidth / 2;
-    final spacing = strokeWidth * 1.5;
+    final radius = strokeWidth! / 2;
+    final spacing = strokeWidth! * 1.5;
 
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth
-      ..strokeCap = polyline.strokeCap ?? options.strokeCap
-      ..strokeJoin = polyline.strokeJoin ?? options.strokeJoin
+      ..strokeWidth = strokeWidth!
+      ..strokeCap = strokeCap!
+      ..strokeJoin = strokeJoin!
       ..blendMode = BlendMode.srcOver;
     
     hasGradient 
       ? paint.shader = _gradient() 
-      : paint.color = strokeColor?.withOpacity(strokeOpacity ?? 1.0);
+      : paint.color = strokeColor!.withOpacity(strokeOpacity!);
     
-    canvas.saveLayer(rect, Paint());
+    canvas.saveLayer(rect, paint);
 
-    if(isDotted) {
+    if(isDotted!) {
       paint.style = PaintingStyle.fill;
       _paintDottedLine(canvas, radius, spacing, paint);
     } else {
@@ -63,31 +75,30 @@ class PolylinePainter extends CustomPainter {
   }
 
   ui.Gradient _gradient() => ui.Gradient.linear(
-    points.first, 
-    points.last, 
-    gradientColors,
+    points!.first, 
+    points!.last, 
+    gradientStrokeColors!,
     _stops(),
   );
 
-  List<double> _stops() {
+  List<double>? _stops() {
     if(hasGradientStops) {
-      return gradientStops;
+      return gradientStrokeStops;
     }
 
-    final stopInterval = 1.0 / gradientColors.length;
-    return gradientColors.map(
-      (color) => gradientColors.indexOf(color) * stopInterval).toList();
+    final stopInterval = 1.0 / gradientStrokeColors!.length;
+    return gradientStrokeColors!.map(
+      (color) => gradientStrokeColors!.indexOf(color) * stopInterval).toList();
   }
 
   void _paintLine(Canvas canvas, Paint paint) {
-    final start = points.first;
-    final path = Path();
+    final start = points!.first;
+    final path = Path()..fillType = pathFillType!;
     
     path.moveTo(start.dx, start.dy);
-    points.removeAt(0);
-
-    for(Offset point in points) {
-      path.lineTo(point.dx, point.dy);
+    
+    for(var i = 1; i < points!.length; i++) {
+      path.lineTo(points![i].dx, points![i].dy);
     }
 
     canvas.drawPath(path, paint);
@@ -96,11 +107,11 @@ class PolylinePainter extends CustomPainter {
   void _paintDottedLine(Canvas canvas, double radius, double stepLength, Paint paint) {
     
     num startDistance = 0.0;
-    final path = Path();
+    final path = Path()..fillType = pathFillType!;
 
-    for (var i = 0; i < points.length - 1; i++) {
-      var current = points[i];
-      var next = points[i + 1];
+    for (var i = 0; i < points!.length - 1; i++) {
+      var current = points![i];
+      var next = points![i + 1];
       var totalDistance = _distance(current, next);
       var distance = startDistance;
 
@@ -122,7 +133,7 @@ class PolylinePainter extends CustomPainter {
         : distance - totalDistance;
     }
 
-    path.addOval(Rect.fromCircle(center: points.last, radius: radius));
+    path.addOval(Rect.fromCircle(center: points!.last, radius: radius));
     canvas.drawPath(path, paint);
   }
 

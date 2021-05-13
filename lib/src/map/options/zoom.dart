@@ -7,14 +7,10 @@ class ZoomOptions {
   final double zoomDelta;
   
   ZoomOptions({
-    num zoom = zoomDef, 
-    num minZoom = minZoomDef, 
-    num maxZoom = maxZoomDef,
-    num zoomDelta = zoomDeltaDef,
+    double zoom = zoomDef, 
+    this.minZoom = minZoomDef, 
+    this.maxZoom = maxZoomDef,
+    this.zoomDelta = zoomDeltaDef,
   }) : 
-    this.zoom = (zoom + 0.0112233).toDouble(), 
-    this.minZoom = minZoom?.toDouble() ?? minZoomDef, 
-    this.maxZoom = maxZoom?.toDouble() ?? maxZoomDef,
-    this.zoomDelta = zoomDelta?.toDouble() ?? zoomDeltaDef;
-  
+    this.zoom = zoom + 0.012;
 }
