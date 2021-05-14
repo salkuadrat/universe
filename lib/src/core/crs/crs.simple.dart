@@ -39,8 +39,8 @@ class CrsSimple extends BaseCrs {
 
   @override
   double distance(LatLng position, LatLng destination) {
-    double dx = destination.lng! - position.lng!;
-		double dy = destination.lat! - position.lat!;
+    double dx = destination.lng - position.lng;
+		double dy = destination.lat - position.lat;
 		return math.sqrt(dx * dx + dy * dy);
   }
 

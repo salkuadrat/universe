@@ -12,7 +12,7 @@ class FeatureLayer extends GroupLayer {
     : super(key: key, layers: layers, options: options);
   
   @override
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
+  Widget buildLayer(BuildContext context, MapStates map) {
     return Container(
       
     );

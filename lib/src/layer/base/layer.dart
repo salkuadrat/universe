@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:provider/provider.dart';
 
 import '../../map/map.dart';
 import 'options.dart';
@@ -10,21 +10,13 @@ class MapLayer extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return CubitBuilder<MapStateManager, MapState>(
-      buildWhen: (old, current) {
-        return 
-          old.center == null || old.zoom == null || 
-          (current.center!.notEqual(old.center)) ||  
-          (current.isNotEqualZoom(old.zoom!)) || 
-          (current.bounds != old.bounds) || 
-          (current.rotation != old.rotation);
-      },
-      builder: (context, map) => buildLayer(context, map.controller, map),
+    return Consumer<MapStates>(
+      builder: (context, map, child) => buildLayer(context, map),
     );
   }
 
   /// override this function for every map layers
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
+  Widget buildLayer(BuildContext context, MapStates map) {
     return Container();
   }
 }

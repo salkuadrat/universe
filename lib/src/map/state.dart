@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+/* import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
 
 import '../core/core.dart';
@@ -98,7 +98,7 @@ class MapState {
 
   MapState withManager(MapStateManager manager) {
     MapController controller = this.controller!;
-    controller.manager = manager;
+    //controller.manager = manager;
     return copyWith(controller: controller);
   }
   
@@ -296,10 +296,10 @@ class MapState {
       final halfHeight = _heightInDegrees / 2;
       final halfWidth = _widthInDegrees / 2;
       
-      final swLatitude = swBound!.latitude! + halfHeight;
-      final swLongitude = swBound!.longitude! + halfWidth;
-      final neLatitude = neBound!.latitude! - halfHeight;
-      final neLongitude = neBound!.longitude! - halfWidth;
+      final swLatitude = swBound!.lat + halfHeight;
+      final swLongitude = swBound!.lng + halfWidth;
+      final neLatitude = neBound!.lat - halfHeight;
+      final neLongitude = neBound!.lng - halfWidth;
       
       _safeBoundsCache = SafeBounds(
         LatLng(swLatitude, swLongitude),
@@ -324,12 +324,12 @@ class MapState {
       }
 
       bool isLatOutOfBounds =  
-        (center.latitude! < swBound!.latitude!) || 
-        (center.latitude! > neBound!.latitude!);
+        (center.lat < swBound!.lat) || 
+        (center.lat > neBound!.lat);
       
       bool isLngOutOfBounds = 
-        (center.longitude! < swBound!.longitude!) || 
-        (center.longitude! > neBound!.longitude!);
+        (center.lng < swBound!.lng) || 
+        (center.lng > neBound!.lng);
       
       if(isLatOutOfBounds || isLngOutOfBounds) {
         return true;
@@ -339,15 +339,15 @@ class MapState {
     return false;
   }
 
-  LatLng? safeCenter(LatLng? center, LatLng? defaultCenter) {
+  LatLng safeCenter(LatLng center, LatLng defaultCenter) {
     if(hasMaxBounds) {
       if (options!.adaptiveBoundaries) {
         return _safeBounds!.containLatLng(center, defaultCenter);
       }
 
       return LatLng(
-        center!.latitude!.clamp(swBound!.latitude!, neBound!.latitude!),
-        center.longitude!.clamp(swBound!.longitude!, neBound!.longitude!),
+        center.lat.clamp(swBound!.lat, neBound!.lat),
+        center.lng.clamp(swBound!.lng, neBound!.lng),
       );
     }
     
@@ -365,4 +365,4 @@ class MapState {
   void onChanged(LatLng? center, double? zoom, double rotation) {
     controller!.onChanged?.call(center, zoom, rotation);
   }
-}
+} */

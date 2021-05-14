@@ -78,15 +78,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  cubit:
-    dependency: transitive
-    description:
-      path: "packages/cubit"
-      ref: HEAD
-      resolved-ref: "60c65ca0a8c64f09d1ffac8adf55318da4b892a7"
-      url: "git://github.com/salkuadrat/cubit.git"
-    source: git
-    version: "0.2.0"
   curved_animation_controller:
     dependency: transitive
     description:
@@ -134,15 +125,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
-  flutter_cubit:
-    dependency: transitive
-    description:
-      path: "packages/flutter_cubit"
-      ref: HEAD
-      resolved-ref: "60c65ca0a8c64f09d1ffac8adf55318da4b892a7"
-      url: "git://github.com/salkuadrat/cubit.git"
-    source: git
-    version: "0.2.0"
   flutter_image:
     dependency: transitive
     description:
@@ -525,7 +507,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.2"
   uuid:
     dependency: transitive
     description:

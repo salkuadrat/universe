@@ -13,12 +13,11 @@ class GroupLayer extends InteractiveLayer {
     : super(key: key, options: options);
 
   @override
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
-    // TODO transfer options from GroupLayer to every child layers
+  Widget buildLayer(BuildContext context, MapStates map) {
     return Transform.rotate(
-      angle: degToRadian(options!.rotation),
+      angle: degToRadian(options?.rotation ?? map.options.rotation),
       child: Opacity(
-        opacity: options!.opacity,
+        opacity: options?.opacity ?? 1.0,
         child: Stack(children: layers!),
       ),
     );

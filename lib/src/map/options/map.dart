@@ -58,7 +58,7 @@ class MapOptions {
 
   /// Whether to show location indicator at the user's location 
   /// when live or locate by [locator]
-  final bool? showLocationIndicator;
+  final bool showLocationIndicator;
 
   /// To define custom style and position of [LocationIndictor] on the screen.
   final LocationIndicator? locationIndicator;
@@ -104,6 +104,7 @@ class MapOptions {
   bool get noSize => size == null;
   bool get hasMaxBounds => maxBounds != null;
   bool get hasFitBounds => fitBounds != null;
+  bool get hasLocationIndicator => locationIndicator != null;
   //bool get hasBounds => bounds != null;
 
   bool get hasCenter => center != null;
@@ -128,7 +129,7 @@ class MapOptions {
     this.locator,
     this.locationMarker = markerDef,
     this.showLocationMarker = showLocationMarkerDef,
-    this.showLocationIndicator,
+    this.showLocationIndicator = showLocationIndicatorDef,
     this.locationIndicator,
     this.showCompass = showCompassDef,
     this.compass,

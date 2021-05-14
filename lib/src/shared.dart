@@ -132,7 +132,7 @@ Size projectedSize(Size size, double angle) {
   return Size(width, height).round();
 }
 
-Offset? projectedPoint(Offset? point, Size size, double angle) {
+Offset projectedPoint(Offset point, Size size, double angle) {
   if(angle == 0.0) {
     return point;
   }
@@ -141,7 +141,7 @@ Offset? projectedPoint(Offset? point, Size size, double angle) {
   Size halfSize = size / 2;
 
   Offset pointFromCenter = Offset(
-    point!.dx - halfSize.width, 
+    point.dx - halfSize.width, 
     halfSize.height - point.dy,
   );
 

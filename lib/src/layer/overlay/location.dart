@@ -22,23 +22,22 @@ class LocationIndicator extends MapLayer {
   });
        
   @override 
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
+  Widget buildLayer(BuildContext context, MapStates map) {
     if(map.location == null) {
       return Container();
     }
     
     double scale = map.getZoomScale(map.zoom, map.zoom);
-    UPoint locationPoint = map.project(map.location) * scale - map.pixelOrigin;
+    UPoint locationPoint = map.project(map.position) * scale - map.pixelOrigin;
     Offset location = map.pointToOffset(locationPoint);
 
     return AnimatedIndicator(
       location: location,
-      overlayRadius: map.options!.live ? overlayRadius : 0,
+      overlayRadius: map.options.live ? overlayRadius : 0,
       ringRadius: ringRadius,
       radius: radius,
-      //color: map.options.live && map.isNotLocating ? Colors.grey : color,
       color: color,
-      animate: animate && map.isLocating!,
+      animate: animate && map.isLocating,
     );
   }
 }

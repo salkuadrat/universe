@@ -78,7 +78,7 @@ class U {
     bool? disableRotation,
     Color? background,
     C.MapController? controller,
-    L.TileLayer? base,
+    required L.TileLayer base,
     L.MarkerLayer? markers,
     L.CircleLayer? circles,
     L.PolylineLayer? polylines,

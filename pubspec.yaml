@@ -1,6 +1,6 @@
 name: universe
 description: An easy way to use interactive maps in Flutter.
-version: 0.0.1
+version: 0.0.2
 author:
 homepage:
 publish_to: none
@@ -32,17 +32,10 @@ dependencies:
     git:
       url: git://github.com/salkuadrat/flutter_geocoder.git
   video_player: ^2.1.1
-  cubit: 
-    git:
-      url: git://github.com/salkuadrat/cubit.git
-      path: packages/cubit
-  flutter_cubit:
-    git:
-      url: git://github.com/salkuadrat/cubit.git
-      path: packages/flutter_cubit
   validate:
     git:
       url: git://github.com/chimon2000/dart-validate.git
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:

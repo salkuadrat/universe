@@ -10,7 +10,7 @@ class LatLngTween extends Tween<LatLng> {
 
   @override
   LatLng lerp(double t) => LatLng(
-    begin!.lat! + (end!.lat! - begin!.lat!) * t, 
-    begin!.lng! + (end!.lng! - begin!.lng!) * t,
+    begin!.lat + (end!.lat - begin!.lat) * t, 
+    begin!.lng + (end!.lng - begin!.lng) * t,
   );
 }

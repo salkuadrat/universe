@@ -9,6 +9,7 @@ import 'crs.earth.dart';
 /// 
 /// Uses Spherical Mercator projection. 
 class Epsg3857 extends Earth {
+  
   const Epsg3857();
   
   static const double SCALE = 0.5 / (PI * SphericalMercator.R);

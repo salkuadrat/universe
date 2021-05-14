@@ -24,7 +24,10 @@ class LatLngBounds {
   // can accept parameter as [LatLng(20,30), LatLng(10, 10), ...] or 
   // [[20, 30], [10, 10], ...]
   factory LatLngBounds.from(dynamic latlngs) {
-    assert(latlngs is LatLngBounds || (latlngs is List && latlngs.length > 1));
+    assert(
+      latlngs is LatLngBounds || 
+      (latlngs is List && latlngs.length > 1)
+    );
 
     if(latlngs is List && latlngs.length > 1) {
       return LatLngBounds(latlngs);
@@ -40,25 +43,30 @@ class LatLngBounds {
   }
 
   extendBounds(LatLngBounds bounds) {
-    _extend(bounds.southWest, bounds.northEast);
-  }
-
-  _extend(LatLng? sw, LatLng? ne) {
-    if (_sw == null && _ne == null) {
-      _sw = LatLng(sw!.latitude, sw.longitude);
-      _ne = LatLng(ne!.latitude, ne.longitude);
-    } else {
-      _sw!.latitude = min(sw!.latitude!, _sw!.latitude!);
-      _sw!.longitude = min(sw.longitude!, _sw!.longitude!);
-      _ne!.latitude = max(ne!.latitude!, _ne!.latitude!);
-      _ne!.longitude = max(ne.longitude!, _ne!.longitude!);
+    if(bounds.southWest != null && bounds.northEast != null) {
+      _extend(bounds.southWest!, bounds.northEast!);
     }
   }
 
-  double? get west => southWest!.longitude;
-  double? get south => southWest!.latitude;
-  double? get east => northEast!.longitude;
-  double? get north => northEast!.latitude;
+  _extend(LatLng sw, LatLng ne) {
+    if (_sw == null && _ne == null) {
+      _sw = LatLng(sw.lat, sw.lng);
+      _ne = LatLng(ne.lat, ne.lng);
+    } else {
+      _sw = LatLng(
+        min(sw.lat, _sw!.lat), 
+        min(sw.lng, _sw!.lng));
+      
+      _ne = LatLng(
+        max(ne.lat, _ne!.lat), 
+        max(ne.lng, _ne!.lng));
+    }
+  }
+
+  double? get west => southWest!.lng;
+  double? get south => southWest!.lat;
+  double? get east => northEast!.lng;
+  double? get north => northEast!.lat;
 
   LatLng? get southWest => _sw;
   LatLng? get northEast => _ne;
@@ -85,10 +93,10 @@ class LatLngBounds {
     var sw = bounds._sw!;
     var ne = bounds._ne;
 
-    return (sw.latitude! >= _sw!.latitude!) &&
-        (ne!.latitude! <= _ne!.latitude!) &&
-        (sw.longitude! >= _sw!.longitude!) &&
-        (ne.longitude! <= _ne!.longitude!);
+    return (sw.lat >= _sw!.lat) &&
+        (ne!.lat <= _ne!.lat) &&
+        (sw.lng >= _sw!.lng) &&
+        (ne.lng <= _ne!.lng);
   }
 
   bool isOverlaps(LatLngBounds bounds) {
@@ -98,10 +106,10 @@ class LatLngBounds {
 
     // check if bounding box rectangle is outside the other, 
     // if it is then it's considered not overlapping
-    if (_sw!.latitude! > bounds._ne!.latitude! ||
-        _ne!.latitude! < bounds._sw!.latitude! ||
-        _ne!.longitude! < bounds._sw!.longitude! ||
-        _sw!.longitude! > bounds._ne!.longitude!) {
+    if (_sw!.lat > bounds._ne!.lat ||
+        _ne!.lat < bounds._sw!.lat ||
+        _ne!.lng < bounds._sw!.lng ||
+        _sw!.lng > bounds._ne!.lng) {
       return false;
     }
 

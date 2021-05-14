@@ -4,67 +4,60 @@ import '../map.dart';
 
 class UMapController implements MapController {
 
-  MapStateManager? _manager;
-
-  set manager(MapStateManager manager) {
-    _manager = manager;
-  }
+  MapStates? map;
 
   @override 
-  MapState? get map => _manager?.state;
-
-  @override 
-  bool get isReady => _manager != null && map != null;
+  bool get isReady => map != null;
 
   @override
   void move(center, {double? zoom, bool animate = false}) {
-    _manager?.move(center, zoom ?? map!.zoom, animate);
+    map?.move(center, zoom ?? map!.zoom, animate);
   }
 
   @override 
   void zoomTo(double zoom,{bool animate = false}) {
-    _manager?.zoom(zoom, animate);
+    map?.zoomTo(zoom, animate);
   }
 
   @override
   void fitBounds(dynamic bounds, [FitBoundsOptions? options]) {
-    _manager?.fitBounds(bounds, options);
+    map?.fitBounds(bounds, options);
   }
 
   void zoomIn([double zoomDelta = zoomDeltaDef]) {
-    _manager?.zoomIn(zoomDelta);
+    map?.zoomIn(zoomDelta);
   }
 
   void zoomOut([double zoomDelta = zoomDeltaDef]) {
-    _manager?.zoomOut(zoomDelta);
+    map?.zoomOut(zoomDelta);
   }
 
   @override 
   void rotate(double rotation, {bool animate = false, Function? onAnimateEnd}) {
-    _manager?.rotate(rotation, animate, onAnimateEnd);
+    map?.rotate(rotation, animate, onAnimateEnd);
   }
 
   @override 
   Future<LatLng?> findLocation(String query) async {
-    return await _manager?.findLocation(query);
+    return await map?.findLocation(query);
   }
 
   @override 
   Future<LatLng?> locate({bool automove = false, double toZoom = 17.0}) async {
-    return await _manager?.locate(automove, toZoom);
+    return await map?.locate(automove, toZoom);
   }
 
   @override
-  LatLngBounds? get bounds => _manager?.state.bounds;
+  LatLngBounds? get bounds => map?.bounds;
 
   @override
-  LatLng? get center => _manager?.state.center;
+  LatLng? get center => map?.center;
 
   @override
-  double get zoom => _manager?.state.zoom ?? zoomDef;
+  double? get zoom => map?.zoom;
 
   @override 
-  double get rotation => _manager?.state.rotation ?? rotationDef;
+  double? get rotation => map?.rotation;
 
   @override 
   Function? onReady;
@@ -73,7 +66,7 @@ class UMapController implements MapController {
   MapChangedCallback? onChanged;
 
   @override 
-  Stream<MapData>? get positionStream => _manager?.positionStream?.stream;
+  Stream<MapData>? get positionStream => map?.positionStream.stream;
 
   @override
   double distance(dynamic toDestination, {
@@ -82,7 +75,7 @@ class UMapController implements MapController {
   }) {
     bool isVincenty = algorithm == DistanceAlgorithmType.Vincenty;
     Distance d = isVincenty ? DistanceVincenty() : DistanceHaversine();
-    return d.distance(map!.center, toDestination, unit: unit);
+    return d.distance(map?.center, toDestination, unit: unit);
   }
 
   @override
@@ -91,7 +84,7 @@ class UMapController implements MapController {
   }) {
     bool isVincenty = algorithm == DistanceAlgorithmType.Vincenty;
     Distance d = isVincenty ? DistanceVincenty() : DistanceHaversine();
-    return d.offset(map!.center, distance, bearing);
+    return d.offset(map?.center, distance, bearing);
   }
 
   @override
@@ -100,7 +93,7 @@ class UMapController implements MapController {
   }) {
     bool isVincenty = algorithm == DistanceAlgorithmType.Vincenty;
     Distance d = isVincenty ? DistanceVincenty() : DistanceHaversine();
-    return d.bearing(map!.center, toDestination);
+    return d.bearing(map?.center, toDestination);
   }
 
   @override 

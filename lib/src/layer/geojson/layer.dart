@@ -18,7 +18,7 @@ class GeoJSONLayer extends InteractiveLayer {
   }) : super(key: key, options: options);
   
   @override
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
+  Widget buildLayer(BuildContext context, MapStates map) {
 
     Map<String, dynamic> json = (jsonDecode(geojson) as Map<String, dynamic>);
 

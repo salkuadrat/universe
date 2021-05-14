@@ -22,26 +22,26 @@ export 'unit/length.dart';
 /// LatLng latlng = LatLng(51.519475, -19.37555556, 20.0); 
 class LatLng extends Coordinate {
 
-  double? latitude;
-  double? longitude;
-  double? altitude;
+  double _latitude;
+  double _longitude;
+  double _altitude;
 
-  double? get lat => latitude;
-  double? get lng => longitude;
-  double? get alt => altitude;
+  double get lat => _latitude;
+  double get lng => _longitude;
+  double get alt => _altitude;
 
   LatLng(latitude, longitude, [altitude = 0.0]) : 
-    this.latitude = latitude != null ? latitude.toDouble() : 0.0,
-    this.longitude = longitude != null ? longitude.toDouble() : 0.0,
-    this.altitude = altitude != null ? altitude.toDouble() : 0.0, 
+    _latitude = latitude?.toDouble() ?? 0.0,
+    _longitude = longitude?.toDouble() ?? 0.0,
+    _altitude = altitude?.toDouble() ?? 0.0,
+
     super(
-      latitude != null ? latitude.toDouble() : 0.0, 
-      longitude != null ? longitude.toDouble() : 0.0, 
-      altitude != null ? altitude.toDouble() : 0.0,
+      latitude?.toDouble() ?? 0.0, 
+      longitude?.toDouble() ?? 0.0, 
+      altitude?.toDouble() ?? 0.0,
     );
 
   factory LatLng.from(dynamic value) {
-    
     assert(
       value is LatLng || 
       (
@@ -53,37 +53,35 @@ class LatLng extends Coordinate {
     );
 
     if(value is List && value.isNotEmpty && (value.first is int || value.first is double)) {
-      if(value.length == 3) 
-        return LatLng(
-          value[0].toDouble(), 
-          value[1].toDouble(), 
-          value[2].toDouble(),
-        );
+      if(value.length == 3) return LatLng(
+        value[0].toDouble(), 
+        value[1].toDouble(), 
+        value[2].toDouble(),
+      );
       
-      if(value.length == 2) 
-        return LatLng(
-          value[0].toDouble(), 
-          value[1].toDouble(),
-        );
+      if(value.length == 2) return LatLng(
+        value[0].toDouble(), 
+        value[1].toDouble(),
+      );
     }
 
     return value;
   }
 
-  double get latitudeInRad => s.degToRadian(latitude!);
+  double get latitudeInRad => s.degToRadian(_latitude);
 
-  double get longitudeInRad => s.degToRadian(longitude!);
+  double get longitudeInRad => s.degToRadian(_longitude);
 
   LatLng round({int decimals = 6}) => LatLng(
-    s.round(lat!, decimals: decimals),
-    s.round(lng!, decimals: decimals),
-    s.round(alt!, decimals: decimals),
+    s.round(_latitude, decimals: decimals),
+    s.round(_longitude, decimals: decimals),
+    s.round(_altitude, decimals: decimals),
   );
 
   NumberFormat get formatter => NumberFormat('0.0#####');
-  String get latitudeStr => formatter.format(lat);
-  String get longitudeStr => formatter.format(lng);
-  String get altitudeStr => formatter.format(alt);
+  String get latitudeStr => formatter.format(_latitude);
+  String get longitudeStr => formatter.format(_longitude);
+  String get altitudeStr => formatter.format(_altitude);
 
   /// Returns `true` if the given position is at the same position 
   /// (within a small margin of error). 
@@ -99,11 +97,11 @@ class LatLng extends Coordinate {
     LatLng o = LatLng.from(other);
 
     double margin = math.max(
-      (this.lat! - o.lat!).abs(), 
-      (this.lng! - o.lng!).abs(),
+      (this.lat - o.lat).abs(), 
+      (this.lng - o.lng).abs(),
     );
 
-    margin = math.max(margin, (this.alt! - o.alt!).abs());
+    margin = math.max(margin, (this.alt - o.alt).abs());
 
     return margin <= maxMargin;
   }
@@ -132,10 +130,10 @@ class LatLng extends Coordinate {
   ///     
   /// Result: 51° 31' 10.11" N, 19° 22' 32.00" W
   String toSexagesimal() {
-    String latDirection = lat! >= 0 ? "N" : "S";
-    String longDirection = lng! >= 0 ? "O" : "W";
-    String latSexagesimal = s.decimal2sexagesimal(lat!);
-    String longSexagesimal = s.decimal2sexagesimal(lng!);
+    String latDirection = _latitude >= 0 ? "N" : "S";
+    String longDirection = _longitude >= 0 ? "O" : "W";
+    String latSexagesimal = s.decimal2sexagesimal(_latitude);
+    String longSexagesimal = s.decimal2sexagesimal(_longitude);
 
     return "$latSexagesimal $latDirection, $longSexagesimal $longDirection";
   }

@@ -174,11 +174,11 @@ class BaseCrs extends Crs {
   @override
   LatLng wrapLatLng(LatLng latlng) {
     double? latitude = projection != null && projection!.hasLatBounds 
-      ? projection!.wrapLat(latlng.lat!) 
+      ? projection!.wrapLat(latlng.lat) 
       : latlng.lat;
 
     double? longitude = projection != null && projection!.hasLngBounds 
-      ? projection!.wrapLng(latlng.lng!) 
+      ? projection!.wrapLng(latlng.lng) 
       : latlng.lng;
 
     return LatLng(latitude, longitude);
@@ -192,8 +192,8 @@ class BaseCrs extends Crs {
   LatLngBounds wrapLatLngBounds(LatLngBounds bounds) {
     LatLng center = bounds.center;
 		LatLng newCenter = wrapLatLng(center);
-		double latShift = center.lat! - newCenter.lat!;
-		double lngShift = center.lng! - newCenter.lng!;
+		double latShift = center.lat - newCenter.lat;
+		double lngShift = center.lng - newCenter.lng;
 
 		if(latShift == 0 && lngShift == 0) {
 			return bounds;
@@ -201,8 +201,8 @@ class BaseCrs extends Crs {
     
 		LatLng sw = bounds.southWest!;
 		LatLng ne = bounds.northEast!;
-		LatLng newSw = LatLng(sw.lat! - latShift, sw.lng! - lngShift);
-		LatLng newNe = LatLng(ne.lat! - latShift, ne.lng! - lngShift);
+		LatLng newSw = LatLng(sw.lat - latShift, sw.lng - lngShift);
+		LatLng newNe = LatLng(ne.lat - latShift, ne.lng - lngShift);
 
 		return LatLngBounds(newSw, newNe);
   }

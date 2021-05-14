@@ -1,3 +1,8 @@
-## [0.0.1] - TODO: Add release date.
+## [0.0.2] - 15 May 2021
 
-* TODO: Describe initial release.
+* Change from Cubit to Provider
+* Migrate to null safety
+
+## [0.0.1] - Mar 2021
+
+* Initial version of Universe (still using Cubit)

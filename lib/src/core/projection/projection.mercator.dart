@@ -22,7 +22,7 @@ class Mercator extends Projection {
   @override
   UPoint project(LatLng? position) {
     double d = PI / 180;
-    double y = position!.latitude! * d;
+    double y = position!.lat * d;
     double tmp = R_MINOR / R;
     double e = Math.sqrt(1 - tmp * tmp);
     double con = e * Math.sin(y);
@@ -30,7 +30,7 @@ class Mercator extends Projection {
     double ts = Math.tan(PI / 4 - y / 2) / Math.pow((1 - con) / (1 + con), e / 2);
     y = -R * Math.log(Math.max(ts, 1E-10));
 
-    return UPoint(position.longitude! * d * R, y);
+    return UPoint(position.lng * d * R, y);
   }
 
   @override

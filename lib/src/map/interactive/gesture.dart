@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/core.dart';
 import '../../shared.dart';
@@ -41,11 +41,7 @@ class MapGestureDetector extends StatefulWidget {
 class _MapGestureDetectorState extends State<MapGestureDetector> 
   with TickerProviderStateMixin implements MapGestureMixin {
   
-  // Cubit state management to manage map state
-  MapStateManager get manager => context.cubit<MapStateManager>();
-
-  // Current map state from cubit MapManager
-  MapState get map => manager.state;
+  MapStates get map => Provider.of<MapStates>(context, listen: false);
 
   TapPositionController _tapPositionController = TapPositionController();
 
@@ -117,13 +113,13 @@ class _MapGestureDetectorState extends State<MapGestureDetector>
     final centerStart = _centerZoomStart.center;
     final centerPoint = map.project(centerStart) + map.offsetToPoint(fling);
     final center = map.unproject(centerPoint);
-    manager.move(center, map.zoom);
+    map.move(center, map.zoom);
   }
 
   void _onDoubleTapAnim() {
     LatLng center = _centerAnimation.value;
     double zoom = _zoomAnimation.value;
-    manager.move(center,  zoom);
+    map.move(center,  zoom);
   }
 
   void _startDoubleTapAnimation(LatLng? toCenter, double toZoom) {
@@ -161,18 +157,18 @@ class _MapGestureDetectorState extends State<MapGestureDetector>
   void _onDoubleTapHold(ScaleUpdateDetails details) {
     _doubleTapHoldTimer?.cancel();
 
-    final projectedFocalPoint = projectedPoint(details.localFocalPoint, size, manager.angle)!;
+    final projectedFocalPoint = projectedPoint(details.localFocalPoint, size, map.angle);
     final focalPoint = map.offsetToPoint(projectedFocalPoint);
     final diff = map.pointToOffset(_focalPointStart - focalPoint);
 
     final minZoom = map.minZoom;
     final maxZoom = map.maxZoom;
-    final zoomStart = _centerZoomStart.zoom!;
+    final zoomStart = _centerZoomStart.zoom;
 
-    final zoom = zoomStart - diff.dy / 360 * map.zoom!;
+    final zoom = zoomStart - diff.dy / 360 * map.zoom;
     final toZoom = math.max(minZoom, math.min(maxZoom, zoom));
 
-    manager.move(map.center, toZoom);
+    map.move(map.center, toZoom);
   }
 
   @override
@@ -194,11 +190,11 @@ class _MapGestureDetectorState extends State<MapGestureDetector>
   void onDoubleTap(TapPosition position) {
     _resetDoubleTapHold();
 
-    final zoom = map.getScaledZoom(map.zoom!, 2.0);
-    final zoomDelta = zoom - map.zoom!;
+    final zoom = map.getScaledZoom(map.zoom, 2.0);
+    final zoomDelta = zoom - map.zoom;
 
-    Size pjSize = projectedSize(size, manager.angle);
-    Offset focalPoint = projectedPoint(position.local, size, manager.angle)!;
+    Size pjSize = projectedSize(size, map.angle);
+    Offset focalPoint = projectedPoint(position.local!, size, map.angle);
 
     UPoint centerPoint = UPoint.from(pjSize / 2);
     Offset focalCenter = map.pointToOffset(centerPoint);
@@ -215,20 +211,20 @@ class _MapGestureDetectorState extends State<MapGestureDetector>
 
   @override
   void onTap(TapPosition position) {
-    final pjSize = projectedSize(size, manager.angle);
-    final focalPoint = projectedPoint(position.local, size, manager.angle)!;
+    final pjSize = projectedSize(size, map.angle);
+    final focalPoint = projectedPoint(position.local!, size, map.angle);
     final location = map.offsetToLatLng(focalPoint, pjSize.width, pjSize.height);
-    map.onTap(location);
+    map.onTap?.call(location);
   }
 
   @override
   void onLongPress(TapPosition position) {
     _resetDoubleTapHold();
 
-    final pjSize = projectedSize(size, manager.angle);
-    final focalPoint = projectedPoint(position.local, size, manager.angle)!;
+    final pjSize = projectedSize(size, map.angle);
+    final focalPoint = projectedPoint(position.local!, size, map.angle);
     final location = map.offsetToLatLng(focalPoint, pjSize.width, pjSize.height);
-    map.onLongPress(location);
+    map.onLongPress?.call(location);
   }
 
   Size get size => Size(context.size!.width, context.size!.height);
@@ -240,11 +236,11 @@ class _MapGestureDetectorState extends State<MapGestureDetector>
     _centerZoomStart = MapData(center: map.center, zoom: map.zoom);
 
     if(map.canRotate) {
-      manager.setAngleStart(manager.angle);
+      map.angleStart = map.angle;
     }
 
-    final pjSize = projectedSize(size, manager.angle);
-    final focalPoint = projectedPoint(details.localFocalPoint, size, manager.angle)!;
+    final pjSize = projectedSize(size, map.angle);
+    final focalPoint = projectedPoint(details.localFocalPoint, size, map.angle);
 
     _focalPointStart = map.offsetToPoint(focalPoint);
     _focalLatLngStart = map.offsetToLatLng(focalPoint, pjSize.width, pjSize.height);
@@ -266,15 +262,15 @@ class _MapGestureDetectorState extends State<MapGestureDetector>
     final isRotating = _rotationUpdate.abs() > (PI / 20);
 
     if(map.canRotate) {
-      manager.setAngle(manager.angleStart + details.rotation);
+      map.angle = map.angleStart + details.rotation;
     }
 
     if(isScaling || !isRotating) {
       
-      final zoom = map.getScaledZoom(_centerZoomStart.zoom!, details.scale);
+      final zoom = map.getScaledZoom(_centerZoomStart.zoom, details.scale);
 
-      final pjSize = projectedSize(size, manager.angle);
-      final projectedFocalPoint = projectedPoint(details.localFocalPoint, size, manager.angle)!;
+      final pjSize = projectedSize(size, map.angle);
+      final projectedFocalPoint = projectedPoint(details.localFocalPoint, size, map.angle);
 
       final halfPoint = UPoint.from(pjSize / 2);
       final focalPoint = map.offsetToPoint(projectedFocalPoint);
@@ -283,7 +279,7 @@ class _MapGestureDetectorState extends State<MapGestureDetector>
       final centerPoint = halfPoint + (focalStartPoint - focalPoint);
       final center = map.unproject(centerPoint, zoom);
 
-      manager.move(center, zoom);
+      map.move(center, zoom);
       
       _flingStart = map.pointToOffset(_focalPointStart - focalPoint);
     }
@@ -294,7 +290,7 @@ class _MapGestureDetectorState extends State<MapGestureDetector>
     _resetDoubleTapHold();
 
     if(map.canRotate) {
-      manager.setAngle(manager.angleStart + _rotationUpdate);
+      map.angle = map.angleStart + _rotationUpdate;
     }
      
     final flingVelocity = details.velocity.pixelsPerSecond.distance;
@@ -306,8 +302,8 @@ class _MapGestureDetectorState extends State<MapGestureDetector>
       final distance = math.min(size.width, size.height);
       final dd = direction * distance;
 
-      final cos = math.cos(manager.angle);
-      final sin = math.sin(manager.angle);
+      final cos = math.cos(map.angle);
+      final sin = math.sin(map.angle);
       
       final pdd = Offset(
         dd.dx * cos + dd.dy * sin,

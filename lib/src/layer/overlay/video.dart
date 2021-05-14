@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../map/map.dart';
@@ -11,21 +11,21 @@ class VideoOverlay extends InteractiveLayer {
   final String videoUrl;
   final LatLngBounds bounds;
   final dynamic data;
-  final bool? looping;
-  final InteractiveLayerOptions? options;
+  final bool looping;
+  final InteractiveLayerOptions options;
   final Function(VideoPlayerController?)? onReady;
 
   VideoOverlay(this.videoUrl, {
     Key? key, 
-    dynamic bounds,
+    required dynamic bounds,
     this.data, 
-    this.looping, 
-    this.options,
+    this.looping = true, 
+    required this.options,
     this.onReady,
   }) : this.bounds = LatLngBounds.from(bounds);
 
   @override
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
+  Widget buildLayer(BuildContext context, MapStates map) {
     final pixelOrigin = map.pixelOrigin;
     final scale = map.getZoomScale(map.zoom, map.zoom);
     final nw = map.project(bounds.northWest);
@@ -64,18 +64,18 @@ class VideoOverlay extends InteractiveLayer {
 class VideoOverlayPlayer extends StatefulWidget {
 
   final String url;
-  final LatLngBounds? bounds;
+  final LatLngBounds bounds;
   final dynamic data;
-  final bool? looping;
-  final InteractiveLayerOptions? options;
+  final bool looping;
+  final InteractiveLayerOptions options;
   final Function(VideoPlayerController?)? onReady;
 
   VideoOverlayPlayer(this.url, {
     Key? key, 
-    this.bounds,
+    required this.bounds,
     this.data, 
-    this.looping, 
-    this.options,
+    required this.looping, 
+    required this.options,
     this.onReady,
   });
 
@@ -85,34 +85,33 @@ class VideoOverlayPlayer extends StatefulWidget {
 
 class _VideoOverlayPlayerState extends State<VideoOverlayPlayer> {
 
-  MapStateManager get manager => context.cubit<MapStateManager>();
-  MapState get map => manager.state;
+  MapStates get map => Provider.of<MapStates>(context, listen: false);
 
-  VideoPlayerController? _videoController;
+  late VideoPlayerController _videoController;
 
   @override
   void initState() {
     super.initState();
     _videoController = VideoPlayerController.network(widget.url);
-    _videoController!.setLooping(widget.looping!);
-    _videoController!.addListener(() => setState(() {}));
-    _videoController!.initialize().then((_) => setState(() {
+    _videoController.setLooping(widget.looping);
+    _videoController.addListener(() => setState(() {}));
+    _videoController.initialize().then((_) => setState(() {
       widget.onReady?.call(_videoController);
     }));
-    _videoController!.play();
+    _videoController.play();
   }
 
   @override
   void dispose() {
-    _videoController?.dispose();
+    _videoController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: _videoController!.value.aspectRatio,
-      child: VideoPlayer(_videoController!),
+      aspectRatio: _videoController.value.aspectRatio,
+      child: VideoPlayer(_videoController),
     );
   }
 }

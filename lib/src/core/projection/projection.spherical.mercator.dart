@@ -22,11 +22,11 @@ class SphericalMercator extends Projection {
   UPoint project(LatLng? position) {
     double d = PI / 180;
     double max = MAX_LATITUDE;
-    double lat = Math.max(Math.min(max, position!.latitude!), -max);
+    double lat = Math.max(Math.min(max, position!.lat), -max);
     double sin = Math.sin(lat * d);
 
     return UPoint(
-      R * position.longitude! * d, 
+      R * position.lng * d, 
       R * Math.log((1 + sin) / (1 - sin)) / 2,
     );
   }

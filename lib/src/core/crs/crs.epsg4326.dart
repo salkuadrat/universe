@@ -7,6 +7,7 @@ import 'crs.earth.dart';
 /// 
 /// Uses simple Equirectangular projection.
 class Epsg4326 extends Earth {
+  
   const Epsg4326();
 
   @override

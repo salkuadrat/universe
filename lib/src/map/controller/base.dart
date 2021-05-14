@@ -61,19 +61,19 @@ abstract class MapController {
     LengthUnit unit=LengthUnit.M,
   });
   
-  set manager(MapStateManager manager);
+  set map(MapStates? map);
 
   bool get isReady;
 
-  MapState? get map;
+  MapStates? get map;
 
   LatLngBounds? get bounds;
 
   LatLng? get center;
 
-  double get zoom;
+  double? get zoom;
 
-  double get rotation;
+  double? get rotation;
 
   Function? onReady;
 

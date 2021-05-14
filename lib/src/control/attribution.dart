@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:html_unescape/html_unescape.dart';
-
 import '../layer/layer.dart';
 import '../map/map.dart';
 
@@ -11,7 +10,7 @@ class Attribution extends MapLayer {
   Attribution(this.attribution);
 
   @override 
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
+  Widget buildLayer(BuildContext context, MapStates map) {
     return Positioned.fill(
       child: Align(
         alignment: Alignment.bottomLeft,

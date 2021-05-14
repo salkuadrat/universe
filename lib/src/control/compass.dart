@@ -18,7 +18,7 @@ class Compass extends MapLayer {
   });
 
   @override 
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
+  Widget buildLayer(BuildContext context, MapStates map) {
     return Positioned.fill(
       child: Align(
         alignment: alignment,
@@ -28,7 +28,7 @@ class Compass extends MapLayer {
           margin: margin,
           child: FittedBox(
             child: FloatingActionButton(
-              onPressed: () => controller!.rotate(0.0, animate: true),
+              onPressed: () => map.controller.rotate(0.0, animate: true),
               backgroundColor: Colors.white,
               child: Transform.rotate(
                 angle: map.angle,

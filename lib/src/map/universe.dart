@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:provider/provider.dart';
 
-import '../control/control.dart';
+import '../control/control.dart' as C;
 import '../core/core.dart';
 import '../layer/layer.dart';
 import '../shared.dart';
@@ -10,52 +10,52 @@ import 'map.dart';
 
 class Universe extends StatelessWidget {
 
-  final MapOptions? options;
+  final MapOptions options;
   final MapController? controller;
   final Color? background;
-  final TileLayer? base;
+  final TileLayer base;
   final MarkerLayer? markers;
   final CircleLayer? circles;
   final PolylineLayer? polylines;
   final PolygonLayer? polygons;
   final RectangleLayer? rectangles;
-  final List<ImageOverlay>? images;
-  final List<VideoOverlay>? videos;
-  final List<MapLayer>? layers;
-  final List<Widget>? controls;
+  final List<ImageOverlay> images;
+  final List<VideoOverlay> videos;
+  final List<MapLayer> layers;
+  final List<Widget> controls;
 
   const Universe({
     Key? key, 
-    this.options, 
+    required this.options, 
     this.controller, 
     this.background,
-    this.base,
+    required this.base,
     this.markers,
     this.circles,
     this.polylines,
     this.polygons,
     this.rectangles,
-    this.images,
-    this.videos,
-    this.layers,
-    this.controls,
+    this.images = const [],
+    this.videos = const [],
+    this.layers = const [],
+    this.controls = const [],
   }) : 
-    assert(base != null || layers is List<MapLayer>),
+    assert(layers is List<MapLayer>),
     super(key: key);
   
-  bool get hasBaseLayer => base != null;
   bool get hasCircles => circles != null;
   bool get hasPolylines => polylines != null;
   bool get hasPolygons => polygons != null;
   bool get hasRectangles => rectangles != null;
-  bool get hasImages => images != null && images!.isNotEmpty;
-  bool get hasVideos => videos != null && videos!.isNotEmpty;
-  bool get hasLayers => layers != null && layers!.isNotEmpty;
+  bool get hasImages => images.isNotEmpty;
+  bool get hasVideos => videos.isNotEmpty;
+  bool get hasLayers => layers.isNotEmpty;
   bool get hasMarkers => markers != null;
   
   @override
   Widget build(BuildContext context) {
-    MapOptions mapOptions = options ?? MapOptions();
+    MapOptions mapOptions = options;
+    String attribution = base.options.attribution;
     
     if(mapOptions.noSize) {
       final screenSize = MediaQuery.of(context).size;
@@ -65,35 +65,27 @@ class Universe extends StatelessWidget {
       );
     }
 
-    MapState initialState = MapState(
-      controller: controller ?? MapController(),
-      options: mapOptions,
-    );
-
-    String attribution = '';
-
-    if(base != null) {
-      attribution = base!.options!.attribution;
-    } else {
-      attribution = options!.attribution;
-    }
-
-    return CubitProvider(
-      create: (_) => MapStateManager(initialState),
+    return ChangeNotifierProvider(
+      create: (_) => MapStates(
+        controller: controller ?? MapController(),
+        options: mapOptions,
+      ),
       child: Container(
         color: background,
         child: _Map(
           layers: [
-            if(hasBaseLayer) base,
-            if(hasLayers) ...layers!,
-            if(options!.showLocationIndicator! && !options!.showLocationMarker) options!.locationIndicator,
-            if(hasCircles) circles,
-            if(hasPolylines) polylines,
-            if(hasPolygons) polygons,
-            if(hasRectangles) rectangles,
-            if(hasImages) ...images!,
-            if(hasVideos) ...videos!,
-            if(hasMarkers) markers,
+            base,
+            if(hasLayers) ...layers,
+            if(options.showLocationIndicator && 
+              !options.showLocationMarker && 
+              options.hasLocationIndicator) options.locationIndicator!,
+            if(hasCircles) circles!,
+            if(hasPolylines) polylines!,
+            if(hasPolygons) polygons!,
+            if(hasRectangles) rectangles!,
+            if(hasImages) ...images,
+            if(hasVideos) ...videos,
+            if(hasMarkers) markers!,
           ],
           controls: controls,
           attribution: attribution,
@@ -105,14 +97,14 @@ class Universe extends StatelessWidget {
 
 class _Map extends StatefulWidget {
 
-  final List<Widget?>? layers;
-  final List<Widget>? controls;
+  final List<Widget> layers;
+  final List<Widget> controls;
   final String? attribution;
 
   _Map({
     Key? key, 
-    this.layers,
-    this.controls,
+    this.layers = const [],
+    this.controls = const [],
     this.attribution,
   }) : super(key: key);
 
@@ -120,19 +112,17 @@ class _Map extends StatefulWidget {
   __MapState createState() => __MapState();
 }
 
-class __MapState extends State<_Map> 
-  with TickerProviderStateMixin {
+class __MapState extends State<_Map> with TickerProviderStateMixin {
 
-  MapStateManager get manager => context.cubit<MapStateManager>();
-  MapState get map => manager.state;
-  bool get hasLayers => widget.layers != null && widget.layers!.isNotEmpty;
+  MapStates get map => Provider.of<MapStates>(context, listen: false);
+  bool get hasLayers => widget.layers.isNotEmpty;
 
   ValueNotifier<double> rotationNotifier = ValueNotifier(0.0);
 
   late double _originalWidth;
   late double _originalHeight;
-  double? _width;
-  double? _height;
+  late double _width;
+  late double _height;
 
   @override
   void initState() {
@@ -142,31 +132,26 @@ class __MapState extends State<_Map>
     _height = map.height;
 
     super.initState();
-    manager.init(this);
-    manager.setAngleListener(_resize);
+
+    map.init(this, _resize);
     _resize();
   }
 
   void _resize() {
-    final angle = manager.angle;
+    final angle = map.angle;
     final originalSize = Size(_originalWidth, _originalHeight);
     final size = projectedSize(originalSize, angle);
-    
-    rotationNotifier.value = angle;
 
-    if(mounted) setState(() {  
+    setState(() { 
       _width = size.width;
       _height = size.height;
+      rotationNotifier.value = angle;
     });
 
-    manager.resize(size.width, size.height);
+    map.resize(_width, _height);
   }
 
-  void _refresh() {
-    if(mounted) setState(() {});
-  }
-
-  Widget get _layers => Transform.rotate(
+  get _layers => Transform.rotate(
     angle: rotationNotifier.value,
     alignment: FractionalOffset.center,
     child: OverflowBox(
@@ -176,7 +161,7 @@ class __MapState extends State<_Map>
       maxHeight: _height,
       child: Stack(
         children: [
-          ...widget.layers as Iterable<Widget>,
+          ...widget.layers,
           if(map.showLocationMarker) _locationMarker,
           if(map.showCenterMarker) _centerMarker,
         ],
@@ -184,52 +169,48 @@ class __MapState extends State<_Map>
     ),
   );
 
-  Widget get _centerMarker => MarkerLayer(
+  get _centerMarker => MarkerLayer(
     Marker(map.center),
     options: MarkerLayerOptions(widget: map.centerMarker),
   );
 
-  Widget get _locationMarker => MarkerLayer(
+  get _locationMarker => MarkerLayer(
     Marker(map.location),
     options: MarkerLayerOptions(widget: map.locationMarker),
   );
 
-  Widget? get _locator => map.options!.locator != null 
-    ? map.options!.locator 
-    : Locator();
+  get _locator => map.options.locator != null 
+    ? map.options.locator 
+    : C.Locator();
   
-  Widget? get _compass => map.options!.compass != null 
-    ? map.options!.compass 
-    : Compass();
+  get _compass => map.options.compass != null 
+    ? map.options.compass 
+    : C.Compass();
 
-  Widget? get _scale => map.options!.scale != null 
-    ? map.options!.scale 
-    : Scale();
+  get _scale => map.options.scale != null 
+    ? map.options.scale 
+    : C.Scale();
 
   @override
   Widget build(BuildContext context) {
-    bool showLocator = map.options!.interactive && map.options!.showLocator;
-    bool showCompass = map.options!.interactive && map.options!.canRotate && map.options!.showCompass;
-    bool showScale = map.options!.showScale;
-    bool hasControls = widget.controls != null;
+    bool showLocator = map.options.interactive && map.options.showLocator;
+    bool showCompass = map.options.interactive && map.options.canRotate && map.options.showCompass;
+    bool showScale = map.options.showScale;
+    bool hasControls = widget.controls.isNotEmpty;
 
-    return CubitListener<MapStateManager, MapState>(
-      listenWhen: (old, current) {
-        return old.center != current.center || old.location != current.location;
-      },
-      listener: (old, current) => _refresh(),
-      child: Stack(
+    return Consumer<MapStates>(
+      builder: (context, map, child) => Stack(
         children: [
-          map.options!.interactive 
+          map.options.interactive 
             ? MapGestureDetector(child: _layers) 
             : _layers,
-          map.options!.hideAttribution 
+          map.options.hideAttribution 
             ? Container() 
-            : Attribution(widget.attribution),
-          if(showScale) _scale!,
-          if(showLocator) _locator!,
-          if(showCompass) _compass!,
-          if(hasControls) ...widget.controls!,
+            : C.Attribution(widget.attribution),
+          if(showScale) _scale,
+          if(showLocator) _locator,
+          if(showCompass) _compass,
+          if(hasControls) ...widget.controls,
         ],
       ),
     );

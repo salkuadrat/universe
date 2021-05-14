@@ -19,7 +19,7 @@ class Locator extends MapLayer {
   });
 
   @override 
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
+  Widget buildLayer(BuildContext context, MapStates map) {
     return Positioned.fill(
       child: Align(
         alignment: alignment,
@@ -35,7 +35,7 @@ class Locator extends MapLayer {
                 size: 25,
               ),
               onPressed: () {
-                controller!.locate(automove: true, toZoom: toZoom);
+                map.controller.locate(automove: true, toZoom: toZoom);
               },
             ),
           ),

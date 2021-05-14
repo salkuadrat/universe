@@ -190,7 +190,7 @@ class Path<T extends LatLng> {
           // Add step on the given path
           // Intermediate step is necessary to stay type-safe
           LatLng tempStep = getDistance.offset(baseStep,firstStepPos,bearing);
-          LatLng nextStep = geoPositionFactory(tempStep.latitude,tempStep.longitude);
+          LatLng nextStep = geoPositionFactory(tempStep.lat,tempStep.lng);
           path.add(nextStep);
           
           firstStepPos += stepDistance;
@@ -273,10 +273,10 @@ class Path<T extends LatLng> {
     Validate.notNull(p3);
 
     return CatmullRomSpline2D(
-      Point2D(p0.latitude!, p0.longitude!),
-      Point2D(p1.latitude!, p1.longitude!),
-      Point2D(p2.latitude!, p2.longitude!),
-      Point2D(p3.latitude!, p3.longitude!)
+      Point2D(p0.lat, p0.lng),
+      Point2D(p1.lat, p1.lng),
+      Point2D(p2.lat, p2.lng),
+      Point2D(p3.lat, p3.lng)
     );
   }
   

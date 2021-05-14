@@ -21,7 +21,7 @@ class SimpleProjection extends Projection {
   
   @override
   UPoint project(LatLng? position) {
-    return UPoint(position!.longitude!, position.latitude!);
+    return UPoint(position!.lng, position.lat);
   }
 
   @override

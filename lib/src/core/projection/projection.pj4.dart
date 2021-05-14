@@ -22,8 +22,8 @@ class Pj4Projection extends Projection {
   @override
   UPoint project(LatLng? position) {
     pj4.Point point = epsg4326.transform(pj4Projection, pj4.Point(
-      x: position!.longitude!, 
-      y: position.latitude!,
+      x: position!.lng, 
+      y: position.lat,
     ));
     
     return UPoint(point.x, point.y);

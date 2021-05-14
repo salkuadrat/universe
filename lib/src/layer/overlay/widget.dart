@@ -26,7 +26,7 @@ class WidgetOverlay extends InteractiveLayer {
     super(options: options);
 
   @override 
-  Widget buildLayer(BuildContext context, MapController? controller, MapState map) {
+  Widget buildLayer(BuildContext context, MapStates map) {
 
     final pixelOrigin = map.pixelOrigin;
     final scale = map.getZoomScale(map.zoom, map.zoom);

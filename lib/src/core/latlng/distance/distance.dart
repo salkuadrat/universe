@@ -6,11 +6,8 @@ import '../../../shared.dart';
 import '../../core.dart';
 
 abstract class DistanceAlgorithm {
-
   double distance(dynamic position, dynamic destination);
-
   LatLng offset(dynamic from, double? distanceInMeter, double bearing);
-  
 }
 
 enum DistanceAlgorithmType {

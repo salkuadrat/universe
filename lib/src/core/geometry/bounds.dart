@@ -3,13 +3,15 @@ import 'dart:ui';
 
 import 'geometry.dart';
 
-/// Rectangular bound delimited by orthogonal lines passing through two points.
+/// Rectangular bound delimited by orthogonal lines 
+/// passing through two points.
 class Bounds {
 
   final UPoint min;
   final UPoint max;
   
-  // can accept Bounds(GeoPoint(20,30), GeoPoint(10, 10)) or 
+  // can accept parameters like:
+  // Bounds(GeoPoint(20,30), GeoPoint(10, 10)) or 
   // Bounds([20, 30], [10, 10])
   factory Bounds(dynamic min, dynamic max) {
     Bounds bounds1 = Bounds._(UPoint.from(min), UPoint.from(max));

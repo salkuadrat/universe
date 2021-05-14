@@ -8,6 +8,7 @@ import 'crs.earth.dart';
 /// Rarely used by some commercial tile providers. 
 /// Uses Elliptical Mercator projection.
 class Epsg3395 extends Earth {
+  
   const Epsg3395();
   
   static const double SCALE = 0.5 / (PI * Mercator.R);
