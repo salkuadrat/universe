@@ -1,6 +1,6 @@
 # Universe
 
-The easy way to use interactive maps in Flutter. 
+The easy way to use interactive maps in Flutter.\
 Inspired by [Leaflet.js](https://leafletjs.com/).
 
 ## Getting Started
@@ -20,7 +20,7 @@ Then run `flutter pub get`.
 
 ## Example Project
 
-There is a complete example project in the `example` folder. 
+There is a complete example project in the `example` folder.\
 Check it out to find out the many use cases you can use this library.
 
 You can try a working example with [universe.apk](universe.apk).
@@ -80,7 +80,8 @@ U.MapBox(
 )
 ```
 
-You can get your own MapBox access token from [here](https://account.mapbox.com/access-tokens/). Please always use your own access token for each of your projects.
+You can get your own MapBox access token from [here](https://account.mapbox.com/access-tokens/).\
+Please always use your own access token for each of your projects.
 
 [Complete MapBox example](example/lib/src/map_provider/mapbox.dart)
 
@@ -99,15 +100,15 @@ U.OpenStreetMap(
 
 Complete marker examples:
 
-[Simple Marker](example/lib/src/marker/default.dart)
-[Marker with Data](example/lib/src/marker/data.dart)
-[Multiple Marker](example/lib/src/marker/multi.dart)
-[Marker Icon](example/lib/src/marker/icon.dart)
-[Marker Image](example/lib/src/marker/image.dart)
-[Marker SVG](example/lib/src/marker/svg.dart)
-[Marker Widget](example/lib/src/marker/widget.dart)
-[Tap to Add Marker](example/lib/src/marker/add.dart)
-[Marker Icon](example/lib/src/marker/icon.dart)
+[Simple Marker](example/lib/src/marker/default.dart)\
+[Marker with Data](example/lib/src/marker/data.dart)\
+[Multiple Marker](example/lib/src/marker/multi.dart)\
+[Marker Icon](example/lib/src/marker/icon.dart)\
+[Marker Image](example/lib/src/marker/image.dart)\
+[Marker SVG](example/lib/src/marker/svg.dart)\
+[Marker Widget](example/lib/src/marker/widget.dart)\
+[Tap to Add Marker](example/lib/src/marker/add.dart)\
+[Marker Icon](example/lib/src/marker/icon.dart)\
 
 ### Static Maps
 
