@@ -1,4 +1,4 @@
-import 'package:validate/validate.dart';
+import '../../../validate/validate.dart';
 
 class Point2D<T extends num?> {
   final T x;

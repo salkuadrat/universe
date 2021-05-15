@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:curved_animation_controller/curved_animation_controller.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geocoder/geocoder.dart';
+import 'package:flutter_geocoder/geocoder.dart';
 import 'package:location/location.dart';
 
 import '../core/core.dart';
@@ -626,7 +626,7 @@ class MapStates extends ChangeNotifier {
     }
   }
 
-  /* _setZoomAround(dynamic position, double zoom) {
+  zoomAround(dynamic position, double zoom) {
     UPoint halfSize = UPoint.from(_halfSize);
     UPoint containerPoint;
     
@@ -644,7 +644,7 @@ class MapStates extends ChangeNotifier {
     UPoint offset = (containerPoint - halfSize) * (1 - (1  / scale));
     LatLng? center = pointToLatLng(halfSize + offset);
     move(center, zoom);
-  } */
+  }
 
   set angle(angle) {
     _angle = angle;
@@ -698,10 +698,10 @@ class MapStates extends ChangeNotifier {
   Future<LatLng?> findLocation(String query) async {
     log('MapStates findLocation $query');
 
-    List<Address> locations = await Geocoder.local.findAddressesFromQuery(query) ?? [];
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
 
-    if(locations.length > 0 && locations.first.coordinates != null) {
-      Coordinates coordinates = locations.first.coordinates!;
+    if(addresses.isNotEmpty) {
+      var coordinates = addresses.first.coordinates;
       return LatLng(coordinates.latitude, coordinates.longitude);
     }
 
@@ -717,26 +717,30 @@ class MapStates extends ChangeNotifier {
     log('MapStates locate');
 
     _startLocating();
-
     await _initLocationSettings();
-    LocationData? data = await _location?.getLocation();
 
-    _stopLocating();
+    try {
+      LocationData? data = await _location?.getLocation();
+      _stopLocating();
 
-    if(data != null) {
-      _position = LatLng(
-        data.latitude, 
-        data.longitude, 
-        data.altitude,
-      );
+      if(data != null) {
+        _position = LatLng(
+          data.latitude, 
+          data.longitude, 
+          data.altitude,
+        );
 
-      notifyListeners();
+        notifyListeners();
 
-      if(automove) {
-        await move(_position, zoom + 0.012, true);
+        if(automove) {
+          await move(_position, zoom + 0.012, true);
+        }
+
+        return _position;
       }
-
-      return _position;
+    } catch(e) {
+      _stopLocating();
+      log(e);
     }
 
     return null;

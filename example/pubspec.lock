@@ -111,15 +111,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
-  flutter_image:
+  flutter_geocoder:
     dependency: transitive
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "4cfc614518d77d9d3b6923b6bada32b5c95421e1"
-      url: "git://github.com/salkuadrat/flutter_image.git"
-    source: git
-    version: "4.0.0"
+      name: flutter_geocoder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2-nullsafety"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -137,15 +135,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  geocoder:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "51648f830f2e1a2e486cc69d35b3beb6e20c04d8"
-      url: "git://github.com/salkuadrat/flutter_geocoder.git"
-    source: git
-    version: "0.3.0"
   html_unescape:
     dependency: transitive
     description:
@@ -479,7 +468,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   uuid:
     dependency: transitive
     description:
@@ -487,15 +476,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.4"
-  validate:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: e329a88a35346367eb88f0a21f7beee90c44ca8c
-      url: "git://github.com/chimon2000/dart-validate.git"
-    source: git
-    version: "1.7.0"
   vector_math:
     dependency: transitive
     description:
@@ -554,4 +534,4 @@ packages:
     version: "5.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=1.24.0-10.2.pre"
+  flutter: ">=2.0.0"

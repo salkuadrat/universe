@@ -1,4 +1,4 @@
-bool isPrintLog = false;
+bool isPrintLog = true;
 
 void log(data) {
   if(isPrintLog) {

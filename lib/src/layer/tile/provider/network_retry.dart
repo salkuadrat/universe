@@ -1,7 +1,7 @@
 import 'package:flutter/rendering.dart';
-import 'package:flutter_image/network.dart';
 
 import '../../../core/core.dart';
+import '../../../network/network.dart';
 import '../../layer.dart';
 
 class NetworkRetryTileProvider extends DefaultTileProvider {

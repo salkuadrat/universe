@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:logging/logging.dart';
-import 'package:validate/validate.dart';
 
 import '../../shared.dart';
+import '../../validate/validate.dart';
 import '../core.dart';
 
 typedef LatLng GeoPositionFactory(double? lat, double? lng);

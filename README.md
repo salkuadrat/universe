@@ -11,12 +11,24 @@ Add dependency to your flutter project:
 
 ```yaml
 dependencies:
+  universe: ^0.0.3
+```
+
+```yaml
+dependencies:
   universe:
     git: 
       url: git://github.com/salkuadrat/universe.git
 ```
 
 Then run `flutter pub get`.
+
+Add internet & location permissions to your AndroidManifest.xml.
+
+```
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+```
 
 ## Example Project
 
@@ -27,7 +39,7 @@ You can also try a working example with [universe.apk](universe.apk).
 
 ## Usage
 
-Inspired by the simplicity of Leaflet.js, now you can insert maps functionality in your flutter project with as simple as adding this lines of code:
+Inspired by the simplicity of Leaflet.js, now you can add maps functionality in your flutter project with as simple as adding this lines of code:
 
 ```
 import 'package:universe/universe.dart';
