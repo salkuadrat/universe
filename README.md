@@ -87,7 +87,7 @@ Please always use your own access token for each of your projects.
 
 ### Markers 
 
-You can add marker to your maps as simple as the following code:
+You can add marker to your maps with as simple as the following code:
 
 ```
 U.OpenStreetMap(
