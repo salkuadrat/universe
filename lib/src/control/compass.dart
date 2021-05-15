@@ -6,24 +6,23 @@ import '../layer/layer.dart';
 import '../map/map.dart';
 
 class Compass extends MapLayer {
-
   final Widget? icon;
   final Alignment alignment;
   final EdgeInsets margin;
 
   Compass({
-    this.icon, 
-    this.alignment = Alignment.topRight, 
+    this.icon,
+    this.alignment = Alignment.topRight,
     this.margin = const EdgeInsets.only(top: 52, right: 20),
   });
 
-  @override 
+  @override
   Widget buildLayer(BuildContext context, MapStates map) {
     return Positioned.fill(
       child: Align(
         alignment: alignment,
         child: Container(
-          width: 40, 
+          width: 40,
           height: 40,
           margin: margin,
           child: FittedBox(
@@ -32,9 +31,10 @@ class Compass extends MapLayer {
               backgroundColor: Colors.white,
               child: Transform.rotate(
                 angle: map.angle,
-                child: icon ?? SvgPicture.asset(
-                  'packages/universe/assets/compass.svg',
-                ),
+                child: icon ??
+                    SvgPicture.asset(
+                      'packages/universe/assets/compass.svg',
+                    ),
               ),
             ),
           ),
