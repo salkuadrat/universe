@@ -1,6 +1,6 @@
 # Universe
 
-The easy way to use interactive maps in Flutter.\
+The easy & flexible way to use interactive maps in Flutter.\
 Inspired by [Leaflet.js](https://leafletjs.com/).
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot.png" alt="universe" width="400">

@@ -9,7 +9,7 @@ class OpenStreetMap extends StatefulWidget {
 
 class _OpenStreetMapState extends State<OpenStreetMap> {
 
-  OpenStreetMapType type = OpenStreetMapType.Mapnik;
+  OpenStreetMapType type = OpenStreetMapType.HOT;
 
   get center {
     if(type == OpenStreetMapType.DE) return [48.136794, 11.574197];

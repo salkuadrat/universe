@@ -107,7 +107,7 @@ TileLayerOptions osm(OpenStreetMapType type, TileLayerOptions options, String ap
   }
   else if(type == OpenStreetMapType.MtbMap) {
     return options.copy(
-      templateUrl: 'https://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png',
+      templateUrl: 'http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png',
       attribution: '$attribution &amp; USGS',
       maxZoom: maxZoom,
     );
