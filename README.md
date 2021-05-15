@@ -21,7 +21,7 @@ Then run `flutter pub get`.
 ## Example Project
 
 There is a complete example project in the `example` folder.\
-Check it out to learn the many use cases you can use this library.
+Check it out to learn the many use cases for using Universe.
 
 You can also try a working example with [universe.apk](universe.apk).
 
