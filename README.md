@@ -129,61 +129,61 @@ Complete static maps examples:
 
 ### Other Examples 
 
-[Complex Map](example/lib/src/home.dart)\
+[Complex Map](example/lib/src/home.dart)
 
 [Live Map](example/lib/src/live/default.dart)\
 [Simple Live Map](example/lib/src/live/simple.dart)\
-[Live Map with Location Marker](example/lib/src/live/marker.dart)\
+[Live Map with Location Marker](example/lib/src/live/marker.dart)
 
 [Map with Initial Rotation](example/lib/src/rotation/initial.dart)\
 [Map with Disabled Rotation](example/lib/src/rotation/disable.dart)\
 [Map with MaxBounds](example/lib/src/bounds/maxbounds.dart)\
-[Map with FitBounds](example/lib/src/bounds/fitbounds.dart)\
+[Map with FitBounds](example/lib/src/bounds/fitbounds.dart)
 
 [MapController](example/lib/src/controller/simple.dart)\
 [MapController: Move Map](example/lib/src/controller/move.dart)\
 [MapController: Zoom Map](example/lib/src/controller/zoom.dart)\
 [MapController: Rotate Map](example/lib/src/controller/rotate.dart)\
-[MapController: Find Location](example/lib/src/controller/locate.dart)\
+[MapController: Find Location](example/lib/src/controller/locate.dart)
 
 [Circle](example/lib/src/circle/simple.dart)\
 [Custom Circle](example/lib/src/circle/custom.dart)\
 [Multiple Circles](example/lib/src/circle/multi.dart)\
 [Multiple Circles with Different Styles](example/lib/src/circle/multistyles.dart)\
 [Circle with Data](example/lib/src/circle/data.dart)\
-[Multiple Circles with Data](example/lib/src/circle/multidata.dart)\
+[Multiple Circles with Data](example/lib/src/circle/multidata.dart)
 
 [Polyline](example/lib/src/polyline/simple.dart)\
 [Custom Polyline](example/lib/src/polyline/custom.dart)\
 [Multiple Polylines](example/lib/src/polyline/multi.dart)\
-[Multiple Polylines with Different Styles](example/lib/src/polyline/multistyles.dart)\
+[Multiple Polylines with Different Styles](example/lib/src/polyline/multistyles.dart)
 
 [Polygon](example/lib/src/polygon/simple.dart)\
 [Multiple Polygons](example/lib/src/polygon/multi.dart)\
 [Multiple Polygons with Diffrent Styles](example/lib/src/polygon/multistyles.dart)\
 [Polygon with Data](example/lib/src/polygon/data.dart)\
-[Multiple Polygons with Data](example/lib/src/polygon/multidata.dart)\
+[Multiple Polygons with Data](example/lib/src/polygon/multidata.dart)
 
 [Rectangle](example/lib/src/rectangle/simple.dart)\
 [Custom Rectangle](example/lib/src/rectangle/custom.dart)\
 [Multiple Rectangles](example/lib/src/rectangle/multi.dart)\
 [Multiple Rectangles with Different Styles](example/lib/src/rectangle/multistyles.dart)\
 [Rectangle with Data](example/lib/src/rectangle/data.dart)\
-[Multiple Rectangles with Data](example/lib/src/rectangle/multidata.dart)\
+[Multiple Rectangles with Data](example/lib/src/rectangle/multidata.dart)
 
 [Image Overlay](example/lib/src/overlay/image.dart)\
 [Widget Overlay](example/lib/src/overlay/widget.dart)\
-[Video Overlay](example/lib/src/overlay/video.dart)\
+[Video Overlay](example/lib/src/overlay/video.dart)
 
 [TileProvider: NetworkTileProvider](example/lib/src/tile_provider/network.dart)\
 [TileProvider: NetworkRetryTileProvider](example/lib/src/tile_provider/retry.dart)\
 [TileProvider: CachedNetworkTileProvider](example/lib/src/tile_provider/cached.dart)\
-[TileProvider: Offline AssetTileProvider](example/lib/src/tile_provider/asset.dart)\
+[TileProvider: Offline AssetTileProvider](example/lib/src/tile_provider/asset.dart)
 
 [Map with Custom Compass](example/lib/src/control/compass.dart)\
 [Map with Custom Locator](example/lib/src/control/locator.dart)\
 [Map with Custom Scale Indicator](example/lib/src/control/scale.dart)\
-[Map with Custom Location Indicator](example/lib/src/control/location_indicator.dart)\
+[Map with Custom Location Indicator](example/lib/src/control/location_indicator.dart)
 
 [Map Geolocator: Center by Address](example/lib/src/geolocator/center.dart)\
 [Map Geolocator: Find LatLng by Address](example/lib/src/geolocator/finder.dart)\
