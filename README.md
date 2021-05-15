@@ -106,8 +106,7 @@ Complete marker examples:
 [Marker Image](example/lib/src/marker/image.dart)\
 [Marker SVG](example/lib/src/marker/svg.dart)\
 [Marker Widget](example/lib/src/marker/widget.dart)\
-[Tap to Add Marker](example/lib/src/marker/add.dart)\
-[Marker Icon](example/lib/src/marker/icon.dart)
+[Tap to Add Marker](example/lib/src/marker/add.dart)
 
 ### Live Maps
 
