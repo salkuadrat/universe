@@ -41,7 +41,7 @@ U.OpenStreetMap(
 )
 ```
 
-Universe comes with support for 3 built-in maps provider: OpenStreetMap, Google Maps and MapBox.
+Universe comes with built-in support for 3 maps provider: OpenStreetMap, Google Maps and MapBox.
 
 ### OpenStreetMap
 
