@@ -40,29 +40,30 @@ class MapStates extends ChangeNotifier {
   double _angle = 0.0;
   double _angleStart = 0.0;
 
-  Function? onTap;
-  Function? onLongPress;
   Function? _onAngleChanged;
   Function? _onTileChanged;
+
+  Function? get onTap => _options.onTap;
+  Function? get onLongPress => _options.onLongPress;
 
   MapStates({
     required MapController controller,
     required MapOptions options,
-    this.onTap,
-    this.onLongPress,
   }) {
+
     _originalController = controller;
     _originalOptions = options;
-
     _controller = controller;
     _options = options;
-    _center = options.center!;
     _zoom = options.zoom;
     _minZoom = options.minZoom;
     _maxZoom = options.maxZoom;
     _rotation = options.rotation;
     _size = options.size!;
     _isLocating = false;
+
+    // prepare for default center when the map uses a string centerQuery 
+    _center = options.center ?? LatLng(0.0, 0.0);
 
     _angle = degToRadian(_rotation);
     _controller.onReady = options.onReady;
@@ -137,7 +138,7 @@ class MapStates extends ChangeNotifier {
 
   Bounds get pixelBounds => getPixelBounds(_center, _zoom);
 
-  Bounds getPixelBounds(LatLng center, double zoom) {
+  Bounds getPixelBounds(LatLng? center, double zoom) {
     double scale = getZoomScale(zoom, _zoom);
 
     UPoint centerPoint = getCenterPoint(center, zoom).floor();
@@ -435,12 +436,18 @@ class MapStates extends ChangeNotifier {
   Future _locateCenter([LatLng? defaultCenter]) async {
     log('MapStates locateCenter');
     
-    LatLng? center = await findLocation(options.centerQuery!) ?? defaultCenter ?? _center;
+    LatLng? center = await findLocation(options.centerQuery!) ?? defaultCenter;
+    double zoom = _zoom;
 
-    _center = center;
-    _options = _options.copyWith(center: center);
-
-    move(_center, _zoom);
+    if(center != null) {
+      _center = center;
+      _options = _options.copyWith(center: center);
+      
+      
+      rotate(0.0, true);
+      await move(_center, zoom / 2);
+      await move(_center, zoom, true);
+    }
   }
 
   reset() {
@@ -478,10 +485,11 @@ class MapStates extends ChangeNotifier {
       center = _safeCenter(center, _center);
       isCenterChanged = center.notEqual(_center);
     }
-
+    
     _center = center;
     _zoom = zoom;
     _rotation = radianToDeg(_angle);
+
     _onTileChanged?.call();
     _controller.onChanged?.call(_center, _zoom, _rotation);
     _positionStream.add(MapData(center: _center, zoom: _zoom));
@@ -493,7 +501,7 @@ class MapStates extends ChangeNotifier {
     log('MapStates move $center $zoom');
 
     if(center is String) {
-      center = await (findLocation(center) as FutureOr<String>);
+      center = await findLocation(center);
     } else {
       center = LatLng.from(center);
     }
@@ -523,7 +531,6 @@ class MapStates extends ChangeNotifier {
 
       _zoomAnim?.addListener(() {
         _zoom = _zoomAnim!.value;
-        notifyListeners();
       });
 
       _moveAnim?.addStatusListener((status) { 
@@ -602,7 +609,7 @@ class MapStates extends ChangeNotifier {
       );
 
       _zoomAnim?.addListener(() {
-        _move(center, _zoomAnim!.value);
+        _move(_center, _zoomAnim!.value);
       });
 
       _zoomAnim?.addStatusListener((status) { 
@@ -613,7 +620,7 @@ class MapStates extends ChangeNotifier {
 
       _zoomAnim?..reset()..start();
     } else {
-      _move(center, zoom);
+      _move(_center, zoom);
     }
   }
 
@@ -670,7 +677,6 @@ class MapStates extends ChangeNotifier {
 
       _rotateAnim?.addListener(() {
         rotation = _rotateAnim!.value;
-        //_move(_center, _zoom);
       });
 
       _rotateAnim?.addStatusListener((status) { 
@@ -725,8 +731,9 @@ class MapStates extends ChangeNotifier {
       notifyListeners();
 
       if(automove) {
-        move(_position, (zoom + 0.01212), true);
         rotate(0.0, true);
+        await move(_position, (zoom / 2) + 0.012);
+        await move(_position, zoom + 0.012, true);
       }
 
       return _position;

@@ -71,7 +71,7 @@ class MenuItem {
   final String name;
   final Function map;
 
-  MenuItem(this.name, {this.map});
+  MenuItem(this.name, {required this.map});
 }
 
 Map<Key, MenuItem> menus = {

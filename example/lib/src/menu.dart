@@ -10,10 +10,10 @@ class AppMenu extends StatefulWidget {
   final Function(Key) onChanged;
 
   AppMenu({
-    Key key, 
-    this.value, 
-    this.items, 
-    this.onChanged,
+    Key? key, 
+    required this.value, 
+    required this.items, 
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -67,7 +67,7 @@ class _AppMenuState extends State<AppMenu> {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 13, horizontal: 18),
                     child: Text(
-                      menus[key].name,
+                      menus[key]!.name,
                       style: TextStyle(
                         fontSize: 15, 
                         color: chosen 
@@ -79,7 +79,7 @@ class _AppMenuState extends State<AppMenu> {
                   onTap: () async {
                     Navigator.pop(context);
                     await Future.delayed(Duration(milliseconds: 200));
-                    widget.onChanged?.call(menus.keys.elementAt(index));
+                    widget.onChanged.call(menus.keys.elementAt(index));
                   },
                 );
               },

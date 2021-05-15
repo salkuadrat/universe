@@ -6,7 +6,11 @@ import '../shared.dart';
 class DataClassExample {
   final String id;
   final String name;
-  DataClassExample({this.id, this.name});
+
+  DataClassExample({
+    required this.id, 
+    required this.name,
+  });
 }
 
 class MultiPolygonWithDataMap extends StatelessWidget {

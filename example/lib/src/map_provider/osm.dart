@@ -34,9 +34,11 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
             margin: EdgeInsets.only(left: 90, bottom: 29),
             child: UDropdownButton(
               value: type,
-              onChanged: (chosen) {
+              onChanged: (OpenStreetMapType? chosen) {
                 setState(() {
-                  type = chosen;
+                  if(chosen != null) {
+                    type = chosen;
+                  }
                 });
               },
               items: [

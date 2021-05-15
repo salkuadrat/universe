@@ -13,17 +13,17 @@ class _ControllerMapState extends State<ControllerMap> {
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 
-  MapData _mapData;
+  MapData? _mapData;
 
   void _listenPositionStream() {
     if(mounted) setState(() {
       _mapData = MapData(
         center: _mapController.center, 
-        zoom: _mapController.zoom,
+        zoom: _mapController.zoom!,
       );
     });
     // listen everytime the map data changes (move or zoom)
-    _mapController.positionStream.listen((data) { 
+    _mapController.positionStream?.listen((data) { 
       if(mounted) setState(() {
         _mapData = data;
       });
@@ -53,7 +53,7 @@ class _ControllerMapState extends State<ControllerMap> {
               child: Container(
                 color: Colors.white,
                 padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                child: Text('Center: ${_mapData.center.toSimpleString()}\nZoom: ${_mapData.zoom}'),
+                child: Text('Center: ${_mapData!.center.toSimpleString()}\nZoom: ${_mapData!.zoom}'),
               ),
             ),
           ),

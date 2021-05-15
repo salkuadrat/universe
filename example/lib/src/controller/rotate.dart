@@ -14,13 +14,13 @@ class _RotateControllerMapState extends State<RotateControllerMap> {
   final _mapController = MapController();
 
   void _rotate90() {
-    _mapController?.rotate(90, animate: true, onAnimateEnd: () {
+    _mapController.rotate(90, animate: true, onAnimateEnd: () {
       if(mounted) setState(() {});
     });
   }
 
   void _rotateBack() {
-    _mapController?.rotate(0, animate: true, onAnimateEnd: () {
+    _mapController.rotate(0, animate: true, onAnimateEnd: () {
       if(mounted) setState(() {});
     });
   }
@@ -41,11 +41,11 @@ class _RotateControllerMapState extends State<RotateControllerMap> {
           left: 20,
           bottom: 90,
           child: ElevatedButton(
-            onPressed: _mapController.rotation == 0.0 ? _rotate90 : _rotateBack,
+            onPressed: _mapController.rotation == 90.0 ? _rotateBack : _rotate90,
             child: Text(
-              _mapController.rotation == 0.0 
-              ? 'Rotate 90 degrees'
-              : 'Rotate Back'
+              _mapController.rotation == 90.0 
+              ? 'Rotate Back'
+              : 'Rotate 90 degrees'
             ),
             style: ElevatedButton.styleFrom(
               primary: Colors.white,

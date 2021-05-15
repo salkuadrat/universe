@@ -4,12 +4,12 @@ class UDropdownButton<T> extends StatelessWidget {
 
   final T value;
   final List<DropdownMenuItem<T>> items;
-  final Function(T) onChanged;
+  final void Function(T?)? onChanged;
 
   const UDropdownButton({
-    Key key, 
-    this.value, 
-    this.items, 
+    Key? key, 
+    required this.value, 
+    required this.items, 
     this.onChanged,
   }) : super(key: key);
 

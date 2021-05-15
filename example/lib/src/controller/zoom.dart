@@ -15,7 +15,7 @@ class _ZoomControllerMapState extends State<ZoomControllerMap> {
 
   void _zoom() {
     // zoom to zoom level 17 with animation
-    _mapController?.zoomTo(17, animate: true);
+    _mapController.zoomTo(17, animate: true);
   }
   
   @override

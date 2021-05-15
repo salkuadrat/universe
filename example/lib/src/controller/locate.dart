@@ -27,8 +27,13 @@ class _LocateControllerMapState extends State<LocateControllerMap> {
   
   Future _findLocation() async {
     _startSearching();
-    LatLng location = await _mapController?.locate(automove: true);
-    await Future.delayed(Duration(milliseconds: 500));
+
+    LatLng? location = await _mapController.locate(automove: true);
+
+    // this is only to show a nice transition between two loading text
+    // do not use in production
+    await Future.delayed(Duration(milliseconds: 500)); 
+
     _stopSearching();
 
     final message = location != null 

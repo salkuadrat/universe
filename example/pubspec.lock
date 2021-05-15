@@ -57,20 +57,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
-  colour:
-    dependency: transitive
-    description:
-      name: colour
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
-  colours:
-    dependency: "direct main"
-    description:
-      name: colours
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1+1"
   crypto:
     dependency: transitive
     description:
@@ -156,10 +142,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a861a7fb6fdcc5e9bccece8df475be6c3df35dab
+      resolved-ref: "00aea359d015ee8530728206d999d9647a320e08"
       url: "git://github.com/salkuadrat/flutter_geocoder.git"
     source: git
-    version: "0.2.1"
+    version: "0.3.0"
   html_unescape:
     dependency: transitive
     description:
@@ -285,14 +271,14 @@ packages:
       name: path_drawing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.1"
   path_parsing:
     dependency: transitive
     description:
       name: path_parsing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.1"
   path_provider:
     dependency: transitive
     description:
@@ -342,13 +328,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.0"
-  pigment:
-    dependency: transitive
-    description:
-      name: pigment
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   platform:
     dependency: transitive
     description:
@@ -404,7 +383,7 @@ packages:
       name: scrollable_positioned_list
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.10"
+    version: "0.2.0-nullsafety.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -473,13 +452,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.19"
-  tinycolor:
-    dependency: transitive
-    description:
-      name: tinycolor
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.2"
   tuple:
     dependency: transitive
     description:

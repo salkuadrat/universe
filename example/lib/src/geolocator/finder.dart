@@ -30,8 +30,13 @@ class _LocationFinderMapState extends State<LocationFinderMap> {
 
   Future _findLocation() async {
     _startSearching();
-    LatLng location = await _mapController.findLocation(_locationName);
+
+    LatLng? location = await _mapController.findLocation(_locationName);
+
+    // this is only to show a nice transition between two loading text
+    // do not use in production
     await Future.delayed(Duration(milliseconds: 500));
+    
     _stopSearching();
 
     final message = location != null 

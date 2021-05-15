@@ -36,9 +36,11 @@ class _MapBoxState extends State<MapBox> {
             margin: EdgeInsets.only(left: 90, bottom: 29),
             child: UDropdownButton(
               value: type,
-              onChanged: (chosen) {
+              onChanged: (MapBoxType? chosen) {
                 setState(() {
-                  type = chosen;
+                  if(chosen != null) {
+                    type = chosen;
+                  }
                 });
               },
               items: [

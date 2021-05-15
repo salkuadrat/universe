@@ -125,14 +125,18 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    var self = this;
+
     _originalSize = Size(map.width, map.height);
     _width = map.width;
     _height = map.height;
 
     super.initState();
 
-    map.init(this, _resize);
-    _resize();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      map.init(self, _resize);
+      _resize();
+    });
   }
 
   void _resize() {
@@ -171,7 +175,7 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
   );
 
   get _locationMarker => MarkerLayer(
-    Marker(map.location),
+    Marker(map.position),
     options: MarkerLayerOptions(widget: map.locationMarker),
   );
 

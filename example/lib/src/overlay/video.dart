@@ -11,14 +11,14 @@ class VideoOverlayMap extends StatefulWidget {
 
 class _VideoOverlayMapState extends State<VideoOverlayMap> {
 
-  VideoPlayerController _videoController;
+  VideoPlayerController? _videoController;
 
   void _toggleVideo() {
-    if(_videoController != null && _videoController.value.isInitialized) {
-      if(_videoController.value.isPlaying) {
-        _videoController.pause();
+    if(_videoController != null && _videoController!.value.isInitialized) {
+      if(_videoController!.value.isPlaying) {
+        _videoController?.pause();
       } else {
-        _videoController.play();
+        _videoController?.play();
       }
     }
   }

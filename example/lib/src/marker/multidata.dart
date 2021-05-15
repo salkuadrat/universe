@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MarkerData {
+
   final String name;
   final String description;
 
-  MarkerData({this.name, this.description});
+  MarkerData({
+    required this.name, 
+    required this.description,
+  });
 }
 
 class MultiMarkerWithDataMap extends StatelessWidget {

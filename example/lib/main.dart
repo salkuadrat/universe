@@ -1,4 +1,3 @@
-import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 
 import 'src/menu.dart';
@@ -17,7 +16,7 @@ class _AppState extends State<App> {
 
   Key _key = menus.keys.first;
 
-  Widget get map => menus[_key].map();
+  Widget get map => menus[_key]!.map();
   
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class _AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       title: 'Universe Map Demo',
       theme: ThemeData(
-        primarySwatch: Colours.deepSkyBlue,
+        primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(

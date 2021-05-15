@@ -552,12 +552,14 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
 		return map.wrapLatLngBounds(bounds);
 	}
 
-  void _setZoomTransforms(LatLng center, double zoom) {
+  void _setZoomTransforms(LatLng? center, double zoom) {
     log('TileLayer setZoomTransforms');
     _levels.forEach((key, _) => _setZoomTransform(_levels[key]!, center, zoom));
   }
 
-  void _setZoomTransform(Level level, LatLng center, double zoom) {
+  void _setZoomTransform(Level level, LatLng? center, double zoom) {
+    if(center == null) return;
+
     final scale = map.getZoomScale(zoom, level.zoom);
     final pixelOrigin = map.getPixelOrigin(center, zoom).round();
 
