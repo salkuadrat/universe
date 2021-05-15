@@ -10,7 +10,6 @@ class DefaultMarkerMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [51.555158, -0.108343],
       zoom: 16, 
-      showLocator: true,
       markers: U.MarkerLayer([51.556669, -0.108123]),
     );
   }

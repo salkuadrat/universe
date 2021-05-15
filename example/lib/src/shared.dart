@@ -64,6 +64,7 @@ import 'tile_provider/cached.dart';
 import 'tile_provider/network.dart';
 import 'tile_provider/retry.dart';
 
+// always use your own MapBox access token you get from https://account.mapbox.com/access-tokens/ 
 const String yourAccessTokenHere = 'pk.eyJ1Ijoic2Fsa3VhZHJhdCIsImEiOiJja2Z0dDgzd2kwbmM0MnRzOHZsaHdwOGV3In0.9Zi_07TPS8zWlhAvyi-3sQ';
 
 class MenuItem {

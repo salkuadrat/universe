@@ -24,7 +24,6 @@ class _GoogleMapState extends State<GoogleMap> {
       center: [51.555158, -0.108343],
       type: type,
       zoom: 16,
-      showLocator: true,
       scale: _scale,
       onReady: () => print('Google Map is ready!'),
       controls: [

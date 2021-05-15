@@ -17,7 +17,6 @@ class PolygonWithDataMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [51.555158, -0.108343], 
       zoom: 15,
-      showLocator: true,
       polygons: U.PolygonLayer(
         [
           [51.556550,-0.108717],

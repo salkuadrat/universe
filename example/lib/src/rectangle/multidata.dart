@@ -22,7 +22,6 @@ class _MultiRectangleWithDataMapState extends State<MultiRectangleWithDataMap> {
       accessToken: yourAccessTokenHere,
       center: [-6.175329, 106.827253], 
       zoom: 15,
-      showLocator: true,
       rectangles: U.RectangleLayer(
         [
           U.Rectangle(

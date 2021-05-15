@@ -10,7 +10,6 @@ class MultiCircleWithDataMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [-6.175329, 106.827253],
       zoom: 15,
-      showLocator: true,
       onReady: () => print('Map ready!'),
       // multiple circle layer with data, showing the data to snackbar when it's tapped
       circles: U.CircleLayer(

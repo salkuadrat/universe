@@ -10,7 +10,6 @@ class NetworkTileMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [51.555015,-0.108331], 
       zoom: 16,
-      showLocator: true,
       options: TileLayerOptions(
         tileProvider: NetworkTileProvider(),
       ),

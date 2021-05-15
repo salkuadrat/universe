@@ -11,7 +11,6 @@ class MultiPolylineMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [51.555015,-0.108331],
       zoom: 16,
-      showLocator: true,
       // multiple polylines with similar styles
       polylines: U.PolylineLayer(
         [

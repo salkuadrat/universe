@@ -12,7 +12,6 @@ class PolylineMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [51.555015,-0.108331], 
       zoom: 16,
-      showLocator: true,
       // by default, polyline will use style from theme primaryColor
       polylines: U.PolylineLayer(
         [

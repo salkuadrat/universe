@@ -10,7 +10,6 @@ class MultiPolygonStylesMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [51.555158, -0.108343], 
       zoom: 15,
-      showLocator: true,
       polygons: U.PolygonLayer(
         // list of Polygon with each own styles
         [

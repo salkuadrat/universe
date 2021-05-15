@@ -28,7 +28,6 @@ class _MapBoxState extends State<MapBox> {
       center: [51.555158, -0.108343],
       zoom: 15, 
       scale: _scale,
-      showLocator: true,
       onReady: () => print('MapBox is ready!'),
       controls: [
         Align(

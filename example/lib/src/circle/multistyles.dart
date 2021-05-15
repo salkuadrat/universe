@@ -10,7 +10,6 @@ class MultiCircleStylesMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [-6.175329, 106.827253],
       zoom: 15,
-      showLocator: true,
       onReady: () => print('Map ready!'),
       // multiple circles with different styles
       circles: U.CircleLayer(

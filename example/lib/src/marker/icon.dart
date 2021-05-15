@@ -10,7 +10,6 @@ class MarkerIconMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [51.555158, -0.108343],
       zoom: 16, 
-      showLocator: true,
       markers: U.MarkerLayer(
         [
           [51.558374, -0.107398],

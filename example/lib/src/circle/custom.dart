@@ -10,7 +10,6 @@ class CustomCircleMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [-6.170039, 106.8241],
       zoom: 15,
-      showLocator: true,
       onReady: () => print('Map ready!'),
       // circle with custom styles
       circles: U.CircleLayer(

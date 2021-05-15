@@ -11,7 +11,6 @@ class CustomPolylineMap extends StatelessWidget {
       accessToken: yourAccessTokenHere,
       center: [51.555015,-0.108331], 
       zoom: 16,
-      showLocator: true,
       polylines: U.PolylineLayer(
         [
           [51.556650,-0.108170],

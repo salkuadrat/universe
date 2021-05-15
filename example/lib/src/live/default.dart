@@ -9,8 +9,6 @@ class LiveMap extends StatelessWidget {
       center: [-6.170039, 106.8241],
       zoom: 16,
       live: true,
-      //showLocationIndicator: true, // default true when live true
-      //showLocator: true, // default true
     );
   }
 }

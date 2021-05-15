@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
       accessToken: yourAccessTokenHere,
       center: [-6.175329, 106.827253], 
       zoom: 15,
-      showLocator: true,
       /* locator: Locator(
         alignment: Alignment.bottomLeft,
         margin: EdgeInsets.only(left: 20, bottom: 24),
