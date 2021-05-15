@@ -3,6 +3,8 @@
 The easy way to use interactive maps in Flutter.\
 Inspired by [Leaflet.js](https://leafletjs.com/).
 
+![](screenshot.png)
+
 ## Getting Started
 
 You should add dependency in your flutter project. 
@@ -21,13 +23,13 @@ Then run `flutter pub get`.
 ## Example Project
 
 There is a complete example project in the `example` folder.\
-Check it out to find out the many use cases you can use this library.
+Check it out to learn the many use cases you can use this library.
 
-You can try a working example with [universe.apk](universe.apk).
+You can also try a working example with [universe.apk](universe.apk).
 
 ## Usage
 
-Inspired by the simplicity of Leaflet.js, you can add maps functionality in your flutter project with as simple as adding this lines of code:
+Inspired by the simplicity of Leaflet.js, now you can insert maps functionality in your flutter project with as simple as adding this lines of code:
 
 ```
 import 'package:universe/universe.dart';
@@ -81,7 +83,7 @@ U.MapBox(
 ```
 
 You can get your own MapBox access token from [here](https://account.mapbox.com/access-tokens/).\
-Please always use your own access token for each of your projects.
+Please always use your own access token in your projects.
 
 [Complete MapBox example](example/lib/src/map_provider/mapbox.dart)
 

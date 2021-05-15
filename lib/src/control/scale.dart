@@ -19,7 +19,7 @@ class Scale extends MapLayer {
 
   Scale({
     this.alignment = Alignment.topLeft,
-    this.margin = const EdgeInsets.only(left: 15, top: 32), 
+    this.margin = const EdgeInsets.only(left: 15, top: 48), 
     this.color = const Color(0xFF546E7A),
     this.strokeWidth = 2.0,
     this.fontSize = 12,

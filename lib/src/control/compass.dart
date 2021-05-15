@@ -14,7 +14,7 @@ class Compass extends MapLayer {
   Compass({
     this.icon, 
     this.alignment = Alignment.topRight, 
-    this.margin = const EdgeInsets.only(top: 42, right: 20),
+    this.margin = const EdgeInsets.only(top: 52, right: 20),
   });
 
   @override 
