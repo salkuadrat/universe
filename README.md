@@ -66,7 +66,7 @@ U.GoogleMap(
 )
 ```
 
-[Complete GoogleMap example](example/lib/src/map_provider/google.dart)
+[Complete Google Maps example](example/lib/src/map_provider/google.dart)
 
 
 ### MapBox
