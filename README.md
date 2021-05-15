@@ -110,6 +110,23 @@ Complete marker examples:
 [Tap to Add Marker](example/lib/src/marker/add.dart)\
 [Marker Icon](example/lib/src/marker/icon.dart)
 
+### Live Maps
+
+```
+U.OpenStreetMap(
+  center: [51.555158, -0.108343],
+  type: OpenStreetMapType.Mapnik,
+  zoom: 15,
+  live: true,
+)
+```
+
+Complete live maps examples:
+
+[Default Live Map](example/lib/src/live/default.dart)\
+[Simple Live Map](example/lib/src/live/simple.dart)\
+[Live Map with Location Marker](example/lib/src/live/marker.dart)
+
 ### Static Maps
 
 ```
@@ -130,10 +147,6 @@ Complete static maps examples:
 ### Other Examples 
 
 [Complex Map](example/lib/src/home.dart)
-
-[Live Map](example/lib/src/live/default.dart)\
-[Simple Live Map](example/lib/src/live/simple.dart)\
-[Live Map with Location Marker](example/lib/src/live/marker.dart)
 
 [Map with Initial Rotation](example/lib/src/rotation/initial.dart)\
 [Map with Disabled Rotation](example/lib/src/rotation/disable.dart)\
