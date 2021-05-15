@@ -3,7 +3,7 @@
 The easy way to use interactive maps in Flutter.\
 Inspired by [Leaflet.js](https://leafletjs.com/).
 
-![](screenshot.png | width=400)
+![](screenshot.png)
 
 ## Getting Started
 
