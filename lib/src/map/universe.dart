@@ -133,9 +133,10 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
 
     super.initState();
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      map.init(self, _resize);
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      await map.init(self, _resize);
       _resize();
+      map.rotate(map.originalRotation);
     });
   }
 

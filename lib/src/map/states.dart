@@ -23,6 +23,7 @@ class MapStates extends ChangeNotifier {
   late double _zoom;
   late double _minZoom;
   late double _maxZoom;
+  late double _originalRotation;
   late double _rotation;
   late Size _size;
   late bool _isLocating;
@@ -58,7 +59,8 @@ class MapStates extends ChangeNotifier {
     _zoom = options.zoom;
     _minZoom = options.minZoom;
     _maxZoom = options.maxZoom;
-    _rotation = options.rotation;
+    _originalRotation = options.rotation;
+    _rotation = 0.0;
     _size = options.size!;
     _isLocating = false;
 
@@ -87,6 +89,7 @@ class MapStates extends ChangeNotifier {
   double get minZoom => _minZoom;
   double get maxZoom => _maxZoom;
   double get rotation => _rotation;
+  double get originalRotation => _originalRotation;
   Size get size => _size;
 
   double get angle => _angle;
