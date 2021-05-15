@@ -11,7 +11,7 @@ Add dependency to your flutter project:
 
 ```yaml
 dependencies:
-  universe: ^0.0.3
+  universe: ^0.0.2-nullsafety
 ```
 
 ```yaml

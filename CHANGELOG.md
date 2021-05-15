@@ -1,4 +1,4 @@
-## [0.0.3] - 16 May 2021
+## [0.0.2-nullsafety] - 16 May 2021
 
 * Fixing non null safety dependencies
 

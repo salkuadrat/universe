@@ -1,7 +1,7 @@
 name: universe
 description: The easy & flexible way to use interactive maps in Flutter.
-version: 0.0.3
-author: Salman S
+version: 0.0.2-nullsafety
+# author: Salman S
 homepage: https://pub.dev/packages/universe
 repository: https://github.com/salkuadrat/universe
 module:
