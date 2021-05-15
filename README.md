@@ -4,7 +4,7 @@ The easy way to use interactive maps in Flutter. Inspired by Leaflet.js.
 
 ## Getting Started
 
-You should ensure that you add dependency in your flutter project. 
+You should add dependency in your flutter project. 
 
 Since the initial version of this package using 3 dependencies from other git repos (the null safety version of their non-null safety official packages), at this moment, you can only reference this library from github repo:
 
