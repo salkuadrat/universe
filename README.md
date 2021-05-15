@@ -1,6 +1,7 @@
 # Universe
 
-The easy way to use interactive maps in Flutter. Inspired by Leaflet.js.
+The easy way to use interactive maps in Flutter. 
+Inspired by [Leaflet.js](https://leafletjs.com/).
 
 ## Getting Started
 
