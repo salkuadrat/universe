@@ -30,6 +30,10 @@ You can try a working example with [universe.apk](universe.apk).
 Inspired by the simplicity of Leaflet.js, you can add maps functionality in your flutter project with as simple as adding this lines of code:
 
 ```
+import 'package:universe/universe.dart';
+```
+
+```
 U.OpenStreetMap(
   center: [-6.175329, 106.827253],
   type: OpenStreetMapType.HOT,
