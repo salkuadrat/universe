@@ -7,7 +7,7 @@ Inspired by [Leaflet.js](https://leafletjs.com/).
 
 You should add dependency in your flutter project. 
 
-Since the initial version of this package using 3 dependencies from other git repos (the null safety version of their non-null safety official packages), at this moment, you can only reference this library from github repo:
+Since the initial version of this package use 3 dependencies from other git repos (the null safety version of their non-null safety official packages), at this moment, you can only reference this library from github repo:
 
 ```yaml
 dependencies:
