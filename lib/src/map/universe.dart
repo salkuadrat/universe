@@ -118,16 +118,14 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
   bool get hasLayers => widget.layers.isNotEmpty;
 
   ValueNotifier<double> rotationNotifier = ValueNotifier(0.0);
-
-  late double _originalWidth;
-  late double _originalHeight;
+  
   late double _width;
   late double _height;
+  late Size _originalSize;
 
   @override
   void initState() {
-    _originalWidth = map.width;
-    _originalHeight = map.height;
+    _originalSize = Size(map.width, map.height);
     _width = map.width;
     _height = map.height;
 
@@ -138,14 +136,13 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
   }
 
   void _resize() {
-    final angle = map.angle;
-    final originalSize = Size(_originalWidth, _originalHeight);
-    final size = projectedSize(originalSize, angle);
-
-    setState(() { 
+    final size = projectedSize(_originalSize, map.angle);
+    
+    setState(() {
       _width = size.width;
       _height = size.height;
-      rotationNotifier.value = angle;
+      
+      rotationNotifier.value = map.angle;
     });
 
     map.resize(_width, _height);
@@ -153,7 +150,6 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
 
   get _layers => Transform.rotate(
     angle: rotationNotifier.value,
-    alignment: FractionalOffset.center,
     child: OverflowBox(
       minWidth: _width,
       minHeight: _height,

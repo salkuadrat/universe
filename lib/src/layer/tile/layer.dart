@@ -132,7 +132,7 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
       if(_canUpdate && center != null) {
         log('TileLayer: Soft Updating...');
         _update(center);
-        _setZoomTransforms(center, map.zoom);
+        //_setZoomTransforms(center, map.zoom);
         _lastUpdated = _now;
       }
     });
@@ -145,7 +145,7 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
       _softUpdateStream?.add(map.center);
     } else {
       _update();
-      _setZoomTransforms(map.center, map.zoom);
+      //_setZoomTransforms(map.center, map.zoom);
     }
   }
 
@@ -252,7 +252,7 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
       setState(() {
         _tileZoom = zoom;
         _refresh(map.center, zoom);
-        //_setZoomTransforms(map.center, zoom);
+        _setZoomTransforms(map.center, zoom);
       });
     }
     // refresh map if it's zoomed

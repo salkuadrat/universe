@@ -641,6 +641,7 @@ class MapStates extends ChangeNotifier {
     _angle = angle;
     _rotation = radianToDeg(_angle);
     _onAngleChanged?.call();
+    _onTileChanged?.call();
     notifyListeners();
   }
 
@@ -648,6 +649,7 @@ class MapStates extends ChangeNotifier {
     _rotation = rotation;
     _angle = degToRadian(_rotation);
     _onAngleChanged?.call();
+    _onTileChanged?.call();
     notifyListeners();
   }
 
@@ -668,6 +670,7 @@ class MapStates extends ChangeNotifier {
 
       _rotateAnim?.addListener(() {
         rotation = _rotateAnim!.value;
+        //_move(_center, _zoom);
       });
 
       _rotateAnim?.addStatusListener((status) { 
