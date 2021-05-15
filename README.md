@@ -80,8 +80,7 @@ U.MapBox(
 )
 ```
 
-You can get your own MapBox access token from [here](https://account.mapbox.com/access-tokens/).\
-Please always use your own access token in your projects.
+You can get your own MapBox access token from [here](https://account.mapbox.com/access-tokens/). Please always use your own access token in your projects.
 
 [Complete MapBox example](example/lib/src/map_provider/mapbox.dart)
 
@@ -92,7 +91,7 @@ You can add marker to your maps with as simple as the following code:
 ```
 U.OpenStreetMap(
   center: [51.555158, -0.108343],
-  type: OpenStreetMapType.Mapnik,
+  type: OpenStreetMapType.HOT,
   zoom: 15,
   markers: U.MarkerLayer([51.556669, -0.108123]),
 )
@@ -115,7 +114,7 @@ Complete marker examples:
 ```
 U.OpenStreetMap(
   center: [51.555158, -0.108343],
-  type: OpenStreetMapType.Mapnik,
+  type: OpenStreetMapType.HOT,
   zoom: 15,
   live: true,
 )
