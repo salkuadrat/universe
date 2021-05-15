@@ -9,13 +9,6 @@ Inspired by [Leaflet.js](https://leafletjs.com/).
 
 Add dependency to your flutter project:
 
-```
-dependencies:
-  universe: ^0.0.2
-```
-
-or directly from github repo:
-
 ```yaml
 dependencies:
   universe:
