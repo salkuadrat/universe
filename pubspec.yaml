@@ -29,6 +29,7 @@ dependencies:
   curved_animation_controller: ^1.1.0
   location: ^4.1.1
   geocoder:
+    #path: ../flutter_geocoder/
     git:
       url: git://github.com/salkuadrat/flutter_geocoder.git
   video_player: ^2.1.1

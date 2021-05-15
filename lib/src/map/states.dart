@@ -445,10 +445,9 @@ class MapStates extends ChangeNotifier {
     if(center != null) {
       _center = center;
       _options = _options.copyWith(center: center);
-      
-      
+
       rotate(0.0, true);
-      await move(_center, zoom / 2);
+      await move(_center, zoom - 1.1);
       await move(_center, zoom, true);
     }
   }
@@ -699,9 +698,9 @@ class MapStates extends ChangeNotifier {
   Future<LatLng?> findLocation(String query) async {
     log('MapStates findLocation $query');
 
-    List<Address>? locations = await Geocoder.local.findAddressesFromQuery(query);
+    List<Address> locations = await Geocoder.local.findAddressesFromQuery(query) ?? [];
 
-    if(locations != null && locations.length > 0 && locations.first.coordinates != null) {
+    if(locations.length > 0 && locations.first.coordinates != null) {
       Coordinates coordinates = locations.first.coordinates!;
       return LatLng(coordinates.latitude, coordinates.longitude);
     }
@@ -734,8 +733,6 @@ class MapStates extends ChangeNotifier {
       notifyListeners();
 
       if(automove) {
-        rotate(0.0, true);
-        await move(_position, (zoom / 2) + 0.012);
         await move(_position, zoom + 0.012, true);
       }
 
