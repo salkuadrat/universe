@@ -931,7 +931,12 @@ class U {
 
     bool isMarker = marker is L.Marker;
     bool isLatLng = marker is LatLng;
-    bool isList = (marker is List && marker.isNotEmpty && (marker.first is int || marker.first is double));
+    bool isList = (
+      marker is List && 
+      marker.isNotEmpty && 
+      (marker.first is int || marker.first is double)
+    );
+    
     List<dynamic> items = (isMarker || isLatLng || isList) ? [ marker ] : marker;
 
     return L.MarkerLayer(

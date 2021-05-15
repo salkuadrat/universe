@@ -16,7 +16,7 @@ class MarkerWithDataMap extends StatelessWidget {
         onTap: (latlng, data) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Welcome to $data'),
+            content: Text('Data: $data'),
           ));
         },
       ),

@@ -34,6 +34,8 @@ import 'marker/default.dart';
 import 'marker/icon.dart';
 import 'marker/image.dart';
 import 'marker/multi.dart';
+import 'marker/multidata.dart';
+import 'marker/multistyles.dart';
 import 'marker/svg.dart';
 import 'marker/widget.dart';
 import 'overlay/image.dart';
@@ -89,6 +91,8 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Marker', map: () => DefaultMarkerMap()),
   UniqueKey(): MenuItem('Marker with Data', map: () => MarkerWithDataMap()),
   UniqueKey(): MenuItem('Multiple Marker', map: () => MultiMarkerMap()),
+  UniqueKey(): MenuItem('Multiple Marker with Different Styles', map: () => MultiMarkerStylesMap()),
+  UniqueKey(): MenuItem('Multiple Marker with Data', map: () => MultiMarkerWithDataMap()),
   UniqueKey(): MenuItem('Marker Icon', map: () => MarkerIconMap()),
   UniqueKey(): MenuItem('Marker Image', map: () => MarkerImageMap()),
   UniqueKey(): MenuItem('Marker Svg', map: () => MarkerSvgMap()),

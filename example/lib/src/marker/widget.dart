@@ -15,10 +15,11 @@ class MarkerWidgetMap extends StatelessWidget {
           [51.558374, -0.107398],
           [51.556674, -0.106215],
         ],
+        // marker with custom widget
         widget: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Arsenal'),
+            Text('ARS'),
             SizedBox(height: 5),
             Icon(Icons.location_on, color: Colors.red, size: 28)
           ],

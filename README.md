@@ -102,6 +102,8 @@ Complete marker examples:
 [Simple Marker](example/lib/src/marker/default.dart)\
 [Marker with Data](example/lib/src/marker/data.dart)\
 [Multiple Marker](example/lib/src/marker/multi.dart)\
+[Multiple Marker with Different Styles](example/lib/src/marker/multistyles.dart)\
+[Multiple Marker with Data](example/lib/src/marker/multidata.dart)\
 [Marker Icon](example/lib/src/marker/icon.dart)\
 [Marker Image](example/lib/src/marker/image.dart)\
 [Marker SVG](example/lib/src/marker/svg.dart)\

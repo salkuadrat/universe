@@ -83,12 +83,16 @@ class Marker {
       opacity: opacity as double? ?? value.opacity,
       align: align ?? value.align,
       offset: offset ?? value.offset,
-      widget: widget ?? value.icon ?? value.image ?? value.svg ?? value.widget,
+      widget: value.icon ?? value.image ?? value.svg ?? value.widget ?? widget,
       data: data ?? value.data,
     );
 
     bool isLatLng = value is LatLng;
-    bool isList = (value is List && value.isNotEmpty && value.first is num);
+    bool isList = (
+      value is List && 
+      value.isNotEmpty && 
+      (value.first is int || value.first is double)
+    );
 
     if(isLatLng || isList) {
       LatLng latlng = value is LatLng ? value : LatLng.from(value);
