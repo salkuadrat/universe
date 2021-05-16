@@ -30,7 +30,7 @@ class _TileImageState extends State<TileImage> {
   void didUpdateWidget(TileImage oldWidget) {
     super.didUpdateWidget(oldWidget);
     oldWidget.tile.removeAnimationListener(_refresh);
-    //widget.tile.removeAnimationListener(_refresh);
+    widget.tile.removeAnimationListener(_refresh);
     widget.tile.addAnimationListener(_refresh);
   }
 

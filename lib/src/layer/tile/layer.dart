@@ -109,7 +109,6 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
   }
 
   bool get _hasUpdateStream => _softUpdateStream != null;
-  //bool get _hasUpdateInterval => options!.updateInterval != null;
   bool get _canUpdate => _now - _lastUpdated > _updateInterval;
 
   int get _updateInterval => options.updateInterval.inMilliseconds;
@@ -127,11 +126,11 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
 
     _softUpdateStream = StreamController<LatLng?>(sync: true);
     _softUpdateStream!.stream.listen((center) {
-      if (_canUpdate && center != null) {
+      if(_canUpdate) {
         log('TileLayer: Soft Updating...');
-        _update(center);
-        //_setZoomTransforms(center, map.zoom);
-        _lastUpdated = _now;
+        _update(map.center);
+        //_setZoomTransforms(map.center, map.zoom);
+         _lastUpdated = _now;
       }
     });
   }
@@ -143,7 +142,7 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
       _softUpdateStream?.add(map.center);
     } else {
       _update();
-      //_setZoomTransforms(map.center, map.zoom);
+      _setZoomTransforms(map.center, map.zoom);
     }
   }
 
@@ -264,6 +263,7 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
       setState(() {
         // update map softly, based on tileUpdateInterval (default 200ms)
         _softUpdate();
+        //_update();
         _setZoomTransforms(map.center, map.zoom);
       });
     }

@@ -22,7 +22,7 @@ class U {
   ///
   /// ```dart
   /// U.Map(
-  ///   controller: U.MapController(),
+  ///   controller: MapController(),
   ///   center: [-6.175329, 106.827253],
   ///   zoom: 15,
   /// )
@@ -35,7 +35,7 @@ class U {
   ///
   /// ```dart
   /// U.Map(
-  ///   controller: U.MapController(),
+  ///   controller: MapController(),
   ///   center: [-6.175329, 106.827253],
   ///   zoom: 15,
   /// )
@@ -45,7 +45,7 @@ class U {
   ///
   /// ```dart
   /// U.Map(
-  ///   controller: U.MapController(),
+  ///   controller: MapController(),
   ///   center: LatLng(-6.175329, 106.827253),
   ///   zoom: 15,
   /// )
@@ -60,7 +60,7 @@ class U {
   ///
   /// ```dart
   /// U.Map(
-  ///   controller: U.MapController(),
+  ///   controller: MapController(),
   ///   center: 'Emirates Stadium',
   ///   zoom: 15,
   /// )

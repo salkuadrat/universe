@@ -83,7 +83,7 @@ class Tile implements Comparable<Tile> {
     log('dispose tile $coordinate');
 
     if (hasImageProvider && evict) {
-      imageProvider!.evict();
+      imageProvider?.evict();
     }
 
     _imageStream?.removeListener(_listener);
@@ -100,9 +100,9 @@ class Tile implements Comparable<Tile> {
 
     _animController = CurvedAnimationController(
         duration: duration, vsync: vsync, curve: curve);
-    _animController!.addStatusListener(_onAnimateEnd);
-    _animController!
-      ..reset()
+    _animController?.addStatusListener(_onAnimateEnd);
+    _animController
+      ?..reset()
       ..forward(from: from);
   }
 
