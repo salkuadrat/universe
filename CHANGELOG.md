@@ -1,3 +1,9 @@
+## [0.0.2-nullsafety.1] - 16 May 2021
+
+* Change dependency cached_network_image to version 3.1.0-alpha.1
+* Add Live Map Without Automoving example
+* Add Custom Map Provider example
+
 ## [0.0.2-nullsafety] - 16 May 2021
 
 * Fixing non null safety dependencies
