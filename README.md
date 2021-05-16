@@ -96,7 +96,7 @@ You can get your own MapBox access token from [here](https://account.mapbox.com/
 
 [Complete MapBox example](example/lib/src/map_provider/mapbox.dart)
 
-## Custom Map Provider
+### Custom Map Provider
 
 We can also call U.Map directly to use maps from custom map providers. Here is an example of using custom map from OpenTopoMap.
 
@@ -155,7 +155,7 @@ Complete live maps examples:
 [Simple Live Map](example/lib/src/live/simple.dart)\
 [Live Map with Location Marker](example/lib/src/live/marker.dart)
 
-## Live Maps Without AutoMoving
+### Live Maps Without AutoMoving
 
 The default behavior of Live Map will automatically move the center of the maps to user's current location. If we want to go live (always searching for user's current location and show location indicator to that location), but don't want to always move the center of the maps, we can use parameter moveWhenLive and set it to false.
 
