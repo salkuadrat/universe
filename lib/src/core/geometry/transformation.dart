@@ -1,7 +1,6 @@
 import 'point.dart';
 
 class Transformation {
-  
   final num a;
   final num b;
   final num c;

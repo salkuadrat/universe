@@ -14,7 +14,7 @@ class CustomCircleMap extends StatelessWidget {
       // circle with custom styles
       circles: U.CircleLayer(
         [-6.170039, 106.8241],
-        radius: 240, 
+        radius: 240,
         stroke: true,
         strokeColor: Colors.orange,
         strokeCap: StrokeCap.butt,

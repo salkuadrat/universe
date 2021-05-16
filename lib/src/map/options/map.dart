@@ -9,8 +9,7 @@ import '../../shared.dart';
 import '../map.dart';
 
 class MapOptions {
-  
-  /// The [Coordinate Reference System] to use. 
+  /// The [Coordinate Reference System] to use.
   /// Don't change this if you're not sure what it means.
   final Crs crs;
 
@@ -50,13 +49,13 @@ class MapOptions {
   /// To define custom style and position of [Locator] on the screen.
   final Locator? locator;
 
-  /// Whether to show location marker at the user's location 
+  /// Whether to show location marker at the user's location
   /// when live or locate by [locator]
-  /// 
+  ///
   /// Default to false when [showLocationIndicator] is true.
   final bool showLocationMarker;
 
-  /// Whether to show location indicator at the user's location 
+  /// Whether to show location indicator at the user's location
   /// when live or locate by [locator]
   final bool showLocationIndicator;
 
@@ -81,8 +80,8 @@ class MapOptions {
 
   final bool hideAttribution;
 
-  /// When this option is set, the map restricts the view to the given 
-  /// geographical bounds, bouncing the user back if the user tries to pan 
+  /// When this option is set, the map restricts the view to the given
+  /// geographical bounds, bouncing the user back if the user tries to pan
   /// outside the view.
   final LatLngBounds? maxBounds;
   final LatLngBounds? fitBounds;
@@ -115,11 +114,11 @@ class MapOptions {
   bool get canRotate => !disableRotation;
 
   MapOptions({
-    this.crs = CRS.EPSG3857, 
+    this.crs = CRS.EPSG3857,
     dynamic center,
-    this.size,  
+    this.size,
     ZoomOptions? zoomOptions,
-    this.rotation = rotationDef, 
+    this.rotation = rotationDef,
     this.disableRotation = disableRotationDef,
     this.showCenterMarker = showCenterMarkerDef,
     this.centerMarker = markerDef,
@@ -135,40 +134,33 @@ class MapOptions {
     this.compass,
     this.showScale = showScaleDef,
     this.scale,
-    this.interactive = interactiveDef, 
+    this.interactive = interactiveDef,
     this.maxBounds,
     this.fitBounds,
     FitBoundsOptions? fitBoundsOptions,
-    this.slideOnBoundaries = slideOnBoundariesDef, 
-    this.adaptiveBoundaries = adaptiveBoundariesDef, 
-    this.onTap, 
-    this.onLongPress, 
+    this.slideOnBoundaries = slideOnBoundariesDef,
+    this.adaptiveBoundaries = adaptiveBoundariesDef,
+    this.onTap,
+    this.onLongPress,
     this.onChanged,
     this.onReady,
     this.attribution = attributionDef,
     this.hideAttribution = hideAttributionDef,
-  }): 
-    assert(
-      center is LatLng || 
-      center is String || 
-      (
-        center is List && 
-        center.isNotEmpty && 
-        (center.first is int || center.first is double)
-      )
-    ),
-    this.center = (
-      center is LatLng || 
-      (
-        center is List && 
-        center.isNotEmpty && 
-        (center.first is int || center.first is double)
-      )
-    ) ? LatLng.from(center) : null,
-    this.centerQuery = center is String ? center : null,
-    this.zoomOptions = zoomOptions ?? ZoomOptions(),
-    this.fitBoundsOptions = fitBoundsOptions ?? FitBoundsOptions();
-    
+  })  : assert(center is LatLng ||
+            center is String ||
+            (center is List &&
+                center.isNotEmpty &&
+                (center.first is int || center.first is double))),
+        this.center = (center is LatLng ||
+                (center is List &&
+                    center.isNotEmpty &&
+                    (center.first is int || center.first is double)))
+            ? LatLng.from(center)
+            : null,
+        this.centerQuery = center is String ? center : null,
+        this.zoomOptions = zoomOptions ?? ZoomOptions(),
+        this.fitBoundsOptions = fitBoundsOptions ?? FitBoundsOptions();
+
   MapOptions copyWith({
     Crs? crs,
     Size? size,
@@ -202,38 +194,40 @@ class MapOptions {
     Function? onReady,
     String? attribution,
     bool? hideAttribution,
-  }) => MapOptions(
-    crs: crs ?? this.crs,
-    size: size ?? this.size,
-    center: center ?? this.center ?? this.centerQuery,
-    zoomOptions: zoomOptions ?? this.zoomOptions,
-    rotation: rotation ?? this.rotation,
-    disableRotation: disableRotation ?? this.disableRotation,
-    showCenterMarker: showCenterMarker ?? this.showCenterMarker,
-    centerMarker: centerMarker ?? this.centerMarker,
-    locationMarker: locationMarker ?? this.locationMarker,
-    live: live ?? this.live,
-    moveWhenLive: moveWhenLive ?? this.moveWhenLive,
-    locator: locator ?? this.locator,
-    showLocator: showLocator ?? this.showLocator,
-    locationIndicator: locationIndicator ?? this.locationIndicator,
-    showLocationIndicator: showLocationIndicator ?? this.showLocationIndicator,
-    showLocationMarker: showLocationMarker ?? this.showLocationMarker,
-    compass: compass ?? this.compass,
-    showCompass: showCompass ?? this.showCompass,
-    scale: scale ?? this.scale,
-    showScale: showScale ?? this.showScale,
-    interactive: interactive ?? this.interactive,
-    maxBounds: maxBounds ?? this.maxBounds,
-    fitBounds: fitBounds ?? this.fitBounds,
-    fitBoundsOptions: fitBoundsOptions ?? this.fitBoundsOptions,
-    slideOnBoundaries: slideOnBoundaries ?? this.slideOnBoundaries,
-    adaptiveBoundaries: adaptiveBoundaries ?? this.adaptiveBoundaries,
-    onTap: onTap ?? this.onTap,
-    onLongPress: onLongPress ?? this.onLongPress,
-    onChanged: onChanged ?? this.onChanged,
-    onReady: onReady ?? this.onReady,
-    attribution: attribution ?? this.attribution,
-    hideAttribution: hideAttribution ?? this.hideAttribution,
-  );
+  }) =>
+      MapOptions(
+        crs: crs ?? this.crs,
+        size: size ?? this.size,
+        center: center ?? this.center ?? this.centerQuery,
+        zoomOptions: zoomOptions ?? this.zoomOptions,
+        rotation: rotation ?? this.rotation,
+        disableRotation: disableRotation ?? this.disableRotation,
+        showCenterMarker: showCenterMarker ?? this.showCenterMarker,
+        centerMarker: centerMarker ?? this.centerMarker,
+        locationMarker: locationMarker ?? this.locationMarker,
+        live: live ?? this.live,
+        moveWhenLive: moveWhenLive ?? this.moveWhenLive,
+        locator: locator ?? this.locator,
+        showLocator: showLocator ?? this.showLocator,
+        locationIndicator: locationIndicator ?? this.locationIndicator,
+        showLocationIndicator:
+            showLocationIndicator ?? this.showLocationIndicator,
+        showLocationMarker: showLocationMarker ?? this.showLocationMarker,
+        compass: compass ?? this.compass,
+        showCompass: showCompass ?? this.showCompass,
+        scale: scale ?? this.scale,
+        showScale: showScale ?? this.showScale,
+        interactive: interactive ?? this.interactive,
+        maxBounds: maxBounds ?? this.maxBounds,
+        fitBounds: fitBounds ?? this.fitBounds,
+        fitBoundsOptions: fitBoundsOptions ?? this.fitBoundsOptions,
+        slideOnBoundaries: slideOnBoundaries ?? this.slideOnBoundaries,
+        adaptiveBoundaries: adaptiveBoundaries ?? this.adaptiveBoundaries,
+        onTap: onTap ?? this.onTap,
+        onLongPress: onLongPress ?? this.onLongPress,
+        onChanged: onChanged ?? this.onChanged,
+        onReady: onReady ?? this.onReady,
+        attribution: attribution ?? this.attribution,
+        hideAttribution: hideAttribution ?? this.hideAttribution,
+      );
 }

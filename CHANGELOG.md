@@ -1,3 +1,7 @@
+## [0.0.2-nullsafety.2] - 16 May 2021
+
+* format all .dart files
+
 ## [0.0.2-nullsafety.1] - 16 May 2021
 
 * Change dependency cached_network_image to version 3.1.0-alpha.1

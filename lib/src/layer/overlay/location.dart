@@ -6,7 +6,6 @@ import '../../map/map.dart';
 import '../layer.dart';
 
 class LocationIndicator extends MapLayer {
-
   final double radius;
   final double overlayRadius;
   final double ringRadius;
@@ -14,19 +13,19 @@ class LocationIndicator extends MapLayer {
   final bool animate;
 
   const LocationIndicator({
-    this.radius = 10, 
-    this.overlayRadius = 100, 
+    this.radius = 10,
+    this.overlayRadius = 100,
     this.ringRadius = 3,
     this.color = Colors.lightBlue,
     this.animate = true,
   });
-       
-  @override 
+
+  @override
   Widget buildLayer(BuildContext context, MapStates map) {
-    if(map.location == null) {
+    if (map.location == null) {
       return Container();
     }
-    
+
     double scale = map.getZoomScale(map.zoom, map.zoom);
     UPoint locationPoint = map.project(map.position) * scale - map.pixelOrigin;
     Offset location = map.pointToOffset(locationPoint);
@@ -43,7 +42,6 @@ class LocationIndicator extends MapLayer {
 }
 
 class AnimatedIndicator extends StatefulWidget {
-
   final Offset? location;
   final double? radius;
   final double? overlayRadius;
@@ -55,7 +53,7 @@ class AnimatedIndicator extends StatefulWidget {
 
   AnimatedIndicator({
     this.location,
-    this.radius, 
+    this.radius,
     this.overlayRadius,
     this.ringRadius,
     this.color,
@@ -66,21 +64,21 @@ class AnimatedIndicator extends StatefulWidget {
   _AnimatedIndicatorState createState() => _AnimatedIndicatorState();
 }
 
-class _AnimatedIndicatorState extends State<AnimatedIndicator> 
-  with SingleTickerProviderStateMixin {
-
+class _AnimatedIndicatorState extends State<AnimatedIndicator>
+    with SingleTickerProviderStateMixin {
   CurvedAnimationController? _animation;
 
   @override
   void initState() {
     super.initState();
 
-    if(widget.animate) {
+    if (widget.animate) {
       _animation = CurvedAnimationController(
-        begin: widget.insideRadius, end: widget.insideRadius - 1,
+        begin: widget.insideRadius,
+        end: widget.insideRadius - 1,
         duration: Duration(milliseconds: 1000),
         curve: Curves.easeInOut,
-        vsync: this, 
+        vsync: this,
       );
 
       _animation?.addListener(() => setState(() {}));
@@ -93,65 +91,61 @@ class _AnimatedIndicatorState extends State<AnimatedIndicator>
     _animation?.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, BoxConstraints c) {
-        Size size = Size(c.maxWidth, c.maxHeight); 
-        return Stack(
-          children: [
-            CustomPaint(
-              painter: OuterIndicatorPainter(
-                location: widget.location,
-                radius: widget.overlayRadius,
-                color: widget.color,
-                opacity: 0.1,
-              ),
-              size: size,
+    return LayoutBuilder(builder: (_, BoxConstraints c) {
+      Size size = Size(c.maxWidth, c.maxHeight);
+      return Stack(
+        children: [
+          CustomPaint(
+            painter: OuterIndicatorPainter(
+              location: widget.location,
+              radius: widget.overlayRadius,
+              color: widget.color,
+              opacity: 0.1,
             ),
-            CustomPaint(
-              painter: IndicatorPainter(
-                radius: widget.radius,
-                insideRadius: widget.animate && _animation != null 
-                  ? _animation!.value 
+            size: size,
+          ),
+          CustomPaint(
+            painter: IndicatorPainter(
+              radius: widget.radius,
+              insideRadius: widget.animate && _animation != null
+                  ? _animation!.value
                   : widget.insideRadius,
-                location: widget.location,
-                color: widget.color,
-              ),
-              size: size,
+              location: widget.location,
+              color: widget.color,
             ),
-          ],
-        );
-      }
-    );
+            size: size,
+          ),
+        ],
+      );
+    });
   }
 }
 
 class IndicatorPainter extends CustomPainter {
-
   final Offset? location;
   final double? radius;
   final double? insideRadius;
   final Color? color;
 
   IndicatorPainter({
-    this.location, 
-    this.radius, 
+    this.location,
+    this.radius,
     this.insideRadius,
     this.color,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    
     final rect = Offset.zero & size;
     canvas.clipRect(rect);
 
     final paint = Paint()
       ..style = PaintingStyle.fill
       ..color = Colors.white;
-    
+
     canvas.drawCircle(location!, radius!, paint);
 
     final insidePaint = Paint()
@@ -159,16 +153,13 @@ class IndicatorPainter extends CustomPainter {
       ..color = color!;
 
     canvas.drawCircle(location!, insideRadius!, insidePaint);
-
   }
 
   @override
   bool shouldRepaint(IndicatorPainter oldPainter) => false;
-
 }
 
 class OuterIndicatorPainter extends CustomPainter {
-
   final Offset? location;
   final double? radius;
   final Color? color;
@@ -177,10 +168,10 @@ class OuterIndicatorPainter extends CustomPainter {
   OuterIndicatorPainter({
     this.location,
     this.radius,
-    this.color, 
+    this.color,
     this.opacity,
   });
-  
+
   @override
   void paint(Canvas canvas, Size size) {
     // bound the canvas
@@ -192,10 +183,8 @@ class OuterIndicatorPainter extends CustomPainter {
       ..color = color!.withOpacity(opacity!);
 
     canvas.drawCircle(location!, radius!, outerPaint);
-
   }
 
   @override
   bool shouldRepaint(OuterIndicatorPainter oldPainter) => false;
-
 }

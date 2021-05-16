@@ -12,14 +12,14 @@ class MaxBoundsMap extends StatelessWidget {
       center: [51.555158, -0.108343],
       zoom: 16,
       maxBounds: LatLngBounds(
-        [51.293714,-0.527292], // southWest bound
-        [51.669162,0.256857],  // northEast bound
+        [51.293714, -0.527292], // southWest bound
+        [51.669162, 0.256857], // northEast bound
       ),
       // draw rectangle to visualize the bounds
       rectangles: U.RectangleLayer(
         [
-          [51.293714,-0.527292],
-          [51.669162,0.256857],
+          [51.293714, -0.527292],
+          [51.669162, 0.256857],
         ],
         stroke: false,
         fillColor: Colors.white,

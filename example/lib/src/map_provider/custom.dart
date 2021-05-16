@@ -7,8 +7,10 @@ class CustomMapProvider extends StatelessWidget {
     // using U.Map to show custom maps from OpenTopoMap
     return U.Map(
       center: [51.555158, -0.108343],
-      base: U.TileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-        attribution: 'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap',
+      base: U.TileLayer(
+        'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+        attribution:
+            'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap',
         maxZoom: 17,
       ),
     );

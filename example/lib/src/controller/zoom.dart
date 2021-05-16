@@ -9,7 +9,6 @@ class ZoomControllerMap extends StatefulWidget {
 }
 
 class _ZoomControllerMapState extends State<ZoomControllerMap> {
-
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 
@@ -17,7 +16,7 @@ class _ZoomControllerMapState extends State<ZoomControllerMap> {
     // zoom to zoom level 17 with animation
     _mapController.zoomTo(17, animate: true);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Stack(

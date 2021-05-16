@@ -10,12 +10,11 @@ class VideoOverlayMap extends StatefulWidget {
 }
 
 class _VideoOverlayMapState extends State<VideoOverlayMap> {
-
   VideoPlayerController? _videoController;
 
   void _toggleVideo() {
-    if(_videoController != null && _videoController!.value.isInitialized) {
-      if(_videoController!.value.isPlaying) {
+    if (_videoController != null && _videoController!.value.isInitialized) {
+      if (_videoController!.value.isPlaying) {
         _videoController?.pause();
       } else {
         _videoController?.play();
@@ -34,7 +33,10 @@ class _VideoOverlayMapState extends State<VideoOverlayMap> {
       videos: [
         U.VideoOverlay(
           'https://www.mapbox.com/bites/00188/patricia_nasa.mp4',
-          bounds: [[ 32, -130], [ 13, -100]],
+          bounds: [
+            [32, -130],
+            [13, -100]
+          ],
           onReady: (controller) => (_videoController = controller),
           onTap: (position, data) => _toggleVideo(),
         ),

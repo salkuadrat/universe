@@ -152,7 +152,7 @@ abstract class Validate {
   */
   static notEmpty(final value, [String message = DEFAULT_NOT_EMPTY_MESSAGE]) {
     Validate.notNull(value, message);
-    
+
     if (value.isEmpty) {
       throw new ArgumentError(message);
     }

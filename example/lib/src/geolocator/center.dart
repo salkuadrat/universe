@@ -9,7 +9,8 @@ class GeolocatorMap extends StatelessWidget {
     return U.MapBox(
       type: MapBoxType.Light,
       accessToken: yourAccessTokenHere,
-      center: 'Emirates Stadium',// set map center by location name (not latlng)
+      center:
+          'Emirates Stadium', // set map center by location name (not latlng)
       zoom: 15,
     );
   }

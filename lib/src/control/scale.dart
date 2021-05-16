@@ -9,7 +9,6 @@ import '../map/map.dart';
 import '../layer/layer.dart';
 
 class Scale extends MapLayer {
-
   final Alignment alignment;
   final EdgeInsets margin;
   final Color color;
@@ -19,7 +18,7 @@ class Scale extends MapLayer {
 
   Scale({
     this.alignment = Alignment.topLeft,
-    this.margin = const EdgeInsets.only(left: 15, top: 48), 
+    this.margin = const EdgeInsets.only(left: 15, top: 48),
     this.color = const Color(0xFF546E7A),
     this.strokeWidth = 2.0,
     this.fontSize = 12,
@@ -52,7 +51,7 @@ class Scale extends MapLayer {
     5
   ];
 
-  @override 
+  @override
   Widget buildLayer(BuildContext context, MapStates map) {
     final zoom = map.zoom.round();
     final center = map.center;
@@ -62,9 +61,9 @@ class Scale extends MapLayer {
     final targetPoint = map.project(target);
 
     final scaleWidth = targetPoint.x - centerPoint.x;
-    final distanceStr = distance > 999 
-      ? '${(distance / 1000).toStringAsFixed(0)} km' 
-      : '${distance.toStringAsFixed(0)} m';
+    final distanceStr = distance > 999
+        ? '${(distance / 1000).toStringAsFixed(0)} km'
+        : '${distance.toStringAsFixed(0)} m';
 
     return Positioned.fill(
       child: Align(
@@ -90,7 +89,6 @@ class Scale extends MapLayer {
 }
 
 class ScalePainter extends CustomPainter {
-
   final String? text;
   final TextStyle? textStyle;
   final double? scaleWidth;
@@ -98,64 +96,62 @@ class ScalePainter extends CustomPainter {
   final Color? strokeColor;
 
   ScalePainter({
-    this.scaleWidth, 
-    this.text, 
-    this.textStyle, 
-    this.strokeWidth, 
+    this.scaleWidth,
+    this.text,
+    this.textStyle,
+    this.strokeWidth,
     this.strokeColor,
   });
 
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
-
     final paint = Paint()
       ..color = strokeColor!
       ..strokeWidth = strokeWidth!
       ..strokeCap = StrokeCap.square;
 
     final textPainter = TextPainter(
-      text: TextSpan(style: textStyle, text: text), 
+      text: TextSpan(style: textStyle, text: text),
       textDirection: TextDirection.ltr,
     )..layout();
 
     textPainter.paint(
-      canvas, 
+      canvas,
       Offset(scaleWidth! / 2 - textPainter.width / 2, 0),
     );
 
     final vLineStart = textPainter.height;
     final vLineHeight = 5;
-    
+
     // left vertical line
     canvas.drawLine(
       Offset(0, vLineStart),
-      Offset(0, vLineStart + vLineHeight), 
+      Offset(0, vLineStart + vLineHeight),
       paint,
     );
 
     // middle vertical line
     canvas.drawLine(
       Offset(scaleWidth! / 2 - strokeWidth! / 2, vLineStart + vLineHeight / 2),
-      Offset(scaleWidth! / 2 - strokeWidth! / 2, vLineStart + vLineHeight), 
+      Offset(scaleWidth! / 2 - strokeWidth! / 2, vLineStart + vLineHeight),
       paint,
     );
 
     // right vertical line
     canvas.drawLine(
       Offset(scaleWidth!, vLineStart),
-      Offset(scaleWidth!, vLineStart + vLineHeight), 
+      Offset(scaleWidth!, vLineStart + vLineHeight),
       paint,
     );
 
     // bottom horizontal line
     canvas.drawLine(
-      Offset(0, vLineStart + vLineHeight), 
-      Offset(scaleWidth!, vLineStart + vLineHeight), 
+      Offset(0, vLineStart + vLineHeight),
+      Offset(scaleWidth!, vLineStart + vLineHeight),
       paint,
     );
   }
 
   @override
   bool shouldRepaint(ScalePainter oldPainter) => true;
-
 }

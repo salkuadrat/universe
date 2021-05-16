@@ -12,35 +12,34 @@ import '../layer.dart';
 import 'image.dart';
 
 class MarkerLayer extends InteractiveLayer {
-
   final Marker? marker;
   final List<Marker> markers;
   final MarkerLayerOptions? options;
 
   bool get hasMarker => marker != null;
   bool get hasMarkers => markers.isNotEmpty;
-  
-  const MarkerLayer(dynamic marker, {
-    Key? key, 
+
+  const MarkerLayer(
+    dynamic marker, {
+    Key? key,
     this.options,
-  }): 
-    assert(marker is Marker || marker is List<Marker>), 
-    this.marker = marker is Marker ? marker : null,
-    this.markers = marker is List<Marker> ? marker : const <Marker>[],
-    super(key: key, options: options);
+  })  : assert(marker is Marker || marker is List<Marker>),
+        this.marker = marker is Marker ? marker : null,
+        this.markers = marker is List<Marker> ? marker : const <Marker>[],
+        super(key: key, options: options);
 
   @override
   Widget buildLayer(BuildContext context, MapStates map) {
-    if(hasMarkers) return _markers(context, map);
-    if(hasMarker) return _marker(context, map, marker!);
+    if (hasMarkers) return _markers(context, map);
+    if (hasMarker) return _marker(context, map, marker!);
     return Container();
   }
 
   Widget _markers(BuildContext context, MapStates map) => Stack(
-    children: [
-      for(Marker marker in markers) _marker(context, map, marker),
-    ],
-  );
+        children: [
+          for (Marker marker in markers) _marker(context, map, marker),
+        ],
+      );
 
   Widget _marker(BuildContext context, MapStates map, Marker marker) {
     ThemeData theme = Theme.of(context);
@@ -52,7 +51,7 @@ class MarkerLayer extends InteractiveLayer {
     MarkerOffset? offset = marker.offset ?? options!.offset;
     MarkerAlignment align = marker.align ?? options!.align;
 
-    if(offset == null) {
+    if (offset == null) {
       offset = MarkerOffset(
         top: _topOffset(height, align),
         left: _leftOffset(width, align),
@@ -62,7 +61,7 @@ class MarkerLayer extends InteractiveLayer {
     double cleanWidth = width - offset.left!;
     double cleanHeight = height - offset.top!;
 
-    if(_isOutOfBounds(map, marker, cleanWidth, cleanHeight)) {
+    if (_isOutOfBounds(map, marker, cleanWidth, cleanHeight)) {
       return Container();
     }
 
@@ -76,7 +75,7 @@ class MarkerLayer extends InteractiveLayer {
     MarkerImage? image = marker.image ?? options!.image;
     MarkerIcon? icon = marker.icon ?? options!.icon;
     Widget? widget = marker.widget ?? options!.widget;
-    
+
     return Positioned(
       width: width,
       height: height,
@@ -93,33 +92,33 @@ class MarkerLayer extends InteractiveLayer {
             opacity: opacity,
             child: LayoutBuilder(
               builder: (_, __) {
-                if(icon != null) {
+                if (icon != null) {
                   return Icon(
-                    icon.icon, 
+                    icon.icon,
                     color: icon.color ?? theme.primaryColor,
                     size: math.max(width, height),
                   );
                 }
-                
-                if(image != null) {
-                  if(image.isImage) {
+
+                if (image != null) {
+                  if (image.isImage) {
                     return image.image!;
                   }
 
-                  if(image.isProvider) {
+                  if (image.isProvider) {
                     return Image(image: image.imageProvider!);
                   }
 
-                  if(image.isFile) {
+                  if (image.isFile) {
                     return Image.file(image.imageFile!);
                   }
 
-                  if(image.isPath) {
-                    if(image.isNetworkPath) {
+                  if (image.isPath) {
+                    if (image.isNetworkPath) {
                       return CachedNetworkImage(imageUrl: image.imagePath!);
                     }
 
-                    if(image.isFilePath) {
+                    if (image.isFilePath) {
                       return Image.file(File(image.imagePath!));
                     }
 
@@ -131,28 +130,28 @@ class MarkerLayer extends InteractiveLayer {
                     }
                   }
                 }
-                
-                if(widget != null) {
+
+                if (widget != null) {
                   return widget;
                 }
-                
-                if(svg != null) {
-                  if(svg.isFile) {
+
+                if (svg != null) {
+                  if (svg.isFile) {
                     return SvgPicture.file(
                       svg.svgFile!,
                       color: svg.color ?? theme.primaryColor,
                     );
                   }
 
-                  if(svg.isPath) {
-                    if(svg.isNetworkPath) {
+                  if (svg.isPath) {
+                    if (svg.isNetworkPath) {
                       return SvgPicture.network(
                         svg.svgPath!,
                         color: svg.color ?? theme.primaryColor,
                       );
                     }
 
-                    if(svg.isFilePath) {
+                    if (svg.isFilePath) {
                       return SvgPicture.file(
                         File(svg.svgPath!),
                         color: svg.color ?? theme.primaryColor,
@@ -161,7 +160,7 @@ class MarkerLayer extends InteractiveLayer {
 
                     try {
                       return SvgPicture.asset(
-                        svg.svgPath!, 
+                        svg.svgPath!,
                         color: svg.color ?? theme.primaryColor,
                       );
                     } catch (e) {
@@ -169,7 +168,7 @@ class MarkerLayer extends InteractiveLayer {
                     }
                   }
                 }
-                
+
                 return Container();
               },
             ),
@@ -216,8 +215,8 @@ class MarkerLayer extends InteractiveLayer {
     }
   }
 
-  bool _isInsideBounds(MapStates map, Marker marker, double width, double height) {
-
+  bool _isInsideBounds(
+      MapStates map, Marker marker, double width, double height) {
     final markerPoint = map.project(marker.latlng);
 
     final sw = UPoint(markerPoint.x + width, markerPoint.y - height);
@@ -227,7 +226,8 @@ class MarkerLayer extends InteractiveLayer {
     return map.pixelBounds.containsPartialBounds(markerBounds);
   }
 
-  bool _isOutOfBounds(MapStates map, Marker marker, double width, double height) {
+  bool _isOutOfBounds(
+      MapStates map, Marker marker, double width, double height) {
     return !_isInsideBounds(map, marker, width, height);
   }
 }

@@ -16,11 +16,10 @@ import '../../log.dart';
 import 'level.dart';
 
 class Tile implements Comparable<Tile> {
-
   final Coordinate? coordinate;
   final UPoint? position;
   final Level? level;
-  
+
   ImageProvider? imageProvider;
   ImageInfo? imageInfo;
   ImageStream? _imageStream;
@@ -56,15 +55,15 @@ class Tile implements Comparable<Tile> {
   bool get isLoaded => loaded != null;
   bool get isNotLoaded => !isLoaded;
 
-  double? get opacity => hasAnimController 
-    ? (_animController!.value * maxOpacity) 
-    : (isActive ? maxOpacity : 0.0);
+  double? get opacity => hasAnimController
+      ? (_animController!.value * maxOpacity)
+      : (isActive ? maxOpacity : 0.0);
 
   void loadImageWith(ImageProvider imageProvider) {
     this.imageProvider = imageProvider;
     loadImage();
   }
-  
+
   Future loadImage() async {
     log('load image...');
 
@@ -83,7 +82,7 @@ class Tile implements Comparable<Tile> {
   void dispose([bool evict = false]) {
     log('dispose tile $coordinate');
 
-    if(hasImageProvider && evict) {
+    if (hasImageProvider && evict) {
       imageProvider!.evict();
     }
 
@@ -92,12 +91,19 @@ class Tile implements Comparable<Tile> {
     _animController?.dispose();
   }
 
-  void show({Duration? duration, required TickerProvider vsync, double? from, required Curve curve}) {
+  void show(
+      {Duration? duration,
+      required TickerProvider vsync,
+      double? from,
+      required Curve curve}) {
     _animController?.removeStatusListener(_onAnimateEnd);
-    
-    _animController = CurvedAnimationController(duration: duration, vsync: vsync, curve: curve);
+
+    _animController = CurvedAnimationController(
+        duration: duration, vsync: vsync, curve: curve);
     _animController!.addStatusListener(_onAnimateEnd);
-    _animController!..reset()..forward(from: from);
+    _animController!
+      ..reset()
+      ..forward(from: from);
   }
 
   void addAnimationListener(Function listener) {
@@ -123,18 +129,19 @@ class Tile implements Comparable<Tile> {
   void _onTileError(dynamic error, StackTrace? trace) {
     log('on Tile Error');
     this.isLoadError = true;
-    onTileReady?.call(coordinate, this, 
-      error ?? "Unknown error during loadTileImage");
+    onTileReady?.call(
+        coordinate, this, error ?? "Unknown error during loadTileImage");
   }
 
   @override
   int compareTo(Tile other) => level!.zIndex!.compareTo(other.level!.zIndex!);
-  
+
   @override
   int get hashCode => hashValues(coordinate.hashCode, level!.zIndex.hashCode);
 
   @override
-  bool operator ==(other) => other is Tile && 
-    coordinate == other.coordinate && 
-    level!.zIndex == other.level!.zIndex;
+  bool operator ==(other) =>
+      other is Tile &&
+      coordinate == other.coordinate &&
+      level!.zIndex == other.level!.zIndex;
 }

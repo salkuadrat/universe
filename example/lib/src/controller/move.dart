@@ -9,7 +9,6 @@ class MoveControllerMap extends StatefulWidget {
 }
 
 class _MoveControllerMapState extends State<MoveControllerMap> {
-
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 

@@ -8,7 +8,6 @@ import 'point.dart';
 import 'polygon.dart';
 
 class Geometry extends GeoJSONModel {
-
   @override
   GeoJSONType get type => GeoJSONType.Geometry;
 
@@ -33,5 +32,5 @@ class Geometry extends GeoJSONModel {
     }
 
     return null;
-  } 
+  }
 }

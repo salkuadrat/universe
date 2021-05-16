@@ -5,7 +5,6 @@ import 'bbox.dart';
 import 'type.dart';
 
 abstract class GeoJSONModel {
-
   BoundingBox? _bounds;
 
   GeoJSONType get type;
@@ -16,7 +15,8 @@ abstract class GeoJSONModel {
     this._bounds = bounds;
   }
 
-  L.MapLayer layer(GeoJSONLayerOptions? options, [Map<String, dynamic>? properties]) {
+  L.MapLayer layer(GeoJSONLayerOptions? options,
+      [Map<String, dynamic>? properties]) {
     return L.MapLayer();
   }
 }

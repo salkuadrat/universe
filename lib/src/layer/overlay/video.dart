@@ -7,7 +7,6 @@ import '../../core/core.dart';
 import '../layer.dart';
 
 class VideoOverlay extends InteractiveLayer {
-
   final String videoUrl;
   final LatLngBounds bounds;
   final dynamic data;
@@ -15,11 +14,12 @@ class VideoOverlay extends InteractiveLayer {
   final InteractiveLayerOptions options;
   final Function(VideoPlayerController?)? onReady;
 
-  VideoOverlay(this.videoUrl, {
-    Key? key, 
+  VideoOverlay(
+    this.videoUrl, {
+    Key? key,
     required dynamic bounds,
-    this.data, 
-    this.looping = true, 
+    this.data,
+    this.looping = true,
     required this.options,
     this.onReady,
   }) : this.bounds = LatLngBounds.from(bounds);
@@ -62,7 +62,6 @@ class VideoOverlay extends InteractiveLayer {
 }
 
 class VideoOverlayPlayer extends StatefulWidget {
-
   final String url;
   final LatLngBounds bounds;
   final dynamic data;
@@ -70,11 +69,12 @@ class VideoOverlayPlayer extends StatefulWidget {
   final InteractiveLayerOptions options;
   final Function(VideoPlayerController?)? onReady;
 
-  VideoOverlayPlayer(this.url, {
-    Key? key, 
+  VideoOverlayPlayer(
+    this.url, {
+    Key? key,
     required this.bounds,
-    this.data, 
-    required this.looping, 
+    this.data,
+    required this.looping,
     required this.options,
     this.onReady,
   });
@@ -84,7 +84,6 @@ class VideoOverlayPlayer extends StatefulWidget {
 }
 
 class _VideoOverlayPlayerState extends State<VideoOverlayPlayer> {
-
   MapStates get map => Provider.of<MapStates>(context, listen: false);
 
   late VideoPlayerController _videoController;
@@ -96,8 +95,8 @@ class _VideoOverlayPlayerState extends State<VideoOverlayPlayer> {
     _videoController.setLooping(widget.looping);
     _videoController.addListener(() => setState(() {}));
     _videoController.initialize().then((_) => setState(() {
-      widget.onReady?.call(_videoController);
-    }));
+          widget.onReady?.call(_videoController);
+        }));
     _videoController.play();
   }
 

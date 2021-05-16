@@ -7,7 +7,6 @@ import '../../map/map.dart';
 import '../layer.dart';
 
 class RectangleLayer extends ShapeLayer {
-  
   final Rectangle? rectangle;
   final List<Rectangle> rectangles;
   final RectangleLayerOptions? options;
@@ -16,37 +15,40 @@ class RectangleLayer extends ShapeLayer {
   bool get hasRectangles => rectangles.isNotEmpty;
 
   // can accept a single rectangle or list of rectangles
-  const RectangleLayer(dynamic rectangle, {Key? key, this.options}) : 
-    assert(rectangle is Rectangle || (rectangle is List<Rectangle> && rectangle.length > 0)), 
-    this.rectangle = rectangle is Rectangle ? rectangle : null,
-    this.rectangles = rectangle is List<Rectangle> ? rectangle : const <Rectangle>[],
-    super(key: key, options: options);
-  
-  @override 
+  const RectangleLayer(dynamic rectangle, {Key? key, this.options})
+      : assert(rectangle is Rectangle ||
+            (rectangle is List<Rectangle> && rectangle.length > 0)),
+        this.rectangle = rectangle is Rectangle ? rectangle : null,
+        this.rectangles =
+            rectangle is List<Rectangle> ? rectangle : const <Rectangle>[],
+        super(key: key, options: options);
+
+  @override
   Widget buildLayer(BuildContext context, MapStates map) {
-    if(hasRectangles) return _rectangles(context, map);
-    if(hasRectangle) return _rectangle(context, map, rectangle!);
+    if (hasRectangles) return _rectangles(context, map);
+    if (hasRectangle) return _rectangle(context, map, rectangle!);
     return Container();
   }
 
   Widget _rectangles(BuildContext context, MapStates map) => Stack(
-    children: [
-      for(Rectangle rectangle in rectangles) _rectangle(context, map, rectangle),
-    ],
-  );
+        children: [
+          for (Rectangle rectangle in rectangles)
+            _rectangle(context, map, rectangle),
+        ],
+      );
 
   Widget _rectangle(BuildContext context, MapStates map, Rectangle rectangle) {
-    if(rectangle.isNotValid) {
+    if (rectangle.isNotValid) {
       return Container();
     }
 
-    if(options!.culling && rectangle.bounds.isNotOverlaps(map.bounds)) {
+    if (options!.culling && rectangle.bounds.isNotOverlaps(map.bounds)) {
       return Container();
     }
 
     final strokeWidth = rectangle.strokeWidth ?? options!.strokeWidth;
     final primaryColor = Theme.of(context).primaryColor;
-    
+
     final points = _points(map, rectangle.validLatLngs);
     final holesPoints = _holesPoints(map, rectangle.holes);
 
@@ -55,7 +57,7 @@ class RectangleLayer extends ShapeLayer {
     double maxX = 0;
     double maxY = 0;
 
-    for(Offset point in points) {
+    for (Offset point in points) {
       minX = minX == 0 ? point.dx : math.min(minX, point.dx);
       minY = minY == 0 ? point.dy : math.min(minY, point.dy);
       maxX = math.max(maxX, point.dx);
@@ -70,14 +72,14 @@ class RectangleLayer extends ShapeLayer {
     List<Offset> rPoints = [];
     List<List<Offset>> rHolesPoints = [];
 
-    for(Offset point in points) {
+    for (Offset point in points) {
       rPoints.add(Offset(point.dx - left, point.dy - top));
     }
 
-    for(List<Offset> points in holesPoints) {
+    for (List<Offset> points in holesPoints) {
       List<Offset> _points = [];
 
-      for(Offset point in points) {
+      for (Offset point in points) {
         _points.add(Offset(point.dx - minX, point.dy - minY));
       }
 
@@ -93,22 +95,30 @@ class RectangleLayer extends ShapeLayer {
         options: options,
         child: CustomPaint(
           painter: PolygonPainter(
-            points: rPoints, 
-            holesPoints: rHolesPoints, 
+            points: rPoints,
+            holesPoints: rHolesPoints,
             stroke: rectangle.stroke ?? options!.stroke,
-            strokeColor: rectangle.strokeColor ?? options!.strokeColor ?? 
-              rectangle.fillColor ?? options!.fillColor ?? primaryColor,
+            strokeColor: rectangle.strokeColor ??
+                options!.strokeColor ??
+                rectangle.fillColor ??
+                options!.fillColor ??
+                primaryColor,
             strokeWidth: rectangle.strokeWidth ?? options!.strokeWidth,
             strokeOpacity: rectangle.strokeOpacity ?? options!.strokeOpacity,
             strokeCap: rectangle.strokeCap ?? options!.strokeCap,
             strokeJoin: rectangle.strokeJoin ?? options!.strokeJoin,
             pathFillType: rectangle.pathFillType ?? options!.pathFillType,
-            fillColor: rectangle.fillColor ?? options!.fillColor ?? primaryColor,
+            fillColor:
+                rectangle.fillColor ?? options!.fillColor ?? primaryColor,
             fillOpacity: rectangle.fillOpacity ?? options!.fillOpacity,
-            gradientStrokeColors: rectangle.gradientStrokeColors ?? options!.gradientStrokeColors,
-            gradientStrokeStops: rectangle.gradientStrokeStops ?? options!.gradientStrokeStops,
-            gradientFillColors: rectangle.gradientFillColors ?? options!.gradientFillColors,
-            gradientFillStops: rectangle.gradientFillStops ?? options!.gradientFillStops,
+            gradientStrokeColors:
+                rectangle.gradientStrokeColors ?? options!.gradientStrokeColors,
+            gradientStrokeStops:
+                rectangle.gradientStrokeStops ?? options!.gradientStrokeStops,
+            gradientFillColors:
+                rectangle.gradientFillColors ?? options!.gradientFillColors,
+            gradientFillStops:
+                rectangle.gradientFillStops ?? options!.gradientFillStops,
             isDotted: rectangle.isDotted ?? options!.isDotted,
             culling: options!.culling,
           ),
@@ -125,7 +135,7 @@ class RectangleLayer extends ShapeLayer {
   List<Offset> _points(MapStates map, List<LatLng?> latlngs) {
     List<Offset> points = [];
 
-    for(LatLng? latlng in latlngs) {
+    for (LatLng? latlng in latlngs) {
       double scale = map.getZoomScale(map.zoom, map.zoom);
       UPoint point = (map.project(latlng) * scale) - map.pixelOrigin;
       points.add(Offset(point.x, point.y));
@@ -136,9 +146,9 @@ class RectangleLayer extends ShapeLayer {
 
   List<List<Offset>> _holesPoints(MapStates map, List<List<LatLng>>? holes) {
     List<List<Offset>> holesPoints = [];
-    
-    if(holes != null && holes.isNotEmpty) {
-      for(final hole in holes) {
+
+    if (holes != null && holes.isNotEmpty) {
+      for (final hole in holes) {
         holesPoints.add(_points(map, hole));
       }
     }

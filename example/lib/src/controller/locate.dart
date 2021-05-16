@@ -7,7 +7,6 @@ class LocateControllerMap extends StatefulWidget {
 }
 
 class _LocateControllerMapState extends State<LocateControllerMap> {
-
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 
@@ -24,7 +23,7 @@ class _LocateControllerMapState extends State<LocateControllerMap> {
       _isSearching = false;
     });
   }
-  
+
   Future _findLocation() async {
     _startSearching();
 
@@ -32,16 +31,17 @@ class _LocateControllerMapState extends State<LocateControllerMap> {
 
     // this is only to show a nice transition between two loading text
     // do not use in production
-    await Future.delayed(Duration(milliseconds: 500)); 
+    await Future.delayed(Duration(milliseconds: 500));
 
     _stopSearching();
 
-    final message = location != null 
-      ? 'Latlng: ${location.toSimpleString()}' 
-      : 'Location not found!';
+    final message = location != null
+        ? 'Latlng: ${location.toSimpleString()}'
+        : 'Location not found!';
 
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -61,9 +61,8 @@ class _LocateControllerMapState extends State<LocateControllerMap> {
           bottom: 90,
           child: ElevatedButton(
             onPressed: _findLocation,
-            child: Text(_isSearching 
-              ? 'Searching...' 
-              : 'Find your location',
+            child: Text(
+              _isSearching ? 'Searching...' : 'Find your location',
             ),
             style: ElevatedButton.styleFrom(
               primary: Colors.white,

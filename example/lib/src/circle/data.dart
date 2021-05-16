@@ -14,14 +14,15 @@ class CircleWithDataMap extends StatelessWidget {
       // circle layer with data, showing the data to snackbar when it's tapped
       circles: U.CircleLayer(
         [-6.170039, 106.8241],
-        radius: 180, 
+        radius: 180,
         stroke: true,
         strokeWidth: 0.75,
         fill: true,
         data: 'Bicycle Palace',
         onTap: (position, data) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Welcome to $data')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Welcome to $data')));
         },
       ),
     );

@@ -8,17 +8,16 @@ class OpenStreetMap extends StatefulWidget {
 }
 
 class _OpenStreetMapState extends State<OpenStreetMap> {
-
   OpenStreetMapType type = OpenStreetMapType.HOT;
 
   get center {
-    if(type == OpenStreetMapType.DE) return [48.136794, 11.574197];
-    if(type == OpenStreetMapType.France) return [48.858236, 2.294477];
-    if(type == OpenStreetMapType.HOT) return [48.858236, 2.294477];
-    if(type == OpenStreetMapType.CH) return [47.3746272,8.5175823];
+    if (type == OpenStreetMapType.DE) return [48.136794, 11.574197];
+    if (type == OpenStreetMapType.France) return [48.858236, 2.294477];
+    if (type == OpenStreetMapType.HOT) return [48.858236, 2.294477];
+    if (type == OpenStreetMapType.CH) return [47.3746272, 8.5175823];
     return [51.555158, -0.108343];
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return U.OpenStreetMap(
@@ -36,7 +35,7 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
               value: type,
               onChanged: (OpenStreetMapType? chosen) {
                 setState(() {
-                  if(chosen != null) {
+                  if (chosen != null) {
                     type = chosen;
                   }
                 });
@@ -74,7 +73,7 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
                   value: OpenStreetMapType.Wikimedia,
                   child: Text('Wikimedia'),
                 ),
-              ], 
+              ],
             ),
           ),
         ),

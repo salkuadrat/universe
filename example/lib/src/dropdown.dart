@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 class UDropdownButton<T> extends StatelessWidget {
-
   final T value;
   final List<DropdownMenuItem<T>> items;
   final void Function(T?)? onChanged;
 
   const UDropdownButton({
-    Key? key, 
-    required this.value, 
-    required this.items, 
+    Key? key,
+    required this.value,
+    required this.items,
     this.onChanged,
   }) : super(key: key);
 
@@ -22,7 +21,7 @@ class UDropdownButton<T> extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 12),
         child: DropdownButton(
           value: value,
-          items: items, 
+          items: items,
           onChanged: onChanged,
         ),
       ),

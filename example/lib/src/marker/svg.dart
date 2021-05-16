@@ -7,7 +7,7 @@ class MarkerSvgMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return U.MapBox(
-      accessToken: yourAccessTokenHere, 
+      accessToken: yourAccessTokenHere,
       center: [51.555158, -0.108343],
       zoom: 15,
       markers: U.MarkerLayer(

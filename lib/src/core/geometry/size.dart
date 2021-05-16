@@ -3,9 +3,7 @@ import 'dart:ui';
 import 'point.dart';
 
 class Size extends UPoint {
-
-  const Size(double width, double height) 
-    : super(width, height);
+  const Size(double width, double height) : super(width, height);
 
   double get width => x;
   double get height => y;
@@ -27,7 +25,7 @@ class Size extends UPoint {
 
   @override
   Size operator /(num factor) {
-    if(factor == 0) throw Exception("Cannot divide by zero!");
+    if (factor == 0) throw Exception("Cannot divide by zero!");
     return Size(x / factor, y / factor);
   }
 
@@ -56,18 +54,18 @@ class Size extends UPoint {
   @override
   Size unscaleBy(UPoint point) {
     return Size(
-      (point.x == 0) ? 0 : (x / point.x), 
+      (point.x == 0) ? 0 : (x / point.x),
       (point.y == 0) ? 0 : (y / point.y),
     );
   }
 
   @override
   int get hashCode => hashValues(width.hashCode, height.hashCode);
-  
+
   @override
-  bool operator ==(other) => other is Size && 
-    width == other.width && height == other.height;
-  
+  bool operator ==(other) =>
+      other is Size && width == other.width && height == other.height;
+
   @override
   String toString() => 'Size($width, $height)';
 

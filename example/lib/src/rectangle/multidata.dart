@@ -8,14 +8,15 @@ class DataClassExample {
   final String name;
 
   DataClassExample({
-    required this.id, 
+    required this.id,
     required this.name,
   });
 }
 
 class MultiRectangleWithDataMap extends StatefulWidget {
   @override
-  _MultiRectangleWithDataMapState createState() => _MultiRectangleWithDataMapState();
+  _MultiRectangleWithDataMapState createState() =>
+      _MultiRectangleWithDataMapState();
 }
 
 class _MultiRectangleWithDataMapState extends State<MultiRectangleWithDataMap> {
@@ -24,14 +25,14 @@ class _MultiRectangleWithDataMapState extends State<MultiRectangleWithDataMap> {
     return U.MapBox(
       type: MapBoxType.Hybrid,
       accessToken: yourAccessTokenHere,
-      center: [-6.175329, 106.827253], 
+      center: [-6.175329, 106.827253],
       zoom: 15,
       rectangles: U.RectangleLayer(
         [
           U.Rectangle(
             [
-              [-6.183200,106.823205],
-              [-6.180427,106.831809],
+              [-6.183200, 106.823205],
+              [-6.180427, 106.831809],
             ],
             strokeColor: Colors.yellow,
             fillColor: Colors.lightBlue,
@@ -42,8 +43,8 @@ class _MultiRectangleWithDataMapState extends State<MultiRectangleWithDataMap> {
           ),
           U.Rectangle(
             [
-              [-6.177590,106.825007],
-              [-6.173344,106.829234],
+              [-6.177590, 106.825007],
+              [-6.173344, 106.829234],
             ],
             strokeColor: Colors.red,
             fillColor: Colors.red,
@@ -54,8 +55,8 @@ class _MultiRectangleWithDataMapState extends State<MultiRectangleWithDataMap> {
           ),
           U.Rectangle(
             [
-              [-6.171083,106.823290],
-              [-6.167542,106.825307],
+              [-6.171083, 106.823290],
+              [-6.167542, 106.825307],
             ],
             strokeColor: Colors.orange,
             fillColor: Colors.teal,
@@ -69,7 +70,7 @@ class _MultiRectangleWithDataMapState extends State<MultiRectangleWithDataMap> {
         strokeWidth: 5,
         fillOpacity: 1.0,
         onTap: (position, data) {
-          if(data is DataClassExample) {
+          if (data is DataClassExample) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

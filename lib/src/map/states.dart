@@ -13,7 +13,6 @@ import 'interactive/interactive.dart';
 import 'options/options.dart';
 
 class MapStates extends ChangeNotifier {
-
   late MapController _originalController;
   late MapOptions _originalOptions;
 
@@ -51,7 +50,6 @@ class MapStates extends ChangeNotifier {
     required MapController controller,
     required MapOptions options,
   }) {
-
     _originalController = controller;
     _originalOptions = options;
     _controller = controller;
@@ -64,7 +62,7 @@ class MapStates extends ChangeNotifier {
     _size = options.size!;
     _isLocating = false;
 
-    // prepare for default center when the map uses a string centerQuery 
+    // prepare for default center when the map uses a string centerQuery
     _center = options.center ?? LatLng(0.0, 0.0);
 
     _angle = degToRadian(_rotation);
@@ -72,11 +70,9 @@ class MapStates extends ChangeNotifier {
     _controller.onChanged = options.onChanged;
     _controller.map = this;
 
-    assert(
-      options.slideOnBoundaries || 
-      (options.centerQuery != null && options.centerQuery!.isNotEmpty) || 
-      (options.center != null && !_isOutOfBounds(options.center))
-    );
+    assert(options.slideOnBoundaries ||
+        (options.centerQuery != null && options.centerQuery!.isNotEmpty) ||
+        (options.center != null && !_isOutOfBounds(options.center)));
   }
 
   StreamController<MapData> get positionStream => _positionStream;
@@ -110,7 +106,8 @@ class MapStates extends ChangeNotifier {
   bool get canRotate => _options.canRotate;
   bool get hasRotation => _rotation > 0.0;
   bool get showCenterMarker => _options.showCenterMarker;
-  bool get showLocationMarker => _options.showLocationMarker && _position != null;
+  bool get showLocationMarker =>
+      _options.showLocationMarker && _position != null;
 
   dynamic get centerMarker => _options.centerMarker;
   dynamic get locationMarker => _options.locationMarker;
@@ -121,9 +118,10 @@ class MapStates extends ChangeNotifier {
   Size get _halfSize => _size / 2;
   UPoint get _halfPoint => UPoint.from(_halfSize);
 
-  double  get _widthInDegrees => _size.width * (360 / math.pow(2, _zoom + 8));
-  double get _heightInDegrees => (_size.height * 170.102258) / math.pow(2, _zoom + 8);
-  
+  double get _widthInDegrees => _size.width * (360 / math.pow(2, _zoom + 8));
+  double get _heightInDegrees =>
+      (_size.height * 170.102258) / math.pow(2, _zoom + 8);
+
   UPoint get centerPoint => getCenterPoint(_center, _zoom);
   UPoint get pixelOrigin => getPixelOrigin(_center, _zoom);
 
@@ -158,7 +156,7 @@ class MapStates extends ChangeNotifier {
       unproject(bounds.topRight),
     );
   }
-  
+
   LatLngBounds wrapLatLngBounds(LatLngBounds latlngBounds) {
     return crs.wrapLatLngBounds(latlngBounds);
   }
@@ -202,32 +200,32 @@ class MapStates extends ChangeNotifier {
   LatLng? offsetToLatLng(Offset offset, [double? width, double? height]) {
     width ??= size.width;
     height ??= size.height;
-    
+
     UPoint point = offsetToPoint(offset);
     UPoint centerPoint = project(center);
     UPoint diffPoint = UPoint(
-      (width / 2) - point.x, 
+      (width / 2) - point.x,
       (height / 2) - point.y,
     );
 
     return unproject(centerPoint - diffPoint);
   }
 
-  /// Returns the scale factor to be applied to a map transition 
-  /// from zoom level `fromZoom` to `toZoom`. 
-  /// 
+  /// Returns the scale factor to be applied to a map transition
+  /// from zoom level `fromZoom` to `toZoom`.
+  ///
   /// Used internally to help with zoom animations.
   double getZoomScale(double toZoom, [double? fromZoom]) {
     return crs.scale(toZoom)! / crs.scale(fromZoom ?? _zoom)!;
   }
 
-  /// Returns the zoom level that the map would end up at, 
-  /// if it is at `fromZoom` level and everything is scaled 
-  /// by a factor of `scale`. 
-  /// 
+  /// Returns the zoom level that the map would end up at,
+  /// if it is at `fromZoom` level and everything is scaled
+  /// by a factor of `scale`.
+  ///
   /// Inverse of [`getZoomScale`].
   double getScaleZoom(double scale, [double? fromZoom]) {
-    return crs.zoom(scale * crs.scale(fromZoom ?? _zoom)!);   
+    return crs.zoom(scale * crs.scale(fromZoom ?? _zoom)!);
   }
 
   double getScaledZoom(double fromZoom, double scale) {
@@ -247,10 +245,10 @@ class MapStates extends ChangeNotifier {
     UPoint paddingTL = UPoint(options.padding.left, options.padding.top);
     UPoint paddingBR = UPoint(options.padding.right, options.padding.bottom);
 
-    double zoom = _getBoundsZoom(bounds, paddingTL + paddingBR); 
+    double zoom = _getBoundsZoom(bounds, paddingTL + paddingBR);
     zoom = math.min(options.maxZoom, zoom);
 
-    if(zoom == double.infinity) {
+    if (zoom == double.infinity) {
       return MapData(center: bounds.center, zoom: zoom);
     }
 
@@ -264,7 +262,8 @@ class MapStates extends ChangeNotifier {
     return MapData(center: center, zoom: zoom);
   }
 
-  double _getBoundsZoom(LatLngBounds bounds, UPoint padding, {bool inside=false}) {
+  double _getBoundsZoom(LatLngBounds bounds, UPoint padding,
+      {bool inside = false}) {
     double zoom = _zoom;
 
     LatLng nw = bounds.northWest;
@@ -282,15 +281,15 @@ class MapStates extends ChangeNotifier {
   }
 
   SafeBounds get _safeBounds {
-    if(hasMaxBounds) {
+    if (hasMaxBounds) {
       final halfHeight = _heightInDegrees / 2;
       final halfWidth = _widthInDegrees / 2;
-      
+
       final swLatitude = swBound!.lat + halfHeight;
       final swLongitude = swBound!.lng + halfWidth;
       final neLatitude = neBound!.lat - halfHeight;
       final neLongitude = neBound!.lng - halfWidth;
-      
+
       _safeBoundsCache = SafeBounds(
         LatLng(swLatitude, swLongitude),
         LatLng(neLatitude, neLongitude),
@@ -303,24 +302,22 @@ class MapStates extends ChangeNotifier {
   }
 
   bool _isOutOfBounds(LatLng? center) {
-    if(center == null) {
+    if (center == null) {
       return true;
     }
 
-    if(hasMaxBounds) {
-      if(options.adaptiveBoundaries) {
+    if (hasMaxBounds) {
+      if (options.adaptiveBoundaries) {
         return !_safeBounds.contains(center);
       }
 
-      bool isLatOutOfBounds =  
-        (center.lat < swBound!.lat) || 
-        (center.lat > neBound!.lat);
-      
-      bool isLngOutOfBounds = 
-        (center.lng < swBound!.lng) || 
-        (center.lng > neBound!.lng);
-      
-      if(isLatOutOfBounds || isLngOutOfBounds) {
+      bool isLatOutOfBounds =
+          (center.lat < swBound!.lat) || (center.lat > neBound!.lat);
+
+      bool isLngOutOfBounds =
+          (center.lng < swBound!.lng) || (center.lng > neBound!.lng);
+
+      if (isLatOutOfBounds || isLngOutOfBounds) {
         return true;
       }
     }
@@ -329,7 +326,7 @@ class MapStates extends ChangeNotifier {
   }
 
   LatLng _safeCenter(LatLng center, LatLng defaultCenter) {
-    if(hasMaxBounds) {
+    if (hasMaxBounds) {
       if (options.adaptiveBoundaries) {
         return _safeBounds.containLatLng(center, defaultCenter);
       }
@@ -339,7 +336,7 @@ class MapStates extends ChangeNotifier {
         center.lng.clamp(swBound!.lng, neBound!.lng),
       );
     }
-    
+
     return defaultCenter;
   }
 
@@ -354,7 +351,7 @@ class MapStates extends ChangeNotifier {
 
   Future init(TickerProvider vsync, Function onAngleChanged) async {
     log('MapStates init');
-    
+
     _vsync = vsync;
     _onAngleChanged = onAngleChanged;
     _positionStream = StreamController.broadcast(sync: true);
@@ -362,12 +359,12 @@ class MapStates extends ChangeNotifier {
     notifyListeners();
 
     await _initLocation();
-    
-    if(options.hasFitBounds) {
+
+    if (options.hasFitBounds) {
       fitBounds(options.fitBounds, options.fitBoundsOptions);
-    } else if(options.hasCenterQuery) {
+    } else if (options.hasCenterQuery) {
       await _locateCenter(options.center);
-    } else if(options.hasCenter) {
+    } else if (options.hasCenter) {
       move(options.center, options.zoom);
     } else {
       fitWorld();
@@ -392,22 +389,22 @@ class MapStates extends ChangeNotifier {
 
     _location = new Location();
 
-    if(options.live) {
+    if (options.live) {
       _startLocating();
       await _initLocationSettings();
 
-      _locationSubs = _location?.onLocationChanged.listen((data) { 
+      _locationSubs = _location?.onLocationChanged.listen((data) {
         _stopLocating();
 
         _position = LatLng(
-          data.latitude, 
-          data.longitude, 
+          data.latitude,
+          data.longitude,
           data.altitude,
         );
 
         notifyListeners();
 
-        if(options.moveWhenLive) {
+        if (options.moveWhenLive) {
           move(_position, 17.01122, true);
         }
       });
@@ -416,7 +413,7 @@ class MapStates extends ChangeNotifier {
 
   Future _initLocationSettings() async {
     bool _serviceEnabled = await _location?.serviceEnabled() ?? false;
-      
+
     if (!_serviceEnabled) {
       _serviceEnabled = await _location?.requestService() ?? false;
 
@@ -426,8 +423,8 @@ class MapStates extends ChangeNotifier {
     }
 
     PermissionStatus? _permissionGranted = await _location?.hasPermission();
-    
-    if (_permissionGranted == PermissionStatus.denied) {      
+
+    if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await _location?.requestPermission();
 
       if (_permissionGranted != PermissionStatus.granted) {
@@ -438,11 +435,11 @@ class MapStates extends ChangeNotifier {
 
   Future _locateCenter([LatLng? defaultCenter]) async {
     log('MapStates locateCenter');
-    
+
     LatLng? center = await findLocation(options.centerQuery!) ?? defaultCenter;
     double zoom = _zoom;
 
-    if(center != null) {
+    if (center != null) {
       _center = center;
       _options = _options.copyWith(center: center);
 
@@ -475,19 +472,19 @@ class MapStates extends ChangeNotifier {
     bool boundsNotValid = hasMaxBounds && bounds.isNotValid;
 
     // if not moved (center is not changed or bounds is not valid)
-    if(isMapNotChanged || boundsNotValid) {
+    if (isMapNotChanged || boundsNotValid) {
       return;
     }
 
-    if(_isOutOfBounds(center)) {
-      if(!options.slideOnBoundaries) {
+    if (_isOutOfBounds(center)) {
+      if (!options.slideOnBoundaries) {
         return;
       }
 
       center = _safeCenter(center, _center);
       isCenterChanged = center.notEqual(_center);
     }
-    
+
     _center = center;
     _zoom = zoom;
     _rotation = radianToDeg(_angle);
@@ -502,26 +499,27 @@ class MapStates extends ChangeNotifier {
   Future move(dynamic center, double? zoom, [bool animate = false]) async {
     log('MapStates move $center $zoom');
 
-    if(center is String) {
+    if (center is String) {
       center = await findLocation(center);
     } else {
       center = LatLng.from(center);
     }
 
-    if(center == null) {
+    if (center == null) {
       return;
     }
 
-    if(animate) {
+    if (animate) {
       _moveAnim = CurvedAnimationController.tween(
-        LatLngTween(begin: _center, end: center), 
+        LatLngTween(begin: _center, end: center),
         Duration(milliseconds: 250),
         curve: Curves.ease,
         vsync: _vsync,
       );
 
       _zoomAnim = CurvedAnimationController(
-        begin: _zoom, end: zoom,
+        begin: _zoom,
+        end: zoom,
         duration: Duration(milliseconds: 250),
         curve: Curves.ease,
         vsync: _vsync,
@@ -535,20 +533,24 @@ class MapStates extends ChangeNotifier {
         _zoom = _zoomAnim!.value;
       });
 
-      _moveAnim?.addStatusListener((status) { 
-        if(status == AnimationStatus.completed) {
+      _moveAnim?.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
           _moveAnim?.dispose();
         }
       });
 
-      _zoomAnim?.addStatusListener((status) { 
-        if(status == AnimationStatus.completed) {
+      _zoomAnim?.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
           _zoomAnim?.dispose();
         }
       });
-      
-      _moveAnim?..reset()..start();
-      _zoomAnim?..reset()..start();
+
+      _moveAnim
+        ?..reset()
+        ..start();
+      _zoomAnim
+        ?..reset()
+        ..start();
     } else {
       _move(center, zoom);
     }
@@ -559,25 +561,29 @@ class MapStates extends ChangeNotifier {
 
     LatLngBounds latlngBounds = LatLngBounds.from(bounds);
 
-    if(latlngBounds.isNotValid) {
+    if (latlngBounds.isNotValid) {
       throw Exception('Bounds are not valid');
     }
 
-    final target = _getBoundsCenterZoom(latlngBounds, options ?? FitBoundsOptions());
-    
+    final target =
+        _getBoundsCenterZoom(latlngBounds, options ?? FitBoundsOptions());
+
     move(target.center, target.zoom, true);
   }
 
   fitWorld([FitBoundsOptions? options]) {
     log('MapStates fitWorld');
-    fitBounds([[-90.0, -180.0], [90.0, 180.0]], options);
+    fitBounds([
+      [-90.0, -180.0],
+      [90.0, 180.0]
+    ], options);
   }
 
   set minZoom(double minZoom) {
     _minZoom = minZoom;
     notifyListeners();
 
-    if(_zoom < minZoom) {
+    if (_zoom < minZoom) {
       zoomTo(minZoom);
     }
   }
@@ -586,12 +592,12 @@ class MapStates extends ChangeNotifier {
     _maxZoom = maxZoom;
     notifyListeners();
 
-    if(_zoom > maxZoom) {
+    if (_zoom > maxZoom) {
       zoomTo(maxZoom);
     }
   }
 
-  zoomIn([double zoomDelta = zoomDeltaDef]) { 
+  zoomIn([double zoomDelta = zoomDeltaDef]) {
     zoomTo(_zoom + zoomDelta);
   }
 
@@ -602,9 +608,10 @@ class MapStates extends ChangeNotifier {
   zoomTo(double zoom, [bool animate = false]) {
     log('MapStates zoomTo $zoom');
 
-    if(animate) {
+    if (animate) {
       _zoomAnim = CurvedAnimationController(
-        begin: _zoom, end: zoom,
+        begin: _zoom,
+        end: zoom,
         duration: Duration(milliseconds: 250),
         curve: Curves.ease,
         vsync: _vsync,
@@ -614,13 +621,15 @@ class MapStates extends ChangeNotifier {
         _move(_center, _zoomAnim!.value);
       });
 
-      _zoomAnim?.addStatusListener((status) { 
-        if(status == AnimationStatus.completed) {
+      _zoomAnim?.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
           _zoomAnim?.dispose();
         }
       });
 
-      _zoomAnim?..reset()..start();
+      _zoomAnim
+        ?..reset()
+        ..start();
     } else {
       _move(_center, zoom);
     }
@@ -629,19 +638,19 @@ class MapStates extends ChangeNotifier {
   zoomAround(dynamic position, double zoom) {
     UPoint halfSize = UPoint.from(_halfSize);
     UPoint containerPoint;
-    
+
     double scale = getZoomScale(zoom);
 
-    if(position is UPoint) {
+    if (position is UPoint) {
       containerPoint = position;
-    } else if(position is LatLng) {
+    } else if (position is LatLng) {
       containerPoint = latlngToPoint(position);
     } else {
       position = LatLng.from(position);
       containerPoint = latlngToPoint(position);
     }
 
-    UPoint offset = (containerPoint - halfSize) * (1 - (1  / scale));
+    UPoint offset = (containerPoint - halfSize) * (1 - (1 / scale));
     LatLng? center = pointToLatLng(halfSize + offset);
     move(center, zoom);
   }
@@ -670,10 +679,12 @@ class MapStates extends ChangeNotifier {
   rotate(double rotateTo, [bool animate = false, Function? onAnimateEnd]) {
     log('MapStates rotate $rotateTo');
 
-    if(animate) {
+    if (animate) {
       _rotateAnim = CurvedAnimationController(
-        begin: normalizeDeg(_rotation), end: normalizeDeg(rotateTo),
-        vsync: _vsync, duration: Duration(milliseconds: 250), 
+        begin: normalizeDeg(_rotation),
+        end: normalizeDeg(rotateTo),
+        vsync: _vsync,
+        duration: Duration(milliseconds: 250),
         curve: Curves.ease,
       );
 
@@ -681,14 +692,16 @@ class MapStates extends ChangeNotifier {
         rotation = _rotateAnim!.value;
       });
 
-      _rotateAnim?.addStatusListener((status) { 
-        if(status == AnimationStatus.completed) {
+      _rotateAnim?.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
           onAnimateEnd?.call();
           _rotateAnim?.dispose();
         }
       });
 
-      _rotateAnim?..reset()..start();
+      _rotateAnim
+        ?..reset()
+        ..start();
     } else {
       rotation = rotateTo;
     }
@@ -700,17 +713,17 @@ class MapStates extends ChangeNotifier {
 
     var addresses = await Geocoder.local.findAddressesFromQuery(query);
 
-    if(addresses.isNotEmpty) {
+    if (addresses.isNotEmpty) {
       var coordinates = addresses.first.coordinates;
       return LatLng(coordinates.latitude, coordinates.longitude);
     }
 
     return null;
   }
-  
+
   /// Tries to locate the current user location.
-  /// 
-  /// Return LatLng location if found, 
+  ///
+  /// Return LatLng location if found,
   /// and optionally sets the map view to the user's location
   /// (or stay in previous location if geolocation failed).
   Future<LatLng?> locate([bool automove = false, double zoom = 17.0]) async {
@@ -723,22 +736,22 @@ class MapStates extends ChangeNotifier {
       LocationData? data = await _location?.getLocation();
       _stopLocating();
 
-      if(data != null) {
+      if (data != null) {
         _position = LatLng(
-          data.latitude, 
-          data.longitude, 
+          data.latitude,
+          data.longitude,
           data.altitude,
         );
 
         notifyListeners();
 
-        if(automove) {
+        if (automove) {
           await move(_position, zoom + 0.012, true);
         }
 
         return _position;
       }
-    } catch(e) {
+    } catch (e) {
       _stopLocating();
       log(e);
     }

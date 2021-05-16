@@ -3,8 +3,7 @@ import 'package:flutter/rendering.dart';
 import '../../core/core.dart';
 import '../layer.dart';
 
-class Polygon extends Polyline{
-
+class Polygon extends Polyline {
   final bool? stroke;
   final Color? fillColor;
   final double? fillOpacity;
@@ -18,21 +17,22 @@ class Polygon extends Polyline{
 
   bool get isValid => isNotEmpty && latlngs.length > 2;
   bool get isNotValid => !isValid;
-  
+
   LatLngBounds get bounds => LatLngBounds.from(latlngs);
 
   // can accept Polygon([LatLng(), LatLng(), ...]) or Polygon([[], [], ...])
-  Polygon(List<dynamic> latlngs, {
+  Polygon(
+    List<dynamic> latlngs, {
     this.stroke,
-    Color? strokeColor, 
+    Color? strokeColor,
     double? strokeWidth,
-    double? strokeOpacity, 
+    double? strokeOpacity,
     StrokeCap? strokeCap,
     StrokeJoin? strokeJoin,
     PathFillType? pathFillType,
     this.fillColor,
     this.fillOpacity,
-    List<Color>? gradientStrokeColors, 
+    List<Color>? gradientStrokeColors,
     List<double>? gradientStrokeStops,
     this.gradientFillColors,
     this.gradientFillStops,
@@ -40,19 +40,19 @@ class Polygon extends Polyline{
     this.holes = const [],
     this.withHoles,
     dynamic data,
-  }): super(
-    latlngs,
-    strokeColor: strokeColor,
-    strokeWidth: strokeWidth,
-    strokeOpacity: strokeOpacity,
-    strokeCap: strokeCap,
-    strokeJoin: strokeJoin,
-    pathFillType: pathFillType,
-    gradientStrokeColors: gradientStrokeColors,
-    gradientStrokeStops: gradientStrokeStops,
-    isDotted: isDotted,
-    data: data,
-  );
+  }) : super(
+          latlngs,
+          strokeColor: strokeColor,
+          strokeWidth: strokeWidth,
+          strokeOpacity: strokeOpacity,
+          strokeCap: strokeCap,
+          strokeJoin: strokeJoin,
+          pathFillType: pathFillType,
+          gradientStrokeColors: gradientStrokeColors,
+          gradientStrokeStops: gradientStrokeStops,
+          isDotted: isDotted,
+          data: data,
+        );
 
   Polygon copy({
     bool? stroke,
@@ -95,7 +95,8 @@ class Polygon extends Polyline{
     );
   }
 
-  factory Polygon.from(dynamic value, {
+  factory Polygon.from(
+    dynamic value, {
     bool? stroke,
     Color? strokeColor,
     num? strokeWidth,
@@ -114,11 +115,11 @@ class Polygon extends Polyline{
     bool? isDotted,
     dynamic data,
   }) {
-
     bool isPolygon = value is Polygon;
     bool isList = value is List;
     bool isLatLngs = isList && value.first is LatLng;
-    bool isCoordinates = isList && value.first is List && value.first.first is num;
+    bool isCoordinates =
+        isList && value.first is List && value.first.first is num;
 
     assert(isPolygon || isLatLngs || isCoordinates);
 
@@ -147,5 +148,4 @@ class Polygon extends Polyline{
 
   @override
   String toString() => 'Polygon($latlngs)';
-
 }

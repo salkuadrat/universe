@@ -3,10 +3,9 @@ import 'package:flutter/rendering.dart';
 import '../../shared.dart';
 import '../layer.dart';
 
-/// This options can be overridden by individual style options 
+/// This options can be overridden by individual style options
 /// at individual Circle instance.
 class CircleLayerOptions extends ShapeLayerOptions {
-
   const CircleLayerOptions({
     bool? stroke = strokeDef,
     Color? strokeColor,
@@ -40,39 +39,39 @@ class CircleLayerOptions extends ShapeLayerOptions {
     LongPressUpLayerCallback? onSecondaryLongPressUp,
     LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) : super(
-    stroke: stroke,
-    strokeColor: strokeColor,
-    strokeWidth: strokeWidth,
-    strokeOpacity: strokeOpacity,
-    strokeCap: strokeCap,
-    strokeJoin: strokeJoin,
-    fill: fill,
-    fillColor: fillColor ?? strokeColor,
-    fillOpacity: fillOpacity,
-    pathFillType: pathFillTypeDef,
-    smoothFactor: smoothFactor,
-    culling: culling,
-    interactive: interactive,
-    onTap: onTap,
-    onTapUp: onTapUp,
-    onTapDown: onTapDown,
-    onTapCancel: onTapCancel,
-    onSecondaryTap: onSecondaryTap,
-    onSecondaryTapDown: onSecondaryTapDown,
-    onSecondaryTapUp: onSecondaryTapUp,
-    onSecondaryTapCancel: onSecondaryTapCancel,
-    onDoubleTap: onDoubleTap,
-    onLongPress: onLongPress,
-    onLongPressStart: onLongPressStart,
-    onLongPressMoveUpdate: onLongPressMoveUpdate,
-    onLongPressUp: onLongPressUp,
-    onLongPressEnd: onLongPressEnd,
-    onSecondaryLongPress: onSecondaryLongPress,
-    onSecondaryLongPressStart: onSecondaryLongPressStart,
-    onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
-    onSecondaryLongPressUp: onSecondaryLongPressUp,
-    onSecondaryLongPressEnd: onSecondaryLongPressEnd,
-  );
+          stroke: stroke,
+          strokeColor: strokeColor,
+          strokeWidth: strokeWidth,
+          strokeOpacity: strokeOpacity,
+          strokeCap: strokeCap,
+          strokeJoin: strokeJoin,
+          fill: fill,
+          fillColor: fillColor ?? strokeColor,
+          fillOpacity: fillOpacity,
+          pathFillType: pathFillTypeDef,
+          smoothFactor: smoothFactor,
+          culling: culling,
+          interactive: interactive,
+          onTap: onTap,
+          onTapUp: onTapUp,
+          onTapDown: onTapDown,
+          onTapCancel: onTapCancel,
+          onSecondaryTap: onSecondaryTap,
+          onSecondaryTapDown: onSecondaryTapDown,
+          onSecondaryTapUp: onSecondaryTapUp,
+          onSecondaryTapCancel: onSecondaryTapCancel,
+          onDoubleTap: onDoubleTap,
+          onLongPress: onLongPress,
+          onLongPressStart: onLongPressStart,
+          onLongPressMoveUpdate: onLongPressMoveUpdate,
+          onLongPressUp: onLongPressUp,
+          onLongPressEnd: onLongPressEnd,
+          onSecondaryLongPress: onSecondaryLongPress,
+          onSecondaryLongPressStart: onSecondaryLongPressStart,
+          onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
+          onSecondaryLongPressUp: onSecondaryLongPressUp,
+          onSecondaryLongPressEnd: onSecondaryLongPressEnd,
+        );
 
   CircleLayerOptions copy({
     bool? stroke,
@@ -133,14 +132,19 @@ class CircleLayerOptions extends ShapeLayerOptions {
       onDoubleTap: onDoubleTap ?? this.onDoubleTap,
       onLongPress: onLongPress ?? this.onLongPress,
       onLongPressStart: onLongPressStart ?? this.onLongPressStart,
-      onLongPressMoveUpdate: onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
+      onLongPressMoveUpdate:
+          onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
       onLongPressUp: onLongPressUp ?? this.onLongPressUp,
       onLongPressEnd: onLongPressEnd ?? this.onLongPressEnd,
       onSecondaryLongPress: onSecondaryLongPress ?? this.onSecondaryLongPress,
-      onSecondaryLongPressStart: onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
-      onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
-      onSecondaryLongPressUp: onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
-      onSecondaryLongPressEnd: onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
+      onSecondaryLongPressStart:
+          onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
+      onSecondaryLongPressMoveUpdate:
+          onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
+      onSecondaryLongPressUp:
+          onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
+      onSecondaryLongPressEnd:
+          onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
     );
   }
 }

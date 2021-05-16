@@ -1,4 +1,3 @@
-
 import 'package:flutter/widgets.dart';
 
 import '../../core/core.dart';
@@ -6,11 +5,10 @@ import '../../shared.dart';
 import '../layer.dart';
 
 class WMSTileLayerOptions extends TileLayerOptions {
-
   final service = 'WMS';
   final request = 'GetMap';
 
-  /// Coordinate Reference System to use for the WMS requests, defaults to map CRS. 
+  /// Coordinate Reference System to use for the WMS requests, defaults to map CRS.
   /// Don't change this if you're not sure what it means.
   final Crs? crs;
 
@@ -32,30 +30,30 @@ class WMSTileLayerOptions extends TileLayerOptions {
   /// Version of the WMS service to use
   final String version;
 
-  double get versionNumber => 
-    double.tryParse(version.split('.').take(2).join('.')) ?? 0;
+  double get versionNumber =>
+      double.tryParse(version.split('.').take(2).join('.')) ?? 0;
 
   WMSTileLayerOptions({
     String? templateUrl,
     dynamic subdomains,
     dynamic bounds,
-    num? tileSize, 
-    double? minZoom, 
-    double? maxZoom, 
+    num? tileSize,
+    double? minZoom,
+    double? maxZoom,
     double? opacity,
-    double? minNativeZoom, 
-    double? maxNativeZoom, 
-    bool? zoomReverse, 
-    double? zoomOffset, 
-    int? keepBuffer, 
-    ImageProvider? placeholderImage, 
-    ImageProvider? errorImage, 
-    required int updateInterval, 
-    required int tileFadeInDuration, 
-    double? tileFadeInStart, 
-    double? tileFadeInStartWhenOverride, 
-    bool? overrideTilesWhenUrlChanges, 
-    bool? retinaMode, 
+    double? minNativeZoom,
+    double? maxNativeZoom,
+    bool? zoomReverse,
+    double? zoomOffset,
+    int? keepBuffer,
+    ImageProvider? placeholderImage,
+    ImageProvider? errorImage,
+    required int updateInterval,
+    required int tileFadeInDuration,
+    double? tileFadeInStart,
+    double? tileFadeInStartWhenOverride,
+    bool? overrideTilesWhenUrlChanges,
+    bool? retinaMode,
     Function(Tile, dynamic)? onTileError,
     TileProvider? tileProvider,
     bool tms = tmsDef,
@@ -69,39 +67,38 @@ class WMSTileLayerOptions extends TileLayerOptions {
     this.version = '1.1.1',
     this.transparent = false,
     this.uppercase = false,
-  }) : 
-    assert(layers is String || layers is List<String>),
-    assert(styles is String || styles is List<String>),
-    this.layers = layers is String ? layers.split(',') : layers,
-    this.styles = styles is String ? styles.split(',') : styles,
-    super(
-      templateUrl: templateUrl,
-      subdomains: subdomains,
-      tileSize: tileSize,
-      bounds: bounds,
-      minZoom: minZoom,
-      maxZoom: maxZoom,
-      opacity: opacity,
-      minNativeZoom: minNativeZoom,
-      maxNativeZoom: maxNativeZoom,
-      zoomReverse: zoomReverse,
-      zoomOffset: zoomOffset,
-      keepBuffer: keepBuffer,
-      placeholderImage: placeholderImage,
-      errorImage: errorImage,
-      updateInterval: updateInterval,
-      tileFadeInDuration: tileFadeInDuration,
-      tileFadeInStart: tileFadeInStart,
-      tileFadeInStartWhenOverride: tileFadeInStartWhenOverride,
-      overrideTilesWhenUrlChanges: overrideTilesWhenUrlChanges,
-      retinaMode: retinaMode,
-      tileProvider: tileProvider,
-      onTileError: onTileError,
-      interactive: interactive, 
-      attribution: attribution,
-      additionalOptions: additionalOptions,
-      tms: tms,
-    );
+  })  : assert(layers is String || layers is List<String>),
+        assert(styles is String || styles is List<String>),
+        this.layers = layers is String ? layers.split(',') : layers,
+        this.styles = styles is String ? styles.split(',') : styles,
+        super(
+          templateUrl: templateUrl,
+          subdomains: subdomains,
+          tileSize: tileSize,
+          bounds: bounds,
+          minZoom: minZoom,
+          maxZoom: maxZoom,
+          opacity: opacity,
+          minNativeZoom: minNativeZoom,
+          maxNativeZoom: maxNativeZoom,
+          zoomReverse: zoomReverse,
+          zoomOffset: zoomOffset,
+          keepBuffer: keepBuffer,
+          placeholderImage: placeholderImage,
+          errorImage: errorImage,
+          updateInterval: updateInterval,
+          tileFadeInDuration: tileFadeInDuration,
+          tileFadeInStart: tileFadeInStart,
+          tileFadeInStartWhenOverride: tileFadeInStartWhenOverride,
+          overrideTilesWhenUrlChanges: overrideTilesWhenUrlChanges,
+          retinaMode: retinaMode,
+          tileProvider: tileProvider,
+          onTileError: onTileError,
+          interactive: interactive,
+          attribution: attribution,
+          additionalOptions: additionalOptions,
+          tms: tms,
+        );
 
   @override
   String getBaseUrl(Crs crs) => _baseUrl(crs);
@@ -115,9 +112,11 @@ class WMSTileLayerOptions extends TileLayerOptions {
   String get paramLayers => uppercase ? 'layers'.toUpperCase() : 'layers';
   String get paramStyles => uppercase ? 'styles'.toUpperCase() : 'styles';
   String get paramFormat => uppercase ? 'format'.toUpperCase() : 'format';
-  String get paramProjection => uppercase ? projection.toUpperCase() : projection;
+  String get paramProjection =>
+      uppercase ? projection.toUpperCase() : projection;
   String get paramVersion => uppercase ? 'version'.toUpperCase() : 'version';
-  String get paramTransparent => uppercase ? 'transparent'.toUpperCase() : 'transparent';
+  String get paramTransparent =>
+      uppercase ? 'transparent'.toUpperCase() : 'transparent';
 
   @override
   String getTemplateUrl(Crs mapCrs, Coordinate? coordinate) {
@@ -140,7 +139,7 @@ class WMSTileLayerOptions extends TileLayerOptions {
     final bbox = (versionNumber >= 1.3 && crs is Epsg4326)
         ? [bounds.min.y, bounds.min.x, bounds.max.y, bounds.max.x]
         : [bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y];
-    
+
     final buffer = StringBuffer(_baseUrl(crs));
     buffer.write('&$paramWidth=${retinaMode! ? tileWidth * 2 : tileWidth}');
     buffer.write('&$paramHeight=${retinaMode! ? tileHeight * 2 : tileHeight}');
@@ -159,7 +158,7 @@ class WMSTileLayerOptions extends TileLayerOptions {
       ..write('&$paramProjection=${Uri.encodeComponent(crs.code)}')
       ..write('&$paramVersion=${Uri.encodeComponent(version)}')
       ..write('&$paramTransparent=$transparent');
-    
+
     additionalOptions?.forEach((key, value) {
       key = uppercase ? key.toUpperCase() : key;
       buffer.write('&$key=${Uri.encodeComponent(value)}');

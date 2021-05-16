@@ -6,7 +6,6 @@ import '../geojson.dart';
 import '../type.dart';
 
 class Feature extends GeoJSONModel {
-
   Geometry? geometry;
   Map<String, dynamic>? properties = {};
 
@@ -21,24 +20,25 @@ class Feature extends GeoJSONModel {
 
     Map<String, dynamic> g = json['geometry'];
 
-    if(g.containsKey('type')) {
+    if (g.containsKey('type')) {
       String? type = g['type'];
 
-      if(type == 'GeometryCollection') {
+      if (type == 'GeometryCollection') {
         geometry = GeometryCollection.from(g);
       } else {
         geometry = Geometry.from(g);
       }
     }
 
-    if(g.containsKey('properties')) {
+    if (g.containsKey('properties')) {
       properties = g['properties'];
     }
   }
 
-  @override 
-  L.MapLayer layer(GeoJSONLayerOptions? options, [Map<String, dynamic>? properties]) {
-    if(geometry != null) {
+  @override
+  L.MapLayer layer(GeoJSONLayerOptions? options,
+      [Map<String, dynamic>? properties]) {
+    if (geometry != null) {
       return geometry!.layer(options, this.properties);
     }
     return L.MapLayer();

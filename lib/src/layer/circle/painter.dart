@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 class CirclePainter extends CustomPainter {
-  
   final Offset? center;
   final double? radius;
   final bool? stroke;
@@ -15,8 +14,8 @@ class CirclePainter extends CustomPainter {
   final double? fillOpacity;
 
   CirclePainter({
-    this.center, 
-    this.radius=0.0, 
+    this.center,
+    this.radius = 0.0,
     this.stroke,
     this.strokeColor,
     this.strokeOpacity,
@@ -34,10 +33,11 @@ class CirclePainter extends CustomPainter {
     canvas.clipRect(rect);
 
     // always check for strokeWidth and strokeColor before painting the stroke
-    final isPaintStroke = stroke! && (strokeWidth! > 0) && (strokeColor != null);
+    final isPaintStroke =
+        stroke! && (strokeWidth! > 0) && (strokeColor != null);
     final isPaintFill = fill! && (fillColor != null);
 
-    if(isPaintStroke) {
+    if (isPaintStroke) {
       final paint = Paint()
         ..style = PaintingStyle.stroke
         ..color = strokeColor!.withOpacity(strokeOpacity!)

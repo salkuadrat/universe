@@ -16,16 +16,19 @@ class Haversine implements DistanceAlgorithm {
     position = LatLng.from(position);
     destination = LatLng.from(destination);
 
-    final sinLatDist = math.sin((destination.latitudeInRad - position.latitudeInRad) / 2);
-    final sinLngDist = math.sin((destination.longitudeInRad - position.longitudeInRad) / 2);
-    
+    final sinLatDist =
+        math.sin((destination.latitudeInRad - position.latitudeInRad) / 2);
+    final sinLngDist =
+        math.sin((destination.longitudeInRad - position.longitudeInRad) / 2);
+
     // Sides
-    final a = 
-      (sinLatDist * sinLatDist) + 
-      (sinLngDist * sinLngDist) * math.cos(position.latitudeInRad) * math.cos(destination.latitudeInRad);
+    final a = (sinLatDist * sinLatDist) +
+        (sinLngDist * sinLngDist) *
+            math.cos(position.latitudeInRad) *
+            math.cos(destination.latitudeInRad);
 
     final c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
-    
+
     return EQUATOR_RADIUS * c;
   }
 
@@ -44,23 +47,21 @@ class Haversine implements DistanceAlgorithm {
   @override
   LatLng offset(dynamic from, double? distanceInMeter, double bearing) {
     from = LatLng.from(from);
-    
-    Validate.inclusiveBetween(-180.0, 180.0, bearing, 
-      "Bearing angle must be between -180 and 180 degrees");
-    
+
+    Validate.inclusiveBetween(-180.0, 180.0, bearing,
+        "Bearing angle must be between -180 and 180 degrees");
+
     double h = degToRadian(bearing);
     double a = distanceInMeter! / EQUATOR_RADIUS;
-    double latitude = math.asin(
-      math.sin(from.latitudeInRad) * math.cos(a) + 
-      math.cos(from.latitudeInRad) * math.sin(a) * math.cos(h) 
-    );
+    double latitude = math.asin(math.sin(from.latitudeInRad) * math.cos(a) +
+        math.cos(from.latitudeInRad) * math.sin(a) * math.cos(h));
 
-    double longitude = from.longitudeInRad + 
-      math.atan2(
-        math.sin(h) * math.sin(a) * math.cos(from.latitudeInRad), 
-        math.cos(a) - math.sin(from.latitudeInRad) * math.sin(latitude),
-      );
-    
+    double longitude = from.longitudeInRad +
+        math.atan2(
+          math.sin(h) * math.sin(a) * math.cos(from.latitudeInRad),
+          math.cos(a) - math.sin(from.latitudeInRad) * math.sin(latitude),
+        );
+
     return LatLng(radianToDeg(latitude), radianToDeg(longitude));
   }
 }

@@ -10,7 +10,6 @@ import '../../shared.dart';
 import '../layer.dart';
 
 class ImageOverlay extends InteractiveLayer {
-
   final String? imagePath;
   final File? imageFile;
   final Image? image;
@@ -26,32 +25,33 @@ class ImageOverlay extends InteractiveLayer {
 
   bool get isPath => imagePath != null && imagePath!.isNotEmpty;
   bool get isProvider => imageProvider != null;
-  bool get isNetworkPath => isPath && (imagePath!.startsWith('http://') || imagePath!.startsWith('https://'));
+  bool get isNetworkPath =>
+      isPath &&
+      (imagePath!.startsWith('http://') || imagePath!.startsWith('https://'));
   bool get isFilePath => isPath && File(imagePath!).existsSync();
   bool get isFile => imageFile != null;
   bool get isImage => image != null;
 
-  ImageOverlay(dynamic image, {
-    dynamic bounds, 
-    this.imageError, 
-    this.opacity, 
-    this.rotation, 
-    this.fit, 
+  ImageOverlay(
+    dynamic image, {
+    dynamic bounds,
+    this.imageError,
+    this.opacity,
+    this.rotation,
+    this.fit,
     this.gaplessPlayback,
     this.data,
     this.options,
-  }):
-    assert((image is String || image is ImageProvider) && bounds != null),
-    this.imagePath = image is String ? image : null,
-    this.imageFile = image is File ? image : null,
-    this.imageProvider = image is ImageProvider ? image : null,
-    this.image = image is Image ? image : null,
-    this.bounds = LatLngBounds.from(bounds),
-    super(options: options);
+  })  : assert((image is String || image is ImageProvider) && bounds != null),
+        this.imagePath = image is String ? image : null,
+        this.imageFile = image is File ? image : null,
+        this.imageProvider = image is ImageProvider ? image : null,
+        this.image = image is Image ? image : null,
+        this.bounds = LatLngBounds.from(bounds),
+        super(options: options);
 
-  @override 
+  @override
   Widget buildLayer(BuildContext context, MapStates map) {
-
     final pixelOrigin = map.pixelOrigin;
     final scale = map.getZoomScale(map.zoom, map.zoom);
     final nw = map.project(bounds.northWest);
@@ -65,7 +65,7 @@ class ImageOverlay extends InteractiveLayer {
     final width = bottomRight.x - topLeft.x;
     final height = bottomRight.y - topLeft.y;
     final opacity = this.opacity ?? 1.0;
-    
+
     return Positioned(
       top: top,
       left: left,
@@ -86,11 +86,11 @@ class ImageOverlay extends InteractiveLayer {
   Widget? get _image {
     final angle = degToRadian(rotation!);
 
-    if(isImage) {
+    if (isImage) {
       return image;
     }
-    
-    if(isProvider) {
+
+    if (isProvider) {
       return Transform.rotate(
         angle: angle,
         child: Image(
@@ -101,16 +101,13 @@ class ImageOverlay extends InteractiveLayer {
       );
     }
 
-    if(isFile) {
-      return Image.file(
-        imageFile!,
-        fit: fit, 
-        gaplessPlayback: gaplessPlayback!
-      );
+    if (isFile) {
+      return Image.file(imageFile!,
+          fit: fit, gaplessPlayback: gaplessPlayback!);
     }
 
-    if(isPath) {
-      if(isNetworkPath) {
+    if (isPath) {
+      if (isNetworkPath) {
         return CachedNetworkImage(
           imageUrl: imagePath!,
           imageBuilder: (_, imageProvider) => Transform.rotate(
@@ -122,30 +119,28 @@ class ImageOverlay extends InteractiveLayer {
             ),
           ),
           placeholder: (_, __) => Container(),
-          errorWidget: (_, __, ___) => imageError != null ? Image(image: imageError!) : Container(),
+          errorWidget: (_, __, ___) =>
+              imageError != null ? Image(image: imageError!) : Container(),
         );
       }
 
-      if(isFilePath) {
-        return Image.file(
-          File(imagePath!),
-          fit: fit, 
-          gaplessPlayback: gaplessPlayback!
-        );
+      if (isFilePath) {
+        return Image.file(File(imagePath!),
+            fit: fit, gaplessPlayback: gaplessPlayback!);
       }
 
       try {
         return Image.asset(
-          imagePath!, 
-          fit: fit, 
+          imagePath!,
+          fit: fit,
           gaplessPlayback: gaplessPlayback!,
         );
       } catch (e) {
         log(e);
       }
     }
-    
-    if(imageError != null) {
+
+    if (imageError != null) {
       return Image(image: imageError!);
     }
 

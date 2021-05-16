@@ -8,7 +8,9 @@ class NetworkRetryTileProvider extends DefaultTileProvider {
   const NetworkRetryTileProvider();
 
   @override
-  ImageProvider getImage(String? templateUrl, Bounds? globalTileRange, Coordinate coordinate, TileLayerOptions? options) {
-    return NetworkImageWithRetry(getTileUrl(templateUrl, globalTileRange, coordinate, options));
+  ImageProvider getImage(String? templateUrl, Bounds? globalTileRange,
+      Coordinate coordinate, TileLayerOptions? options) {
+    return NetworkImageWithRetry(
+        getTileUrl(templateUrl, globalTileRange, coordinate, options));
   }
 }

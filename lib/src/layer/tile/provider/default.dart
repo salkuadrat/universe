@@ -6,14 +6,14 @@ import '../tile.dart';
 
 class DefaultTileProvider extends TileProvider {
   const DefaultTileProvider();
-  
+
   _getZoomForUrl(Coordinate coordinate, TileLayerOptions options) {
     var zoom = coordinate.z;
     final maxZoom = options.maxZoom;
     final zoomReverse = options.zoomReverse!;
     final zoomOffset = options.zoomOffset!;
 
-    if(zoomReverse) {
+    if (zoomReverse) {
       zoom = maxZoom! - zoom;
     }
 
@@ -21,7 +21,8 @@ class DefaultTileProvider extends TileProvider {
   }
 
   @override
-  String getTileUrl(String? templateUrl, Bounds? globalTileRange, Coordinate coordinate, TileLayerOptions? options) {
+  String getTileUrl(String? templateUrl, Bounds? globalTileRange,
+      Coordinate coordinate, TileLayerOptions? options) {
     //final templateUrl = options.getTemplateUrl(crs, coordinate);
     final zoom = _getZoomForUrl(coordinate, options!);
     final x = coordinate.x.round();
@@ -42,13 +43,15 @@ class DefaultTileProvider extends TileProvider {
   }
 
   @override
-  ImageProvider getImage(String? templateUrl, Bounds? globalTileRange, Coordinate coordinate, TileLayerOptions? options) => 
-    throw UnimplementedError();
+  ImageProvider getImage(String? templateUrl, Bounds? globalTileRange,
+          Coordinate coordinate, TileLayerOptions? options) =>
+      throw UnimplementedError();
 
   @override
   String getSubdomain(Coordinate coordinate, TileLayerOptions options) {
-    if(options.subdomains.isNotEmpty) {
-      var index = (coordinate.x + coordinate.y).round() % options.subdomains.length;
+    if (options.subdomains.isNotEmpty) {
+      var index =
+          (coordinate.x + coordinate.y).round() % options.subdomains.length;
       return options.subdomains[index];
     }
     return '';

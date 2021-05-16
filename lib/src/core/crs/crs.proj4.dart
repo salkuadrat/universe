@@ -11,7 +11,6 @@ import 'crs.dart';
 
 /// Custom CRS
 class Proj4Crs extends BaseCrs {
-  
   @override
   final String code;
 
@@ -36,7 +35,7 @@ class Proj4Crs extends BaseCrs {
     this.transformations,
     required this.scales,
   });
-  
+
   factory Proj4Crs.fromFactory({
     required String code,
     required pj4.Projection pj4Projection,
@@ -46,14 +45,13 @@ class Proj4Crs extends BaseCrs {
     List<double>? scales,
     List<double>? resolutions,
   }) {
-    
     Projection projection = Pj4Projection(
-      pj4Projection: pj4Projection, 
-      bounds: bounds, 
+      pj4Projection: pj4Projection,
+      bounds: bounds,
       latBounds: Tuple2(-90.0, 90.0),
       lngBounds: Tuple2(-180.0, 180.0),
     );
-    
+
     List<Transformation>? transformations;
     bool infinite = null == bounds;
     List<double> finalScales;
@@ -63,21 +61,20 @@ class Proj4Crs extends BaseCrs {
     } else if (resolutions != null && resolutions.isNotEmpty) {
       finalScales = resolutions.map((r) => 1 / r).toList(growable: false);
     } else {
-      throw Exception('You should provide scales or resolutions to calculate scales');
+      throw Exception(
+          'You should provide scales or resolutions to calculate scales');
     }
 
     if (origins == null || origins.isEmpty) {
       transformation ??= Transformation(1, 0, -1, 0);
-    } 
-    else {
+    } else {
       if (origins.length == 1) {
         var origin = origins[0];
         transformation = Transformation(1, -origin.x, -1, origin.y);
       } else {
-        transformations = origins
-          .map((p) => Transformation(1, -p.x, -1, p.y))
-          .toList();
-        
+        transformations =
+            origins.map((p) => Transformation(1, -p.x, -1, p.y)).toList();
+
         transformation = null;
       }
     }
@@ -114,7 +111,7 @@ class Proj4Crs extends BaseCrs {
       Transformation transformation = _getTransformationByZoom(zoom);
       double? scale = this.scale(zoom);
       UPoint untransformedPoint = transformation.untransform(point, scale);
-      
+
       return projection.unproject(untransformedPoint);
     } catch (e) {
       return null;
@@ -124,7 +121,7 @@ class Proj4Crs extends BaseCrs {
   /// Rescales the bounds to a given zoom value.
   @override
   Bounds? getProjectedBounds(double? zoom) {
-    if(infinite) {
+    if (infinite) {
       return null;
     }
 
@@ -204,7 +201,7 @@ class Proj4Crs extends BaseCrs {
 
     int zoomInt = zoom!.round();
     int lastIdx = transformations!.length - 1;
-    
+
     return transformations![zoomInt > lastIdx ? lastIdx : zoomInt];
   }
 
@@ -213,5 +210,4 @@ class Proj4Crs extends BaseCrs {
 
   @override
   Tuple2<double, double> get lngBounds => Tuple2(-180.0, 180.0);
-  
 }

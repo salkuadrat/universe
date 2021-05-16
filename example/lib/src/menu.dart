@@ -4,30 +4,27 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'shared.dart';
 
 class AppMenu extends StatefulWidget {
-
   final Key value;
   final Map<Key, MenuItem> items;
   final Function(Key) onChanged;
 
   AppMenu({
-    Key? key, 
-    required this.value, 
-    required this.items, 
+    Key? key,
+    required this.value,
+    required this.items,
     required this.onChanged,
   }) : super(key: key);
 
   @override
   _AppMenuState createState() => _AppMenuState();
-
 }
 
 class _AppMenuState extends State<AppMenu> {
-
   final ItemScrollController itemScrollController = ItemScrollController();
 
   int get chosenIndex {
-    for(int index = 0; index < widget.items.length; index++) {
-      if(widget.items.keys.elementAt(index) == widget.value) {
+    for (int index = 0; index < widget.items.length; index++) {
+      if (widget.items.keys.elementAt(index) == widget.value) {
         return index;
       }
     }
@@ -69,10 +66,10 @@ class _AppMenuState extends State<AppMenu> {
                     child: Text(
                       menus[key]!.name,
                       style: TextStyle(
-                        fontSize: 15, 
-                        color: chosen 
-                          ? Theme.of(context).primaryColor 
-                          : Color(0xFF454545),
+                        fontSize: 15,
+                        color: chosen
+                            ? Theme.of(context).primaryColor
+                            : Color(0xFF454545),
                       ),
                     ),
                   ),
@@ -90,7 +87,7 @@ class _AppMenuState extends State<AppMenu> {
       backgroundColor: Colors.transparent,
     );
 
-    if(chosenIndex >= 0) {
+    if (chosenIndex >= 0) {
       await Future.delayed(Duration(milliseconds: 300));
       itemScrollController.jumpTo(index: jumpIndex);
     }
@@ -99,14 +96,16 @@ class _AppMenuState extends State<AppMenu> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 18, bottom: 28,
-      width: 52, height: 52,
+      left: 18,
+      bottom: 28,
+      width: 52,
+      height: 52,
       child: FittedBox(
         child: FloatingActionButton(
           onPressed: showMenuDialog,
           backgroundColor: Colors.white,
-          child: Icon(Icons.menu, 
-            size: 25, color: Theme.of(context).primaryColor),
+          child:
+              Icon(Icons.menu, size: 25, color: Theme.of(context).primaryColor),
         ),
       ),
     );

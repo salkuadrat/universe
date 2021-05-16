@@ -1,3 +1,1 @@
-class BoundingBox {
-  
-}
+class BoundingBox {}

@@ -4,51 +4,50 @@ import '../../shared.dart';
 import '../layer.dart';
 
 class PathLayerOptions extends InteractiveLayerOptions {
-
-  /// Whether to draw stroke along the path. 
+  /// Whether to draw stroke along the path.
   /// Set it to `false` to disable borders on polygons or circles.
-  /// 
+  ///
   /// Default: false
   final bool? stroke;
 
-  /// Stroke color 
-  /// 
+  /// Stroke color
+  ///
   /// Default: Colors.lightBlue
   final Color? strokeColor;
 
   /// Stroke width in pixels
-  /// 
+  ///
   /// Default: 3.0
   final double strokeWidth;
 
   /// Stroke opacity
-  /// 
+  ///
   /// Default: 1.0
   final double strokeOpacity;
 
   /// Defines shape to be used at the end.
-  /// 
+  ///
   /// Default: StrokeCap.round
   final StrokeCap strokeCap;
 
   /// Defines shape to be used at the corners.
-  /// 
+  ///
   /// Default: StrokeJoin.round
   final StrokeJoin strokeJoin;
 
   /// Defines how the path is painted.
-  /// 
+  ///
   /// Default: PathFillType.evenOdd
   final PathFillType pathFillType;
 
   final bool culling;
-  
+
   const PathLayerOptions({
-    this.stroke, 
-    this.strokeColor = strokeColorDef, 
-    this.strokeWidth = strokeWidthDef, 
-    this.strokeOpacity = strokeOpacityDef, 
-    this.strokeCap = strokeCapDef, 
+    this.stroke,
+    this.strokeColor = strokeColorDef,
+    this.strokeWidth = strokeWidthDef,
+    this.strokeOpacity = strokeOpacityDef,
+    this.strokeCap = strokeCapDef,
     this.strokeJoin = strokeJoinDef,
     this.pathFillType = pathFillTypeDef,
     this.culling = cullingDef,
@@ -74,28 +73,28 @@ class PathLayerOptions extends InteractiveLayerOptions {
     LongPressUpLayerCallback? onSecondaryLongPressUp,
     LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) : super(
-    interactive: interactive,
-    attribution: attribution,
-    onTap: onTap,
-    onTapUp: onTapUp,
-    onTapDown: onTapDown,
-    onTapCancel: onTapCancel,
-    onSecondaryTap: onSecondaryTap,
-    onSecondaryTapDown: onSecondaryTapDown,
-    onSecondaryTapUp: onSecondaryTapUp,
-    onSecondaryTapCancel: onSecondaryTapCancel,
-    onDoubleTap: onDoubleTap,
-    onLongPress: onLongPress,
-    onLongPressStart: onLongPressStart,
-    onLongPressMoveUpdate: onLongPressMoveUpdate,
-    onLongPressUp: onLongPressUp,
-    onLongPressEnd: onLongPressEnd,
-    onSecondaryLongPress: onSecondaryLongPress,
-    onSecondaryLongPressStart: onSecondaryLongPressStart,
-    onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
-    onSecondaryLongPressUp: onSecondaryLongPressUp,
-    onSecondaryLongPressEnd: onSecondaryLongPressEnd,
-  );
+          interactive: interactive,
+          attribution: attribution,
+          onTap: onTap,
+          onTapUp: onTapUp,
+          onTapDown: onTapDown,
+          onTapCancel: onTapCancel,
+          onSecondaryTap: onSecondaryTap,
+          onSecondaryTapDown: onSecondaryTapDown,
+          onSecondaryTapUp: onSecondaryTapUp,
+          onSecondaryTapCancel: onSecondaryTapCancel,
+          onDoubleTap: onDoubleTap,
+          onLongPress: onLongPress,
+          onLongPressStart: onLongPressStart,
+          onLongPressMoveUpdate: onLongPressMoveUpdate,
+          onLongPressUp: onLongPressUp,
+          onLongPressEnd: onLongPressEnd,
+          onSecondaryLongPress: onSecondaryLongPress,
+          onSecondaryLongPressStart: onSecondaryLongPressStart,
+          onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
+          onSecondaryLongPressUp: onSecondaryLongPressUp,
+          onSecondaryLongPressEnd: onSecondaryLongPressEnd,
+        );
 
   PathLayerOptions copy({
     bool? stroke,
@@ -149,14 +148,19 @@ class PathLayerOptions extends InteractiveLayerOptions {
       onDoubleTap: onDoubleTap ?? this.onDoubleTap,
       onLongPress: onLongPress ?? this.onLongPress,
       onLongPressStart: onLongPressStart ?? this.onLongPressStart,
-      onLongPressMoveUpdate: onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
+      onLongPressMoveUpdate:
+          onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
       onLongPressUp: onLongPressUp ?? this.onLongPressUp,
       onLongPressEnd: onLongPressEnd ?? this.onLongPressEnd,
       onSecondaryLongPress: onSecondaryLongPress ?? this.onSecondaryLongPress,
-      onSecondaryLongPressStart: onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
-      onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
-      onSecondaryLongPressUp: onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
-      onSecondaryLongPressEnd: onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
+      onSecondaryLongPressStart:
+          onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
+      onSecondaryLongPressMoveUpdate:
+          onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
+      onSecondaryLongPressUp:
+          onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
+      onSecondaryLongPressEnd:
+          onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
     );
   }
 }

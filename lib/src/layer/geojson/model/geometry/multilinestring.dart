@@ -6,7 +6,6 @@ import 'geometry.dart';
 import 'linestring.dart';
 
 class MultiLineString extends Geometry {
-  
   List<LineString> _lines = [];
 
   @override
@@ -14,9 +13,8 @@ class MultiLineString extends Geometry {
 
   List<LineString> get lines => _lines;
 
-  MultiLineString(List<LineString> lines) 
-    : this._lines = lines.toList();
-  
+  MultiLineString(List<LineString> lines) : this._lines = lines.toList();
+
   void add(LineString lineString) {
     _lines.add(lineString);
   }
@@ -27,9 +25,9 @@ class MultiLineString extends Geometry {
 
     List coordinates = (json['coordinates'] as List);
 
-    for(List ls in coordinates as Iterable<List<dynamic>>) {
+    for (List ls in coordinates as Iterable<List<dynamic>>) {
       List<Position> positions = [];
-      for(List c in ls as Iterable<List<dynamic>>) {
+      for (List c in ls as Iterable<List<dynamic>>) {
         positions.add(Position.from(c as List<num>));
       }
 
@@ -38,10 +36,12 @@ class MultiLineString extends Geometry {
   }
 
   @override
-  L.MapLayer layer(GeoJSONLayerOptions? options, [Map<String, dynamic>? properties]) {
+  L.MapLayer layer(GeoJSONLayerOptions? options,
+      [Map<String, dynamic>? properties]) {
     return L.PolylineLayer(
-      L.Polyline.from(lines.map((l) => 
-        L.Polyline.from(l.latlngs, data: properties)).toList()),
+      L.Polyline.from(lines
+          .map((l) => L.Polyline.from(l.latlngs, data: properties))
+          .toList()),
       options: options!.lineStringOptions,
     );
   }

@@ -15,11 +15,11 @@ class U {
   // ignore: non_constant_identifier_names
   // static C.MapController MapController() => C.MapController();
 
-  /// The central point of Universe API. 
+  /// The central point of Universe API.
   /// Tt is used to create a map on the screen and manipulate it.
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// ```dart
   /// U.Map(
   ///   controller: U.MapController(),
@@ -27,12 +27,12 @@ class U {
   ///   zoom: 15,
   /// )
   /// ```
-  /// 
+  ///
   /// @param: [center]
-  /// 
+  ///
   /// Used to define center latlng position of the map.
   /// It can accept any type of inputs, such as:
-  /// 
+  ///
   /// ```dart
   /// U.Map(
   ///   controller: U.MapController(),
@@ -40,9 +40,9 @@ class U {
   ///   zoom: 15,
   /// )
   /// ```
-  /// 
+  ///
   /// or LatLng instance:
-  /// 
+  ///
   /// ```dart
   /// U.Map(
   ///   controller: U.MapController(),
@@ -50,14 +50,14 @@ class U {
   ///   zoom: 15,
   /// )
   /// ```
-  /// 
+  ///
   /// or use location name.
-  /// 
-  /// The Universe map is smart enough to automatically 
+  ///
+  /// The Universe map is smart enough to automatically
   /// convert it to latlng position for you.
-  /// 
+  ///
   /// Default to LatLng(0.0, 0.0) if your location is not found.
-  /// 
+  ///
   /// ```dart
   /// U.Map(
   ///   controller: U.MapController(),
@@ -65,11 +65,11 @@ class U {
   ///   zoom: 15,
   /// )
   /// ```
-  /// 
+  ///
   // ignore: non_constant_identifier_names
   static Universe Map({
     Key? key,
-    required dynamic center, 
+    required dynamic center,
     double? zoom,
     double? minZoom,
     double? maxZoom,
@@ -123,8 +123,8 @@ class U {
       size: size,
       center: center,
       zoomOptions: ZoomOptions(
-        zoom: zoom ?? zoomDef, 
-        minZoom: minZoom ?? minZoomDef, 
+        zoom: zoom ?? zoomDef,
+        minZoom: minZoom ?? minZoomDef,
         maxZoom: maxZoom ?? maxZoomDef,
         zoomDelta: zoomDelta ?? zoomDeltaDef,
       ),
@@ -138,7 +138,10 @@ class U {
       locator: locator ?? Locator(),
       showLocator: showLocator ?? showLocatorDef,
       locationIndicator: locationIndicator ?? L.LocationIndicator(),
-      showLocationIndicator: showLocationIndicator ?? showLocator ?? live ?? showLocationIndicatorDef,
+      showLocationIndicator: showLocationIndicator ??
+          showLocator ??
+          live ??
+          showLocationIndicatorDef,
       showLocationMarker: showLocationMarker ?? showLocationMarkerDef,
       compass: compass ?? Compass(),
       showCompass: showCompass ?? showCompassDef,
@@ -179,7 +182,7 @@ class U {
   // ignore: non_constant_identifier_names
   static Universe GoogleMap({
     Key? key,
-    required dynamic center, 
+    required dynamic center,
     GoogleMapType type = GoogleMapType.Street,
     L.TileLayerOptions? options,
     double? zoom,
@@ -227,8 +230,7 @@ class U {
     MapChangedCallback? onChanged,
     Function? onReady,
   }) {
-
-    if(type == GoogleMapType.Satellite || type == GoogleMapType.Hybrid) {
+    if (type == GoogleMapType.Satellite || type == GoogleMapType.Hybrid) {
       background ??= Color(0xFF888888);
     } else {
       background ??= Color(0xFFDEDEDE);
@@ -288,7 +290,7 @@ class U {
   // ignore: non_constant_identifier_names
   static Universe OpenStreetMap({
     Key? key,
-    required dynamic center, 
+    required dynamic center,
     OpenStreetMapType type = OpenStreetMapType.Mapnik,
     String apikey = '',
     L.TileLayerOptions? options,
@@ -384,7 +386,7 @@ class U {
       onChanged: onChanged,
       onReady: onReady,
       base: OpenStreetMapLayer(
-        type: type, 
+        type: type,
         options: options,
         apikey: apikey,
       ),
@@ -397,7 +399,7 @@ class U {
     Key? key,
     MapBoxType type = MapBoxType.Street,
     required String accessToken,
-    required dynamic center, 
+    required dynamic center,
     L.TileLayerOptions? options,
     double? zoom,
     double? minZoom,
@@ -444,15 +446,14 @@ class U {
     MapChangedCallback? onChanged,
     Function? onReady,
   }) {
-    
-    if(type == MapBoxType.Dark) {
+    if (type == MapBoxType.Dark) {
       background ??= Color(0xFF555555);
-    } else if(type == MapBoxType.Satellite || type == MapBoxType.Hybrid) {
+    } else if (type == MapBoxType.Satellite || type == MapBoxType.Hybrid) {
       background ??= Color(0xFF888888);
     } else {
       background ??= Color(0xFFDEDEDE);
     }
-    
+
     return U.Map(
       key: key,
       center: center,
@@ -502,11 +503,11 @@ class U {
       base: MapBoxLayer(type: type, accessToken: accessToken),
     );
   }
-  
+
   /// Used to load and display tile layers on the map.
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// ```dart
   /// U.TileLayer(
   ///   templateUrl: 'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
@@ -517,11 +518,11 @@ class U {
   ///   minZoom: 0,
   /// )
   /// ```
-  /// 
+  ///
   /// Alias: TileLayer
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// ```dart
   /// TileLayer(
   ///   options: TileLayerOptions(
@@ -534,24 +535,25 @@ class U {
   ///   ),
   /// )
   /// ```
-  /// 
+  ///
   /// @param: templateUrl
-  /// 
+  ///
   /// A string of the following form:
-  /// 
+  ///
   /// ```
   /// 'http://{s}.somemap.com/blabla/{z}/{x}/{y}{r}.png'
   /// ```
-  /// 
-  /// `{s}` means one of the available subdomains (used sequentially to help 
-  /// with browser parallel requests per domain limitation. 
-  /// 
-  /// subdomain values are specified in options (`a`, `b` or `c` by default, can be omitted), 
-  /// `{z}` — zoom level, `{x}` and `{y}` — tile coordinates. 
+  ///
+  /// `{s}` means one of the available subdomains (used sequentially to help
+  /// with browser parallel requests per domain limitation.
+  ///
+  /// subdomain values are specified in options (`a`, `b` or `c` by default, can be omitted),
+  /// `{z}` — zoom level, `{x}` and `{y}` — tile coordinates.
   /// `{r}` can be used to add "@2x" to the URL to load retina tiles.
-  /// 
+  ///
   // ignore: non_constant_identifier_names
-  static L.TileLayer TileLayer(String templateUrl, {
+  static L.TileLayer TileLayer(
+    String templateUrl, {
     dynamic subdomains = subdomainsDef,
     LatLngBounds? bounds,
     double minZoom = minZoomDef,
@@ -596,11 +598,11 @@ class U {
     );
   }
 
-  /// Used to display [WMS](https://en.wikipedia.org/wiki/Web_Map_Service) 
+  /// Used to display [WMS](https://en.wikipedia.org/wiki/Web_Map_Service)
   /// services as tile layers on the map.
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// ```dart
   /// U.WMSTileLayer(
   ///   templateUrl: 'http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi',
@@ -610,11 +612,11 @@ class U {
   ///   transparent: true,
   /// )
   /// ```
-  /// 
+  ///
   /// Alias: TileLayer with WMSTileLayerOptions as options
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// ```dart
   /// TileLayer(
   ///   options: WMSTileLayerOptions(
@@ -628,7 +630,8 @@ class U {
   /// ```
   ///
   // ignore: non_constant_identifier_names
-  static L.TileLayer WMSTileLayer(String templateUrl, {
+  static L.TileLayer WMSTileLayer(
+    String templateUrl, {
     dynamic subdomains = subdomainsDef,
     LatLngBounds? bounds,
     double minZoom = minZoomDef,
@@ -690,9 +693,9 @@ class U {
   }
 
   /// Used to load and display tile layers from GoogleMap servers.
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// ```dart
   /// U.GoogleMapLayer(
   ///   type: GoogleMapType.Hybrid,
@@ -701,18 +704,18 @@ class U {
   ///   ),
   /// )
   /// ```
-  /// 
-  /// @param: type 
-  /// 
+  ///
+  /// @param: type
+  ///
   /// enum to define the type of GoogleMap tiles to load.
   /// Default value: [GoogleMapType.Street].
-  /// 
+  ///
   /// Available values:
   /// [GoogleMapType.Street]
   /// [GoogleMapType.Satellite]
   /// [GoogleMapType.Hybrid]
   /// [GoogleMapType.Terrain]
-  /// 
+  ///
   // ignore: non_constant_identifier_names
   static L.TileLayer GoogleMapLayer({
     GoogleMapType type = GoogleMapType.Street,
@@ -721,23 +724,25 @@ class U {
     options ??= L.TileLayerOptions();
 
     String lyrs = 'm';
-    if(type == GoogleMapType.Satellite) lyrs = 's';
-    else if(type == GoogleMapType.Hybrid) lyrs = 'y';
-    else if(type == GoogleMapType.Terrain) lyrs = 'p';
+    if (type == GoogleMapType.Satellite)
+      lyrs = 's';
+    else if (type == GoogleMapType.Hybrid)
+      lyrs = 'y';
+    else if (type == GoogleMapType.Terrain) lyrs = 'p';
 
     return L.TileLayer(
       options: options.copy(
         templateUrl: 'https://{s}.google.com/vt/lyrs=$lyrs&x={x}&y={y}&z={z}',
-        subdomains: ['mt0','mt1','mt2','mt3'],
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
         attribution: 'Map Data &copy; Google',
       ),
     );
   }
 
   /// Used to load and display tile layers from OpenStreetMap servers.
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// ```dart
   /// U.OpenStreetMapLayer(
   ///   type: OpenStreetMapType.HOT,
@@ -746,23 +751,22 @@ class U {
   ///   ),
   /// )
   /// ```
-  /// 
-  /// @param: [type] 
-  /// 
+  ///
+  /// @param: [type]
+  ///
   /// enum to define the type of OpenStreetMap tiles to load.
   /// Default value: [OpenStreetMapType.Mapnik]
-  /// 
+  ///
   /// @param: [apikey]
-  /// 
+  ///
   /// String to pass api key to load OSM Map that need apikey.
-  /// 
+  ///
   // ignore: non_constant_identifier_names
   static L.TileLayer OpenStreetMapLayer({
     OpenStreetMapType type = OpenStreetMapType.Mapnik,
     L.TileLayerOptions? options,
     String apikey = '',
   }) {
-
     options ??= L.TileLayerOptions();
 
     return L.TileLayer(
@@ -771,9 +775,9 @@ class U {
   }
 
   /// Used to load and display tile layers from MapBox servers.
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// ```dart
   /// U.MapBoxLayer(
   ///   type: MapBoxType.Satellite,
@@ -782,17 +786,17 @@ class U {
   ///   ),
   /// )
   /// ```
-  /// 
+  ///
   /// @param: [accessToken]
-  /// 
+  ///
   /// Your access token to load tiles from MapBox.
   /// Required.
-  /// 
-  /// @param: [type] 
-  /// 
+  ///
+  /// @param: [type]
+  ///
   /// enum to define the type of MapBox tiles to load.
   /// Default value: [MapBoxType.Street].
-  /// 
+  ///
   /// Available values:
   /// [MapBoxType.Basic]
   /// [MapBoxType.Street]
@@ -802,32 +806,33 @@ class U {
   /// [MapBoxType.Dark]
   /// [MapBoxType.Light]
   /// [MapBoxType.Bright]
-  /// 
+  ///
   // ignore: non_constant_identifier_names
   static L.TileLayer MapBoxLayer({
     required String accessToken,
     MapBoxType type = MapBoxType.Street,
     L.TileLayerOptions? options,
   }) {
-
     options ??= L.TileLayerOptions();
 
     String id = 'mapbox/streets-v11';
-    if(type == MapBoxType.Basic) id = 'mapbox/basic-v9';
-    if(type == MapBoxType.Satellite) id = 'mapbox/satellite-v9';
-    if(type == MapBoxType.Hybrid) id = 'mapbox/satellite-streets-v11';
-    if(type == MapBoxType.Outdoors) id = 'mapbox/outdoors-v11';
-    if(type == MapBoxType.Dark) id = 'mapbox/dark-v10';
-    if(type == MapBoxType.Light) id = 'mapbox/light-v10';
-    if(type == MapBoxType.Bright) id = 'mapbox/bright-v9';
-    
+    if (type == MapBoxType.Basic) id = 'mapbox/basic-v9';
+    if (type == MapBoxType.Satellite) id = 'mapbox/satellite-v9';
+    if (type == MapBoxType.Hybrid) id = 'mapbox/satellite-streets-v11';
+    if (type == MapBoxType.Outdoors) id = 'mapbox/outdoors-v11';
+    if (type == MapBoxType.Dark) id = 'mapbox/dark-v10';
+    if (type == MapBoxType.Light) id = 'mapbox/light-v10';
+    if (type == MapBoxType.Bright) id = 'mapbox/bright-v9';
+
     return L.TileLayer(
       options: options.copy(
         tileSize: 512,
         maxZoom: 18,
         zoomOffset: -1,
-        templateUrl: 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-        attribution: 'Map data &copy; OpenStreetMap contributors, Imagery &copy; MapBox',
+        templateUrl:
+            'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
+        attribution:
+            'Map data &copy; OpenStreetMap contributors, Imagery &copy; MapBox',
         additionalOptions: {
           'id': id,
           'accessToken': accessToken,
@@ -837,70 +842,71 @@ class U {
   }
 
   /// Used to display marker(s) at specified locations on map.
-  /// 
+  ///
   /// @param: [marker]
-  /// 
-  /// This param can accept any type of inputs for 
+  ///
+  /// This param can accept any type of inputs for
   /// a single marker layer or multiple markers layer.
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// Single Marker Layer
-  /// 
+  ///
   /// ```dart
   /// U.MarkerLayer([-6.175329, 106.827253], ...)
   /// ```
-  /// 
+  ///
   /// ```dart
   /// U.MarkerLayer(LatLng(-6.175329, 106.827253), ...)
   /// ```
-  /// 
+  ///
   /// ```dart
   /// U.MarkerLayer(U.Marker([-6.175329, 106.827253]), ...)
   /// ```
-  /// 
+  ///
   /// Multiple Markers Layer
-  /// 
+  ///
   /// ```dart
-  /// U.MarkerLayer([ 
-  ///   [-6.175329, 106.827253], 
+  /// U.MarkerLayer([
+  ///   [-6.175329, 106.827253],
   ///   [-6.181883, 106.826933],
   /// ], ...)
   /// ```
-  /// 
+  ///
   /// ```dart
-  /// U.MarkerLayer([ 
-  ///   LatLng(-6.175329, 106.827253), 
+  /// U.MarkerLayer([
+  ///   LatLng(-6.175329, 106.827253),
   ///   LatLng(-6.181883, 106.826933),
   /// ], ...)
   /// ```
-  /// 
+  ///
   /// ```dart
-  /// U.MarkerLayer([ 
-  ///   U.Marker([-6.175329, 106.827253]), 
+  /// U.MarkerLayer([
+  ///   U.Marker([-6.175329, 106.827253]),
   ///   U.Marker([-6.181883, 106.826933]),
   /// ], ...)
   /// ```
-  /// 
-  /// 
+  ///
+  ///
   /// @param: [widget]
-  /// 
+  ///
   /// Used to define the type of widget to show as Marker.
-  /// 
+  ///
   /// Available values:
   /// [MarkerIcon]
   /// [MarkerImage]
   /// [MarkerSvg]
   /// [MarkerWidget]
-  /// 
+  ///
   /// Default:
   /// ```dart
   /// MarkerSvg('packages/universe/assets/marker2.svg')
   /// ```
   ///
   // ignore: non_constant_identifier_names
-  static L.MarkerLayer MarkerLayer(dynamic marker, {
-    dynamic widget = markerDef, 
+  static L.MarkerLayer MarkerLayer(
+    dynamic marker, {
+    dynamic widget = markerDef,
     double opacity = opacityDef,
     double size = markerSizeDef,
     double width = markerSizeDef,
@@ -928,25 +934,25 @@ class U {
     L.LongPressEndLayerCallback? onSecondaryLongPressEnd,
     dynamic data,
   }) {
-
     bool isMarker = marker is L.Marker;
     bool isLatLng = marker is LatLng;
-    bool isList = (
-      marker is List && 
-      marker.isNotEmpty && 
-      (marker.first is int || marker.first is double)
-    );
-    
-    List<dynamic> items = (isMarker || isLatLng || isList) ? [ marker ] : marker;
+    bool isList = (marker is List &&
+        marker.isNotEmpty &&
+        (marker.first is int || marker.first is double));
+
+    List<dynamic> items = (isMarker || isLatLng || isList) ? [marker] : marker;
 
     return L.MarkerLayer(
-      items.map((value) => L.Marker.from(value, 
-        size: size,
-        width: width,
-        height: height,
-        widget: widget,
-        data: data, 
-      )).toList(),
+      items
+          .map((value) => L.Marker.from(
+                value,
+                size: size,
+                width: width,
+                height: height,
+                widget: widget,
+                data: data,
+              ))
+          .toList(),
       options: L.MarkerLayerOptions(
         opacity: opacity,
         align: align,
@@ -975,13 +981,13 @@ class U {
   }
 
   /// Used to create Marker object to be passed to MarkerLayer.
-  /// 
+  ///
   /// @param: [latlng]
-  /// 
+  ///
   /// Coordinates position to place the Marker on the map.
-  /// 
+  ///
   /// Example:
-  /// 
+  ///
   /// ```dart
   /// U.MarkerLayer(
   ///   U.Marker(
@@ -989,9 +995,9 @@ class U {
   ///   ),
   /// )
   /// ```
-  /// 
+  ///
   /// or use LatLng to define marker position:
-  /// 
+  ///
   /// ```dart
   /// U.MarkerLayer(
   ///   U.Marker(
@@ -999,20 +1005,21 @@ class U {
   ///   ),
   /// )
   /// ```
-  /// 
+  ///
   /// @param: [widget]
-  /// 
+  ///
   /// Used to define the type of widget to show as Marker.
-  /// 
+  ///
   /// Available values:
   /// [MarkerIcon]
   /// [MarkerImage]
   /// [MarkerSvg]
   /// [MarkerWidget]
-  /// 
+  ///
   // ignore: non_constant_identifier_names
-  static L.Marker Marker(dynamic latlng, {
-    dynamic widget, 
+  static L.Marker Marker(
+    dynamic latlng, {
+    dynamic widget,
     double opacity = opacityDef,
     double size = markerSizeDef,
     double width = markerSizeDef,
@@ -1022,7 +1029,7 @@ class U {
     dynamic data,
   }) {
     return L.Marker.from(
-      latlng, 
+      latlng,
       size: size,
       width: width,
       height: height,
@@ -1035,7 +1042,8 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.CircleLayer CircleLayer(dynamic circle, {
+  static L.CircleLayer CircleLayer(
+    dynamic circle, {
     double? radius,
     L.RadiusUnit radiusUnit = L.RadiusUnit.METER,
     bool stroke = strokeDef,
@@ -1069,17 +1077,21 @@ class U {
     L.LongPressUpLayerCallback? onSecondaryLongPressUp,
     L.LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) {
-
     bool isCircle = circle is L.Circle;
-    bool isLatLng = circle is List && circle.isNotEmpty && (circle.first is int || circle.first is double);
-    List<dynamic> items = (isCircle || isLatLng) ? [ circle ] : circle;
+    bool isLatLng = circle is List &&
+        circle.isNotEmpty &&
+        (circle.first is int || circle.first is double);
+    List<dynamic> items = (isCircle || isLatLng) ? [circle] : circle;
 
     return L.CircleLayer(
-      items.map((value) => L.Circle.from(value, 
-        radius: radius,
-        radiusUnit: radiusUnit,
-        data: data,
-      )).toList(),
+      items
+          .map((value) => L.Circle.from(
+                value,
+                radius: radius,
+                radiusUnit: radiusUnit,
+                data: data,
+              ))
+          .toList(),
       options: L.CircleLayerOptions(
         stroke: stroke,
         strokeColor: strokeColor,
@@ -1115,7 +1127,8 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.Circle Circle(dynamic circle, {
+  static L.Circle Circle(
+    dynamic circle, {
     double? radius,
     L.RadiusUnit radiusUnit = L.RadiusUnit.METER,
     bool stroke = strokeDef,
@@ -1129,8 +1142,9 @@ class U {
     double fillOpacity = fillOpacityDef,
     dynamic data,
   }) {
-    return L.Circle.from(circle,
-      radius: radius, 
+    return L.Circle.from(
+      circle,
+      radius: radius,
       radiusUnit: radiusUnit,
       stroke: stroke,
       strokeColor: strokeColor,
@@ -1146,7 +1160,8 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.PolylineLayer PolylineLayer(dynamic polyline, {
+  static L.PolylineLayer PolylineLayer(
+    dynamic polyline, {
     Color? strokeColor,
     double strokeWidth = strokeWidthDef,
     double strokeOpacity = strokeOpacityDef,
@@ -1179,18 +1194,16 @@ class U {
     L.LongPressUpLayerCallback? onSecondaryLongPressUp,
     L.LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) {
-
     bool isPolyline = polyline is L.Polyline;
-    bool isLatLngs = 
-      polyline is List && 
-      polyline.isNotEmpty && 
-      polyline.first is List && 
-      (polyline.first.first is int || polyline.first.first is double);
+    bool isLatLngs = polyline is List &&
+        polyline.isNotEmpty &&
+        polyline.first is List &&
+        (polyline.first.first is int || polyline.first.first is double);
 
-    List<dynamic> items = (isPolyline || isLatLngs) ? [ polyline ] : polyline;
+    List<dynamic> items = (isPolyline || isLatLngs) ? [polyline] : polyline;
 
     return L.PolylineLayer(
-      items.map((value) => L.Polyline.from(value, data: data)).toList(), 
+      items.map((value) => L.Polyline.from(value, data: data)).toList(),
       options: L.PolylineLayerOptions(
         strokeColor: strokeColor,
         strokeWidth: strokeWidth,
@@ -1227,7 +1240,8 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.Polyline Polyline(dynamic latlngs, {
+  static L.Polyline Polyline(
+    dynamic latlngs, {
     bool stroke = strokeDef,
     Color? strokeColor,
     double strokeWidth = strokeWidthDef,
@@ -1256,7 +1270,8 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.PolygonLayer PolygonLayer(dynamic polygon, {
+  static L.PolygonLayer PolygonLayer(
+    dynamic polygon, {
     bool stroke = strokePolygonDef,
     Color? strokeColor,
     double strokeWidth = strokeWidthPolygonDef,
@@ -1295,18 +1310,16 @@ class U {
     L.LongPressUpLayerCallback? onSecondaryLongPressUp,
     L.LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) {
-
     bool isPolygon = polygon is L.Polygon;
-    bool isLatLngs = 
-      polygon is List && 
-      polygon.isNotEmpty && 
-      polygon.first is List && 
-      (polygon.first.first is int || polygon.first.first is double);
+    bool isLatLngs = polygon is List &&
+        polygon.isNotEmpty &&
+        polygon.first is List &&
+        (polygon.first.first is int || polygon.first.first is double);
 
-    List<dynamic> items = (isPolygon || isLatLngs) ? [ polygon ] : polygon;
+    List<dynamic> items = (isPolygon || isLatLngs) ? [polygon] : polygon;
 
     return L.PolygonLayer(
-      items.map((value) => L.Polygon.from(value, data: data)).toList(), 
+      items.map((value) => L.Polygon.from(value, data: data)).toList(),
       options: L.PolygonLayerOptions(
         stroke: stroke,
         strokeColor: strokeColor ?? fillColor,
@@ -1349,7 +1362,8 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.Polygon Polygon(List<dynamic> latlngs, {
+  static L.Polygon Polygon(
+    List<dynamic> latlngs, {
     bool stroke = strokePolygonDef,
     Color? strokeColor,
     double strokeWidth = strokeWidthPolygonDef,
@@ -1387,7 +1401,8 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.RectangleLayer RectangleLayer(dynamic rectangle, {
+  static L.RectangleLayer RectangleLayer(
+    dynamic rectangle, {
     bool stroke = strokeRectangleDef,
     Color? strokeColor,
     double strokeWidth = strokeWidthRectangleDef,
@@ -1426,15 +1441,13 @@ class U {
     L.LongPressUpLayerCallback? onSecondaryLongPressUp,
     L.LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) {
-
     bool isRectangle = rectangle is L.Rectangle;
-    bool isLatLngs = 
-      rectangle is List && 
-      rectangle.isNotEmpty && 
-      rectangle.first is List && 
-      (rectangle.first.first is int || rectangle.first.first is double);
+    bool isLatLngs = rectangle is List &&
+        rectangle.isNotEmpty &&
+        rectangle.first is List &&
+        (rectangle.first.first is int || rectangle.first.first is double);
 
-    List<dynamic> items = (isRectangle || isLatLngs) ? [ rectangle ] : rectangle;
+    List<dynamic> items = (isRectangle || isLatLngs) ? [rectangle] : rectangle;
 
     return L.RectangleLayer(
       items.map((value) => L.Rectangle.from(value, data: data)).toList(),
@@ -1480,7 +1493,8 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.Rectangle Rectangle(List<dynamic> latlngs, {
+  static L.Rectangle Rectangle(
+    List<dynamic> latlngs, {
     bool? stroke,
     Color? strokeColor,
     double strokeWidth = strokeWidthRectangleDef,
@@ -1497,7 +1511,8 @@ class U {
     bool isDotted = isDottedDef,
     dynamic data,
   }) {
-    return L.Rectangle.from(latlngs,
+    return L.Rectangle.from(
+      latlngs,
       stroke: stroke,
       strokeColor: strokeColor ?? fillColor,
       strokeWidth: strokeWidth,
@@ -1518,7 +1533,7 @@ class U {
 
   // ignore: non_constant_identifier_names
   static L.GroupLayer GroupLayer({
-    required List<L.MapLayer> layers, 
+    required List<L.MapLayer> layers,
     double opacity = opacityDef,
     double rotation = 0.0,
     bool interactive = interactiveDef,
@@ -1574,7 +1589,8 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.ImageOverlay ImageOverlay(dynamic image, {
+  static L.ImageOverlay ImageOverlay(
+    dynamic image, {
     dynamic bounds,
     ImageProvider? imageError,
     double opacity = overlayOpacityDef,
@@ -1603,7 +1619,7 @@ class U {
     L.LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) {
     return L.ImageOverlay(
-      image, 
+      image,
       bounds: bounds,
       imageError: imageError,
       opacity: opacity,
@@ -1636,8 +1652,9 @@ class U {
   }
 
   // ignore: non_constant_identifier_names
-  static L.VideoOverlay VideoOverlay(String videoUrl, {
-    dynamic bounds, 
+  static L.VideoOverlay VideoOverlay(
+    String videoUrl, {
+    dynamic bounds,
     dynamic data,
     bool looping = loopingVideoDef,
     Function(VideoPlayerController?)? onReady,
@@ -1661,7 +1678,8 @@ class U {
     L.LongPressUpLayerCallback? onSecondaryLongPressUp,
     L.LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) {
-    return L.VideoOverlay(videoUrl, 
+    return L.VideoOverlay(
+      videoUrl,
       bounds: bounds,
       looping: looping,
       data: data,
@@ -1693,7 +1711,7 @@ class U {
   // ignore: non_constant_identifier_names
   static L.WidgetOverlay WidgetOverlay({
     Widget? child,
-    required dynamic bounds, 
+    required dynamic bounds,
     dynamic data,
     bool looping = loopingVideoDef,
     double opacity = opacityDef,
@@ -1717,7 +1735,7 @@ class U {
     L.LongPressUpLayerCallback? onSecondaryLongPressUp,
     L.LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) {
-    return L.WidgetOverlay( 
+    return L.WidgetOverlay(
       child: child,
       bounds: bounds,
       opacity: opacity,
@@ -1746,31 +1764,41 @@ class U {
     );
   }
 
-  static double distanceBetween(dynamic position, dynamic destination, {
+  static double distanceBetween(
+    dynamic position,
+    dynamic destination, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
-    LengthUnit unit=LengthUnit.M,
+    LengthUnit unit = LengthUnit.M,
   }) {
     bool isVincenty = algorithm == DistanceAlgorithmType.Vincenty;
     Distance d = isVincenty ? DistanceVincenty() : DistanceHaversine();
     return d.distance(position, destination, unit: unit);
   }
 
-  static bool isInsideRadius(LatLng location, LatLng fromCenter, double radius, {
+  static bool isInsideRadius(
+    LatLng location,
+    LatLng fromCenter,
+    double radius, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
-    LengthUnit unit=LengthUnit.M,
+    LengthUnit unit = LengthUnit.M,
   }) {
-    double distance = distanceBetween(fromCenter, location, algorithm: algorithm, unit: unit);
+    double distance =
+        distanceBetween(fromCenter, location, algorithm: algorithm, unit: unit);
     return distance <= radius;
   }
 
-  static List<LatLng> filterInsideRadius(List<LatLng> locations, LatLng fromCenter, double radius, {
+  static List<LatLng> filterInsideRadius(
+    List<LatLng> locations,
+    LatLng fromCenter,
+    double radius, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
-    LengthUnit unit=LengthUnit.M,
+    LengthUnit unit = LengthUnit.M,
   }) {
     List<LatLng> result = [];
 
-    for(LatLng location in locations) {
-      if(isInsideRadius(location, fromCenter, radius, algorithm: algorithm, unit: unit)) {
+    for (LatLng location in locations) {
+      if (isInsideRadius(location, fromCenter, radius,
+          algorithm: algorithm, unit: unit)) {
         result.add(location);
       }
     }
@@ -1778,15 +1806,20 @@ class U {
     return result;
   }
 
-  static LatLng destination(dynamic fromPosition, double distance, double bearing, {
+  static LatLng destination(
+    dynamic fromPosition,
+    double distance,
+    double bearing, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
   }) {
     bool isVincenty = algorithm == DistanceAlgorithmType.Vincenty;
     Distance d = isVincenty ? DistanceVincenty() : DistanceHaversine();
     return d.offset(fromPosition, distance, bearing);
   }
-  
-  static double bearing(dynamic position, dynamic destination, {
+
+  static double bearing(
+    dynamic position,
+    dynamic destination, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
   }) {
     bool isVincenty = algorithm == DistanceAlgorithmType.Vincenty;

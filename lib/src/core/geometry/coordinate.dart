@@ -4,48 +4,45 @@ import 'dart:ui';
 import 'point.dart';
 
 class Coordinate extends UPoint {
-
   final double z;
 
-  Coordinate(num x, num y, [num z = 0]) : 
-    this.z = z.toDouble(),
-    super(x.toDouble(), y.toDouble());
+  Coordinate(num x, num y, [num z = 0])
+      : this.z = z.toDouble(),
+        super(x.toDouble(), y.toDouble());
 
   factory Coordinate.from(dynamic value) {
+    assert(value is Coordinate ||
+        value is UPoint ||
+        (value is List<num> && (value.length == 2 || value.length == 3)));
 
-    assert(
-      value is Coordinate || 
-      value is UPoint || 
-      (value is List<num> && (value.length == 2 || value.length == 3))
-    );
-
-    if(value is UPoint) {
+    if (value is UPoint) {
       return Coordinate(value.x, value.y, 0);
     }
 
-    if(value is List<num>) {
-      if(value.length == 2) {
+    if (value is List<num>) {
+      if (value.length == 2) {
         final point = UPoint.from(value);
         return Coordinate(point.x, point.y, 0);
       }
 
-      if(value.length == 3) {
-        return Coordinate(value[0].toDouble(), value[1].toDouble(), value[2].toDouble());
+      if (value.length == 3) {
+        return Coordinate(
+            value[0].toDouble(), value[1].toDouble(), value[2].toDouble());
       }
     }
 
     return value;
   }
-  
+
   factory Coordinate.fromKey(String key) {
     final keys = key.split(':');
 
-    if(keys.length >= 2) {
+    if (keys.length >= 2) {
       double x = double.parse(keys[0]);
       double y = double.parse(keys[1]);
       double z = 0.0;
 
-      if(keys.length > 2) {
+      if (keys.length > 2) {
         z = double.parse(keys[2]);
       }
 
@@ -72,7 +69,7 @@ class Coordinate extends UPoint {
 
   @override
   Coordinate operator /(num factor) {
-    if(factor == 0) throw Exception("Cannot divide by zero!");
+    if (factor == 0) throw Exception("Cannot divide by zero!");
     return Coordinate(x / factor, y / factor);
   }
 
@@ -101,7 +98,7 @@ class Coordinate extends UPoint {
   Coordinate unscaleBy(UPoint point) {
     Coordinate c = point is Coordinate ? point : Coordinate.from(point);
     return Coordinate(
-      (c.x == 0) ? 0 : (x / c.x), 
+      (c.x == 0) ? 0 : (x / c.x),
       (c.y == 0) ? 0 : (y / c.y),
       (c.z == 0) ? 0 : (z / c.z),
     );
@@ -113,12 +110,11 @@ class Coordinate extends UPoint {
 
   @override
   int get hashCode => hashValues(x.hashCode, y.hashCode, z.hashCode);
-  
+
   @override
-  bool operator ==(other) => other is Coordinate && 
-    x == other.x && y == other.y && z == other.z;
+  bool operator ==(other) =>
+      other is Coordinate && x == other.x && y == other.y && z == other.z;
 
   @override
   String toString() => 'Coordinate($x, $y, $z)';
-  
 }

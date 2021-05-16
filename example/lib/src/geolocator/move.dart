@@ -9,7 +9,6 @@ class MoveGeolocatorMap extends StatefulWidget {
 }
 
 class _MoveGeolocatorMapState extends State<MoveGeolocatorMap> {
-
   final _mapController = MapController();
   final _locationName = 'Highbury Square';
 
@@ -26,7 +25,8 @@ class _MoveGeolocatorMapState extends State<MoveGeolocatorMap> {
           controller: _mapController,
           type: MapBoxType.Hybrid,
           accessToken: yourAccessTokenHere,
-          center: 'Emirates Stadium', // set map center by location name (not latlng)
+          center:
+              'Emirates Stadium', // set map center by location name (not latlng)
           zoom: 15,
         ),
         Positioned(

@@ -9,7 +9,7 @@ T notNull<T>(T? object, {LazyMessage message = _defaultIsNullExMessage}) {
   if (object == null) {
     throw new ArgumentError(message());
   }
-  
+
   return object;
 }
 

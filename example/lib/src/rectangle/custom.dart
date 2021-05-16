@@ -9,12 +9,12 @@ class CustomRectangleMap extends StatelessWidget {
     return U.MapBox(
       type: MapBoxType.Hybrid,
       accessToken: yourAccessTokenHere,
-      center: [51.555015,-0.108331],
+      center: [51.555015, -0.108331],
       zoom: 16,
       rectangles: U.RectangleLayer(
         [
-          [51.554488,-0.108964], // bottom left corner
-          [51.555682,-0.107580], // top right corner
+          [51.554488, -0.108964], // bottom left corner
+          [51.555682, -0.107580], // top right corner
         ],
         stroke: true,
         isDotted: true,

@@ -7,7 +7,6 @@ import '../../map/map.dart';
 import '../layer.dart';
 
 class PolygonLayer extends PathLayer {
-
   final Polygon? polygon;
   final List<Polygon> polygons;
   final PolygonLayerOptions? options;
@@ -16,37 +15,38 @@ class PolygonLayer extends PathLayer {
   bool get hasPolygons => polygons.isNotEmpty;
 
   // can accept a single polygon or list of polygons
-  const PolygonLayer(dynamic polygon, {Key? key, this.options}) : 
-    assert(polygon is Polygon || (polygon is List<Polygon> && polygon.length > 0)), 
-    this.polygon = polygon is Polygon ? polygon : null,
-    this.polygons = polygon is List<Polygon> ? polygon : const <Polygon>[],
-    super(key: key, options: options);
+  const PolygonLayer(dynamic polygon, {Key? key, this.options})
+      : assert(polygon is Polygon ||
+            (polygon is List<Polygon> && polygon.length > 0)),
+        this.polygon = polygon is Polygon ? polygon : null,
+        this.polygons = polygon is List<Polygon> ? polygon : const <Polygon>[],
+        super(key: key, options: options);
 
   @override
   Widget buildLayer(BuildContext context, MapStates map) {
-    if(hasPolygons) return _polygons(context, map);
-    if(hasPolygon) return _polygon(context, map, polygon!);
+    if (hasPolygons) return _polygons(context, map);
+    if (hasPolygon) return _polygon(context, map, polygon!);
     return Container();
   }
 
   Widget _polygons(BuildContext context, MapStates map) => Stack(
-    children: [
-      for(Polygon polygon in polygons) _polygon(context, map, polygon),
-    ],
-  );
+        children: [
+          for (Polygon polygon in polygons) _polygon(context, map, polygon),
+        ],
+      );
 
   Widget _polygon(BuildContext context, MapStates map, Polygon polygon) {
-    if(polygon.isNotValid) {
+    if (polygon.isNotValid) {
       return Container();
     }
 
-    if(options!.culling && polygon.bounds.isNotOverlaps(map.bounds)) {
+    if (options!.culling && polygon.bounds.isNotOverlaps(map.bounds)) {
       return Container();
     }
-    
+
     final strokeWidth = polygon.strokeWidth ?? options!.strokeWidth;
     final primaryColor = Theme.of(context).primaryColor;
-    
+
     final points = _points(map, polygon.validLatLngs);
     final holesPoints = _holesPoints(map, polygon.holes);
 
@@ -55,7 +55,7 @@ class PolygonLayer extends PathLayer {
     double maxX = 0;
     double maxY = 0;
 
-    for(Offset point in points) {
+    for (Offset point in points) {
       minX = minX == 0 ? point.dx : math.min(minX, point.dx);
       minY = minY == 0 ? point.dy : math.min(minY, point.dy);
       maxX = math.max(maxX, point.dx);
@@ -70,14 +70,14 @@ class PolygonLayer extends PathLayer {
     List<Offset> rPoints = [];
     List<List<Offset>> rHolesPoints = [];
 
-    for(Offset point in points) {
+    for (Offset point in points) {
       rPoints.add(Offset(point.dx - left, point.dy - top));
     }
 
-    for(List<Offset> points in holesPoints) {
+    for (List<Offset> points in holesPoints) {
       List<Offset> _points = [];
 
-      for(Offset point in points) {
+      for (Offset point in points) {
         _points.add(Offset(point.dx - minX, point.dy - minY));
       }
 
@@ -93,11 +93,14 @@ class PolygonLayer extends PathLayer {
         options: options,
         child: CustomPaint(
           painter: PolygonPainter(
-            points: rPoints, 
-            holesPoints: rHolesPoints, 
+            points: rPoints,
+            holesPoints: rHolesPoints,
             stroke: polygon.stroke ?? options!.stroke,
-            strokeColor: polygon.strokeColor ?? options!.strokeColor ?? 
-              polygon.fillColor ?? options!.fillColor ?? primaryColor,
+            strokeColor: polygon.strokeColor ??
+                options!.strokeColor ??
+                polygon.fillColor ??
+                options!.fillColor ??
+                primaryColor,
             strokeWidth: polygon.strokeWidth ?? options!.strokeWidth,
             strokeOpacity: polygon.strokeOpacity ?? options!.strokeOpacity,
             strokeCap: polygon.strokeCap ?? options!.strokeCap,
@@ -105,10 +108,14 @@ class PolygonLayer extends PathLayer {
             pathFillType: polygon.pathFillType ?? options!.pathFillType,
             fillColor: polygon.fillColor ?? options!.fillColor ?? primaryColor,
             fillOpacity: polygon.fillOpacity ?? options!.fillOpacity,
-            gradientStrokeColors: polygon.gradientStrokeColors ?? options!.gradientStrokeColors,
-            gradientStrokeStops: polygon.gradientStrokeStops ?? options!.gradientStrokeStops,
-            gradientFillColors: polygon.gradientFillColors ?? options!.gradientFillColors,
-            gradientFillStops: polygon.gradientFillStops ?? options!.gradientFillStops,
+            gradientStrokeColors:
+                polygon.gradientStrokeColors ?? options!.gradientStrokeColors,
+            gradientStrokeStops:
+                polygon.gradientStrokeStops ?? options!.gradientStrokeStops,
+            gradientFillColors:
+                polygon.gradientFillColors ?? options!.gradientFillColors,
+            gradientFillStops:
+                polygon.gradientFillStops ?? options!.gradientFillStops,
             isDotted: polygon.isDotted ?? options!.isDotted,
             culling: options!.culling,
           ),
@@ -125,7 +132,7 @@ class PolygonLayer extends PathLayer {
   List<Offset> _points(MapStates map, List<LatLng?> latlngs) {
     List<Offset> points = [];
 
-    for(LatLng? latlng in latlngs) {
+    for (LatLng? latlng in latlngs) {
       double scale = map.getZoomScale(map.zoom, map.zoom);
       UPoint point = (map.project(latlng) * scale) - map.pixelOrigin;
       points.add(Offset(point.x, point.y));
@@ -136,9 +143,9 @@ class PolygonLayer extends PathLayer {
 
   List<List<Offset>> _holesPoints(MapStates map, List<List<LatLng>>? holes) {
     List<List<Offset>> holesPoints = [];
-    
-    if(holes != null && holes.isNotEmpty) {
-      for(List<LatLng> hole in holes) {
+
+    if (holes != null && holes.isNotEmpty) {
+      for (List<LatLng> hole in holes) {
         holesPoints.add(_points(map, hole));
       }
     }

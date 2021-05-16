@@ -8,11 +8,10 @@ class GoogleMap extends StatefulWidget {
 }
 
 class _GoogleMapState extends State<GoogleMap> {
-
   GoogleMapType type = GoogleMapType.Street;
 
   Scale get _scale {
-    if(type == GoogleMapType.Satellite || type == GoogleMapType.Hybrid) {
+    if (type == GoogleMapType.Satellite || type == GoogleMapType.Hybrid) {
       return Scale(color: Colors.white);
     }
     return Scale();
@@ -35,7 +34,7 @@ class _GoogleMapState extends State<GoogleMap> {
               value: type,
               onChanged: (GoogleMapType? chosen) {
                 setState(() {
-                  if(chosen != null) {
+                  if (chosen != null) {
                     type = chosen;
                   }
                 });
@@ -57,7 +56,7 @@ class _GoogleMapState extends State<GoogleMap> {
                   value: GoogleMapType.Terrain,
                   child: Text('Terrain'),
                 ),
-              ], 
+              ],
             ),
           ),
         ),

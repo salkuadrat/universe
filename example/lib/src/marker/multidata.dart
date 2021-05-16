@@ -4,12 +4,11 @@ import 'package:universe/universe.dart';
 import '../shared.dart';
 
 class MarkerData {
-
   final String name;
   final String description;
 
   MarkerData({
-    required this.name, 
+    required this.name,
     required this.description,
   });
 }
@@ -20,24 +19,27 @@ class MultiMarkerWithDataMap extends StatelessWidget {
     return U.MapBox(
       accessToken: yourAccessTokenHere,
       center: [51.555158, -0.108343],
-      zoom: 16, 
+      zoom: 16,
       // multiple markers with different styles
       markers: U.MarkerLayer(
         [
           // default
           U.Marker([51.555158, -0.108343], data: 'Arsenal'),
           // marker icon
-          U.Marker([51.558374, -0.107398], 
+          U.Marker(
+            [51.558374, -0.107398],
             widget: MarkerIcon(icon: Icons.location_on, color: Colors.red),
             data: 'Arsenal #1',
           ),
           // marker svg
-          U.Marker([51.556674, -0.106215], 
+          U.Marker(
+            [51.556674, -0.106215],
             widget: MarkerSvg('assets/marker.svg', color: Colors.pink),
             data: 'Arsenal #2',
           ),
           // marker custom widget
-          U.Marker([51.556669, -0.108123], 
+          U.Marker(
+            [51.556669, -0.108123],
             widget: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

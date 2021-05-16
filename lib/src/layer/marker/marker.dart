@@ -41,32 +41,33 @@ class Marker {
   final Widget? widget;
   final dynamic data;
 
-  Marker(dynamic latlng, {
-    num? size, 
-    num? width, 
-    num? height, 
+  Marker(
+    dynamic latlng, {
+    num? size,
+    num? width,
+    num? height,
     this.opacity,
-    this.align, 
+    this.align,
     this.offset,
     dynamic widget,
     this.data,
-  }): 
-    this.latlng = LatLng.from(latlng),
-    this.size = size?.toDouble(),
-    this.width = width?.toDouble() ?? size?.toDouble(),
-    this.height = height?.toDouble() ?? size?.toDouble(),
-    this.icon = widget is MarkerIcon ? widget : null,
-    this.image = widget is MarkerImage ? widget : null,
-    this.svg = widget is MarkerSvg ? widget : null,
-    this.widget = widget is Widget ? widget : null;
+  })  : this.latlng = LatLng.from(latlng),
+        this.size = size?.toDouble(),
+        this.width = width?.toDouble() ?? size?.toDouble(),
+        this.height = height?.toDouble() ?? size?.toDouble(),
+        this.icon = widget is MarkerIcon ? widget : null,
+        this.image = widget is MarkerImage ? widget : null,
+        this.svg = widget is MarkerSvg ? widget : null,
+        this.widget = widget is Widget ? widget : null;
 
   bool get hasIcon => icon != null;
   bool get hasImage => image != null;
   bool get hasSvg => svg != null;
 
-  factory Marker.from(dynamic value, {
-    num? size, 
-    num? width, 
+  factory Marker.from(
+    dynamic value, {
+    num? size,
+    num? width,
     num? height,
     num? opacity,
     MarkerAlignment? align,
@@ -74,33 +75,32 @@ class Marker {
     dynamic widget,
     dynamic data,
   }) {
-    
-    if(value is Marker) return Marker(
-      value.latlng, 
-      size: size ?? value.size, 
-      width: width ?? value.width, 
-      height: height ?? value.height,
-      opacity: opacity as double? ?? value.opacity,
-      align: align ?? value.align,
-      offset: offset ?? value.offset,
-      widget: value.icon ?? value.image ?? value.svg ?? value.widget ?? widget,
-      data: data ?? value.data,
-    );
+    if (value is Marker)
+      return Marker(
+        value.latlng,
+        size: size ?? value.size,
+        width: width ?? value.width,
+        height: height ?? value.height,
+        opacity: opacity as double? ?? value.opacity,
+        align: align ?? value.align,
+        offset: offset ?? value.offset,
+        widget:
+            value.icon ?? value.image ?? value.svg ?? value.widget ?? widget,
+        data: data ?? value.data,
+      );
 
     bool isLatLng = value is LatLng;
-    bool isList = (
-      value is List && 
-      value.isNotEmpty && 
-      (value.first is int || value.first is double)
-    );
+    bool isList = (value is List &&
+        value.isNotEmpty &&
+        (value.first is int || value.first is double));
 
-    if(isLatLng || isList) {
+    if (isLatLng || isList) {
       LatLng latlng = value is LatLng ? value : LatLng.from(value);
 
       return Marker(
-        latlng, 
-        size: size, 
-        width: width, 
+        latlng,
+        size: size,
+        width: width,
         height: height,
         opacity: opacity as double?,
         align: align,

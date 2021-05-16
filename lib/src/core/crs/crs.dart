@@ -11,7 +11,7 @@ export 'crs.proj4.dart';
 
 class CRS {
   const CRS();
-  
+
   static const Crs BASE = BaseCrs();
   static const Crs SIMPLE = CrsSimple();
   static const Crs EARTH = Earth();

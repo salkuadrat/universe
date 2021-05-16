@@ -13,10 +13,13 @@ void main() {
     assert(LatLng(20.0, 18.0) == LatLng.from([20.0, 18]));
     assert(LatLng(10, 10) == LatLng(10.0, 10.0, 0.0));
     assert(LatLng(20.0, 18.0, 50) == LatLng.from([20.0, 18.0, 50.0]));
-    assert(LatLng(20.0, 18.0).toSexagesimal() == "20° 0' 0.00\" N, 18° 0' 0.00\" O");
+    assert(LatLng(20.0, 18.0).toSexagesimal() ==
+        "20° 0' 0.00\" N, 18° 0' 0.00\" O");
     assert(LatLng(20.0, 18.0).toString() == "LatLng(20.0, 18.0, 0.0)");
     assert(LatLng(20.0, 18.0, 40).toString() == "LatLng(20.0, 18.0, 40.0)");
-    assert(LatLng(20.2847773843, 18.74363727273).round(decimals: 4).toString() == "LatLng(20.2848, 18.7436, 0.0)");
+    assert(
+        LatLng(20.2847773843, 18.74363727273).round(decimals: 4).toString() ==
+            "LatLng(20.2848, 18.7436, 0.0)");
   });
 
   test('Size', () {
@@ -50,7 +53,8 @@ void main() {
   });
 
   test('Bounds', () {
-    assert(Bounds([20, 30], [50.0, 50.0]) == Bounds(UPoint(20.0, 30.0), UPoint(50, 50)));
+    assert(Bounds([20, 30], [50.0, 50.0]) ==
+        Bounds(UPoint(20.0, 30.0), UPoint(50, 50)));
     assert(Bounds([20, 30], [50, 50]).center == UPoint(35.0, 40.0));
     assert(Bounds([20, 30], [50, 50]).size == Size(30.0, 20.0));
     assert(Bounds([20, 30], [50, 50]).topLeft == UPoint(20.0, 30.0));
@@ -59,15 +63,29 @@ void main() {
     assert(Bounds([20, 30], [50, 50]).bottomRight == UPoint(50.0, 50.0));
     assert(Bounds([20, 30], [50, 50]).contains(UPoint(25, 40)) == true);
     assert(Bounds([20, 30], [50, 50]).contains(UPoint(80, 80)) == false);
-    assert(Bounds([20, 30], [50, 50]).containsBounds(Bounds([25, 35], [40, 40])) == true);
-    assert(Bounds([20, 30], [50, 50]).containsPartialBounds(Bounds([15, 25], [40, 80])) == true);
+    assert(
+        Bounds([20, 30], [50, 50]).containsBounds(Bounds([25, 35], [40, 40])) ==
+            true);
+    assert(Bounds([20, 30], [50, 50])
+            .containsPartialBounds(Bounds([15, 25], [40, 80])) ==
+        true);
   });
 
   test('LatLngBounds', () {
-    assert(LatLngBounds([20, 30], [50.0, 50.0]) == LatLngBounds(LatLng(20.0, 30.0), LatLng(50, 50)));
-    assert(LatLngBounds([[20, 30], [50.0, 50.0]]) == LatLngBounds(LatLng(20.0, 30.0), LatLng(50, 50)));
-    assert(LatLngBounds([LatLng(20.0, 30.0), LatLng(50, 50)]) == LatLngBounds(LatLng(20.0, 30.0), LatLng(50, 50)));
-    assert(LatLngBounds.from([[20, 30], [50.0, 50.0]]) == LatLngBounds(LatLng(20.0, 30.0), LatLng(50, 50)));
+    assert(LatLngBounds([20, 30], [50.0, 50.0]) ==
+        LatLngBounds(LatLng(20.0, 30.0), LatLng(50, 50)));
+    assert(LatLngBounds([
+          [20, 30],
+          [50.0, 50.0]
+        ]) ==
+        LatLngBounds(LatLng(20.0, 30.0), LatLng(50, 50)));
+    assert(LatLngBounds([LatLng(20.0, 30.0), LatLng(50, 50)]) ==
+        LatLngBounds(LatLng(20.0, 30.0), LatLng(50, 50)));
+    assert(LatLngBounds.from([
+          [20, 30],
+          [50.0, 50.0]
+        ]) ==
+        LatLngBounds(LatLng(20.0, 30.0), LatLng(50, 50)));
   });
 
   test('Coordinates', () {
@@ -85,7 +103,7 @@ void main() {
     expect(() => Coordinate(20, 18) / 0, throwsA(isA<Exception>()));
     assert(Coordinate(20.0, 18.0, 2) == Coordinate.from([20.0, 18.0, 2.0]));
     assert(Coordinate(20.0, 18.0, 2).key == '20.0:18.0:2.0');
-  }); 
+  });
 
   /* test('Map State', () {
     MapStates map = MapStates(
@@ -151,11 +169,15 @@ void main() {
     print(dv(from, to));
     print(dv.bearing(from, to));
     print(dv.offset(from, dv(from, to) as double?, dv.bearing(from, to)));
-    assert(dv.offset(from, dv(from, to) as double?, dv.bearing(from, to)).equal(LatLng.from(to)));
+    assert(dv
+        .offset(from, dv(from, to) as double?, dv.bearing(from, to))
+        .equal(LatLng.from(to)));
 
     print(dh(from, to));
     print(dh.bearing(from, to));
     print(dh.offset(from, dh(from, to) as double?, dh.bearing(from, to)));
-    assert(dh.offset(from, dh(from, to) as double?, dh.bearing(from, to)).equal(LatLng.from(to)));
+    assert(dh
+        .offset(from, dh(from, to) as double?, dh.bearing(from, to))
+        .equal(LatLng.from(to)));
   });
 }

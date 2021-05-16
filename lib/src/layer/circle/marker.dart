@@ -8,15 +8,14 @@ enum RadiusUnit {
 }
 
 /// Circle can have their own style to override style from CircleLayerOptions.
-/// 
-/// This is to to handle the case when you use CirclesLayer 
+///
+/// This is to to handle the case when you use CirclesLayer
 /// with many circle take their style from CirclesLayerOptions,
 /// but small part of them need to have its own style.
-/// 
+///
 /// Otherwise, it's better to use CircleLayerOptions to set circle style.
-/// 
+///
 class Circle {
-
   final LatLng latlng;
   final double? radius;
   final RadiusUnit radiusUnit;
@@ -35,18 +34,19 @@ class Circle {
 
   bool get isRadiusInMeter => radiusUnit == RadiusUnit.METER;
   bool get isRadiusInPixel => radiusUnit == RadiusUnit.PIXEL;
-  
-  Circle(dynamic latlng, {
-    this.radius, 
+
+  Circle(
+    dynamic latlng, {
+    this.radius,
     this.radiusUnit = RadiusUnit.METER,
     this.stroke,
-    this.strokeColor, 
-    this.strokeWidth, 
+    this.strokeColor,
+    this.strokeWidth,
     this.strokeOpacity,
     this.strokeCap,
     this.strokeJoin,
-    this.fill, 
-    this.fillColor, 
+    this.fill,
+    this.fillColor,
     this.fillOpacity,
     this.data,
   }) : this.latlng = LatLng.from(latlng);
@@ -81,8 +81,9 @@ class Circle {
       data: data ?? this.data,
     );
   }
-  
-  factory Circle.from(dynamic value, {
+
+  factory Circle.from(
+    dynamic value, {
     double? radius,
     RadiusUnit? radiusUnit,
     bool? stroke,
@@ -96,7 +97,6 @@ class Circle {
     double? fillOpacity,
     dynamic data,
   }) {
-
     bool isCircle = value is Circle;
     bool isLatLng = value is LatLng;
     bool isCoordinate = value is List && value.first is num;
@@ -104,7 +104,7 @@ class Circle {
     assert(isCircle || isLatLng || isCoordinate);
 
     Circle circle = isCircle ? value : Circle(value);
-    
+
     return circle.copy(
       radius: radius,
       radiusUnit: radiusUnit,
@@ -120,8 +120,7 @@ class Circle {
       data: data,
     );
   }
-  
+
   @override
   String toString() => 'Circle($latlng, radius $radius)';
-
 }

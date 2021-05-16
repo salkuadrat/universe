@@ -13,11 +13,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
   Key _key = menus.keys.first;
 
   Widget get map => menus[_key]!.map();
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

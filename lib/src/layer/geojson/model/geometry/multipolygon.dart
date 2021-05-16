@@ -5,15 +5,13 @@ import 'linearring.dart';
 import 'polygon.dart';
 
 class MultiPolygon extends Geometry {
-
   List<Polygon> _polygons = [];
 
-  MultiPolygon(List<Polygon> polygons) : 
-    this._polygons = polygons;
-  
+  MultiPolygon(List<Polygon> polygons) : this._polygons = polygons;
+
   @override
   GeoJSONType get type => GeoJSONType.MultiPolygon;
-  
+
   List<Polygon> get polygons => _polygons;
 
   set polygons(List<Polygon> polygons) {
@@ -27,16 +25,16 @@ class MultiPolygon extends Geometry {
   MultiPolygon.from(Map<String, dynamic> json) {
     assert(json.containsKey('type') && json['type'] == 'MultiPolygon');
     assert(json.containsKey('coordinates'));
-    
+
     List coordinates = (json['coordinates'] as List);
 
-    for(List p in coordinates as Iterable<List<dynamic>>) {
+    for (List p in coordinates as Iterable<List<dynamic>>) {
       List<LinearRing> linearRings = [];
-      
-      for(List lr in p as Iterable<List<dynamic>>) {
+
+      for (List lr in p as Iterable<List<dynamic>>) {
         List<Position> positions = [];
-        
-        for(List c in lr as Iterable<List<dynamic>>) {
+
+        for (List c in lr as Iterable<List<dynamic>>) {
           positions.add(Position.from(c as List<num>));
         }
 

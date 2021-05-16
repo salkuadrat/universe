@@ -5,9 +5,8 @@ import '../../map/map.dart';
 import 'options.dart';
 
 class MapLayer extends StatelessWidget {
-  
   const MapLayer({Key? key, MapLayerOptions? options}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MapStates>(

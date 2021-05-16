@@ -6,7 +6,6 @@ import 'image.dart';
 import 'svg.dart';
 
 class MarkerLayerOptions extends InteractiveLayerOptions {
-  
   final double? size;
   final double? width;
   final double? height;
@@ -49,35 +48,34 @@ class MarkerLayerOptions extends InteractiveLayerOptions {
     LongPressMoveUpdateLayerCallback? onSecondaryLongPressMoveUpdate,
     LongPressUpLayerCallback? onSecondaryLongPressUp,
     LongPressEndLayerCallback? onSecondaryLongPressEnd,
-  }) : 
-  this.size = size?.toDouble(),
-  this.width = width?.toDouble() ?? size?.toDouble(),
-  this.height = height?.toDouble() ?? size?.toDouble(),
-  this.icon = widget is MarkerIcon ? widget : null,
-  this.image = widget is MarkerImage ? widget : null,
-  this.svg = widget is MarkerSvg ? widget : null,
-  this.widget = widget is Widget ? widget : null,
-  super(
-    interactive: interactive,
-    attribution: attribution,
-    onTap: onTap,
-    onTapUp: onTapUp,
-    onTapDown: onTapDown,
-    onTapCancel: onTapCancel,
-    onSecondaryTap: onSecondaryTap,
-    onSecondaryTapDown: onSecondaryTapDown,
-    onSecondaryTapUp: onSecondaryTapUp,
-    onSecondaryTapCancel: onSecondaryTapCancel,
-    onDoubleTap: onDoubleTap,
-    onLongPress: onLongPress,
-    onLongPressStart: onLongPressStart,
-    onLongPressMoveUpdate: onLongPressMoveUpdate,
-    onLongPressUp: onLongPressUp,
-    onLongPressEnd: onLongPressEnd,
-    onSecondaryLongPress: onSecondaryLongPress,
-    onSecondaryLongPressStart: onSecondaryLongPressStart,
-    onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
-    onSecondaryLongPressUp: onSecondaryLongPressUp,
-    onSecondaryLongPressEnd: onSecondaryLongPressEnd,
-  );
+  })  : this.size = size?.toDouble(),
+        this.width = width?.toDouble() ?? size?.toDouble(),
+        this.height = height?.toDouble() ?? size?.toDouble(),
+        this.icon = widget is MarkerIcon ? widget : null,
+        this.image = widget is MarkerImage ? widget : null,
+        this.svg = widget is MarkerSvg ? widget : null,
+        this.widget = widget is Widget ? widget : null,
+        super(
+          interactive: interactive,
+          attribution: attribution,
+          onTap: onTap,
+          onTapUp: onTapUp,
+          onTapDown: onTapDown,
+          onTapCancel: onTapCancel,
+          onSecondaryTap: onSecondaryTap,
+          onSecondaryTapDown: onSecondaryTapDown,
+          onSecondaryTapUp: onSecondaryTapUp,
+          onSecondaryTapCancel: onSecondaryTapCancel,
+          onDoubleTap: onDoubleTap,
+          onLongPress: onLongPress,
+          onLongPressStart: onLongPressStart,
+          onLongPressMoveUpdate: onLongPressMoveUpdate,
+          onLongPressUp: onLongPressUp,
+          onLongPressEnd: onLongPressEnd,
+          onSecondaryLongPress: onSecondaryLongPress,
+          onSecondaryLongPressStart: onSecondaryLongPressStart,
+          onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
+          onSecondaryLongPressUp: onSecondaryLongPressUp,
+          onSecondaryLongPressEnd: onSecondaryLongPressEnd,
+        );
 }

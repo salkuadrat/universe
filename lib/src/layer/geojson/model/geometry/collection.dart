@@ -4,12 +4,10 @@ import '../type.dart';
 import 'geometry.dart';
 
 class GeometryCollection extends Geometry {
-  
   List<Geometry> _geometries = [];
 
-  GeometryCollection(List<Geometry> geometries) 
-    : this._geometries = geometries;
-  
+  GeometryCollection(List<Geometry> geometries) : this._geometries = geometries;
+
   @override
   GeoJSONType get type => GeoJSONType.MultiPolygon;
 
@@ -29,17 +27,19 @@ class GeometryCollection extends Geometry {
 
     List geometries = (json['geometries'] as List);
 
-    for(Map<String, dynamic> g in geometries as Iterable<Map<String, dynamic>>) {
+    for (Map<String, dynamic> g
+        in geometries as Iterable<Map<String, dynamic>>) {
       Geometry? geometry = Geometry.from(g);
 
-      if(geometry != null) {
+      if (geometry != null) {
         add(geometry);
       }
     }
   }
 
   @override
-  L.MapLayer layer(GeoJSONLayerOptions? options, [Map<String, dynamic>? properties]) {
+  L.MapLayer layer(GeoJSONLayerOptions? options,
+      [Map<String, dynamic>? properties]) {
     return L.GroupLayer(
       layers: geometries.map((g) => g.layer(options, properties)).toList(),
       options: options,

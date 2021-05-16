@@ -9,14 +9,15 @@ class SphericalMercator extends Projection {
   static const double MAX_LATITUDE = 85.0511287798;
   static const double D = R * PI;
 
-  const SphericalMercator({Tuple2<double, double>? latBounds, Tuple2<double, double>? lngBounds}) 
-    : super(latBounds: latBounds, lngBounds: lngBounds);
+  const SphericalMercator(
+      {Tuple2<double, double>? latBounds, Tuple2<double, double>? lngBounds})
+      : super(latBounds: latBounds, lngBounds: lngBounds);
 
   @override
   Bounds get bounds => Bounds(
-    UPoint(-D, -D),
-    UPoint(D, D),
-  );
+        UPoint(-D, -D),
+        UPoint(D, D),
+      );
 
   @override
   UPoint project(LatLng? position) {
@@ -26,7 +27,7 @@ class SphericalMercator extends Projection {
     double sin = Math.sin(lat * d);
 
     return UPoint(
-      R * position.lng * d, 
+      R * position.lng * d,
       R * Math.log((1 + sin) / (1 - sin)) / 2,
     );
   }

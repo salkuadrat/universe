@@ -4,7 +4,6 @@ import '../../shared.dart';
 import '../layer.dart';
 
 class PolygonLayerOptions extends ShapeLayerOptions {
-
   final bool isDotted;
   final List<Color> gradientStrokeColors;
   final List<double> gradientStrokeStops;
@@ -51,39 +50,39 @@ class PolygonLayerOptions extends ShapeLayerOptions {
     LongPressUpLayerCallback? onSecondaryLongPressUp,
     LongPressEndLayerCallback? onSecondaryLongPressEnd,
   }) : super(
-    stroke: stroke,
-    strokeColor: strokeColor ?? fillColor,
-    strokeWidth: strokeWidth,
-    strokeOpacity: strokeOpacity,
-    strokeCap: strokeCap,
-    strokeJoin: strokeJoin,
-    pathFillType: pathFillType,
-    fill: true,
-    fillColor: fillColor,
-    fillOpacity: fillOpacity,
-    smoothFactor: smoothFactor,
-    culling: culling,
-    interactive: interactive,
-    onTap: onTap,
-    onTapUp: onTapUp,
-    onTapDown: onTapDown,
-    onTapCancel: onTapCancel,
-    onSecondaryTap: onSecondaryTap,
-    onSecondaryTapDown: onSecondaryTapDown,
-    onSecondaryTapUp: onSecondaryTapUp,
-    onSecondaryTapCancel: onSecondaryTapCancel,
-    onDoubleTap: onDoubleTap,
-    onLongPress: onLongPress,
-    onLongPressStart: onLongPressStart,
-    onLongPressMoveUpdate: onLongPressMoveUpdate,
-    onLongPressUp: onLongPressUp,
-    onLongPressEnd: onLongPressEnd,
-    onSecondaryLongPress: onSecondaryLongPress,
-    onSecondaryLongPressStart: onSecondaryLongPressStart,
-    onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
-    onSecondaryLongPressUp: onSecondaryLongPressUp,
-    onSecondaryLongPressEnd: onSecondaryLongPressEnd,
-  );
+          stroke: stroke,
+          strokeColor: strokeColor ?? fillColor,
+          strokeWidth: strokeWidth,
+          strokeOpacity: strokeOpacity,
+          strokeCap: strokeCap,
+          strokeJoin: strokeJoin,
+          pathFillType: pathFillType,
+          fill: true,
+          fillColor: fillColor,
+          fillOpacity: fillOpacity,
+          smoothFactor: smoothFactor,
+          culling: culling,
+          interactive: interactive,
+          onTap: onTap,
+          onTapUp: onTapUp,
+          onTapDown: onTapDown,
+          onTapCancel: onTapCancel,
+          onSecondaryTap: onSecondaryTap,
+          onSecondaryTapDown: onSecondaryTapDown,
+          onSecondaryTapUp: onSecondaryTapUp,
+          onSecondaryTapCancel: onSecondaryTapCancel,
+          onDoubleTap: onDoubleTap,
+          onLongPress: onLongPress,
+          onLongPressStart: onLongPressStart,
+          onLongPressMoveUpdate: onLongPressMoveUpdate,
+          onLongPressUp: onLongPressUp,
+          onLongPressEnd: onLongPressEnd,
+          onSecondaryLongPress: onSecondaryLongPress,
+          onSecondaryLongPressStart: onSecondaryLongPressStart,
+          onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
+          onSecondaryLongPressUp: onSecondaryLongPressUp,
+          onSecondaryLongPressEnd: onSecondaryLongPressEnd,
+        );
 
   PolygonLayerOptions copy({
     bool? stroke,
@@ -144,14 +143,19 @@ class PolygonLayerOptions extends ShapeLayerOptions {
       onDoubleTap: onDoubleTap ?? this.onDoubleTap,
       onLongPress: onLongPress ?? this.onLongPress,
       onLongPressStart: onLongPressStart ?? this.onLongPressStart,
-      onLongPressMoveUpdate: onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
+      onLongPressMoveUpdate:
+          onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
       onLongPressUp: onLongPressUp ?? this.onLongPressUp,
       onLongPressEnd: onLongPressEnd ?? this.onLongPressEnd,
       onSecondaryLongPress: onSecondaryLongPress ?? this.onSecondaryLongPress,
-      onSecondaryLongPressStart: onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
-      onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
-      onSecondaryLongPressUp: onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
-      onSecondaryLongPressEnd: onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
+      onSecondaryLongPressStart:
+          onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
+      onSecondaryLongPressMoveUpdate:
+          onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
+      onSecondaryLongPressUp:
+          onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
+      onSecondaryLongPressEnd:
+          onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
     );
   }
 }

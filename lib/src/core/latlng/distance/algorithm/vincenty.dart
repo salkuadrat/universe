@@ -4,14 +4,13 @@ import '../../../../shared.dart';
 import '../../../core.dart';
 
 class Vincenty implements DistanceAlgorithm {
-
   const Vincenty();
 
   @override
   double distance(dynamic position, dynamic destination) {
     position = LatLng.from(position);
     destination = LatLng.from(destination);
-    
+
     double a = EQUATOR_RADIUS, b = POLAR_RADIUS, f = FLATTENING;
     double? L = destination.longitudeInRad - position.longitudeInRad;
     double u1 = atan((1 - f) * tan(position.latitudeInRad));
@@ -20,20 +19,25 @@ class Vincenty implements DistanceAlgorithm {
     double sinU1 = sin(u1), cosU1 = cos(u1);
     double sinU2 = sin(u2), cosU2 = cos(u2);
 
-    double sinLambda, cosLambda, sinSigma, cosSigma, sigma, sinAlpha, cosSqAlpha, cos2SigmaM;
+    double sinLambda,
+        cosLambda,
+        sinSigma,
+        cosSigma,
+        sigma,
+        sinAlpha,
+        cosSqAlpha,
+        cos2SigmaM;
     double? lambda = L, lambdaP;
     int maxIterations = 200;
-    
+
     do {
       sinLambda = sin(lambda!);
       cosLambda = cos(lambda);
-      sinSigma = sqrt(
-        (cosU2 * sinLambda) * (cosU2 * sinLambda) + 
-        (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * 
-        (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda)
-      );
-      
-      if(sinSigma == 0) {
+      sinSigma = sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda) +
+          (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) *
+              (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda));
+
+      if (sinSigma == 0) {
         return 0.0; // co-incident points
       }
 
@@ -43,29 +47,42 @@ class Vincenty implements DistanceAlgorithm {
       cosSqAlpha = 1 - sinAlpha * sinAlpha;
       cos2SigmaM = cosSigma - 2 * sinU1 * sinU2 / cosSqAlpha;
 
-      if(cos2SigmaM.isNaN) {
+      if (cos2SigmaM.isNaN) {
         cos2SigmaM = 0.0; // equatorial line: cosSqAlpha=0 (§6)
       }
-      
+
       double C = f / 16 * cosSqAlpha * (4 + f * (4 - 3 * cosSqAlpha));
       lambdaP = lambda;
-      lambda = 
-        L! + (1 - C) * f * sinAlpha * 
-        (sigma + C * sinSigma * (cos2SigmaM + C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
-    
+      lambda = L! +
+          (1 - C) *
+              f *
+              sinAlpha *
+              (sigma +
+                  C *
+                      sinSigma *
+                      (cos2SigmaM +
+                          C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
     } while ((lambda - lambdaP).abs() > 1e-12 && --maxIterations > 0);
 
     if (maxIterations == 0) {
       throw new StateError("Distance calculation faild to converge!");
     }
-    
+
     double uSq = cosSqAlpha * (a * a - b * b) / (b * b);
-    double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+    double A =
+        1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
     double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
-    double deltaSigma = B * sinSigma * 
-      (cos2SigmaM + B / 4 * 
-        (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) - B / 6 * cos2SigmaM * 
-        (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2SigmaM * cos2SigmaM)));
+    double deltaSigma = B *
+        sinSigma *
+        (cos2SigmaM +
+            B /
+                4 *
+                (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) -
+                    B /
+                        6 *
+                        cos2SigmaM *
+                        (-3 + 4 * sinSigma * sinSigma) *
+                        (-3 + 4 * cos2SigmaM * cos2SigmaM)));
 
     double distance = b * A * (sigma - deltaSigma);
     return distance;
@@ -77,7 +94,7 @@ class Vincenty implements DistanceAlgorithm {
 
     final latInRad = latlng.latitudeInRad;
     final lngInRad = latlng.longitudeInRad;
-    
+
     double alpha1 = degToRadian(bearing);
     double sinAlpha1 = sin(alpha1);
     double cosAlpha1 = cos(alpha1);
@@ -89,12 +106,14 @@ class Vincenty implements DistanceAlgorithm {
     double sigma1 = atan2(tanU1, cosAlpha1);
     double sinAlpha = cosU1 * sinAlpha1;
     double cosSqAlpha = 1 - sinAlpha * sinAlpha;
-    double dfUSq = 
-      cosSqAlpha * (EQUATOR_RADIUS * EQUATOR_RADIUS - POLAR_RADIUS * POLAR_RADIUS) / 
-      (POLAR_RADIUS * POLAR_RADIUS);
+    double dfUSq = cosSqAlpha *
+        (EQUATOR_RADIUS * EQUATOR_RADIUS - POLAR_RADIUS * POLAR_RADIUS) /
+        (POLAR_RADIUS * POLAR_RADIUS);
 
-    double a = 1 + dfUSq / 16384 * (4096 + dfUSq * (-768 + dfUSq * (320 - 175 * dfUSq)));
-    double b = dfUSq / 1024 * (256 + dfUSq * (-128 + dfUSq * (74 - 47 * dfUSq)));
+    double a = 1 +
+        dfUSq / 16384 * (4096 + dfUSq * (-768 + dfUSq * (320 - 175 * dfUSq)));
+    double b =
+        dfUSq / 1024 * (256 + dfUSq * (-128 + dfUSq * (74 - 47 * dfUSq)));
 
     double sigma = distanceInMeter! / (POLAR_RADIUS * a);
     double sigmaP = 2 * PI;
@@ -109,44 +128,57 @@ class Vincenty implements DistanceAlgorithm {
       cos2SigmaM = cos(2 * sigma1 + sigma);
       sinSigma = sin(sigma);
       cosSigma = cos(sigma);
-      
-      deltaSigma = 
-        b * sinSigma * (cos2SigmaM + b / 4 * (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) -
-        b / 6 * cos2SigmaM * (-3 + 4 * sinSigma * sinSigma) *
-        (-3 + 4 * cos2SigmaM * cos2SigmaM)));
-      
+
+      deltaSigma = b *
+          sinSigma *
+          (cos2SigmaM +
+              b /
+                  4 *
+                  (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) -
+                      b /
+                          6 *
+                          cos2SigmaM *
+                          (-3 + 4 * sinSigma * sinSigma) *
+                          (-3 + 4 * cos2SigmaM * cos2SigmaM)));
+
       sigmaP = sigma;
       sigma = distanceInMeter / (POLAR_RADIUS * a) + deltaSigma;
-    
-    } while((sigma - sigmaP).abs() > 1e-12 && --maxIterations > 0);
+    } while ((sigma - sigmaP).abs() > 1e-12 && --maxIterations > 0);
 
     if (maxIterations == 0) {
       throw new StateError("offset calculation faild to converge!");
     }
-    
+
     double tmp = sinU1 * sinSigma - cosU1 * cosSigma * cosAlpha1;
     double latitude = atan2(
-      sinU1 * cosSigma + cosU1 * sinSigma * cosAlpha1, 
+      sinU1 * cosSigma + cosU1 * sinSigma * cosAlpha1,
       (1 - FLATTENING) * sqrt(sinAlpha * sinAlpha + tmp * tmp),
     );
-    
-    double lambda = atan2(sinSigma * sinAlpha1, cosU1 * cosSigma - sinU1 * sinSigma * cosAlpha1);
-    double c = FLATTENING / 16 * cosSqAlpha * (4 + FLATTENING * (4 - 3 * cosSqAlpha));
-    double l = 
-      lambda - (1 - c) * FLATTENING * sinAlpha * 
-      (sigma + c * sinSigma * (cos2SigmaM + c * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
-      
+
+    double lambda = atan2(
+        sinSigma * sinAlpha1, cosU1 * cosSigma - sinU1 * sinSigma * cosAlpha1);
+    double c =
+        FLATTENING / 16 * cosSqAlpha * (4 + FLATTENING * (4 - 3 * cosSqAlpha));
+    double l = lambda -
+        (1 - c) *
+            FLATTENING *
+            sinAlpha *
+            (sigma +
+                c *
+                    sinSigma *
+                    (cos2SigmaM +
+                        c * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
+
     double longitude = lngInRad + l;
-    
+
     if (longitude > PI) {
       longitude = longitude - 2 * PI;
     }
-    
+
     if (longitude < -1 * PI) {
       longitude = longitude + 2 * PI;
     }
-    
+
     return LatLng(radianToDeg(latitude), radianToDeg(longitude));
   }
-  
 }

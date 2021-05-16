@@ -9,7 +9,6 @@ class LocationFinderMap extends StatefulWidget {
 }
 
 class _LocationFinderMapState extends State<LocationFinderMap> {
-
   final _mapKey = UniqueKey();
   final _mapController = MapController();
   final _locationName = 'Highbury Square';
@@ -36,17 +35,18 @@ class _LocationFinderMapState extends State<LocationFinderMap> {
     // this is only to show a nice transition between two loading text
     // do not use in production
     await Future.delayed(Duration(milliseconds: 500));
-    
+
     _stopSearching();
 
-    final message = location != null 
-      ? 'Latlng: ${location.toSimpleString()}' 
-      : 'Location not found!';
+    final message = location != null
+        ? 'Latlng: ${location.toSimpleString()}'
+        : 'Location not found!';
 
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -56,7 +56,8 @@ class _LocationFinderMapState extends State<LocationFinderMap> {
           controller: _mapController,
           type: MapBoxType.Bright,
           accessToken: yourAccessTokenHere,
-          center: 'Emirates Stadium', // set map center by location name (not latlng)
+          center:
+              'Emirates Stadium', // set map center by location name (not latlng)
           zoom: 16,
         ),
         Positioned(
@@ -64,10 +65,9 @@ class _LocationFinderMapState extends State<LocationFinderMap> {
           bottom: 90,
           child: ElevatedButton(
             onPressed: _findLocation,
-            child: Text(_isSearching 
-              ? 'Searching...' 
-              : 'Find latlng for $_locationName'
-            ),
+            child: Text(_isSearching
+                ? 'Searching...'
+                : 'Find latlng for $_locationName'),
             style: ElevatedButton.styleFrom(
               primary: Colors.white,
               onPrimary: Colors.lightBlue,

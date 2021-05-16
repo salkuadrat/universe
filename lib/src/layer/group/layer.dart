@@ -5,12 +5,11 @@ import '../../map/map.dart';
 import '../layer.dart';
 
 class GroupLayer extends InteractiveLayer {
-
   final List<MapLayer>? layers;
   final GroupLayerOptions? options;
-  
-  const GroupLayer({Key? key, this.layers, this.options}) 
-    : super(key: key, options: options);
+
+  const GroupLayer({Key? key, this.layers, this.options})
+      : super(key: key, options: options);
 
   @override
   Widget buildLayer(BuildContext context, MapStates map) {

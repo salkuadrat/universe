@@ -9,7 +9,7 @@ class MarkerIconMap extends StatelessWidget {
     return U.MapBox(
       accessToken: yourAccessTokenHere,
       center: [51.555158, -0.108343],
-      zoom: 16, 
+      zoom: 16,
       markers: U.MarkerLayer(
         [
           [51.558374, -0.107398],

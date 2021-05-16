@@ -8,20 +8,23 @@ class ImageOverlayMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return U.MapBox(
       accessToken: yourAccessTokenHere,
-      center: [-6.175329, 106.827253], 
+      center: [-6.175329, 106.827253],
       zoom: 15,
       showLocator: true,
       rectangles: U.RectangleLayer(
         [
           // to see star trek overlay bounds
-          [ [-6.17098, 106.825514], [-6.167775, 106.822867] ] 
+          [
+            [-6.17098, 106.825514],
+            [-6.167775, 106.822867]
+          ]
         ],
         fillOpacity: 0.5,
       ),
       images: [
         U.ImageOverlay(
           // from url
-          'http://img.freeflagicons.com/thumb/background_with_square_parts/indonesia/indonesia_640.png', 
+          'http://img.freeflagicons.com/thumb/background_with_square_parts/indonesia/indonesia_640.png',
           bounds: [
             [-6.180143, 106.823504],
             [-6.180344, 106.828948],

@@ -3,10 +3,9 @@ import '../../shared.dart';
 import '../map.dart';
 
 class UMapController implements MapController {
-
   MapStates? map;
 
-  @override 
+  @override
   bool get isReady => map != null;
 
   @override
@@ -14,8 +13,8 @@ class UMapController implements MapController {
     map?.move(center, zoom ?? map!.zoom, animate);
   }
 
-  @override 
-  void zoomTo(double zoom,{bool animate = false}) {
+  @override
+  void zoomTo(double zoom, {bool animate = false}) {
     map?.zoomTo(zoom, animate);
   }
 
@@ -32,17 +31,17 @@ class UMapController implements MapController {
     map?.zoomOut(zoomDelta);
   }
 
-  @override 
+  @override
   void rotate(double rotation, {bool animate = false, Function? onAnimateEnd}) {
     map?.rotate(rotation, animate, onAnimateEnd);
   }
 
-  @override 
+  @override
   Future<LatLng?> findLocation(String query) async {
     return await map?.findLocation(query);
   }
 
-  @override 
+  @override
   Future<LatLng?> locate({bool automove = false, double toZoom = 17.0}) async {
     return await map?.locate(automove, toZoom);
   }
@@ -56,22 +55,23 @@ class UMapController implements MapController {
   @override
   double? get zoom => map?.zoom;
 
-  @override 
+  @override
   double? get rotation => map?.rotation;
 
-  @override 
+  @override
   Function? onReady;
 
-  @override 
+  @override
   MapChangedCallback? onChanged;
 
-  @override 
+  @override
   Stream<MapData>? get positionStream => map?.positionStream.stream;
 
   @override
-  double distance(dynamic toDestination, {
+  double distance(
+    dynamic toDestination, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
-    LengthUnit unit=LengthUnit.M,
+    LengthUnit unit = LengthUnit.M,
   }) {
     bool isVincenty = algorithm == DistanceAlgorithmType.Vincenty;
     Distance d = isVincenty ? DistanceVincenty() : DistanceHaversine();
@@ -79,7 +79,9 @@ class UMapController implements MapController {
   }
 
   @override
-  LatLng destination(double distance, double bearing, {
+  LatLng destination(
+    double distance,
+    double bearing, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
   }) {
     bool isVincenty = algorithm == DistanceAlgorithmType.Vincenty;
@@ -88,7 +90,8 @@ class UMapController implements MapController {
   }
 
   @override
-  double bearing(dynamic toDestination, {
+  double bearing(
+    dynamic toDestination, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
   }) {
     bool isVincenty = algorithm == DistanceAlgorithmType.Vincenty;
@@ -96,24 +99,28 @@ class UMapController implements MapController {
     return d.bearing(map?.center, toDestination);
   }
 
-  @override 
-  bool isInsideRadius(LatLng location, double radius, {
+  @override
+  bool isInsideRadius(
+    LatLng location,
+    double radius, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
-    LengthUnit unit=LengthUnit.M,
+    LengthUnit unit = LengthUnit.M,
   }) {
     double distance = this.distance(location, algorithm: algorithm, unit: unit);
     return distance <= radius;
   }
 
   @override
-  List<LatLng> filterInsideRadius(List<LatLng> locations, double radius, {
+  List<LatLng> filterInsideRadius(
+    List<LatLng> locations,
+    double radius, {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
-    LengthUnit unit=LengthUnit.M,
+    LengthUnit unit = LengthUnit.M,
   }) {
     List<LatLng> result = [];
 
-    for(LatLng location in locations) {
-      if(isInsideRadius(location, radius, algorithm: algorithm, unit: unit)) {
+    for (LatLng location in locations) {
+      if (isInsideRadius(location, radius, algorithm: algorithm, unit: unit)) {
         result.add(location);
       }
     }

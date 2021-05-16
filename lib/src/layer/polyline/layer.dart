@@ -7,7 +7,6 @@ import '../../map/map.dart';
 import '../layer.dart';
 
 class PolylineLayer extends PathLayer {
-  
   final Polyline? polyline;
   final List<Polyline> polylines;
   final PolylineLayerOptions? options;
@@ -16,27 +15,30 @@ class PolylineLayer extends PathLayer {
   bool get hasPolylines => polylines.isNotEmpty;
 
   // can accept a single polyline or list of polylines
-  PolylineLayer(dynamic polyline, {Key? key, this.options}) : 
-    assert(polyline is Polyline || (polyline is List<Polyline> && polyline.length > 0)), 
-    this.polyline = polyline is Polyline ? polyline : null,
-    this.polylines = polyline is List<Polyline> ? polyline : const <Polyline>[],
-    super(key: key, options: options);
-  
-  @override 
+  PolylineLayer(dynamic polyline, {Key? key, this.options})
+      : assert(polyline is Polyline ||
+            (polyline is List<Polyline> && polyline.length > 0)),
+        this.polyline = polyline is Polyline ? polyline : null,
+        this.polylines =
+            polyline is List<Polyline> ? polyline : const <Polyline>[],
+        super(key: key, options: options);
+
+  @override
   Widget buildLayer(BuildContext context, MapStates map) {
-    if(hasPolylines) return _polylines(context, map);
-    if(hasPolyline) return _polyline(context, map, polyline);
+    if (hasPolylines) return _polylines(context, map);
+    if (hasPolyline) return _polyline(context, map, polyline);
     return Container();
   }
 
   Widget _polylines(BuildContext context, MapStates map) => Stack(
-    children: [
-      for(Polyline polyline in polylines) _polyline(context, map, polyline),
-    ],
-  );
+        children: [
+          for (Polyline polyline in polylines)
+            _polyline(context, map, polyline),
+        ],
+      );
 
   Widget _polyline(BuildContext context, MapStates map, Polyline? polyline) {
-    if(options!.culling && polyline!.bounds.isNotOverlaps(map.bounds)) {
+    if (options!.culling && polyline!.bounds.isNotOverlaps(map.bounds)) {
       return Container();
     }
 
@@ -49,7 +51,7 @@ class PolylineLayer extends PathLayer {
     double maxX = 0;
     double maxY = 0;
 
-    for(Offset point in points) {
+    for (Offset point in points) {
       minX = minX == 0 ? point.dx : math.min(minX, point.dx);
       minY = minY == 0 ? point.dy : math.min(minY, point.dy);
       maxX = math.max(maxX, point.dx);
@@ -63,10 +65,10 @@ class PolylineLayer extends PathLayer {
 
     List<Offset> rPoints = [];
 
-    for(Offset point in points) {
+    for (Offset point in points) {
       rPoints.add(Offset(point.dx - left, point.dy - top));
     }
-    
+
     return Positioned(
       top: top,
       left: left,
@@ -76,15 +78,18 @@ class PolylineLayer extends PathLayer {
         options: options,
         child: CustomPaint(
           painter: PolylinePainter(
-            points: rPoints, 
-            strokeColor: polyline.strokeColor ?? options!.strokeColor ?? primaryColor,
+            points: rPoints,
+            strokeColor:
+                polyline.strokeColor ?? options!.strokeColor ?? primaryColor,
             strokeWidth: polyline.strokeWidth ?? options!.strokeWidth,
             strokeOpacity: polyline.strokeOpacity ?? options!.strokeOpacity,
             strokeCap: polyline.strokeCap ?? options!.strokeCap,
             strokeJoin: polyline.strokeJoin ?? options!.strokeJoin,
             pathFillType: polyline.pathFillType ?? options!.pathFillType,
-            gradientStrokeColors: polyline.gradientStrokeColors ?? options!.gradientStrokeColors,
-            gradientStrokeStops: polyline.gradientStrokeStops ?? options!.gradientStrokeStops,
+            gradientStrokeColors:
+                polyline.gradientStrokeColors ?? options!.gradientStrokeColors,
+            gradientStrokeStops:
+                polyline.gradientStrokeStops ?? options!.gradientStrokeStops,
             isDotted: polyline.isDotted ?? options!.isDotted,
             culling: options!.culling,
           ),
@@ -101,9 +106,9 @@ class PolylineLayer extends PathLayer {
   List<Offset> _points(MapStates map, List<LatLng> latlngs) {
     List<Offset> points = [];
 
-    for(LatLng latlng in latlngs) {
+    for (LatLng latlng in latlngs) {
       double scale = map.getZoomScale(map.zoom, map.zoom);
-      UPoint point = (map.project(latlng) * scale) -  map.pixelOrigin;
+      UPoint point = (map.project(latlng) * scale) - map.pixelOrigin;
       points.add(Offset(point.x, point.y));
     }
 

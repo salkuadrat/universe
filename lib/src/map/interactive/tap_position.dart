@@ -133,9 +133,9 @@ class _TapPositionDetectorState extends State<TapPositionDetector> {
   }
 
   Offset? _getWidgetTopLeft() {
-    final translation = context
-      .findRenderObject()?.getTransformTo(null).getTranslation();
-    
+    final translation =
+        context.findRenderObject()?.getTransformTo(null).getTranslation();
+
     return translation != null ? Offset(translation.x, translation.y) : null;
   }
 

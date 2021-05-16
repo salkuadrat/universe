@@ -5,12 +5,11 @@ class ZoomOptions {
   final double minZoom;
   final double maxZoom;
   final double zoomDelta;
-  
+
   ZoomOptions({
-    double zoom = zoomDef, 
-    this.minZoom = minZoomDef, 
+    double zoom = zoomDef,
+    this.minZoom = minZoomDef,
     this.maxZoom = maxZoomDef,
     this.zoomDelta = zoomDeltaDef,
-  }) : 
-    this.zoom = zoom + 0.012;
+  }) : this.zoom = zoom + 0.012;
 }

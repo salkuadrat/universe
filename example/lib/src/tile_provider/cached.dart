@@ -8,7 +8,7 @@ class CachedNetworkTileMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return U.MapBox(
       accessToken: yourAccessTokenHere,
-      center: [51.555015,-0.108331], 
+      center: [51.555015, -0.108331],
       zoom: 16,
       options: TileLayerOptions(
         tileProvider: CachedNetworkTileProvider(),

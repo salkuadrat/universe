@@ -12,8 +12,8 @@ class FitBoundsMap extends StatelessWidget {
       center: [51.555158, -0.108343],
       zoom: 16,
       fitBounds: LatLngBounds(
-        [51.293714,-0.527292], // southWest bound
-        [51.669162,0.256857],  // northEast bound
+        [51.293714, -0.527292], // southWest bound
+        [51.669162, 0.256857], // northEast bound
       ),
     );
   }

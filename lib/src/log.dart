@@ -1,7 +1,7 @@
 bool isPrintLog = false;
 
 void log(data) {
-  if(isPrintLog) {
+  if (isPrintLog) {
     print(data);
   }
 }

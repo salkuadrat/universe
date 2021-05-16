@@ -10,7 +10,7 @@ class LiveMapWithoutAutoMoving extends StatelessWidget {
       zoom: 16,
       live: true,
       // moveWhenLive: false will make the map live (constantly search for user location),
-      // set the location indicator to current user location, but does not 
+      // set the location indicator to current user location, but does not
       // move the center of the maps automatically to that location.
 
       // moveWhenLive has default value set to true

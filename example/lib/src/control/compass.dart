@@ -9,7 +9,7 @@ class CustomCompassMap extends StatelessWidget {
     return U.MapBox(
       accessToken: yourAccessTokenHere,
       center: [51.555158, -0.108343],
-      zoom: 15, 
+      zoom: 15,
       showLocator: true,
       onReady: () => print('Map is ready!'),
       compass: Compass(

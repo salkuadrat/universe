@@ -6,7 +6,6 @@ import '../../shared.dart';
 import '../layer.dart';
 
 class TileLayerOptions extends InteractiveLayerOptions {
-
   /// Defines the structure to create the URLs for the tiles.
   /// `{s}` means one of the available subdomains (can be omitted)
   /// `{z}` zoom level
@@ -20,16 +19,16 @@ class TileLayerOptions extends InteractiveLayerOptions {
   /// It will translate to this:
   ///
   /// https://a.tile.openstreetmap.org/12/2177/1259.png
-  /// 
+  ///
   final String? templateUrl;
 
-  /// Subdomains of the tile service. 
-  /// Can be passed in the form of one string 
+  /// Subdomains of the tile service.
+  /// Can be passed in the form of one string
   /// (where each letter is a subdomain name) or an array of strings.
   final List<String> subdomains;
 
   /// The type of tile provider used to load tiles.
-  /// 
+  ///
   /// Available TileProvider:
   /// [DefaultTileProvider]
   /// [NetworkTileProvider]
@@ -46,7 +45,7 @@ class TileLayerOptions extends InteractiveLayerOptions {
   /// If set, tiles will only be loaded inside the set `LatLngBounds`.
   final LatLngBounds? bounds;
 
-  /// The minimum zoom level down to which this layer 
+  /// The minimum zoom level down to which this layer
   /// will be displayed (inclusive).
   final double? minZoom;
 
@@ -68,7 +67,7 @@ class TileLayerOptions extends InteractiveLayerOptions {
   /// Opacity of the tiles.
   final double? opacity;
 
-  /// If set to true, the zoom number used in tile URLs will be reversed 
+  /// If set to true, the zoom number used in tile URLs will be reversed
   /// (`maxZoom - zoom` instead of `zoom`)
   final bool? zoomReverse;
 
@@ -85,12 +84,12 @@ class TileLayerOptions extends InteractiveLayerOptions {
   /// Tile image to show in place of the tile that failed to load.
   final ImageProvider? errorImage;
 
-  /// By default, a smooth zoom animation (during a [touch zoom](#map-touchzoom) 
-  /// or a [`flyTo()`](#map-flyto)) will update grid layers every integer zoom level. 
-  /// 
-  /// Setting this option to `false` will update the grid layer 
+  /// By default, a smooth zoom animation (during a [touch zoom](#map-touchzoom)
+  /// or a [`flyTo()`](#map-flyto)) will update grid layers every integer zoom level.
+  ///
+  /// Setting this option to `false` will update the grid layer
   /// only when the smooth animation ends.
-	final bool updateWhenZooming;
+  final bool updateWhenZooming;
 
   /// Tiles will not update more than once every `updateInterval`
   /// (default 200 milliseconds) when panning.
@@ -132,7 +131,7 @@ class TileLayerOptions extends InteractiveLayerOptions {
   ///   retinaMode: true && MediaQuery.of(context).devicePixelRatio > 1.0,
   /// )
   final bool? retinaMode;
-  
+
   /// This callback will be execute if some errors by getting tile
   final Function(Tile, dynamic)? onTileError;
 
@@ -142,7 +141,6 @@ class TileLayerOptions extends InteractiveLayerOptions {
 
   final Map<String, dynamic>? additionalOptions;
 
-  
   bool get hasMinZoom => minZoom != null;
   bool get hasMaxZoom => maxZoom != null;
   bool get hasMinNativeZoom => minNativeZoom != null;
@@ -156,25 +154,25 @@ class TileLayerOptions extends InteractiveLayerOptions {
     this.templateUrl,
     dynamic bounds,
     dynamic subdomains = 'abc',
-    num? tileSize = tileSizeDef, 
-    this.minZoom = minZoomDef, 
-    this.maxZoom = maxZoomDef, 
+    num? tileSize = tileSizeDef,
+    this.minZoom = minZoomDef,
+    this.maxZoom = maxZoomDef,
     this.opacity = tileOpacityDef,
-    this.minNativeZoom, 
-    this.maxNativeZoom, 
-    this.zoomReverse = zoomReverseDef, 
-    this.zoomOffset = zoomOffsetDef, 
-    this.keepBuffer = keepBufferDef, 
-    this.placeholderImage, 
-    this.errorImage, 
+    this.minNativeZoom,
+    this.maxNativeZoom,
+    this.zoomReverse = zoomReverseDef,
+    this.zoomOffset = zoomOffsetDef,
+    this.keepBuffer = keepBufferDef,
+    this.placeholderImage,
+    this.errorImage,
     this.updateWhenZooming = updateWhenZoomingDef,
-    int updateInterval = updateTileIntervalDef, 
-    int tileFadeInDuration = tileFadeInDurationDef, 
+    int updateInterval = updateTileIntervalDef,
+    int tileFadeInDuration = tileFadeInDurationDef,
     this.tileFadeInCurve = tileFadeInCurveDef,
-    this.tileFadeInStart = tileFadeInStartDef, 
-    this.tileFadeInStartWhenOverride = tileFadeInStartWhenOverrideDef, 
-    this.overrideTilesWhenUrlChanges = overrideTilesWhenUrlChangesDef, 
-    this.retinaMode = retinaModeDef, 
+    this.tileFadeInStart = tileFadeInStartDef,
+    this.tileFadeInStartWhenOverride = tileFadeInStartWhenOverrideDef,
+    this.overrideTilesWhenUrlChanges = overrideTilesWhenUrlChangesDef,
+    this.retinaMode = retinaModeDef,
     this.onTileError,
     this.tileProvider = tileProviderDef,
     this.tms = tmsDef,
@@ -200,58 +198,58 @@ class TileLayerOptions extends InteractiveLayerOptions {
     LongPressMoveUpdateLayerCallback? onSecondaryLongPressMoveUpdate,
     LongPressUpLayerCallback? onSecondaryLongPressUp,
     LongPressEndLayerCallback? onSecondaryLongPressEnd,
-  }) : 
-    this.subdomains = parseSubdomains(subdomains), 
-    this.tileSize = Size.from([tileSize ?? tileSizeDef, tileSize ?? tileSizeDef]), 
-    this.bounds = bounds != null ? LatLngBounds.from(bounds) : null,
-    this.updateInterval = Duration(milliseconds: updateInterval),
-    this.tileFadeInDuration = Duration(milliseconds: tileFadeInDuration),
-    super(
-      interactive: interactive, 
-      attribution: attribution,
-      onTap: onTap,
-      onTapUp: onTapUp,
-      onTapDown: onTapDown,
-      onTapCancel: onTapCancel,
-      onSecondaryTap: onSecondaryTap,
-      onSecondaryTapDown: onSecondaryTapDown,
-      onSecondaryTapUp: onSecondaryTapUp,
-      onSecondaryTapCancel: onSecondaryTapCancel,
-      onDoubleTap: onDoubleTap,
-      onLongPress: onLongPress,
-      onLongPressStart: onLongPressStart,
-      onLongPressMoveUpdate: onLongPressMoveUpdate,
-      onLongPressUp: onLongPressUp,
-      onLongPressEnd: onLongPressEnd,
-      onSecondaryLongPress: onSecondaryLongPress,
-      onSecondaryLongPressStart: onSecondaryLongPressStart,
-      onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
-      onSecondaryLongPressUp: onSecondaryLongPressUp,
-      onSecondaryLongPressEnd: onSecondaryLongPressEnd,
-    );
+  })  : this.subdomains = parseSubdomains(subdomains),
+        this.tileSize =
+            Size.from([tileSize ?? tileSizeDef, tileSize ?? tileSizeDef]),
+        this.bounds = bounds != null ? LatLngBounds.from(bounds) : null,
+        this.updateInterval = Duration(milliseconds: updateInterval),
+        this.tileFadeInDuration = Duration(milliseconds: tileFadeInDuration),
+        super(
+          interactive: interactive,
+          attribution: attribution,
+          onTap: onTap,
+          onTapUp: onTapUp,
+          onTapDown: onTapDown,
+          onTapCancel: onTapCancel,
+          onSecondaryTap: onSecondaryTap,
+          onSecondaryTapDown: onSecondaryTapDown,
+          onSecondaryTapUp: onSecondaryTapUp,
+          onSecondaryTapCancel: onSecondaryTapCancel,
+          onDoubleTap: onDoubleTap,
+          onLongPress: onLongPress,
+          onLongPressStart: onLongPressStart,
+          onLongPressMoveUpdate: onLongPressMoveUpdate,
+          onLongPressUp: onLongPressUp,
+          onLongPressEnd: onLongPressEnd,
+          onSecondaryLongPress: onSecondaryLongPress,
+          onSecondaryLongPressStart: onSecondaryLongPressStart,
+          onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
+          onSecondaryLongPressUp: onSecondaryLongPressUp,
+          onSecondaryLongPressEnd: onSecondaryLongPressEnd,
+        );
 
   TileLayerOptions copy({
     String? templateUrl,
     dynamic subdomains,
     dynamic bounds,
-    num? tileSize, 
-    double? minZoom, 
-    double? maxZoom, 
+    num? tileSize,
+    double? minZoom,
+    double? maxZoom,
     double? opacity,
-    double? minNativeZoom, 
-    double? maxNativeZoom, 
-    bool? zoomReverse, 
-    double? zoomOffset, 
-    int? keepBuffer, 
-    ImageProvider? placeholderImage, 
-    ImageProvider? errorImage, 
-    int? updateInterval, 
-    int? tileFadeInDuration, 
+    double? minNativeZoom,
+    double? maxNativeZoom,
+    bool? zoomReverse,
+    double? zoomOffset,
+    int? keepBuffer,
+    ImageProvider? placeholderImage,
+    ImageProvider? errorImage,
+    int? updateInterval,
+    int? tileFadeInDuration,
     Curve? tileFadeInCurve,
-    double? tileFadeInStart, 
-    double? tileFadeInStartWhenOverride, 
-    bool? overrideTilesWhenUrlChanges, 
-    bool? retinaMode, 
+    double? tileFadeInStart,
+    double? tileFadeInStartWhenOverride,
+    bool? overrideTilesWhenUrlChanges,
+    bool? retinaMode,
     Function(Tile, dynamic)? onTileError,
     TileProvider? tileProvider,
     bool? tms,
@@ -294,15 +292,18 @@ class TileLayerOptions extends InteractiveLayerOptions {
       placeholderImage: placeholderImage ?? this.placeholderImage,
       errorImage: errorImage ?? this.errorImage,
       updateInterval: updateInterval ?? this.updateInterval.inMilliseconds,
-      tileFadeInDuration: tileFadeInDuration ?? this.tileFadeInDuration.inMilliseconds,
+      tileFadeInDuration:
+          tileFadeInDuration ?? this.tileFadeInDuration.inMilliseconds,
       tileFadeInCurve: tileFadeInCurve ?? this.tileFadeInCurve,
       tileFadeInStart: tileFadeInStart ?? this.tileFadeInStart,
-      tileFadeInStartWhenOverride: tileFadeInStartWhenOverride ?? this.tileFadeInStartWhenOverride,
-      overrideTilesWhenUrlChanges: overrideTilesWhenUrlChanges ?? this.overrideTilesWhenUrlChanges,
+      tileFadeInStartWhenOverride:
+          tileFadeInStartWhenOverride ?? this.tileFadeInStartWhenOverride,
+      overrideTilesWhenUrlChanges:
+          overrideTilesWhenUrlChanges ?? this.overrideTilesWhenUrlChanges,
       retinaMode: retinaMode ?? this.retinaMode,
       tileProvider: tileProvider ?? this.tileProvider,
       onTileError: onTileError ?? this.onTileError,
-      interactive: interactive ?? this.interactive, 
+      interactive: interactive ?? this.interactive,
       attribution: attribution ?? this.attribution,
       additionalOptions: additionalOptions ?? this.additionalOptions,
       tms: tms ?? this.tms,
@@ -317,14 +318,19 @@ class TileLayerOptions extends InteractiveLayerOptions {
       onDoubleTap: onDoubleTap ?? this.onDoubleTap,
       onLongPress: onLongPress ?? this.onLongPress,
       onLongPressStart: onLongPressStart ?? this.onLongPressStart,
-      onLongPressMoveUpdate: onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
+      onLongPressMoveUpdate:
+          onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
       onLongPressUp: onLongPressUp ?? this.onLongPressUp,
       onLongPressEnd: onLongPressEnd ?? this.onLongPressEnd,
       onSecondaryLongPress: onSecondaryLongPress ?? this.onSecondaryLongPress,
-      onSecondaryLongPressStart: onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
-      onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
-      onSecondaryLongPressUp: onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
-      onSecondaryLongPressEnd: onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
+      onSecondaryLongPressStart:
+          onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
+      onSecondaryLongPressMoveUpdate:
+          onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
+      onSecondaryLongPressUp:
+          onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
+      onSecondaryLongPressEnd:
+          onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
     );
   }
 }

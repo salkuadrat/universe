@@ -4,34 +4,32 @@ import '../../core/core.dart';
 import '../layer.dart';
 
 class Rectangle extends Polygon {
-
   bool get isEmpty => latlngs.isEmpty;
   bool get isNotEmpty => latlngs.isNotEmpty;
 
-  bool get isValid => 
-    isNotEmpty && 
-    latlngs.length == 2 && 
-    latlngs[0] != latlngs[1];
-  
+  bool get isValid =>
+      isNotEmpty && latlngs.length == 2 && latlngs[0] != latlngs[1];
+
   bool get isNotValid => !isValid;
-  
+
   LatLngBounds get bounds => LatLngBounds.from(latlngs);
 
   List<LatLng?> get validLatLngs {
     LatLngBounds bounds = this.bounds;
-    return [ 
-      bounds.northWest, 
-      bounds.northEast, 
-      bounds.southEast, 
+    return [
+      bounds.northWest,
+      bounds.northEast,
+      bounds.southEast,
       bounds.southWest,
       bounds.northWest,
     ];
   }
 
-  Rectangle(List<dynamic> latlngs, {
+  Rectangle(
+    List<dynamic> latlngs, {
     bool? stroke,
-    Color? strokeColor, 
-    double? strokeWidth, 
+    Color? strokeColor,
+    double? strokeWidth,
     double? strokeOpacity,
     StrokeCap? strokeCap,
     StrokeJoin? strokeJoin,
@@ -39,7 +37,7 @@ class Rectangle extends Polygon {
     Color? fillColor,
     double? fillOpacity,
     bool? isDotted,
-    List<Color>? gradientStrokeColors, 
+    List<Color>? gradientStrokeColors,
     List<double>? gradientStrokeStops,
     List<Color>? gradientFillColors,
     List<double>? gradientFillStops,
@@ -47,25 +45,25 @@ class Rectangle extends Polygon {
     bool? withHoles,
     dynamic data,
   }) : super(
-    latlngs,
-    stroke: stroke,
-    strokeColor: strokeColor,
-    strokeWidth: strokeWidth,
-    strokeOpacity: strokeOpacity,
-    strokeCap: strokeCap,
-    strokeJoin: strokeJoin,
-    pathFillType: pathFillType,
-    fillColor: fillColor,
-    fillOpacity: fillOpacity,
-    isDotted: isDotted,
-    gradientStrokeColors: gradientStrokeColors,
-    gradientStrokeStops: gradientStrokeStops,
-    gradientFillColors: gradientFillColors,
-    gradientFillStops: gradientFillStops,
-    holes: holes,
-    withHoles: withHoles,
-    data: data,
-  ) {
+          latlngs,
+          stroke: stroke,
+          strokeColor: strokeColor,
+          strokeWidth: strokeWidth,
+          strokeOpacity: strokeOpacity,
+          strokeCap: strokeCap,
+          strokeJoin: strokeJoin,
+          pathFillType: pathFillType,
+          fillColor: fillColor,
+          fillOpacity: fillOpacity,
+          isDotted: isDotted,
+          gradientStrokeColors: gradientStrokeColors,
+          gradientStrokeStops: gradientStrokeStops,
+          gradientFillColors: gradientFillColors,
+          gradientFillStops: gradientFillStops,
+          holes: holes,
+          withHoles: withHoles,
+          data: data,
+        ) {
     assert(latlngs.length == 2);
   }
 
@@ -110,7 +108,8 @@ class Rectangle extends Polygon {
     );
   }
 
-  factory Rectangle.from(dynamic value, {
+  factory Rectangle.from(
+    dynamic value, {
     bool? stroke,
     Color? strokeColor,
     double? strokeWidth,
@@ -129,11 +128,11 @@ class Rectangle extends Polygon {
     bool? isDotted,
     dynamic data,
   }) {
-
     bool isRectangle = value is Rectangle;
     bool isList = value is List;
     bool isLatLngs = isList && value.first is LatLng;
-    bool isCoordinates = isList && value.first is List && value.first.first is num;
+    bool isCoordinates =
+        isList && value.first is List && value.first.first is num;
 
     assert(isRectangle || isLatLngs || isCoordinates);
 
@@ -162,5 +161,4 @@ class Rectangle extends Polygon {
 
   @override
   String toString() => 'Rectangle($latlngs)';
-
 }

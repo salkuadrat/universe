@@ -7,25 +7,23 @@ import '../projection/projection.dart';
 import '../projection/projection.simple.dart';
 import '../geometry/transformation.dart';
 
-/// A simple CRS that maps longitude and latitude into `x` and `y` directly. 
-/// May be used for maps of flat surfaces (e.g. game maps). 
-/// 
-/// Note that the `y` axis should still be inverted (going from bottom to top). 
+/// A simple CRS that maps longitude and latitude into `x` and `y` directly.
+/// May be used for maps of flat surfaces (e.g. game maps).
+///
+/// Note that the `y` axis should still be inverted (going from bottom to top).
 /// `distance()` returns simple euclidean distance.
 class CrsSimple extends BaseCrs {
-  
   const CrsSimple();
-  
+
   @override
   String get code => 'CRS.Simple';
 
   @override
-  Projection get projection => 
-    SimpleProjection(latBounds: latBounds, lngBounds: lngBounds);
+  Projection get projection =>
+      SimpleProjection(latBounds: latBounds, lngBounds: lngBounds);
 
   @override
-  Transformation get transformation => 
-    Transformation(1, 0, -1, 0);
+  Transformation get transformation => Transformation(1, 0, -1, 0);
 
   @override
   double scale(double? zoom) {
@@ -40,8 +38,8 @@ class CrsSimple extends BaseCrs {
   @override
   double distance(LatLng position, LatLng destination) {
     double dx = destination.lng - position.lng;
-		double dy = destination.lat - position.lat;
-		return math.sqrt(dx * dx + dy * dy);
+    double dy = destination.lat - position.lat;
+    return math.sqrt(dx * dx + dy * dy);
   }
 
   @override
@@ -52,5 +50,4 @@ class CrsSimple extends BaseCrs {
 
   @override
   Tuple2<double, double>? get lngBounds => null;
-
 }

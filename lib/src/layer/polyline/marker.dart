@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import '../../core/core.dart';
 
 class Polyline {
-  
   final List<LatLng> latlngs;
   final Color? strokeColor;
   final double? strokeWidth;
@@ -15,33 +14,34 @@ class Polyline {
   final List<double>? gradientStrokeStops;
   final bool? isDotted;
   final dynamic data;
-  
+
   bool get isEmpty => latlngs.isEmpty;
   bool get isNotEmpty => latlngs.isNotEmpty;
 
   LatLngBounds get bounds => LatLngBounds.from(latlngs);
 
   List<LatLng?> get validLatLngs {
-    if(latlngs.first == latlngs.last) {
+    if (latlngs.first == latlngs.last) {
       return latlngs;
     }
 
-    return [ ...latlngs, latlngs.first ];
+    return [...latlngs, latlngs.first];
   }
 
   // can accept Polyline([LatLng(), LatLng(), ...]) or Polygon([[], [], ...])
-  Polyline(List<dynamic> latlngs, {
-    this.strokeColor, 
-    this.strokeWidth, 
+  Polyline(
+    List<dynamic> latlngs, {
+    this.strokeColor,
+    this.strokeWidth,
     this.strokeOpacity,
     this.strokeCap,
     this.strokeJoin,
     this.pathFillType,
-    this.gradientStrokeColors, 
+    this.gradientStrokeColors,
     this.gradientStrokeStops,
     this.isDotted,
     this.data,
-  }): this.latlngs = latlngs.map((latlng) => LatLng.from(latlng)).toList();
+  }) : this.latlngs = latlngs.map((latlng) => LatLng.from(latlng)).toList();
 
   Polyline copy({
     Color? strokeColor,
@@ -70,7 +70,8 @@ class Polyline {
     );
   }
 
-  factory Polyline.from(dynamic value, {
+  factory Polyline.from(
+    dynamic value, {
     Color? strokeColor,
     num? strokeWidth,
     double? strokeOpacity,
@@ -82,11 +83,11 @@ class Polyline {
     bool? isDotted,
     dynamic data,
   }) {
-
     bool isPolyline = value is Polyline;
     bool isList = value is List;
     bool isLatLngs = isList && value.first is LatLng;
-    bool isCoordinates = isList && value.first is List && value.first.first is num;
+    bool isCoordinates =
+        isList && value.first is List && value.first.first is num;
 
     assert(isPolyline || isLatLngs || isCoordinates);
 
@@ -108,5 +109,4 @@ class Polyline {
 
   @override
   String toString() => 'Polyline($latlngs)';
-  
 }

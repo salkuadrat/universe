@@ -7,7 +7,6 @@ enum GeoJSONPointAs {
 }
 
 class GeoJSONLayerOptions extends FeatureLayerOptions {
-
   final GeoJSONPointAs pointAs;
   final double pointRadius;
   final RadiusUnit radiusUnit;
@@ -16,7 +15,7 @@ class GeoJSONLayerOptions extends FeatureLayerOptions {
   final PolygonLayerOptions? polygonOptions;
   final CircleLayerOptions? circleOptions;
   final PathLayerOptions? geometryCollectionOptions;
-  
+
   GeoJSONLayerOptions({
     double opacity = opacityDef,
     double rotation = rotationDef,
@@ -24,10 +23,10 @@ class GeoJSONLayerOptions extends FeatureLayerOptions {
     String attribution = attributionDef,
     this.pointRadius = 0.0,
     this.radiusUnit = RadiusUnit.METER,
-    this.pointOptions, 
-    this.lineStringOptions, 
-    this.polygonOptions, 
-    this.circleOptions, 
+    this.pointOptions,
+    this.lineStringOptions,
+    this.polygonOptions,
+    this.circleOptions,
     this.geometryCollectionOptions,
     TapLayerCallback? onTap,
     TapUpLayerCallback? onTapUp,
@@ -48,31 +47,31 @@ class GeoJSONLayerOptions extends FeatureLayerOptions {
     LongPressMoveUpdateLayerCallback? onSecondaryLongPressMoveUpdate,
     LongPressUpLayerCallback? onSecondaryLongPressUp,
     LongPressEndLayerCallback? onSecondaryLongPressEnd,
-  }) : 
-    this.pointAs = pointRadius > 0.0 ? GeoJSONPointAs.Circle : GeoJSONPointAs.Marker,
-    super(
-    opacity: opacity,
-    rotation: rotation,
-    interactive: interactive, 
-    attribution: attribution,
-    onTap: onTap,
-    onTapUp: onTapUp,
-    onTapDown: onTapDown,
-    onTapCancel: onTapCancel,
-    onSecondaryTap: onSecondaryTap,
-    onSecondaryTapDown: onSecondaryTapDown,
-    onSecondaryTapUp: onSecondaryTapUp,
-    onSecondaryTapCancel: onSecondaryTapCancel,
-    onDoubleTap: onDoubleTap,
-    onLongPress: onLongPress,
-    onLongPressStart: onLongPressStart,
-    onLongPressMoveUpdate: onLongPressMoveUpdate,
-    onLongPressUp: onLongPressUp,
-    onLongPressEnd: onLongPressEnd,
-    onSecondaryLongPress: onSecondaryLongPress,
-    onSecondaryLongPressStart: onSecondaryLongPressStart,
-    onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
-    onSecondaryLongPressUp: onSecondaryLongPressUp,
-    onSecondaryLongPressEnd: onSecondaryLongPressEnd,
-  );
+  })  : this.pointAs =
+            pointRadius > 0.0 ? GeoJSONPointAs.Circle : GeoJSONPointAs.Marker,
+        super(
+          opacity: opacity,
+          rotation: rotation,
+          interactive: interactive,
+          attribution: attribution,
+          onTap: onTap,
+          onTapUp: onTapUp,
+          onTapDown: onTapDown,
+          onTapCancel: onTapCancel,
+          onSecondaryTap: onSecondaryTap,
+          onSecondaryTapDown: onSecondaryTapDown,
+          onSecondaryTapUp: onSecondaryTapUp,
+          onSecondaryTapCancel: onSecondaryTapCancel,
+          onDoubleTap: onDoubleTap,
+          onLongPress: onLongPress,
+          onLongPressStart: onLongPressStart,
+          onLongPressMoveUpdate: onLongPressMoveUpdate,
+          onLongPressUp: onLongPressUp,
+          onLongPressEnd: onLongPressEnd,
+          onSecondaryLongPress: onSecondaryLongPress,
+          onSecondaryLongPressStart: onSecondaryLongPressStart,
+          onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate,
+          onSecondaryLongPressUp: onSecondaryLongPressUp,
+          onSecondaryLongPressEnd: onSecondaryLongPressEnd,
+        );
 }

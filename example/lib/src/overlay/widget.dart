@@ -8,7 +8,7 @@ class WidgetOverlayMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return U.MapBox(
       accessToken: yourAccessTokenHere,
-      center: [-6.170039, 106.8241], 
+      center: [-6.170039, 106.8241],
       zoom: 16,
       showLocator: true,
       layers: [
@@ -29,7 +29,8 @@ class WidgetOverlayMap extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: Text('Wanna bicycle?', 
+              child: Text(
+                'Wanna bicycle?',
                 style: TextStyle(color: Colors.lightBlue),
               ),
             ),

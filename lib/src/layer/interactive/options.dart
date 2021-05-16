@@ -4,18 +4,23 @@ import '../../shared.dart';
 import '../layer.dart';
 
 typedef TapLayerCallback = void Function(dynamic position, dynamic data);
-typedef TapDownLayerCallback = void Function(dynamic position, dynamic data, TapDownDetails details);
-typedef TapUpLayerCallback = void Function(dynamic position, dynamic data, TapUpDetails details);
+typedef TapDownLayerCallback = void Function(
+    dynamic position, dynamic data, TapDownDetails details);
+typedef TapUpLayerCallback = void Function(
+    dynamic position, dynamic data, TapUpDetails details);
 typedef DoubleTapLayerCallback = void Function(dynamic position, dynamic data);
 typedef LongPressLayerCallback = void Function(dynamic position, dynamic data);
-typedef LongPressStartLayerCallback = void Function(dynamic position, dynamic data, LongPressStartDetails details);
-typedef LongPressMoveUpdateLayerCallback = void Function(dynamic position, dynamic data, LongPressMoveUpdateDetails details);
-typedef LongPressUpLayerCallback = void Function(dynamic position, dynamic data);
-typedef LongPressEndLayerCallback = void Function(dynamic position, dynamic data, LongPressEndDetails details);
+typedef LongPressStartLayerCallback = void Function(
+    dynamic position, dynamic data, LongPressStartDetails details);
+typedef LongPressMoveUpdateLayerCallback = void Function(
+    dynamic position, dynamic data, LongPressMoveUpdateDetails details);
+typedef LongPressUpLayerCallback = void Function(
+    dynamic position, dynamic data);
+typedef LongPressEndLayerCallback = void Function(
+    dynamic position, dynamic data, LongPressEndDetails details);
 
 class InteractiveLayerOptions extends MapLayerOptions {
-
-  /// If `false`, the layer will not emit touch events 
+  /// If `false`, the layer will not emit touch events
   /// and will act as a part of the underlying map.
   final bool interactive;
 
@@ -38,7 +43,7 @@ class InteractiveLayerOptions extends MapLayerOptions {
   final LongPressMoveUpdateLayerCallback? onSecondaryLongPressMoveUpdate;
   final LongPressUpLayerCallback? onSecondaryLongPressUp;
   final LongPressEndLayerCallback? onSecondaryLongPressEnd;
-  
+
   bool get hasOnTap => onTap != null;
   bool get hasOnTapDown => onTapDown != null;
   bool get hasOnTapUp => onTapUp != null;
@@ -55,34 +60,35 @@ class InteractiveLayerOptions extends MapLayerOptions {
   bool get hasOnLongPressEnd => onLongPressEnd != null;
   bool get hasOnSecondaryLongPress => onSecondaryLongPress != null;
   bool get hasOnSecondaryLongPressStart => onSecondaryLongPressStart != null;
-  bool get hasOnSecondaryLongPressMoveUpdate => onSecondaryLongPressMoveUpdate != null;
+  bool get hasOnSecondaryLongPressMoveUpdate =>
+      onSecondaryLongPressMoveUpdate != null;
   bool get hasOnSecondaryLongPressUp => onSecondaryLongPressUp != null;
   bool get hasOnSecondaryLongPressEnd => onSecondaryLongPressEnd != null;
-  
+
   const InteractiveLayerOptions({
-    this.interactive = interactiveDef, 
-    this.onTapDown, 
-    this.onTapUp, 
-    this.onTap, 
-    this.onTapCancel, 
-    this.onSecondaryTap, 
-    this.onSecondaryTapDown, 
-    this.onSecondaryTapUp, 
-    this.onSecondaryTapCancel, 
-    this.onDoubleTap, 
-    this.onLongPress, 
-    this.onLongPressStart, 
-    this.onLongPressMoveUpdate, 
-    this.onLongPressUp, 
-    this.onLongPressEnd, 
-    this.onSecondaryLongPress, 
-    this.onSecondaryLongPressStart, 
-    this.onSecondaryLongPressMoveUpdate, 
-    this.onSecondaryLongPressUp, 
+    this.interactive = interactiveDef,
+    this.onTapDown,
+    this.onTapUp,
+    this.onTap,
+    this.onTapCancel,
+    this.onSecondaryTap,
+    this.onSecondaryTapDown,
+    this.onSecondaryTapUp,
+    this.onSecondaryTapCancel,
+    this.onDoubleTap,
+    this.onLongPress,
+    this.onLongPressStart,
+    this.onLongPressMoveUpdate,
+    this.onLongPressUp,
+    this.onLongPressEnd,
+    this.onSecondaryLongPress,
+    this.onSecondaryLongPressStart,
+    this.onSecondaryLongPressMoveUpdate,
+    this.onSecondaryLongPressUp,
     this.onSecondaryLongPressEnd,
     String attribution = attributionDef,
   }) : super(attribution: attribution);
-  
+
   InteractiveLayerOptions copy({
     bool? interactive,
     String? attribution,
@@ -120,14 +126,19 @@ class InteractiveLayerOptions extends MapLayerOptions {
       onDoubleTap: onDoubleTap ?? this.onDoubleTap,
       onLongPress: onLongPress ?? this.onLongPress,
       onLongPressStart: onLongPressStart ?? this.onLongPressStart,
-      onLongPressMoveUpdate: onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
+      onLongPressMoveUpdate:
+          onLongPressMoveUpdate ?? this.onLongPressMoveUpdate,
       onLongPressUp: onLongPressUp ?? this.onLongPressUp,
       onLongPressEnd: onLongPressEnd ?? this.onLongPressEnd,
       onSecondaryLongPress: onSecondaryLongPress ?? this.onSecondaryLongPress,
-      onSecondaryLongPressStart: onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
-      onSecondaryLongPressMoveUpdate: onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
-      onSecondaryLongPressUp: onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
-      onSecondaryLongPressEnd: onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
+      onSecondaryLongPressStart:
+          onSecondaryLongPressStart ?? this.onSecondaryLongPressStart,
+      onSecondaryLongPressMoveUpdate:
+          onSecondaryLongPressMoveUpdate ?? this.onSecondaryLongPressMoveUpdate,
+      onSecondaryLongPressUp:
+          onSecondaryLongPressUp ?? this.onSecondaryLongPressUp,
+      onSecondaryLongPressEnd:
+          onSecondaryLongPressEnd ?? this.onSecondaryLongPressEnd,
     );
   }
 }

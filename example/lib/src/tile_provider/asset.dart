@@ -11,7 +11,7 @@ class AssetTileMap extends StatelessWidget {
       zoom: 13,
       showLocator: false,
       maxBounds: LatLngBounds([
-        [56.6877, 11.5089], 
+        [56.6877, 11.5089],
         [56.7378, 11.6644]
       ]),
       base: U.TileLayer(

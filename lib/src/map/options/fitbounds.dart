@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import '../../shared.dart';
 
 class FitBoundsOptions {
-
   final EdgeInsets padding;
   final double maxZoom;
   final double zoom;

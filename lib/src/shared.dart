@@ -33,7 +33,7 @@ double radianToDeg(double rad) => rad * (180.0 / PI);
 double normalizeDeg(double deg) {
   deg = deg % 360.0;
 
-  if(deg > 180.0) {
+  if (deg > 180.0) {
     deg = deg - 360.0;
   }
 
@@ -41,8 +41,8 @@ double normalizeDeg(double deg) {
 }
 
 /// Rounds [value] to given number of [decimals]
-double round(double value, { int decimals: 6 })
-    => (value * math.pow(10, decimals)).round() / math.pow(10, decimals);
+double round(double value, {int decimals: 6}) =>
+    (value * math.pow(10, decimals)).round() / math.pow(10, decimals);
 
 /// Convert a bearing to be within the 0 to +360 degrees range.
 /// Compass bearing is in the rangen 0° ... 360°
@@ -55,11 +55,12 @@ double normalizeBearing(double bearing) => (bearing + 360) % 360;
 ///
 String decimal2sexagesimal(double decimal) {
   List<int> _split(double value) {
-    // Force NumberFormat to create digit after comma 
+    // Force NumberFormat to create digit after comma
     // if the value has no decimal point
     double roundedValue = round(value, decimals: 10);
-    List<String> values = NumberFormat("0.0#####").format(roundedValue).split('.');
-    return [ int.parse(values[0]).abs(), int.parse(values[1])];
+    List<String> values =
+        NumberFormat("0.0#####").format(roundedValue).split('.');
+    return [int.parse(values[0]).abs(), int.parse(values[1])];
   }
 
   List parts = _split(decimal);
@@ -71,14 +72,14 @@ String decimal2sexagesimal(double decimal) {
   List minParts = _split(minutes);
   int minFraction = minParts[1];
   double seconds = (double.parse("0.$minFraction") * 60);
-  seconds = round(seconds ,decimals: 2);
+  seconds = round(seconds, decimals: 2);
 
   return "$degree° ${minutes.floor()}' ${seconds.toStringAsFixed(2)}\"";
 }
 
 List<String> parseSubdomains(dynamic subdomains) {
-  if(subdomains is List<String>) return subdomains;
-  if(subdomains is String) return subdomains.split('');
+  if (subdomains is List<String>) return subdomains;
+  if (subdomains is String) return subdomains.split('');
   return [];
 }
 
@@ -98,8 +99,8 @@ String urlFromTemplate(String str, Map<String, dynamic> data) {
   });
 }
 
-double wrap(double value, List<num>? range, [bool includeMax=false]) {
-  if(range == null || range.length != 2) {
+double wrap(double value, List<num>? range, [bool includeMax = false]) {
+  if (range == null || range.length != 2) {
     return value;
   }
 
@@ -107,7 +108,7 @@ double wrap(double value, List<num>? range, [bool includeMax=false]) {
   final max = math.max(range[0], range[1]);
   final d = max - min;
 
-  if(value == max && includeMax) {
+  if (value == max && includeMax) {
     return value;
   }
 
@@ -115,7 +116,7 @@ double wrap(double value, List<num>? range, [bool includeMax=false]) {
 }
 
 Size projectedSize(Size size, double angle) {
-  if(angle == 0.0) {
+  if (angle == 0.0) {
     return size;
   }
 
@@ -125,7 +126,7 @@ Size projectedSize(Size size, double angle) {
   final rad90 = PI / 2;
   final sinangle = math.sin(angle).abs();
   final sinrest = math.sin(rad90 - angle).abs();
-  
+
   final width = (oWidth * sinrest) + (oHeight * sinangle) + 20;
   final height = (oHeight * sinrest) + (oWidth * sinangle) + 20;
 
@@ -133,7 +134,7 @@ Size projectedSize(Size size, double angle) {
 }
 
 Offset projectedPoint(Offset point, Size size, double angle) {
-  if(angle == 0.0) {
+  if (angle == 0.0) {
     return point;
   }
 
@@ -141,7 +142,7 @@ Offset projectedPoint(Offset point, Size size, double angle) {
   Size halfSize = size / 2;
 
   Offset pointFromCenter = Offset(
-    point.dx - halfSize.width, 
+    point.dx - halfSize.width,
     halfSize.height - point.dy,
   );
 
@@ -154,7 +155,7 @@ Offset projectedPoint(Offset point, Size size, double angle) {
     pcx * cos + pcy * sin,
     pcy * cos - pcx * sin,
   );
-  
+
   Size sizeOffset = (nSize - size) / 2;
 
   final x = halfSize.width + pointFromCenter.dx + sizeOffset.x;
@@ -237,6 +238,7 @@ const MarkerAlignment markerAlignDef = MarkerAlignment.top;
 
 const Color markerColorDef = Colors.lightBlue;
 
-const MarkerSvg markerDef = const MarkerSvg('packages/universe/assets/marker2.svg');
+const MarkerSvg markerDef =
+    const MarkerSvg('packages/universe/assets/marker2.svg');
 
 const bool loopingVideoDef = true;

@@ -10,7 +10,6 @@ export 'projection.simple.dart';
 export 'projection.spherical.mercator.dart';
 
 abstract class Projection {
-
   final Tuple2<double, double>? latBounds;
   final Tuple2<double, double>? lngBounds;
   final Bounds? bounds;
@@ -20,22 +19,21 @@ abstract class Projection {
 
   const Projection({
     this.bounds,
-    this.latBounds=const Tuple2(-90.0, 90.0),
-    this.lngBounds=const Tuple2(-180.0, 180.0),
+    this.latBounds = const Tuple2(-90.0, 90.0),
+    this.lngBounds = const Tuple2(-180.0, 180.0),
   });
 
-  /// Projects geographical coordinates into coordinates in units accepted for 
+  /// Projects geographical coordinates into coordinates in units accepted for
   /// this CRS (e.g. meters for EPSG:3857, for passing it to WMS services).
   UPoint project(LatLng? position);
 
-  /// Given a projected coordinate returns the corresponding GeoPosition. 
+  /// Given a projected coordinate returns the corresponding GeoPosition.
   /// The inverse of `project`.
   LatLng unproject(UPoint point);
-  
-  
+
   double _wrap(Comparable start, Comparable end, double value) {
-    if(value.compareTo(start as num) < 0) return start as double;
-    if(value.compareTo(end as num) > 0) return end as double;
+    if (value.compareTo(start as num) < 0) return start as double;
+    if (value.compareTo(end as num) > 0) return end as double;
     return value;
   }
 
