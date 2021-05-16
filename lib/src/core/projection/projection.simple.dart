@@ -15,8 +15,8 @@ class SimpleProjection extends Projection {
 
   @override
   Bounds get bounds => Bounds(
-        UPoint(-180.0, -90.0),
-        UPoint(180.0, 90.0),
+        UPoint(latBounds!.item1, latBounds!.item2),
+        UPoint(lngBounds!.item1, lngBounds!.item2),
       );
 
   @override

@@ -11,7 +11,7 @@ Add dependency to your flutter project:
 
 ```yaml
 dependencies:
-  universe: ^0.0.2-nullsafety.2
+  universe: ^0.0.3-nullsafety
 ```
 
 ```yaml
@@ -111,6 +111,34 @@ U.Map(
 ```
 
 [Complete Custom Map example](example/lib/src/map_provider/custom.dart)
+
+### Multi TileLayer Maps
+
+We can create maps with multiple map layers. Here is an example of using Humanitarian OpenStreetMap combined with map tiles from SafeCast and OpenRailwayMap.
+
+```
+U.OpenStreetMap(
+  type: OpenStreetMapType.HOT,
+  center: [48.858236, 2.294477],
+  zoom: 12,
+  tiles: [
+    // add environmental measurements map layer from SafeCast (http://safecast.org/)
+    U.TileLayer(
+      'https://s3.amazonaws.com/te512.safecast.org/{z}/{x}/{y}.png', 
+      attribution: 'Data: &copy; OpenStreetMap contributors | Style: &copy; SafeCast',
+      maxZoom: 16,
+    ),
+    // add map layer from OpenRailwayMap
+    U.TileLayer(
+      'https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', 
+      attribution: 'Data: &copy; OpenStreetMap contributors | Style: &copy; OpenRailwayMap',
+      maxZoom: 19,
+    ),
+  ],
+)
+```
+
+[Multi TileLayer Maps example](example/lib/src/map_provider/multi.dart)
 
 ### Markers 
 

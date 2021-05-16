@@ -41,7 +41,8 @@ class MapStates extends ChangeNotifier {
   double _angleStart = 0.0;
 
   Function? _onAngleChanged;
-  Function? _onTileChanged;
+  //Function? _onTileChanged;
+  List<Function?> _onChangedListeners = [];
 
   Function? get onTap => _options.onTap;
   Function? get onLongPress => _options.onLongPress;
@@ -61,6 +62,7 @@ class MapStates extends ChangeNotifier {
     _rotation = 0.0;
     _size = options.size!;
     _isLocating = false;
+    _onChangedListeners = [];
 
     // prepare for default center when the map uses a string centerQuery
     _center = options.center ?? LatLng(0.0, 0.0);
@@ -345,8 +347,12 @@ class MapStates extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setTileChangedListener(Function listener) {
-    _onTileChanged = listener;
+  void addListener(Function listener) {
+    _onChangedListeners.add(listener);
+  }
+
+  void _callChangedListeners() {
+    _onChangedListeners.forEach((listener) => listener?.call());
   }
 
   Future init(TickerProvider vsync, Function onAngleChanged) async {
@@ -489,7 +495,7 @@ class MapStates extends ChangeNotifier {
     _zoom = zoom;
     _rotation = radianToDeg(_angle);
 
-    _onTileChanged?.call();
+    _callChangedListeners();
     _controller.onChanged?.call(_center, _zoom, _rotation);
     _positionStream.add(MapData(center: _center, zoom: _zoom));
 
@@ -659,7 +665,7 @@ class MapStates extends ChangeNotifier {
     _angle = angle;
     _rotation = radianToDeg(_angle);
     _onAngleChanged?.call();
-    _onTileChanged?.call();
+    _callChangedListeners();
     notifyListeners();
   }
 
@@ -667,7 +673,7 @@ class MapStates extends ChangeNotifier {
     _rotation = rotation;
     _angle = degToRadian(_rotation);
     _onAngleChanged?.call();
-    _onTileChanged?.call();
+    _callChangedListeners();
     notifyListeners();
   }
 

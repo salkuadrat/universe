@@ -102,7 +102,7 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
     _levels = <double, Level>{};
 
     super.initState();
-    map.setTileChangedListener(_onMapChanged);
+    map.addListener(_onMapChanged);
 
     _refresh();
     _initSoftUpdate();

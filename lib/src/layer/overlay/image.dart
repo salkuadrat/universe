@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../core/core.dart';
-import '../../log.dart';
 import '../../map/map.dart';
 import '../../shared.dart';
 import '../layer.dart';
@@ -29,6 +28,7 @@ class ImageOverlay extends InteractiveLayer {
       isPath &&
       (imagePath!.startsWith('http://') || imagePath!.startsWith('https://'));
   bool get isFilePath => isPath && File(imagePath!).existsSync();
+  bool get isAssetPath => isPath && imagePath!.startsWith('assets/');
   bool get isFile => imageFile != null;
   bool get isImage => image != null;
 
@@ -129,14 +129,12 @@ class ImageOverlay extends InteractiveLayer {
             fit: fit, gaplessPlayback: gaplessPlayback!);
       }
 
-      try {
+      if (isAssetPath) {
         return Image.asset(
           imagePath!,
           fit: fit,
           gaplessPlayback: gaplessPlayback!,
         );
-      } catch (e) {
-        log(e);
       }
     }
 

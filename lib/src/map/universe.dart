@@ -12,12 +12,13 @@ class Universe extends StatelessWidget {
   final MapOptions options;
   final MapController? controller;
   final Color? background;
-  final TileLayer base;
+  final TileLayer? base;
   final MarkerLayer? markers;
   final CircleLayer? circles;
   final PolylineLayer? polylines;
   final PolygonLayer? polygons;
   final RectangleLayer? rectangles;
+  final List<TileLayer> tiles;
   final List<ImageOverlay> images;
   final List<VideoOverlay> videos;
   final List<MapLayer> layers;
@@ -28,12 +29,13 @@ class Universe extends StatelessWidget {
     required this.options,
     this.controller,
     this.background,
-    required this.base,
+    this.base,
     this.markers,
     this.circles,
     this.polylines,
     this.polygons,
     this.rectangles,
+    this.tiles = const [],
     this.images = const [],
     this.videos = const [],
     this.layers = const [],
@@ -41,10 +43,12 @@ class Universe extends StatelessWidget {
   })  : assert(layers is List<MapLayer>),
         super(key: key);
 
+  bool get hasBase => base != null;
   bool get hasCircles => circles != null;
   bool get hasPolylines => polylines != null;
   bool get hasPolygons => polygons != null;
   bool get hasRectangles => rectangles != null;
+  bool get hasTiles => tiles.isNotEmpty;
   bool get hasImages => images.isNotEmpty;
   bool get hasVideos => videos.isNotEmpty;
   bool get hasLayers => layers.isNotEmpty;
@@ -53,7 +57,7 @@ class Universe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MapOptions mapOptions = options;
-    String attribution = base.options.attribution;
+    String attribution = base?.options.attribution ?? options.attribution;
 
     if (mapOptions.noSize) {
       final screenSize = MediaQuery.of(context).size;
@@ -72,7 +76,8 @@ class Universe extends StatelessWidget {
         color: background,
         child: _Map(
           layers: [
-            base,
+            if (hasBase) base!,
+            if (hasTiles) ...tiles,
             if (hasLayers) ...layers,
             if (options.showLocationIndicator &&
                 !options.showLocationMarker &&

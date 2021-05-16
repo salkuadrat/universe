@@ -30,6 +30,7 @@ import 'map_provider/custom.dart';
 import 'map_provider/google.dart';
 import 'map_provider/mapbox.dart';
 import 'map_provider/osm.dart';
+import 'map_provider/multi.dart';
 import 'marker/add.dart';
 import 'marker/data.dart';
 import 'marker/default.dart';
@@ -85,6 +86,8 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Open Street Map', map: () => OpenStreetMap()),
   UniqueKey(): MenuItem('Google Map', map: () => GoogleMap()),
   UniqueKey(): MenuItem('Custom Map Provider', map: () => CustomMapProvider()),
+  //UniqueKey(): MenuItem('Non Geographical Map', map: () => NonGeographicalMap()),
+  UniqueKey(): MenuItem('Muti Layers Map', map: () => MultiLayerMap()),
   UniqueKey(): MenuItem('Static Map', map: () => StaticMap()),
   UniqueKey():
       MenuItem('Static Map with Marker', map: () => StaticMapWithMarker()),

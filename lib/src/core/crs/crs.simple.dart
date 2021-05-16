@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:tuple/tuple.dart';
 
+import '../core.dart';
 import 'crs.dart';
 import '../latlng/latlng.dart';
 import '../projection/projection.dart';
@@ -46,8 +47,8 @@ class CrsSimple extends BaseCrs {
   bool get infinite => true;
 
   @override
-  Tuple2<double, double>? get latBounds => null;
+  Tuple2<double, double>? get latBounds => Tuple2(-180.0, -90.0);
 
   @override
-  Tuple2<double, double>? get lngBounds => null;
+  Tuple2<double, double>? get lngBounds => Tuple2(180.0, 90.0);
 }

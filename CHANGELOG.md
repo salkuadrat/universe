@@ -1,3 +1,7 @@
+## [0.0.3-nullsafety] - 16 May 2021
+
+* support multi tile layers maps
+
 ## [0.0.2-nullsafety.2] - 16 May 2021
 
 * format all .dart files

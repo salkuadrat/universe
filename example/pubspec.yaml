@@ -30,6 +30,7 @@ flutter:
     - assets/marker.svg
     - assets/locator.svg
     - assets/startrek.png
+    - assets/uqm_map_full.png
     - assets/berlin.mbtiles
     - assets/map/anholt_osmbright/12/2177/
     - assets/map/anholt_osmbright/12/2178/
