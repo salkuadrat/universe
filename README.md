@@ -155,6 +155,27 @@ Complete live maps examples:
 [Simple Live Map](example/lib/src/live/simple.dart)\
 [Live Map with Location Marker](example/lib/src/live/marker.dart)
 
+## Live Maps Without AutoMoving
+
+The default behavior of Live Map will automatically move the center of the maps to user's current location. If we want to go live (always searching for user's current location and show location indicator to that location), but don't want to always move the center of the maps, we can use parameter moveWhenLive and set it to false.
+
+```
+U.GoogleMap(
+  type: GoogleMapType.Street,
+  center: [-6.169976, 106.830979],
+  zoom: 16,
+  live: true,
+  // moveWhenLive: false will make the map live (constantly search for user location),
+  // set the location indicator to current user location, but does not 
+  // move the center of the maps automatically to that location.
+
+  // moveWhenLive has default value set to true
+  moveWhenLive: false,
+)
+```
+
+[Live Map without Auto Moving](example/lib/src/live/notmove.dart)
+
 ### Static Maps
 
 ```
