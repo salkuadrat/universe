@@ -96,6 +96,22 @@ You can get your own MapBox access token from [here](https://account.mapbox.com/
 
 [Complete MapBox example](example/lib/src/map_provider/mapbox.dart)
 
+## Custom Map Provider
+
+We can also call U.Map directly to use maps from custom map providers. Here is an example of using custom map from OpenTopoMap.
+
+```
+U.Map(
+  center: [51.555158, -0.108343],
+  base: U.TileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+    attribution: 'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap',
+    maxZoom: 17,
+  ),
+)
+```
+
+[Complete Custom Map example](example/lib/src/map_provider/custom.dart)
+
 ### Markers 
 
 You can add marker to your maps with as simple as the following code:

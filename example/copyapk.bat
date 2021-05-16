@@ -1,0 +1,1 @@
+copy "D:\Projects\universe\example\build\app\outputs\flutter-apk\app-release.apk" "D:\Projects\universe\"

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:universe_example/src/live/notmove.dart';
 
 import 'bounds/fitbounds.dart';
 import 'bounds/maxbounds.dart';
@@ -25,6 +26,7 @@ import 'home.dart';
 import 'live/default.dart';
 import 'live/marker.dart';
 import 'live/simple.dart';
+import 'map_provider/custom.dart';
 import 'map_provider/google.dart';
 import 'map_provider/mapbox.dart';
 import 'map_provider/osm.dart';
@@ -81,6 +83,7 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('MapBox', map: () => MapBox()),
   UniqueKey(): MenuItem('Open Street Map', map: () => OpenStreetMap()),
   UniqueKey(): MenuItem('Google Map', map: () => GoogleMap()),
+  UniqueKey(): MenuItem('Custom Map Provider', map: () => CustomMapProvider()),
   UniqueKey(): MenuItem('Static Map', map: () => StaticMap()),
   UniqueKey(): MenuItem('Static Map with Marker', map: () => StaticMapWithMarker()),
   UniqueKey(): MenuItem('Static Map with Rotation', map: () => RotateStaticMap()),
@@ -131,6 +134,7 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Live Map', map: () => LiveMap()),
   UniqueKey(): MenuItem('Simple Live Map', map: () => SimpleLiveMap()),
   UniqueKey(): MenuItem('Live Map with Marker', map: () => LiveMapWithMarker()),
+  UniqueKey(): MenuItem('Live Map without Automoving', map: () => LiveMapWithoutAutoMoving()),
   UniqueKey(): MenuItem('Custom Compass', map: () => CustomCompassMap()),
   UniqueKey(): MenuItem('Custom Locator', map: () => CustomLocatorMap()),
   UniqueKey(): MenuItem('Custom Scale Indicator', map: () => CustomScaleMap()),

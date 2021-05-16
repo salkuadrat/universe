@@ -6,7 +6,7 @@ class LiveMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return U.GoogleMap(
       type: GoogleMapType.Street,
-      center: [-6.170039, 106.8241],
+      center: [-6.169976, 106.830979],
       zoom: 16,
       live: true,
     );
