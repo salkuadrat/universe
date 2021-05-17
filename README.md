@@ -1,7 +1,6 @@
 # Universe
 
-The easy & flexible way to use interactive maps in Flutter.\
-Inspired by [Leaflet.js](https://leafletjs.com/).
+The easy & flexible way to use interactive maps in Flutter. Inspired by [Leaflet.js](https://leafletjs.com/).
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot.png" alt="universe" width="400">
 
@@ -39,7 +38,7 @@ You can also try a working example with [universe.apk](universe.apk).
 
 ## Usage
 
-Inspired by the simplicity of Leaflet.js, now you can add maps functionality in your flutter project with as simple as adding this lines of code:
+Inspired by the simplicity of Leaflet.js, we can add maps functionality to our flutter project with as simple as adding this lines of code:
 
 ```
 import 'package:universe/universe.dart';
@@ -53,6 +52,8 @@ U.OpenStreetMap(
 )
 ```
 
+### Maps Provider
+
 Universe comes with built-in support for 3 maps provider: OpenStreetMap, Google Maps and MapBox.
 
 ### OpenStreetMap
@@ -63,6 +64,23 @@ U.OpenStreetMap(
   type: OpenStreetMapType.Mapnik,
   zoom: 15,
 )
+```
+
+```
+// List of available OpenStreetMapType
+
+// OSM Mapnik
+OpenStreetMapType.Mapnik 
+// OSM Germany
+OpenStreetMapType.DE
+// OSM Switzerland
+OpenStreetMapType.CH
+// OSM France
+OpenStreetMapType.France
+// Humanitarian OSM
+OpenStreetMapType.HOT
+// OSM Breton
+OpenStreetMapType.BZH
 ```
 
 [Complete OpenStreetMap example](example/lib/src/map_provider/osm.dart)
@@ -76,6 +94,16 @@ U.GoogleMap(
   type: GoogleMapType.Street,
   zoom: 15,
 )
+```
+
+
+```
+// List of available GoogleMapType
+
+GoogleMapType.Street 
+GoogleMapType.Satellite
+GoogleMapType.Hybrid
+GoogleMapType.Terrain
 ```
 
 [Complete Google Maps example](example/lib/src/map_provider/google.dart)
@@ -94,11 +122,24 @@ U.MapBox(
 
 You can get your own MapBox access token from [here](https://account.mapbox.com/access-tokens/). Please always use your own access token in your projects.
 
+```
+// List of available MapBoxType
+
+MapBoxType.Basic
+MapBoxType.Street 
+MapBoxType.Satellite
+MapBoxType.Hybrid
+MapBoxType.Outdoors
+MapBoxType.Dark
+MapBoxType.Light
+MapBoxType.Bright
+```
+
 [Complete MapBox example](example/lib/src/map_provider/mapbox.dart)
 
 ### Custom Map Provider
 
-We can also call U.Map directly to use maps from custom map providers. Here is an example of using custom map from OpenTopoMap.
+We can call U.Map directly to use maps with custom map providers. Here is an example of using custom map from OpenTopoMap.
 
 ```
 U.Map(
@@ -114,7 +155,7 @@ U.Map(
 
 ### Multi TileLayer Maps
 
-We can create maps with multiple map layers. Here is an example of using Humanitarian OpenStreetMap combined with map tiles from SafeCast and OpenRailwayMap.
+We can create maps with multiple tile layers. Here is an example of using Humanitarian OpenStreetMap combined with map tiles from SafeCast and OpenRailwayMap.
 
 ```
 U.OpenStreetMap(
@@ -142,7 +183,7 @@ U.OpenStreetMap(
 
 ### Markers 
 
-You can add marker to your maps with as simple as the following code:
+Here is a simple example of adding a marker to universe maps.
 
 ```
 U.OpenStreetMap(
@@ -185,7 +226,9 @@ Complete live maps examples:
 
 ### Live Maps Without AutoMoving
 
-The default behavior of Live Map will automatically move the center of the maps to user's current location. If we want to go live (always searching for user's current location and show location indicator to that location), but don't want to always move the center of the maps, we can use parameter moveWhenLive and set it to false.
+The default behavior of Live Map will always move the center of the maps to user's current location. 
+
+If we want to go live (always searching for user's current location and show location indicator to that location), but don't want to move the center of the maps, we can set parameter moveWhenLive to false.
 
 ```
 U.GoogleMap(
