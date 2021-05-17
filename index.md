@@ -1,9 +1,3 @@
-# Universe
-
-The easy & flexible way to use interactive maps in Flutter.
-
-## Usage
-
 Inspired by the simplicity of Leaflet.js, we can add maps functionality to our flutter project with as simple as adding this lines of code:
 
 ```
