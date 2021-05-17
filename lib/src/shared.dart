@@ -220,8 +220,8 @@ const bool updateWhenZoomingDef = true;
 const int updateTileIntervalDef = 100;
 const int tileFadeInDurationDef = 50;
 const Curve tileFadeInCurveDef = Curves.easeInOut;
-const double tileFadeInStartDef = 0.25;
-const double tileFadeInStartWhenOverrideDef = 0.75;
+const double tileFadeInStartDef = 0.5;
+const double tileFadeInStartWhenOverrideDef = 0.1;
 const bool overrideTilesWhenUrlChangesDef = true;
 const TileProvider tileProviderDef = const CachedNetworkTileProvider();
 const bool retinaModeDef = false;
@@ -242,3 +242,5 @@ const MarkerSvg markerDef =
     const MarkerSvg('packages/universe/assets/marker2.svg');
 
 const bool loopingVideoDef = true;
+
+const String osmAttrDef = 'Map Data &copy; OpenStreetMap contributors';

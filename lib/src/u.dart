@@ -13,10 +13,10 @@ import 'type.dart';
 
 class U {
   // ignore: non_constant_identifier_names
-  // static C.MapController MapController() => C.MapController();
+  static C.MapController MapController() => C.MapController();
 
   /// The central point of Universe API.
-  /// Tt is used to create a map on the screen and manipulate it.
+  /// It is used to create and manipulate a map on the screen.
   ///
   /// Example:
   ///
@@ -31,7 +31,10 @@ class U {
   /// @param: [center]
   ///
   /// Used to define center latlng position of the map.
-  /// It can accept any type of inputs, such as:
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
   ///
   /// ```dart
   /// U.Map(
@@ -41,7 +44,7 @@ class U {
   /// )
   /// ```
   ///
-  /// or LatLng instance:
+  /// or an instance of LatLng object:
   ///
   /// ```dart
   /// U.Map(
@@ -51,9 +54,9 @@ class U {
   /// )
   /// ```
   ///
-  /// or use location name.
+  /// or location name.
   ///
-  /// The Universe map is smart enough to automatically
+  /// The built-in GeoCoder inside will automatically
   /// convert it to latlng position for you.
   ///
   /// Default to LatLng(0.0, 0.0) if your location is not found.
@@ -180,7 +183,74 @@ class U {
     );
   }
 
-  /// Used to display map with TileLayer from GoogleMap servers.
+  /// Used to display map with base TileLayer from GoogleMap servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.GoogleMap(
+  ///   type: GoogleMapType.Hybrid,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: type
+  ///
+  /// enum to define the type of GoogleMap tiles to load.
+  /// Default value: [GoogleMapType.Street].
+  ///
+  /// Available values:
+  /// [GoogleMapType.Street]
+  /// [GoogleMapType.Satellite]
+  /// [GoogleMapType.Hybrid]
+  /// [GoogleMapType.Terrain]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.GoogleMap(
+  ///   type: GoogleMapType.Hybrid,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.GoogleMap(
+  ///   type: GoogleMapType.Hybrid,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.GoogleMap(
+  ///   type: GoogleMapType.Hybrid,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
   // ignore: non_constant_identifier_names
   static Universe GoogleMap({
     Key? key,
@@ -286,120 +356,86 @@ class U {
       onLongPress: onLongPress,
       onChanged: onChanged,
       onReady: onReady,
-      base: GoogleMapLayer(type: type, options: options),
+      base: GoogleMapTileLayer(type: type, options: options),
     );
   }
 
-  /// Used to display map with TileLayer from OpenStreetMap servers.
-  // ignore: non_constant_identifier_names
-  static Universe OpenStreetMap({
-    Key? key,
-    required dynamic center,
-    OpenStreetMapType type = OpenStreetMapType.Mapnik,
-    String apikey = '',
-    L.TileLayerOptions? options,
-    double? zoom,
-    double? minZoom,
-    double? maxZoom,
-    double? rotation,
-    bool? disableRotation,
-    Color? background,
-    C.MapController? controller,
-    L.TileLayer? base,
-    L.MarkerLayer? markers,
-    L.CircleLayer? circles,
-    L.PolylineLayer? polylines,
-    L.PolygonLayer? polygons,
-    L.RectangleLayer? rectangles,
-    List<L.TileLayer> tiles = const [],
-    List<L.ImageOverlay> images = const [],
-    List<L.VideoOverlay> videos = const [],
-    List<L.MapLayer> layers = const [],
-    List<Widget> controls = const [],
-    Crs? crs,
-    Size? size,
-    bool? live,
-    bool? moveWhenLive,
-    dynamic centerMarker,
-    dynamic locationMarker,
-    bool? showCenterMarker,
-    bool? showLocator,
-    Locator? locator,
-    bool? showLocationMarker,
-    bool? showLocationIndicator,
-    L.LocationIndicator? locationIndicator,
-    bool? showCompass,
-    Compass? compass,
-    bool? showScale,
-    Scale? scale,
-    bool? interactive,
-    LatLngBounds? maxBounds,
-    LatLngBounds? fitBounds,
-    FitBoundsOptions? fitBoundsOptions,
-    bool? slideOnBoundaries,
-    bool? adaptiveBoundaries,
-    bool? hideAttribution,
-    Function(LatLng?)? onTap,
-    Function(LatLng?)? onLongPress,
-    MapChangedCallback? onChanged,
-    Function? onReady,
-  }) {
-    return U.Map(
-      key: key,
-      center: center,
-      zoom: zoom,
-      minZoom: minZoom,
-      maxZoom: maxZoom,
-      rotation: rotation,
-      disableRotation: disableRotation,
-      background: background,
-      controller: controller,
-      markers: markers,
-      circles: circles,
-      polylines: polylines,
-      polygons: polygons,
-      rectangles: rectangles,
-      tiles: tiles,
-      images: images,
-      videos: videos,
-      layers: layers,
-      controls: controls,
-      crs: crs,
-      size: size,
-      live: live,
-      moveWhenLive: moveWhenLive,
-      centerMarker: centerMarker,
-      locationMarker: locationMarker,
-      showCenterMarker: showCenterMarker,
-      showLocator: showLocator,
-      locator: locator,
-      showLocationMarker: showLocationMarker,
-      showLocationIndicator: showLocationIndicator,
-      locationIndicator: locationIndicator,
-      showCompass: showCompass,
-      compass: compass,
-      showScale: showScale,
-      scale: scale,
-      interactive: interactive,
-      maxBounds: maxBounds,
-      fitBounds: fitBounds,
-      fitBoundsOptions: fitBoundsOptions,
-      slideOnBoundaries: slideOnBoundaries,
-      adaptiveBoundaries: adaptiveBoundaries,
-      hideAttribution: hideAttribution,
-      onTap: onTap,
-      onLongPress: onLongPress,
-      onChanged: onChanged,
-      onReady: onReady,
-      base: OpenStreetMapLayer(
-        type: type,
-        options: options,
-        apikey: apikey,
-      ),
-    );
-  }
-
-  /// Used to display map with TileLayer from MapBox servers.
+  /// Used to display map with base TileLayer from MapBox.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.MapBox(
+  ///   type: MapBoxType.Street,
+  ///   accessToken: putYourAccessTokenHere,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of MapBox tiles to load.
+  /// Default value: [MapBoxType.Street].
+  ///
+  /// Available values:
+  /// [MapBoxType.Basic]
+  /// [MapBoxType.Street]
+  /// [MapBoxType.Satellite]
+  /// [MapBoxType.Hybrid]
+  /// [MapBoxType.Outdoors]
+  /// [MapBoxType.Dark]
+  /// [MapBoxType.Light]
+  /// [MapBoxType.Bright]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.MapBox(
+  ///   type: MapBoxType.Street,
+  ///   accessToken: putYourAccessTokenHere,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.MapBox(
+  ///   type: MapBoxType.Street,
+  ///   accessToken: putYourAccessTokenHere,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.MapBox(
+  ///   type: MapBoxType.Street,
+  ///   accessToken: putYourAccessTokenHere,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
   // ignore: non_constant_identifier_names
   static Universe MapBox({
     Key? key,
@@ -508,7 +544,4646 @@ class U {
       onLongPress: onLongPress,
       onChanged: onChanged,
       onReady: onReady,
-      base: MapBoxLayer(type: type, accessToken: accessToken),
+      base: MapBoxTileLayer(type: type, accessToken: accessToken),
+    );
+  }
+
+  /// Used to display map with base TileLayer from OpenStreetMap.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.OpenStreetMap(
+  ///   type: OpenStreetMapType.HOT,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of OpenStreetMap tiles to load.
+  /// Default value: [OpenStreetMapType.HOT]
+  ///
+  /// Available values:
+  /// [OpenStreetMapType.Mapnik]
+  /// [OpenStreetMapType.DE]
+  /// [OpenStreetMapType.CH]
+  /// [OpenStreetMapType.France]
+  /// [OpenStreetMapType.HOT]
+  /// [OpenStreetMapType.BZH]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.OpenStreetMap(
+  ///   type: OpenStreetMapType.HOT,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.OpenStreetMap(
+  ///   type: OpenStreetMapType.HOT,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.OpenStreetMap(
+  ///   type: OpenStreetMapType.HOT,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe OpenStreetMap({
+    Key? key,
+    required dynamic center,
+    OpenStreetMapType type = OpenStreetMapType.HOT,
+    String apikey = '',
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: OpenStreetMapLayer(
+        type: type,
+        options: options,
+        apikey: apikey,
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from SafeCast.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.SafeCastMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.SafeCastMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.SafeCastMap(
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.SafeCastMap(
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe SafeCastMap({
+    Key? key,
+    required OpenType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: SafeCastTileLayer(options: options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to display map with base TileLayer from CyclOSM.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.CyclOSMMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.CyclOSMMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.CyclOSMMap(
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.CyclOSMMap(
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe CyclOSMMap({
+    Key? key,
+    required OpenType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: CyclOSMTileLayer(options: options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to display map with base TileLayer from FreeMapSK.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.FreeMapSK(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.FreeMapSK(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.FreeMapSK(
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.FreeMapSK(
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe FreeMapSK({
+    Key? key,
+    required OpenType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: FreeMapSKTileLayer(options: options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to display map with base TileLayer from MtbMap.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.MtbMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.MtbMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.MtbMap(
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.MtbMap(
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe MtbMap({
+    Key? key,
+    required OpenType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: MtbMapTileLayer(options: options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to display map with base TileLayer from NLS Map.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.NLSMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.NLSMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.NLSMap(
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.NLSMap(
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe NLSMap({
+    Key? key,
+    required OpenType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: NLSTileLayer(options: options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Wikimedia.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.WikimediaMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.WikimediaMap(
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.WikimediaMap(
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.WikimediaMap(
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe WikimediaMap({
+    Key? key,
+    required OpenType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: WikimediaTileLayer(options: options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Open Map.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.OpenMap(
+  ///   type: OpenType.OpenSeaMap,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Open Map tiles to load.
+  ///
+  /// Available values:
+  /// [OpenType.OpenSeaMap]
+  /// [OpenType.OpenPtMap]
+  /// [OpenType.OpenTopoMap]
+  /// [OpenType.OpenRailwayMap]
+  /// [OpenType.OpenFireMap]
+  /// [OpenType.OpenSnowMap]
+  /// [OpenType.OpenAIP]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.OpenMap(
+  ///   type: OpenType.OpenSeaMap,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.OpenMap(
+  ///   type: OpenType.OpenSeaMap,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.OpenMap(
+  ///   type: OpenType.OpenSeaMap,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe OpenMap({
+    Key? key,
+    required OpenType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: OpenTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Stadia.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.StadiaMap(
+  ///   type: StadiaType.AlidadeSmooth,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Stadia Map tiles to load.
+  ///
+  /// Available values:
+  /// [StadiaType.AlidadeSmooth]
+  /// [StadiaType.AlidadeSmoothDark]
+  /// [StadiaType.OSMBright]
+  /// [StadiaType.OSMOutdoors]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.StadiaMap(
+  ///   type: StadiaType.AlidadeSmooth,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.StadiaMap(
+  ///   type: StadiaType.AlidadeSmooth,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.StadiaMap(
+  ///   type: StadiaType.AlidadeSmooth,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe StadiaMap({
+    Key? key,
+    required StadiaType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: StadiaTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Thunderforest.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.ThunderforestMap(
+  ///   type: ThunderforestType.Outdoors,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Thunderforest Map tiles to load.
+  ///
+  /// Available values:
+  /// [ThunderforestType.Cycle]
+  /// [ThunderforestType.Transport]
+  /// [ThunderforestType.TransportDark]
+  /// [ThunderforestType.Spinal]
+  /// [ThunderforestType.Landscape]
+  /// [ThunderforestType.Outdoors]
+  /// [ThunderforestType.Pioneer]
+  /// [ThunderforestType.MobileAtlas]
+  /// [ThunderforestType.Neighbourhood]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.ThunderforestMap(
+  ///   type: ThunderforestType.Outdoors,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.ThunderforestMap(
+  ///   type: ThunderforestType.Outdoors,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.ThunderforestMap(
+  ///   type: ThunderforestType.Outdoors,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe ThunderforestMap({
+    Key? key,
+    required ThunderforestType type,
+    required String apikey,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: ThunderforestTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+        apikey: apikey,
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Hydda.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.HyddaMap(
+  ///   type: HyddaType.Base,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Hydda Map tiles to load.
+  ///
+  /// Available values:
+  /// [HyddaType.Base]
+  /// [HyddaType.Full]
+  /// [HyddaType.RoadsLabels]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.HyddaMap(
+  ///   type: HyddaType.Base,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.HyddaMap(
+  ///   type: HyddaType.Base,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.HyddaMap(
+  ///   type: HyddaType.Base,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe HyddaMap({
+    Key? key,
+    required HyddaType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: HyddaTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Jawg Map.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.JawgMap(
+  ///   type: JawgType.Streets,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Jawg Map tiles to load.
+  ///
+  /// Available values:
+  /// [JawgType.Streets]
+  /// [JawgType.Terrain]
+  /// [JawgType.Sunny]
+  /// [JawgType.Dark]
+  /// [JawgType.Light]
+  /// [JawgType.Matrix]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.JawgMap(
+  ///   type: JawgType.Streets,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.JawgMap(
+  ///   type: JawgType.Streets,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.JawgMap(
+  ///   type: JawgType.Streets,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe JawgMap({
+    Key? key,
+    required JawgType type,
+    required String apikey,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: JawgTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+        apikey: apikey,
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from MapTiler.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.MapTiler(
+  ///   type: MapTilerType.Streets,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of MapTiler tiles to load.
+  ///
+  /// Available values:
+  /// [MapTilerType.Default]
+  /// [MapTilerType.Streets]
+  /// [MapTilerType.Basic]
+  /// [MapTilerType.Bright]
+  /// [MapTilerType.Pastel]
+  /// [MapTilerType.Positron]
+  /// [MapTilerType.Hybrid]
+  /// [MapTilerType.Toner]
+  /// [MapTilerType.Topo]
+  /// [MapTilerType.Voyager]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.MapTiler(
+  ///   type: MapTilerType.Streets,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.MapTiler(
+  ///   type: MapTilerType.Streets,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.MapTiler(
+  ///   type: MapTilerType.Streets,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe MapTiler({
+    Key? key,
+    MapTilerType type = MapTilerType.Default,
+    required String apikey,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: MapTilerTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+        apikey: apikey,
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Stamen.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.StamenMap(
+  ///   type: StamenType.Toner,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Stamen Map tiles to load.
+  ///
+  /// Available values:
+  /// [StamenType.Toner]
+  /// [StamenType.TonerBackground]
+  /// [StamenType.TonerHybrid]
+  /// [StamenType.TonerLines]
+  /// [StamenType.TonerLabels]
+  /// [StamenType.TonerLite]
+  /// [StamenType.Watercolor]
+  /// [StamenType.Terrain]
+  /// [StamenType.TerrainBackground]
+  /// [StamenType.TerrainLabels]
+  /// [StamenType.Relief]
+  /// [StamenType.TopOSMRelief]
+  /// [StamenType.TopOSMFeatures]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.StamenMap(
+  ///   type: StamenType.Toner,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.StamenMap(
+  ///   type: StamenType.Toner,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.StamenMap(
+  ///   type: StamenType.Toner,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe StamenMap({
+    Key? key,
+    required StamenType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: StamenTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from TomTom Map.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.TomTomMap(
+  ///   type: TomTomType.Hybrid,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of TomTom Map tiles to load.
+  ///
+  /// Available values:
+  /// [TomTomType.Basic]
+  /// [TomTomType.Hybrid]
+  /// [TomTomType.Labels]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.TomTomMap(
+  ///   type: TomTomType.Hybrid,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.TomTomMap(
+  ///   type: TomTomType.Hybrid,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.TomTomMap(
+  ///   type: TomTomType.Hybrid,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe TomTomMap({
+    Key? key,
+    required TomTomType type,
+    required String apikey,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: TomTomTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+        apikey: apikey,
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Esri.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.EsriMap(
+  ///   type: EsriType.WorldStreetMap,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Esri Map tiles to load.
+  ///
+  /// Available values:
+  /// [EsriType.WorldStreetMap]
+  /// [EsriType.WorldImagery]
+  /// [EsriType.WorldTopoMap]
+  /// [EsriType.WorldTerrain]
+  /// [EsriType.WorldShadedRelief]
+  /// [EsriType.WorldPhysical]
+  /// [EsriType.WorldGray]
+  /// [EsriType.DeLorme]
+  /// [EsriType.OceanBasemap]
+  /// [EsriType.NatGeoWorldMap]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.EsriMap(
+  ///   type: EsriType.WorldStreetMap,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.EsriMap(
+  ///   type: EsriType.WorldStreetMap,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.EsriMap(
+  ///   type: EsriType.WorldStreetMap,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe EsriMap({
+    Key? key,
+    required EsriType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: EsriTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from CartoDB.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.CartoDBMap(
+  ///   type: CartoDBType.Positron,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of CartoDB Map tiles to load.
+  ///
+  /// Available values:
+  /// [CartoDBType.Positron]
+  /// [CartoDBType.PositronNoLabels]
+  /// [CartoDBType.PositronOnlyLabels]
+  /// [CartoDBType.DarkMatter]
+  /// [CartoDBType.DarkMatterNoLabels]
+  /// [CartoDBType.DarkMatterOnlyLabels]
+  /// [CartoDBType.Voyager]
+  /// [CartoDBType.VoyagerNoLabels]
+  /// [CartoDBType.VoyagerOnlyLabels]
+  /// [CartoDBType.VoyagerLabelsUnder]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.CartoDBMap(
+  ///   type: CartoDBType.Positron,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.CartoDBMap(
+  ///   type: CartoDBType.Positron,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.CartoDBMap(
+  ///   type: CartoDBType.Positron,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe CartoDBMap({
+    Key? key,
+    required CartoDBType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: CartoDBTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from BasemapAT.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.BasemapATMap(
+  ///   type: BasemapATType.Terrain,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of BasemapAT Map tiles to load.
+  ///
+  /// Available values:
+  /// [BasemapATType.Default]
+  /// [BasemapATType.Grau]
+  /// [BasemapATType.Overlay]
+  /// [BasemapATType.Terrain]
+  /// [BasemapATType.Surface]
+  /// [BasemapATType.Hdpi]
+  /// [BasemapATType.Orthofoto]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.BasemapATMap(
+  ///   type: BasemapATType.Terrain,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.BasemapATMap(
+  ///   type: BasemapATType.Terrain,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.BasemapATMap(
+  ///   type: BasemapATType.Terrain,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe BasemapATMap({
+    Key? key,
+    BasemapATType type = BasemapATType.Default,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: BasemapATTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from HikeBike.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.HikeBikeMap(
+  ///   type: HikeBikeType.Hill,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of HikeBike Map tiles to load.
+  ///
+  /// Available values:
+  /// [HikeBikeType.Default]
+  /// [HikeBikeType.Hill]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.HikeBikeMap(
+  ///   type: HikeBikeType.Hill,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.HikeBikeMap(
+  ///   type: HikeBikeType.Hill,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.HikeBikeMap(
+  ///   type: HikeBikeType.Hill,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe HikeBikeMap({
+    Key? key,
+    HikeBikeType type = HikeBikeType.Default,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: HikeBikeTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from NLMaps.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.NLMaps(
+  ///   type: NLMapsType.Pastel,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of NLMaps tiles to load.
+  ///
+  /// Available values:
+  /// [NLMapsType.Default]
+  /// [NLMapsType.Pastel]
+  /// [NLMapsType.Grijs]
+  /// [NLMapsType.Luchtfoto]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.NLMaps(
+  ///   type: NLMapsType.Pastel,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.NLMaps(
+  ///   type: NLMapsType.Pastel,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.NLMaps(
+  ///   type: NLMapsType.Pastel,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe NLMaps({
+    Key? key,
+    NLMapsType type = NLMapsType.Default,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: NLMapsTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Geoportail France.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.GeoportailFranceMap(
+  ///   type: GeoportailFranceType.Hybrid,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Geoportail
+  /// France Map tiles to load.
+  ///
+  /// Available values:
+  /// [GeoportailFranceType.Plan]
+  /// [GeoportailFranceType.Parcels]
+  /// [GeoportailFranceType.Orthos]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.GeoportailFranceMap(
+  ///   type: GeoportailFranceType.Plan,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.GeoportailFranceMap(
+  ///   type: GeoportailFranceType.Plan,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.GeoportailFranceMap(
+  ///   type: GeoportailFranceType.Plan,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe GeoportailFranceMap({
+    Key? key,
+    required GeoportailFranceType type,
+    required String apikey,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: GeoportailFranceTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+        apikey: apikey,
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Justice Map.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.JusticeMap(
+  ///   type: JusticeMapType.Multi,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Justice Map tiles to load.
+  ///
+  /// Available values:
+  /// [JusticeMapType.Income]
+  /// [JusticeMapType.Indian]
+  /// [JusticeMapType.Asian]
+  /// [JusticeMapType.Black]
+  /// [JusticeMapType.Hispanic]
+  /// [JusticeMapType.Multi]
+  /// [JusticeMapType.Nonwhite]
+  /// [JusticeMapType.White]
+  /// [JusticeMapType.Plural]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.JusticeMap(
+  ///   type: JusticeMapType.Multi,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.JusticeMap(
+  ///   type: JusticeMapType.Multi,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.JusticeMap(
+  ///   type: JusticeMapType.Multi,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe JusticeMap({
+    Key? key,
+    required JusticeMapType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: JusticeMapTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from OpenWeatherMap.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.OpenWeatherMap(
+  ///   type: OpenWeatherMapType.Clouds,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of OpenWeatherMap tiles to load.
+  ///
+  /// Available values:
+  /// [OpenWeatherMapType.Clouds]
+  /// [OpenWeatherMapType.CloudsClassic]
+  /// [OpenWeatherMapType.Precipitation]
+  /// [OpenWeatherMapType.PrecipitationClassic]
+  /// [OpenWeatherMapType.Rain]
+  /// [OpenWeatherMapType.RainClassic]
+  /// [OpenWeatherMapType.Pressure]
+  /// [OpenWeatherMapType.PressureContour]
+  /// [OpenWeatherMapType.Wind]
+  /// [OpenWeatherMapType.Temperature]
+  /// [OpenWeatherMapType.Snow]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.OpenWeatherMap(
+  ///   type: OpenWeatherMapType.Clouds,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.OpenWeatherMap(
+  ///   type: OpenWeatherMapType.Clouds,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.OpenWeatherMap(
+  ///   type: OpenWeatherMapType.Clouds,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe OpenWeatherMap({
+    Key? key,
+    required OpenWeatherMapType type,
+    required String apikey,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: OpenWeatherMapTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+        apikey: apikey,
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from OneMapSG.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.OneMapSG(
+  ///   type: OneMapSGType.Original,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of OneMapSG tiles to load.
+  ///
+  /// Available values:
+  /// [OneMapSGType.Default]
+  /// [OneMapSGType.Night]
+  /// [OneMapSGType.Original]
+  /// [OneMapSGType.Grey]
+  /// [OneMapSGType.LandLot]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.OneMapSG(
+  ///   type: OneMapSGType.Original,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.OneMapSG(
+  ///   type: OneMapSGType.Original,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.OneMapSG(
+  ///   type: OneMapSGType.Original,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe OneMapSG({
+    Key? key,
+    OneMapSGType type = OneMapSGType.Default,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: OneMapSGTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from NASA GIBS.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.NASAGIBSMap(
+  ///   type: NASAGIBSType.ModisTerraTrueColorCR,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of NASA GIBS Map tiles to load.
+  ///
+  /// Available values:
+  /// [NASAGIBSType.ModisTerraTrueColorCR]
+  /// [NASAGIBSType.ModisTerraBands367CR]
+  /// [NASAGIBSType.ViirsEarthAtNight2012]
+  /// [NASAGIBSType.ModisTerraLSTDay]
+  /// [NASAGIBSType.ModisTerraSnowCover]
+  /// [NASAGIBSType.ModisTerraAOD]
+  /// [NASAGIBSType.ModisTerraChlorophyll]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.NASAGIBSMap(
+  ///   type: NASAGIBSType.ModisTerraTrueColorCR,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.NASAGIBSMap(
+  ///   type: NASAGIBSType.ModisTerraTrueColorCR,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.NASAGIBSMap(
+  ///   type: NASAGIBSType.ModisTerraTrueColorCR,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe NASAGIBSMap({
+    Key? key,
+    required NASAGIBSType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: NASAGIBSTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from USGS.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.USGSMap(
+  ///   type: USGSType.ImageryTopo,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of USGS Map tiles to load.
+  ///
+  /// Available values:
+  /// [USGSType.Topo]
+  /// [USGSType.Imagery]
+  /// [USGSType.ImageryTopo]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.USGSMap(
+  ///   type: USGSType.ImageryTopo,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.USGSMap(
+  ///   type: USGSType.ImageryTopo,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.USGSMap(
+  ///   type: USGSType.ImageryTopo,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe USGSMap({
+    Key? key,
+    required USGSType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: USGSTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
+  }
+
+  /// Used to display map with base TileLayer from Waymarked Trails.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.WaymarkedTrailsMap(
+  ///   type: WaymarkedTrailsType.Cycling,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Waymarked Trails Map tiles to load.
+  ///
+  /// Available values:
+  /// [WaymarkedTrailsType.Hiking]
+  /// [WaymarkedTrailsType.Cycling]
+  /// [WaymarkedTrailsType.MTB]
+  /// [WaymarkedTrailsType.Slopes]
+  /// [WaymarkedTrailsType.Riding]
+  /// [WaymarkedTrailsType.Skating]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.WaymarkedTrailsMap(
+  ///   type: WaymarkedTrailsType.Cycling,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.WaymarkedTrailsMap(
+  ///   type: WaymarkedTrailsType.Cycling,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.WaymarkedTrailsMap(
+  ///   type: WaymarkedTrailsType.Cycling,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe WaymarkedTrailsMap({
+    Key? key,
+    required WaymarkedTrailsType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: WaymarkedTrailsTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
     );
   }
 
@@ -725,61 +5400,11 @@ class U {
   /// [GoogleMapType.Terrain]
   ///
   // ignore: non_constant_identifier_names
-  static L.TileLayer GoogleMapLayer({
+  static L.TileLayer GoogleMapTileLayer({
     GoogleMapType type = GoogleMapType.Street,
     L.TileLayerOptions? options,
   }) {
-    options ??= L.TileLayerOptions();
-
-    String lyrs = 'm';
-    if (type == GoogleMapType.Satellite)
-      lyrs = 's';
-    else if (type == GoogleMapType.Hybrid)
-      lyrs = 'y';
-    else if (type == GoogleMapType.Terrain) lyrs = 'p';
-
-    return L.TileLayer(
-      options: options.copy(
-        templateUrl: 'https://{s}.google.com/vt/lyrs=$lyrs&x={x}&y={y}&z={z}',
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: 'Map Data &copy; Google',
-      ),
-    );
-  }
-
-  /// Used to load and display tile layers from OpenStreetMap servers.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// U.OpenStreetMapLayer(
-  ///   type: OpenStreetMapType.HOT,
-  ///   options: TileLayerOptions(
-  ///     opacity: 0.9,
-  ///   ),
-  /// )
-  /// ```
-  ///
-  /// @param: [type]
-  ///
-  /// enum to define the type of OpenStreetMap tiles to load.
-  /// Default value: [OpenStreetMapType.Mapnik]
-  ///
-  /// @param: [apikey]
-  ///
-  /// String to pass api key to load OSM Map that need apikey.
-  ///
-  // ignore: non_constant_identifier_names
-  static L.TileLayer OpenStreetMapLayer({
-    OpenStreetMapType type = OpenStreetMapType.Mapnik,
-    L.TileLayerOptions? options,
-    String apikey = '',
-  }) {
-    options ??= L.TileLayerOptions();
-
-    return L.TileLayer(
-      options: osm(type, options, apikey),
-    );
+    return L.TileLayer(options: google(type, options ?? L.TileLayerOptions()));
   }
 
   /// Used to load and display tile layers from MapBox servers.
@@ -816,37 +5441,1005 @@ class U {
   /// [MapBoxType.Bright]
   ///
   // ignore: non_constant_identifier_names
-  static L.TileLayer MapBoxLayer({
+  static L.TileLayer MapBoxTileLayer({
     required String accessToken,
     MapBoxType type = MapBoxType.Street,
     L.TileLayerOptions? options,
   }) {
+    return L.TileLayer(
+        options: mapbox(type, options ?? L.TileLayerOptions(), accessToken));
+  }
+
+  /// Used to load and display tile layers from OpenStreetMap servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.OpenStreetMapLayer(
+  ///   type: OpenStreetMapType.HOT,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of OpenStreetMap tiles to load.
+  /// Default value: [OpenStreetMapType.HOT]
+  ///
+  /// Available values:
+  /// [OpenStreetMapType.Mapnik]
+  /// [OpenStreetMapType.DE]
+  /// [OpenStreetMapType.CH]
+  /// [OpenStreetMapType.France]
+  /// [OpenStreetMapType.HOT]
+  /// [OpenStreetMapType.BZH]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer OpenStreetMapLayer({
+    OpenStreetMapType type = OpenStreetMapType.HOT,
+    L.TileLayerOptions? options,
+    String apikey = '',
+  }) {
     options ??= L.TileLayerOptions();
 
-    String id = 'mapbox/streets-v11';
-    if (type == MapBoxType.Basic) id = 'mapbox/basic-v9';
-    if (type == MapBoxType.Satellite) id = 'mapbox/satellite-v9';
-    if (type == MapBoxType.Hybrid) id = 'mapbox/satellite-streets-v11';
-    if (type == MapBoxType.Outdoors) id = 'mapbox/outdoors-v11';
-    if (type == MapBoxType.Dark) id = 'mapbox/dark-v10';
-    if (type == MapBoxType.Light) id = 'mapbox/light-v10';
-    if (type == MapBoxType.Bright) id = 'mapbox/bright-v9';
-
     return L.TileLayer(
-      options: options.copy(
-        tileSize: 512,
-        maxZoom: 18,
-        zoomOffset: -1,
-        templateUrl:
-            'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-        attribution:
-            'Map data &copy; OpenStreetMap contributors, Imagery &copy; MapBox',
-        additionalOptions: {
-          'id': id,
-          'accessToken': accessToken,
-        },
-      ),
+      options: osm(type, options),
     );
+  }
+
+  /// Used to load and display tile layers from SafeCast servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.SafeCastTileLayer(
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer SafeCastTileLayer({
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+      options: safecast(options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to load and display tile layers from CyclOSM servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.CyclOSMTileLayer(
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer CyclOSMTileLayer({
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+      options: cyclosm(options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to load and display tile layers from FreeMapSK servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.FreeMapSKTileLayer(
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer FreeMapSKTileLayer({
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+      options: freemapsk(options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to load and display tile layers from MtbMap servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.MtbMapTileLayer(
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer MtbMapTileLayer({
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+      options: mtbmap(options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to load and display tile layers from NLS servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.NLSTileLayer(
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer NLSTileLayer({
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+      options: nls(options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to load and display tile layers from Wikimedia servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.WikimediaTileLayer(
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer WikimediaTileLayer({
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+      options: wikimedia(options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to load and display tile layers from Open Map servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.OpenTileLayer(
+  ///   type: OpenType.OpenSeaMap,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Open Map tiles to load.
+  ///
+  /// Available values:
+  /// [OpenType.OpenSeaMap]
+  /// [OpenType.OpenPtMap]
+  /// [OpenType.OpenTopoMap]
+  /// [OpenType.OpenRailwayMap]
+  /// [OpenType.OpenFireMap]
+  /// [OpenType.OpenSnowMap]
+  /// [OpenType.OpenAIP]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer OpenTileLayer({
+    required OpenType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+      options: open(type, options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to load and display tile layers from Stadia servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.StadiaTileLayer(
+  ///   type: StadiaType.OSMOutdoors,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Stadia Map tiles to load.
+  ///
+  /// Available values:
+  /// [StadiaType.AlidadeSmooth]
+  /// [StadiaType.AlidadeSmoothDark]
+  /// [StadiaType.OSMBright]
+  /// [StadiaType.OSMOutdoors]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer StadiaTileLayer({
+    required StadiaType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(options: stadia(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from Thunderforest servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.ThunderforestTileLayer(
+  ///   type: ThunderforestType.Outdoors,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Thunderforest Map tiles to load.
+  ///
+  /// Available values:
+  /// [ThunderforestType.Cycle]
+  /// [ThunderforestType.Transport]
+  /// [ThunderforestType.TransportDark]
+  /// [ThunderforestType.Spinal]
+  /// [ThunderforestType.Landscape]
+  /// [ThunderforestType.Outdoors]
+  /// [ThunderforestType.Pioneer]
+  /// [ThunderforestType.MobileAtlas]
+  /// [ThunderforestType.Neighbourhood]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer ThunderforestTileLayer({
+    required ThunderforestType type,
+    L.TileLayerOptions? options,
+    required String apikey,
+  }) {
+    return L.TileLayer(
+      options: thunderforest(type, options ?? L.TileLayerOptions(), apikey),
+    );
+  }
+
+  /// Used to load and display tile layers from Hydda Map servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.HyddaTileLayer(
+  ///   type: OpenType.OpenSeaMap,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Hydda Map tiles to load.
+  ///
+  /// Available values:
+  /// [HyddaType.Base]
+  /// [HyddaType.Full]
+  /// [HyddaType.RoadsLabels]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer HyddaTileLayer({
+    required HyddaType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+      options: hydda(type, options ?? L.TileLayerOptions()),
+    );
+  }
+
+  /// Used to load and display tile layers from Jawg servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.JawgTileLayer(
+  ///   type: JawgType.Streets,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Jawg Map tiles to load.
+  ///
+  /// Available values:
+  /// [JawgType.Streets]
+  /// [JawgType.Terrain]
+  /// [JawgType.Sunny]
+  /// [JawgType.Dark]
+  /// [JawgType.Light]
+  /// [JawgType.Matrix]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer JawgTileLayer({
+    required JawgType type,
+    L.TileLayerOptions? options,
+    required String apikey,
+  }) {
+    return L.TileLayer(
+        options: jawg(type, options ?? L.TileLayerOptions(), apikey));
+  }
+
+  /// Used to load and display tile layers from MapTiler servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.MapTilerTileLayer(
+  ///   type: JawgType.Default,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of MapTiler tiles to load.
+  ///
+  /// Available values:
+  /// [MapTilerType.Default]
+  /// [MapTilerType.Streets]
+  /// [MapTilerType.Basic]
+  /// [MapTilerType.Bright]
+  /// [MapTilerType.Pastel]
+  /// [MapTilerType.Positron]
+  /// [MapTilerType.Hybrid]
+  /// [MapTilerType.Toner]
+  /// [MapTilerType.Topo]
+  /// [MapTilerType.Voyager]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer MapTilerTileLayer({
+    MapTilerType type = MapTilerType.Default,
+    L.TileLayerOptions? options,
+    required String apikey,
+  }) {
+    return L.TileLayer(
+        options: maptiler(type, options ?? L.TileLayerOptions(), apikey));
+  }
+
+  /// Used to load and display tile layers from Stamen servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.StamenTileLayer(
+  ///   type: StamenType.Toner,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Stamen Map tiles to load.
+  ///
+  /// Available values:
+  /// [StamenType.Toner]
+  /// [StamenType.TonerBackground]
+  /// [StamenType.TonerHybrid]
+  /// [StamenType.TonerLines]
+  /// [StamenType.TonerLabels]
+  /// [StamenType.TonerLite]
+  /// [StamenType.Watercolor]
+  /// [StamenType.Terrain]
+  /// [StamenType.TerrainBackground]
+  /// [StamenType.TerrainLabels]
+  /// [StamenType.Relief]
+  /// [StamenType.TopOSMRelief]
+  /// [StamenType.TopOSMFeatures]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer StamenTileLayer({
+    required StamenType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(options: stamen(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from TomTom Map servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.TomTomTileLayer(
+  ///   type: TomTomType.Basic,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of TomTom Map tiles to load.
+  ///
+  /// Available values:
+  /// [TomTomType.Basic]
+  /// [TomTomType.Hybrid]
+  /// [TomTomType.Labels]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer TomTomTileLayer({
+    required TomTomType type,
+    L.TileLayerOptions? options,
+    required String apikey,
+  }) {
+    return L.TileLayer(
+      options: tomtom(type, options ?? L.TileLayerOptions(), apikey),
+    );
+  }
+
+  /// Used to load and display tile layers from Esri servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.EsriTileLayer(
+  ///   type: EsriType.WorldStreetMap,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Esri Map tiles to load.
+  ///
+  /// Available values:
+  /// [EsriType.WorldStreetMap]
+  /// [EsriType.WorldImagery]
+  /// [EsriType.WorldTopoMap]
+  /// [EsriType.WorldTerrain]
+  /// [EsriType.WorldShadedRelief]
+  /// [EsriType.WorldPhysical]
+  /// [EsriType.WorldGray]
+  /// [EsriType.DeLorme]
+  /// [EsriType.OceanBasemap]
+  /// [EsriType.NatGeoWorldMap]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer EsriTileLayer({
+    required EsriType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(options: esri(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from CartoDB servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.CartoDBTileLayer(
+  ///   type: CartoDBType.Positron,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of CartoDB Map tiles to load.
+  ///
+  /// Available values:
+  /// [CartoDBType.Positron]
+  /// [CartoDBType.PositronNoLabels]
+  /// [CartoDBType.PositronOnlyLabels]
+  /// [CartoDBType.DarkMatter]
+  /// [CartoDBType.DarkMatterNoLabels]
+  /// [CartoDBType.DarkMatterOnlyLabels]
+  /// [CartoDBType.Voyager]
+  /// [CartoDBType.VoyagerNoLabels]
+  /// [CartoDBType.VoyagerOnlyLabels]
+  /// [CartoDBType.VoyagerLabelsUnder]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer CartoDBTileLayer({
+    required CartoDBType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(options: cartodb(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from BasemapAT servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.BasemapATTileLayer(
+  ///   type: BasemapATType.Default,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of BasemapAT Map tiles to load.
+  ///
+  /// Available values:
+  /// [BasemapATType.Default]
+  /// [BasemapATType.Grau]
+  /// [BasemapATType.Overlay]
+  /// [BasemapATType.Terrain]
+  /// [BasemapATType.Surface]
+  /// [BasemapATType.Hdpi]
+  /// [BasemapATType.Orthofoto]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer BasemapATTileLayer({
+    BasemapATType type = BasemapATType.Default,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+        options: basemapat(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from HikeBike servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.HikeBikeTileLayer(
+  ///   type: HikeBikeType.Default,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of HikeBike Map tiles to load.
+  ///
+  /// Available values:
+  /// [HikeBikeType.Default]
+  /// [HikeBikeType.Hill]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer HikeBikeTileLayer({
+    HikeBikeType type = HikeBikeType.Default,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+        options: hikebike(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from NLMaps servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.NLMapsTileLayer(
+  ///   type: NLMapsType.Default,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of NLMaps tiles to load.
+  ///
+  /// Available values:
+  /// [NLMapsType.Default]
+  /// [NLMapsType.Pastel]
+  /// [NLMapsType.Grijs]
+  /// [NLMapsType.Luchtfoto]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer NLMapsTileLayer({
+    NLMapsType type = NLMapsType.Default,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(options: nlmaps(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from Geoportail France Map servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.GeoportailFranceTileLayer(
+  ///   type: GeoportailFranceType.Plan,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Geoportail France Map tiles to load.
+  ///
+  /// Available values:
+  /// [GeoportailFranceType.Plan]
+  /// [GeoportailFranceType.Parcels]
+  /// [GeoportailFranceType.Orthos]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer GeoportailFranceTileLayer({
+    required GeoportailFranceType type,
+    L.TileLayerOptions? options,
+    required String apikey,
+  }) {
+    return L.TileLayer(
+      options: geoportail(type, options ?? L.TileLayerOptions(), apikey),
+    );
+  }
+
+  /// Used to load and display tile layers from Justice Map servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.JusticeMapTileLayer(
+  ///   type: JusticeMapType.Income,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Justice Map tiles to load.
+  ///
+  /// Available values:
+  /// [JusticeMapType.Income]
+  /// [JusticeMapType.Indian]
+  /// [JusticeMapType.Asian]
+  /// [JusticeMapType.Black]
+  /// [JusticeMapType.Hispanic]
+  /// [JusticeMapType.Multi]
+  /// [JusticeMapType.Nonwhite]
+  /// [JusticeMapType.White]
+  /// [JusticeMapType.Plural]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer JusticeMapTileLayer({
+    required JusticeMapType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(options: justice(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from Open Weather Map servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.OpenWeatherMapTileLayer(
+  ///   type: OpenWeatherMapType.Clouds,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Open Weather Map tiles to load.
+  ///
+  /// Available values:
+  /// [OpenWeatherMapType.Clouds]
+  /// [OpenWeatherMapType.CloudsClassic]
+  /// [OpenWeatherMapType.Precipitation]
+  /// [OpenWeatherMapType.PrecipitationClassic]
+  /// [OpenWeatherMapType.Rain]
+  /// [OpenWeatherMapType.RainClassic]
+  /// [OpenWeatherMapType.Pressure]
+  /// [OpenWeatherMapType.PressureContour]
+  /// [OpenWeatherMapType.Wind]
+  /// [OpenWeatherMapType.Temperature]
+  /// [OpenWeatherMapType.Snow]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer OpenWeatherMapTileLayer({
+    required OpenWeatherMapType type,
+    L.TileLayerOptions? options,
+    required String apikey,
+  }) {
+    return L.TileLayer(
+      options: openweather(type, options ?? L.TileLayerOptions(), apikey),
+    );
+  }
+
+  /// Used to load and display tile layers from OneMapSG servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.OneMapSGTileLayer(
+  ///   type: OneMapSGType.Original,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of OneMapSG tiles to load.
+  ///
+  /// Available values:
+  /// [OneMapSGType.Default]
+  /// [OneMapSGType.Night]
+  /// [OneMapSGType.Original]
+  /// [OneMapSGType.Grey]
+  /// [OneMapSGType.LandLot]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer OneMapSGTileLayer({
+    OneMapSGType type = OneMapSGType.Default,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+        options: onemapsg(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from NASA GIBS servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.NASAGIBSTileLayer(
+  ///   type: NASAGIBSType.ModisTerraTrueColorCR,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of NASA GIBS tiles to load.
+  ///
+  /// Available values:
+  /// [NASAGIBSType.ModisTerraTrueColorCR]
+  /// [NASAGIBSType.ModisTerraBands367CR]
+  /// [NASAGIBSType.ViirsEarthAtNight2012]
+  /// [NASAGIBSType.ModisTerraLSTDay]
+  /// [NASAGIBSType.ModisTerraSnowCover]
+  /// [NASAGIBSType.ModisTerraAOD]
+  /// [NASAGIBSType.ModisTerraChlorophyll]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer NASAGIBSTileLayer({
+    required NASAGIBSType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+        options: nasagibs(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from USGS servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.USGSTileLayer(
+  ///   type: USGSType.Topo,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of USGS Map tiles to load.
+  ///
+  /// Available values:
+  /// [USGSType.Topo]
+  /// [USGSType.Imagery]
+  /// [USGSType.ImageryTopo]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer USGSTileLayer({
+    required USGSType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(options: usgs(type, options ?? L.TileLayerOptions()));
+  }
+
+  /// Used to load and display tile layers from Waymarked Trails servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.WaymarkedTrailsTileLayer(
+  ///   type: WaymarkedTrailsType.Hiking,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of Waymarked Trails Map tiles to load.
+  ///
+  /// Available values:
+  /// [WaymarkedTrailsType.Hiking]
+  /// [WaymarkedTrailsType.Cycling]
+  /// [WaymarkedTrailsType.MTB]
+  /// [WaymarkedTrailsType.Slopes]
+  /// [WaymarkedTrailsType.Riding]
+  /// [WaymarkedTrailsType.Skating]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer WaymarkedTrailsTileLayer({
+    required WaymarkedTrailsType type,
+    L.TileLayerOptions? options,
+  }) {
+    return L.TileLayer(
+        options: waymarkedtrails(type, options ?? L.TileLayerOptions()));
   }
 
   /// Used to display marker(s) at specified locations on map.

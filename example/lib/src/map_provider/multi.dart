@@ -11,14 +11,16 @@ class MultiLayerMap extends StatelessWidget {
       tiles: [
         // add environmental measurements map layer from SafeCast (http://safecast.org/)
         U.TileLayer(
-          'https://s3.amazonaws.com/te512.safecast.org/{z}/{x}/{y}.png', 
-          attribution: 'Data: &copy; OpenStreetMap contributors | Style: &copy; SafeCast',
+          'https://s3.amazonaws.com/te512.safecast.org/{z}/{x}/{y}.png',
+          attribution:
+              'Data: &copy; OpenStreetMap contributors | Style: &copy; SafeCast',
           maxZoom: 16,
         ),
         // add map layer from OpenRailwayMap
         U.TileLayer(
-          'https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', 
-          attribution: 'Data: &copy; OpenStreetMap contributors | Style: &copy; OpenRailwayMap',
+          'https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png',
+          attribution:
+              'Data: &copy; OpenStreetMap contributors | Style: &copy; OpenRailwayMap',
           maxZoom: 19,
         ),
       ],

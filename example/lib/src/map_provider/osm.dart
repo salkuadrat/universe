@@ -47,11 +47,11 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
                 ),
                 DropdownMenuItem(
                   value: OpenStreetMapType.DE,
-                  child: Text('DE'),
+                  child: Text('Germany (DE)'),
                 ),
                 DropdownMenuItem(
                   value: OpenStreetMapType.CH,
-                  child: Text('CH'),
+                  child: Text('Switzerland (CH)'),
                 ),
                 DropdownMenuItem(
                   value: OpenStreetMapType.France,
@@ -59,19 +59,11 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
                 ),
                 DropdownMenuItem(
                   value: OpenStreetMapType.HOT,
-                  child: Text('HOT'),
+                  child: Text('Humanitarian (HOT)'),
                 ),
                 DropdownMenuItem(
-                  value: OpenStreetMapType.CyclOSM,
-                  child: Text('CyclOSM'),
-                ),
-                DropdownMenuItem(
-                  value: OpenStreetMapType.MtbMap,
-                  child: Text('MtbMap'),
-                ),
-                DropdownMenuItem(
-                  value: OpenStreetMapType.Wikimedia,
-                  child: Text('Wikimedia'),
+                  value: OpenStreetMapType.BZH,
+                  child: Text('Breton (BZH)'),
                 ),
               ],
             ),

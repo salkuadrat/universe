@@ -1,3 +1,7 @@
+## [0.0.4-nullsafety] - 17 May 2021
+
+* adding & restructuring map providers
+
 ## [0.0.3-nullsafety] - 16 May 2021
 
 * support multi tile layers maps

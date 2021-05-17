@@ -1,6 +1,6 @@
 name: universe
 description: The easy & flexible way to use interactive maps in Flutter. Inspired by Leaflet.js.
-version: 0.0.3-nullsafety
+version: 0.0.4-nullsafety
 # author: Salman S
 homepage: https://github.com/salkuadrat/universe
 repository: https://github.com/salkuadrat/universe

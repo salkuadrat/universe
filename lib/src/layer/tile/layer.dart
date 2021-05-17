@@ -126,11 +126,11 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
 
     _softUpdateStream = StreamController<LatLng?>(sync: true);
     _softUpdateStream!.stream.listen((center) {
-      if(_canUpdate) {
+      if (_canUpdate) {
         log('TileLayer: Soft Updating...');
         _update(map.center);
         //_setZoomTransforms(map.center, map.zoom);
-         _lastUpdated = _now;
+        _lastUpdated = _now;
       }
     });
   }

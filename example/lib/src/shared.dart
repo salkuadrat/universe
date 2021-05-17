@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:universe_example/src/live/notmove.dart';
 
 import 'bounds/fitbounds.dart';
 import 'bounds/maxbounds.dart';
@@ -26,11 +25,32 @@ import 'home.dart';
 import 'live/default.dart';
 import 'live/marker.dart';
 import 'live/simple.dart';
+import 'live/notmove.dart';
 import 'map_provider/custom.dart';
 import 'map_provider/google.dart';
 import 'map_provider/mapbox.dart';
 import 'map_provider/osm.dart';
 import 'map_provider/multi.dart';
+/* import 'map_provider/open.dart';
+import 'map_provider/stadia.dart';
+import 'map_provider/hydda.dart';
+import 'map_provider/jawg.dart';
+import 'map_provider/thunderforest.dart';
+import 'map_provider/maptiler.dart';
+import 'map_provider/stamen.dart';
+import 'map_provider/cartodb.dart';
+import 'map_provider/esri.dart';
+import 'map_provider/tomtom.dart';
+import 'map_provider/basemapat.dart';
+import 'map_provider/geoportail.dart';
+import 'map_provider/hikebike.dart';
+import 'map_provider/justice.dart';
+import 'map_provider/nasagibs.dart';
+import 'map_provider/nlmaps.dart';
+import 'map_provider/onemapsg.dart';
+import 'map_provider/openweather.dart';
+import 'map_provider/trails.dart';
+import 'map_provider/usgs.dart'; */
 import 'marker/add.dart';
 import 'marker/data.dart';
 import 'marker/default.dart';
@@ -86,8 +106,30 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Open Street Map', map: () => OpenStreetMap()),
   UniqueKey(): MenuItem('Google Map', map: () => GoogleMap()),
   UniqueKey(): MenuItem('Custom Map Provider', map: () => CustomMapProvider()),
-  //UniqueKey(): MenuItem('Non Geographical Map', map: () => NonGeographicalMap()),
   UniqueKey(): MenuItem('Muti Layers Map', map: () => MultiLayerMap()),
+  //UniqueKey(): MenuItem('Non Geographical Map', map: () => NonGeographicalMap()),
+  /* UniqueKey(): MenuItem('Open Maps', map: () => OpenMap()),
+  UniqueKey(): MenuItem('Stadia Map', map: () => StadiaMap()),
+  UniqueKey(): MenuItem('Thunderforest Map', map: () => ThunderforestMap()),
+  UniqueKey(): MenuItem('Hydda Map', map: () => HyddaMap()),
+  UniqueKey(): MenuItem('Jawg Map', map: () => JawgMap()),
+  UniqueKey(): MenuItem('Map Tiler', map: () => MapTiler()),
+  UniqueKey(): MenuItem('Stamen Map', map: () => StamenMap()),
+  UniqueKey(): MenuItem('TomTom Map', map: () => TomTomMap()),
+  UniqueKey(): MenuItem('Esri Map', map: () => EsriMap()),
+  UniqueKey(): MenuItem('CartoDB Map', map: () => CartoDBMap()),
+  UniqueKey(): MenuItem('BasemapAT Map', map: () => BasemapATMap()),
+  UniqueKey(): MenuItem('Hike Bike Map', map: () => HikeBikeMap()),
+  UniqueKey(): MenuItem('NL Maps', map: () => NLMaps()),
+  UniqueKey():
+      MenuItem('Geoportail France Map', map: () => GeoportailFranceMap()),
+  UniqueKey(): MenuItem('Justice Map', map: () => JusticeMap()),
+  UniqueKey(): MenuItem('Open Weather Map', map: () => OpenWeatherMap()),
+  UniqueKey(): MenuItem('One Map SG', map: () => OneMapSG()),
+  UniqueKey(): MenuItem('NASA GIBS Map', map: () => NASAGIBSMap()),
+  UniqueKey(): MenuItem('USGS Map', map: () => USGSMap()),
+  UniqueKey():
+      MenuItem('Waymarked Trails Map', map: () => WaymarkedTrailsMap()), */
   UniqueKey(): MenuItem('Static Map', map: () => StaticMap()),
   UniqueKey():
       MenuItem('Static Map with Marker', map: () => StaticMapWithMarker()),
