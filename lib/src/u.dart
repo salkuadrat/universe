@@ -5187,6 +5187,219 @@ class U {
     );
   }
 
+  /// Used to display map with base TileLayer from HERE Map.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.HereMap(
+  ///   appId: '',
+  ///   appCode: '',
+  ///   type: HereType.NormalDay,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of HERE Map tiles to load.
+  ///
+  /// Available values:
+  /// [HereType.NormalDay]
+  /// [HereType.NormalDayCustom]
+  /// [HereType.NormalDayGrey]
+  /// [HereType.NormalDayMobile]
+  /// [HereType.NormalDayGreyMobile]
+  /// [HereType.NormalDayTransit]
+  /// [HereType.NormalDayTransitMobile]
+  /// [HereType.NormalDayTraffic]
+  /// [HereType.NormalNight]
+  /// [HereType.NormalNightMobile]
+  /// [HereType.NormalNightGrey]
+  /// [HereType.NormalNightGreyMobile]
+  /// [HereType.NormalNightTransit]
+  /// [HereType.NormalNightTransitMobile]
+  /// [HereType.ReducedDay]
+  /// [HereType.ReducedNight]
+  /// [HereType.BasicMap]
+  /// [HereType.MapLabels]
+  /// [HereType.TrafficFlow]
+  /// [HereType.CarnavDayGrey]
+  /// [HereType.HybridDay]
+  /// [HereType.HybridDayMobile]
+  /// [HereType.HybridDayTransit]
+  /// [HereType.HybridDayGrey]
+  /// [HereType.HybridDayTraffic]
+  /// [HereType.PedestrianDay]
+  /// [HereType.PedestrianNight]
+  /// [HereType.SatelliteDay]
+  /// [HereType.TerrainDay]
+  /// [HereType.TerrainDayMobile]
+  ///
+  /// @param: [center]
+  ///
+  /// Used to define center latlng position of the map.
+  /// It can accept many types of value:
+  ///
+  /// A list of two (or three) values
+  /// that represents latitude and longitude (and altitude).
+  ///
+  /// ```dart
+  /// U.HereMap(
+  ///   appId: '',
+  ///   appCode: '',
+  ///   type: HereType.NormalDay,
+  ///   controller: MapController(),
+  ///   center: [-6.175329, 106.827253],
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or an instance of LatLng object:
+  ///
+  /// ```dart
+  /// U.HereMap(
+  ///   appId: '',
+  ///   appCode: '',
+  ///   type: HereType.NormalDay,
+  ///   controller: MapController(),
+  ///   center: LatLng(-6.175329, 106.827253),
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  /// or location name.
+  ///
+  /// The built-in GeoCoder inside will automatically
+  /// convert it to latlng position for you.
+  ///
+  /// Default to LatLng(0.0, 0.0) if your location is not found.
+  ///
+  /// ```dart
+  /// U.HereMap(
+  ///   appId: '',
+  ///   appCode: '',
+  ///   type: HereType.NormalDay,
+  ///   controller: MapController(),
+  ///   center: 'Emirates Stadium',
+  ///   zoom: 15,
+  /// )
+  /// ```
+  ///
+  // ignore: non_constant_identifier_names
+  static Universe HereMap({
+    Key? key,
+    required String appId,
+    required String appCode,
+    String version = 'v3',
+    required HereType type,
+    required dynamic center,
+    L.TileLayerOptions? options,
+    double? zoom,
+    double? minZoom,
+    double? maxZoom,
+    double? rotation,
+    bool? disableRotation,
+    Color? background,
+    C.MapController? controller,
+    L.TileLayer? base,
+    L.MarkerLayer? markers,
+    L.CircleLayer? circles,
+    L.PolylineLayer? polylines,
+    L.PolygonLayer? polygons,
+    L.RectangleLayer? rectangles,
+    List<L.TileLayer> tiles = const [],
+    List<L.ImageOverlay> images = const [],
+    List<L.VideoOverlay> videos = const [],
+    List<L.MapLayer> layers = const [],
+    List<Widget> controls = const [],
+    Crs? crs,
+    Size? size,
+    bool? live,
+    bool? moveWhenLive,
+    dynamic centerMarker,
+    dynamic locationMarker,
+    bool? showCenterMarker,
+    bool? showLocator,
+    Locator? locator,
+    bool? showLocationMarker,
+    bool? showLocationIndicator,
+    L.LocationIndicator? locationIndicator,
+    bool? showCompass,
+    Compass? compass,
+    bool? showScale,
+    Scale? scale,
+    bool? interactive,
+    LatLngBounds? maxBounds,
+    LatLngBounds? fitBounds,
+    FitBoundsOptions? fitBoundsOptions,
+    bool? slideOnBoundaries,
+    bool? adaptiveBoundaries,
+    bool? hideAttribution,
+    Function(LatLng?)? onTap,
+    Function(LatLng?)? onLongPress,
+    MapChangedCallback? onChanged,
+    Function? onReady,
+  }) {
+    return U.Map(
+      key: key,
+      center: center,
+      zoom: zoom,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      rotation: rotation,
+      disableRotation: disableRotation,
+      background: background,
+      controller: controller,
+      markers: markers,
+      circles: circles,
+      polylines: polylines,
+      polygons: polygons,
+      rectangles: rectangles,
+      tiles: tiles,
+      images: images,
+      videos: videos,
+      layers: layers,
+      controls: controls,
+      crs: crs,
+      size: size,
+      live: live,
+      moveWhenLive: moveWhenLive,
+      centerMarker: centerMarker,
+      locationMarker: locationMarker,
+      showCenterMarker: showCenterMarker,
+      showLocator: showLocator,
+      locator: locator,
+      showLocationMarker: showLocationMarker,
+      showLocationIndicator: showLocationIndicator,
+      locationIndicator: locationIndicator,
+      showCompass: showCompass,
+      compass: compass,
+      showScale: showScale,
+      scale: scale,
+      interactive: interactive,
+      maxBounds: maxBounds,
+      fitBounds: fitBounds,
+      fitBoundsOptions: fitBoundsOptions,
+      slideOnBoundaries: slideOnBoundaries,
+      adaptiveBoundaries: adaptiveBoundaries,
+      hideAttribution: hideAttribution,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onChanged: onChanged,
+      onReady: onReady,
+      base: HereTileLayer(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+        appId: appId,
+        appCode: appCode,
+        version: version,
+      ),
+    );
+  }
+
   /// Used to load and display tile layers on the map.
   ///
   /// Example:
@@ -6442,16 +6655,86 @@ class U {
         options: waymarkedtrails(type, options ?? L.TileLayerOptions()));
   }
 
+  /// Used to load and display tile layers from HERE Map servers.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// U.HereTileLayer(
+  ///   appId: '',
+  ///   appCode: '',
+  ///   type: HereType.NormalDay,
+  ///   options: TileLayerOptions(
+  ///     opacity: 0.9,
+  ///   ),
+  /// )
+  /// ```
+  ///
+  /// @param: [type]
+  ///
+  /// enum to define the type of HERE Map tiles to load.
+  ///
+  /// Available values:
+  /// [HereType.NormalDay]
+  /// [HereType.NormalDayCustom]
+  /// [HereType.NormalDayGrey]
+  /// [HereType.NormalDayMobile]
+  /// [HereType.NormalDayGreyMobile]
+  /// [HereType.NormalDayTransit]
+  /// [HereType.NormalDayTransitMobile]
+  /// [HereType.NormalDayTraffic]
+  /// [HereType.NormalNight]
+  /// [HereType.NormalNightMobile]
+  /// [HereType.NormalNightGrey]
+  /// [HereType.NormalNightGreyMobile]
+  /// [HereType.NormalNightTransit]
+  /// [HereType.NormalNightTransitMobile]
+  /// [HereType.ReducedDay]
+  /// [HereType.ReducedNight]
+  /// [HereType.BasicMap]
+  /// [HereType.MapLabels]
+  /// [HereType.TrafficFlow]
+  /// [HereType.CarnavDayGrey]
+  /// [HereType.HybridDay]
+  /// [HereType.HybridDayMobile]
+  /// [HereType.HybridDayTransit]
+  /// [HereType.HybridDayGrey]
+  /// [HereType.HybridDayTraffic]
+  /// [HereType.PedestrianDay]
+  /// [HereType.PedestrianNight]
+  /// [HereType.SatelliteDay]
+  /// [HereType.TerrainDay]
+  /// [HereType.TerrainDayMobile]
+  ///
+  /// @param: [options]
+  ///
+  /// Parameter to override the default value of TileLayerOptions
+  /// Default value: [TileLayerOptions()]
+  ///
+  // ignore: non_constant_identifier_names
+  static L.TileLayer HereTileLayer({
+    required HereType type,
+    L.TileLayerOptions? options,
+    required String appId,
+    required String appCode,
+    String version = 'v3',
+  }) {
+    return L.TileLayer(
+        options: version == 'v3'
+            ? herev3(type, options ?? L.TileLayerOptions(), appId, appCode)
+            : here(type, options ?? L.TileLayerOptions(), appId, appCode));
+  }
+
   /// Used to display marker(s) at specified locations on map.
   ///
   /// @param: [marker]
   ///
   /// This param can accept any type of inputs for
-  /// a single marker layer or multiple markers layer.
+  /// a single marker or multiple markers.
   ///
   /// Example:
   ///
-  /// Single Marker Layer
+  /// Single Marker
   ///
   /// ```dart
   /// U.MarkerLayer([-6.175329, 106.827253], ...)
@@ -6465,7 +6748,7 @@ class U {
   /// U.MarkerLayer(U.Marker([-6.175329, 106.827253]), ...)
   /// ```
   ///
-  /// Multiple Markers Layer
+  /// Multiple Markers
   ///
   /// ```dart
   /// U.MarkerLayer([
@@ -6491,7 +6774,7 @@ class U {
   ///
   /// @param: [widget]
   ///
-  /// Used to define the type of widget to show as Marker.
+  /// Used to define the widget to show as Marker.
   ///
   /// Available values:
   /// [MarkerIcon]

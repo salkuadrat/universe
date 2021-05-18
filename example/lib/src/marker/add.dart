@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import '../shared.dart';
-
 class AddMarkerMap extends StatefulWidget {
   @override
   _AddMarkerMapState createState() => _AddMarkerMapState();
@@ -15,10 +13,8 @@ class _AddMarkerMapState extends State<AddMarkerMap> {
 
   @override
   Widget build(BuildContext context) {
-    return U.MapBox(
+    return U.OpenStreetMap(
       key: _mapKey,
-      type: MapBoxType.Outdoors,
-      accessToken: yourAccessTokenHere,
       center: [51.555158, -0.108343],
       zoom: 15,
       showLocator: true,

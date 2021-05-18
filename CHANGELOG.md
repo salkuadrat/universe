@@ -1,3 +1,8 @@
+## [0.0.4-nullsafety.1] - 17 May 2021
+
+* fix attribution
+* add HERE map providers
+
 ## [0.0.4-nullsafety] - 17 May 2021
 
 * adding & restructuring map providers

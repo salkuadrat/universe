@@ -50,7 +50,6 @@ class _LocateControllerMapState extends State<LocateControllerMap> {
       children: [
         U.OpenStreetMap(
           key: _mapKey,
-          type: OpenStreetMapType.HOT,
           controller: _mapController,
           center: [51.555158, -0.108343],
           zoom: 15,

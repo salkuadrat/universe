@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import '../shared.dart';
-
 class MoveGeolocatorMap extends StatefulWidget {
   @override
   _MoveGeolocatorMapState createState() => _MoveGeolocatorMapState();
@@ -21,12 +19,10 @@ class _MoveGeolocatorMapState extends State<MoveGeolocatorMap> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        U.MapBox(
+        U.OpenStreetMap(
           controller: _mapController,
-          type: MapBoxType.Hybrid,
-          accessToken: yourAccessTokenHere,
-          center:
-              'Emirates Stadium', // set map center by location name (not latlng)
+          // set map center by location name (not latlng)
+          center: 'Emirates Stadium',
           zoom: 15,
         ),
         Positioned(

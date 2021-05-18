@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import '../shared.dart';
-
 class MoveControllerMap extends StatefulWidget {
   @override
   _MoveControllerMapState createState() => _MoveControllerMapState();
@@ -24,11 +22,9 @@ class _MoveControllerMapState extends State<MoveControllerMap> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        U.MapBox(
+        U.OpenStreetMap(
           key: _mapKey,
-          type: MapBoxType.Hybrid,
           controller: _mapController,
-          accessToken: yourAccessTokenHere,
           center: [51.555158, -0.108343],
           zoom: 15,
           markers: U.MarkerLayer(_moveTarget),

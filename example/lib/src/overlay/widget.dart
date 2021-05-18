@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import '../shared.dart';
-
 class WidgetOverlayMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return U.MapBox(
-      accessToken: yourAccessTokenHere,
+    return U.OpenStreetMap(
       center: [-6.170039, 106.8241],
       zoom: 16,
       showLocator: true,

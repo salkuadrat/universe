@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import '../shared.dart';
-
 class LocationFinderMap extends StatefulWidget {
   @override
   _LocationFinderMapState createState() => _LocationFinderMapState();
@@ -51,13 +49,11 @@ class _LocationFinderMapState extends State<LocationFinderMap> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        U.MapBox(
+        U.OpenStreetMap(
           key: _mapKey,
           controller: _mapController,
-          type: MapBoxType.Bright,
-          accessToken: yourAccessTokenHere,
-          center:
-              'Emirates Stadium', // set map center by location name (not latlng)
+          // set map center by location name (not latlng)
+          center: 'Emirates Stadium', 
           zoom: 16,
         ),
         Positioned(

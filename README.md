@@ -2,7 +2,7 @@
 
 The easy & flexible way to use interactive maps in Flutter. Inspired by [Leaflet.js](https://leafletjs.com/).
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot.png" alt="universe" width="400">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot.jpg" alt="universe" width="400">
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ Add dependency to your flutter project:
 
 ```yaml
 dependencies:
-  universe: ^0.0.4-nullsafety
+  universe: ^0.0.4-nullsafety.1
 ```
 
 ```yaml
@@ -22,11 +22,17 @@ dependencies:
 
 Then run `flutter pub get`.
 
-Add internet & location permissions to your AndroidManifest.xml.
+## Android Permissions
+
+Add Internet & Location permissions to your AndroidManifest.xml.
 
 ```
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<manifest xmlns:android...>
+  ...
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <application ...
+</manifest>
 ```
 
 ## Example Project

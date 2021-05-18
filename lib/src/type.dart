@@ -217,40 +217,7 @@ enum WaymarkedTrailsType {
   Skating,
 }
 
-enum HEREType {
-  NormalDay,
-  NormalDayCustom,
-  NormalDayGrey,
-  NormalDayMobile,
-  NormalDayGreyMobile,
-  NormalDayTransit,
-  NormalDayTransitMobile,
-  NormalDayTraffic,
-  NormalNight,
-  NormalNightMobile,
-  NormalNightGrey,
-  NormalNightGreyMobile,
-  NormalNightTransit,
-  NormalNightTransitMobile,
-  ReducedDay,
-  ReducedNight,
-  BasicMap,
-  MapLabels,
-  TrafficFlow,
-  CarnavDayGrey,
-  HybridDay,
-  HybridDayMobile,
-  HybridDayTransit,
-  HybridDayGrey,
-  HybridDayTraffic,
-  PedestrianDay,
-  PedestrianNight,
-  SatelliteDay,
-  TerrainDay,
-  TerrainDayMobile,
-}
-
-enum HEREV3Type {
+enum HereType {
   NormalDay,
   NormalDayCustom,
   NormalDayGrey,

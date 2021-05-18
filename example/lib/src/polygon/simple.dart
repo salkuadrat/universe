@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import '../shared.dart';
-
 class PolygonMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return U.MapBox(
-      type: MapBoxType.Hybrid,
-      accessToken: yourAccessTokenHere,
+    return U.OpenStreetMap(
       center: [51.555158, -0.108343],
       zoom: 15,
       polygons: U.PolygonLayer(

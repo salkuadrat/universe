@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import '../shared.dart';
-
 class RotateControllerMap extends StatefulWidget {
   @override
   _RotateControllerMapState createState() => _RotateControllerMapState();
@@ -28,10 +26,8 @@ class _RotateControllerMapState extends State<RotateControllerMap> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        U.MapBox(
+        U.OpenStreetMap(
           key: _mapKey,
-          type: MapBoxType.Hybrid,
-          accessToken: yourAccessTokenHere,
           controller: _mapController,
           center: [51.555158, -0.108343],
           zoom: 15,

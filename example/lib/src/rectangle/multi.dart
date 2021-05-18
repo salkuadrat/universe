@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import '../shared.dart';
-
 class MultiRectangleMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return U.MapBox(
-      type: MapBoxType.Hybrid,
-      accessToken: yourAccessTokenHere,
+    return U.OpenStreetMap(
       center: [-6.175329, 106.827253],
       zoom: 15,
       rectangles: U.RectangleLayer(

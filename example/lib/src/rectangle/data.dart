@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import '../shared.dart';
-
 class RectangleWithDataMap extends StatefulWidget {
   @override
   _RectangleWithDataMapState createState() => _RectangleWithDataMapState();
@@ -11,9 +9,7 @@ class RectangleWithDataMap extends StatefulWidget {
 class _RectangleWithDataMapState extends State<RectangleWithDataMap> {
   @override
   Widget build(BuildContext context) {
-    return U.MapBox(
-      type: MapBoxType.Satellite,
-      accessToken: yourAccessTokenHere,
+    return U.OpenStreetMap(
       center: [51.555015, -0.108331],
       zoom: 16,
       rectangles: U.RectangleLayer(

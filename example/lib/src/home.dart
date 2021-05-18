@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:universe/universe.dart';
 
-import 'shared.dart';
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -11,18 +9,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return U.MapBox(
-      accessToken: yourAccessTokenHere,
+    return U.OpenStreetMap(
       center: [-6.175329, 106.827253],
       zoom: 15,
-      /* locator: Locator(
-        alignment: Alignment.bottomLeft,
-        margin: EdgeInsets.only(left: 20, bottom: 24),
-      ), */
-      /* compass: Compass(
-        alignment: Alignment.bottomRight,
-        margin: EdgeInsets.only(right: 20, bottom: 32),
-      ), */
       onReady: () => print('Map ready!'),
       markers: U.MarkerLayer(
         [
