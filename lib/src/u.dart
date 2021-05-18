@@ -782,7 +782,6 @@ class U {
   // ignore: non_constant_identifier_names
   static Universe SafeCastMap({
     Key? key,
-    required OpenType type,
     required dynamic center,
     L.TileLayerOptions? options,
     double? zoom,
@@ -938,7 +937,6 @@ class U {
   // ignore: non_constant_identifier_names
   static Universe CyclOSMMap({
     Key? key,
-    required OpenType type,
     required dynamic center,
     L.TileLayerOptions? options,
     double? zoom,
@@ -1094,7 +1092,6 @@ class U {
   // ignore: non_constant_identifier_names
   static Universe FreeMapSK({
     Key? key,
-    required OpenType type,
     required dynamic center,
     L.TileLayerOptions? options,
     double? zoom,
@@ -1250,7 +1247,6 @@ class U {
   // ignore: non_constant_identifier_names
   static Universe MtbMap({
     Key? key,
-    required OpenType type,
     required dynamic center,
     L.TileLayerOptions? options,
     double? zoom,
@@ -1406,7 +1402,6 @@ class U {
   // ignore: non_constant_identifier_names
   static Universe NLSMap({
     Key? key,
-    required OpenType type,
     required dynamic center,
     L.TileLayerOptions? options,
     double? zoom,
@@ -1562,7 +1557,6 @@ class U {
   // ignore: non_constant_identifier_names
   static Universe WikimediaMap({
     Key? key,
-    required OpenType type,
     required dynamic center,
     L.TileLayerOptions? options,
     double? zoom,
@@ -2436,7 +2430,7 @@ class U {
   static Universe JawgMap({
     Key? key,
     required JawgType type,
-    required String apikey,
+    required String accessToken,
     required dynamic center,
     L.TileLayerOptions? options,
     double? zoom,
@@ -2535,7 +2529,7 @@ class U {
       base: JawgTileLayer(
         type: type,
         options: options ?? L.TileLayerOptions(),
-        apikey: apikey,
+        accessToken: accessToken,
       ),
     );
   }
@@ -6050,10 +6044,10 @@ class U {
   static L.TileLayer JawgTileLayer({
     required JawgType type,
     L.TileLayerOptions? options,
-    required String apikey,
+    required String accessToken,
   }) {
     return L.TileLayer(
-        options: jawg(type, options ?? L.TileLayerOptions(), apikey));
+        options: jawg(type, options ?? L.TileLayerOptions(), accessToken));
   }
 
   /// Used to load and display tile layers from MapTiler servers.

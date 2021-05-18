@@ -13,7 +13,8 @@ class _MapTilerState extends State<MapTiler> {
   @override
   Widget build(BuildContext context) {
     return U.MapTiler(
-      apikey: '',
+      // Please get and use your own API key from https://www.maptiler.com
+      apikey: '861wEvWjtb1nuKXvfXTe',
       center: [51.555158, -0.108343],
       type: type,
       zoom: 16,

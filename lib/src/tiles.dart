@@ -437,7 +437,7 @@ TileLayerOptions hydda(HyddaType type, TileLayerOptions options) {
   return opts;
 }
 
-TileLayerOptions jawg(JawgType type, TileLayerOptions options, String apikey) {
+TileLayerOptions jawg(JawgType type, TileLayerOptions options, String accessToken) {
   TileLayerOptions opts = options.copy(
     subdomains: 'abcd',
     attribution: '&copy; Jawg Maps, &copy; OpenStreetMap contributors',
@@ -447,42 +447,42 @@ TileLayerOptions jawg(JawgType type, TileLayerOptions options, String apikey) {
   if (type == JawgType.Dark) {
     return opts.copy(
       templateUrl:
-          'https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=$apikey',
+          'https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=$accessToken',
     );
   }
 
   if (type == JawgType.Light) {
     return opts.copy(
       templateUrl:
-          'https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token=$apikey',
+          'https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token=$accessToken',
     );
   }
 
   if (type == JawgType.Matrix) {
     return opts.copy(
       templateUrl:
-          'https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token=$apikey',
+          'https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token=$accessToken',
     );
   }
 
   if (type == JawgType.Streets) {
     return opts.copy(
       templateUrl:
-          'https://{s}.tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=$apikey',
+          'https://{s}.tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=$accessToken',
     );
   }
 
   if (type == JawgType.Sunny) {
     return opts.copy(
       templateUrl:
-          'https://{s}.tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=$apikey',
+          'https://{s}.tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=$accessToken',
     );
   }
 
   if (type == JawgType.Terrain) {
     return opts.copy(
       templateUrl:
-          'https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token=$apikey',
+          'https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token=$accessToken',
     );
   }
 

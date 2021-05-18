@@ -13,7 +13,8 @@ class _TomTomMapState extends State<TomTomMap> {
   @override
   Widget build(BuildContext context) {
     return U.TomTomMap(
-      apikey: '',
+      // Please get and use your own API key from https://developer.tomtom.com
+      apikey: 'CiNkU6dezS1lWtDYotck4SGuOgdXWW0X',
       center: [51.555158, -0.108343],
       type: type,
       zoom: 16,

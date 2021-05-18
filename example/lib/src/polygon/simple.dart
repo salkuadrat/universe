@@ -7,6 +7,7 @@ class PolygonMap extends StatelessWidget {
     return U.OpenStreetMap(
       center: [51.555158, -0.108343],
       zoom: 15,
+      // by default, PolygonLayer will use style from theme primaryColor
       polygons: U.PolygonLayer(
         [
           [51.556550, -0.108717],

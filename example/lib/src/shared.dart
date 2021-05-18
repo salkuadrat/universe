@@ -31,26 +31,27 @@ import 'map_provider/google.dart';
 import 'map_provider/mapbox.dart';
 import 'map_provider/osm.dart';
 import 'map_provider/multi.dart';
-/* import 'map_provider/open.dart';
+import 'map_provider/open.dart';
 import 'map_provider/stadia.dart';
+import 'map_provider/thunderforest.dart';
 import 'map_provider/hydda.dart';
 import 'map_provider/jawg.dart';
-import 'map_provider/thunderforest.dart';
 import 'map_provider/maptiler.dart';
 import 'map_provider/stamen.dart';
+import 'map_provider/tomtom.dart';
 import 'map_provider/cartodb.dart';
 import 'map_provider/esri.dart';
-import 'map_provider/tomtom.dart';
 import 'map_provider/basemapat.dart';
-import 'map_provider/geoportail.dart';
 import 'map_provider/hikebike.dart';
-import 'map_provider/justice.dart';
-import 'map_provider/nasagibs.dart';
 import 'map_provider/nlmaps.dart';
 import 'map_provider/onemapsg.dart';
+import 'map_provider/justice.dart';
+import 'map_provider/nasagibs.dart';
+import 'map_provider/usgs.dart';
 import 'map_provider/openweather.dart';
 import 'map_provider/trails.dart';
-import 'map_provider/usgs.dart'; */
+import 'map_provider/geoportail.dart';
+import 'map_provider/here.dart';
 import 'marker/add.dart';
 import 'marker/data.dart';
 import 'marker/default.dart';
@@ -65,6 +66,7 @@ import 'overlay/image.dart';
 import 'overlay/video.dart';
 import 'overlay/widget.dart';
 import 'polygon/data.dart';
+import 'polygon/custom.dart';
 import 'polygon/multi.dart';
 import 'polygon/multidata.dart';
 import 'polygon/multistyles.dart';
@@ -108,7 +110,7 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Custom Map Provider', map: () => CustomMapProvider()),
   UniqueKey(): MenuItem('Muti Layers Map', map: () => MultiLayerMap()),
   //UniqueKey(): MenuItem('Non Geographical Map', map: () => NonGeographicalMap()),
-  /* UniqueKey(): MenuItem('Open Maps', map: () => OpenMap()),
+  UniqueKey(): MenuItem('Open Maps', map: () => OpenMap()),
   UniqueKey(): MenuItem('Stadia Map', map: () => StadiaMap()),
   UniqueKey(): MenuItem('Thunderforest Map', map: () => ThunderforestMap()),
   UniqueKey(): MenuItem('Hydda Map', map: () => HyddaMap()),
@@ -121,15 +123,16 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('BasemapAT Map', map: () => BasemapATMap()),
   UniqueKey(): MenuItem('Hike Bike Map', map: () => HikeBikeMap()),
   UniqueKey(): MenuItem('NL Maps', map: () => NLMaps()),
-  UniqueKey():
-      MenuItem('Geoportail France Map', map: () => GeoportailFranceMap()),
-  UniqueKey(): MenuItem('Justice Map', map: () => JusticeMap()),
-  UniqueKey(): MenuItem('Open Weather Map', map: () => OpenWeatherMap()),
   UniqueKey(): MenuItem('One Map SG', map: () => OneMapSG()),
+  UniqueKey(): MenuItem('Justice Map', map: () => JusticeMap()),
   UniqueKey(): MenuItem('NASA GIBS Map', map: () => NASAGIBSMap()),
   UniqueKey(): MenuItem('USGS Map', map: () => USGSMap()),
+  UniqueKey(): MenuItem('Open Weather Map', map: () => OpenWeatherMap()),
   UniqueKey():
-      MenuItem('Waymarked Trails Map', map: () => WaymarkedTrailsMap()), */
+      MenuItem('Waymarked Trails Map', map: () => WaymarkedTrailsMap()),
+  UniqueKey():
+      MenuItem('Geoportail France Map', map: () => GeoportailFranceMap()),
+  UniqueKey(): MenuItem('HERE Map', map: () => HereMap()),
   UniqueKey(): MenuItem('Static Map', map: () => StaticMap()),
   UniqueKey():
       MenuItem('Static Map with Marker', map: () => StaticMapWithMarker()),
@@ -174,6 +177,7 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Multiple Polylines with Different Styles',
       map: () => MultiPolylineStylesMap()),
   UniqueKey(): MenuItem('Polygon', map: () => PolygonMap()),
+  UniqueKey(): MenuItem('Custom Polygon', map: () => CustomPolygonMap()),
   UniqueKey(): MenuItem('Multiple Polygons', map: () => MultiPolygonMap()),
   UniqueKey(): MenuItem('Multiple Polygons with Different Styles',
       map: () => MultiPolygonStylesMap()),

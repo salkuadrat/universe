@@ -24,9 +24,10 @@ class _MapBoxState extends State<MapBox> {
   @override
   Widget build(BuildContext context) {
     return U.MapBox(
-        type: type,
+        // get your own access token from https://account.mapbox.com/access-tokens/
         accessToken: yourAccessTokenHere,
         center: [51.555158, -0.108343],
+        type: type,
         zoom: 15,
         scale: _scale,
         onReady: () => print('MapBox is ready!'),

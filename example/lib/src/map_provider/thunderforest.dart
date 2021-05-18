@@ -13,7 +13,8 @@ class _ThunderforestMapState extends State<ThunderforestMap> {
   @override
   Widget build(BuildContext context) {
     return U.ThunderforestMap(
-      apikey: '',
+      // Please get and use your own API key from https://www.thunderforest.com
+      apikey: '4c00aeebf2284054b8f72e7e18ce0d3c',
       center: [51.555158, -0.108343],
       type: type,
       zoom: 16,

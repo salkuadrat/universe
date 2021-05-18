@@ -13,7 +13,8 @@ class _GeoportailFranceMapState extends State<GeoportailFranceMap> {
   @override
   Widget build(BuildContext context) {
     return U.GeoportailFranceMap(
-      apikey: '',
+      // Please get and use your own API key from http://professionnels.ign.fr/ign/contrats/
+      apikey: 'choisirgeoportail',
       center: [51.555158, -0.108343],
       type: type,
       zoom: 16,

@@ -9,8 +9,8 @@ class RectangleMap extends StatelessWidget {
       zoom: 16,
       rectangles: U.RectangleLayer(
         [
-          [51.554488, -0.108964], // bottom left corner
-          [51.555682, -0.107580], // top right corner
+          [51.554488, -0.108964], // latlng bottom left corner
+          [51.555682, -0.107580], // latlng top right corner
         ],
       ),
     );
