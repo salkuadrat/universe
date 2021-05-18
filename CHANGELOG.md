@@ -1,3 +1,8 @@
+## [0.0.4-nullsafety.2] - 17 May 2021
+
+* update examples
+* update documentation
+
 ## [0.0.4-nullsafety.1] - 17 May 2021
 
 * fix attribution
