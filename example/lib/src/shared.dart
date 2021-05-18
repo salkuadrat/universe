@@ -9,6 +9,7 @@ import 'circle/multi.dart';
 import 'circle/multidata.dart';
 import 'circle/multistyles.dart';
 import 'circle/simple.dart';
+import 'control/clean.dart';
 import 'control/compass.dart';
 import 'control/location_indicator.dart';
 import 'control/locator.dart';
@@ -206,6 +207,7 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Live Map with Marker', map: () => LiveMapWithMarker()),
   UniqueKey(): MenuItem('Live Map without Automoving',
       map: () => LiveMapWithoutAutoMoving()),
+  UniqueKey(): MenuItem('Clean Map Without Controls', map: () => CleanMap()),
   UniqueKey(): MenuItem('Custom Compass', map: () => CustomCompassMap()),
   UniqueKey(): MenuItem('Custom Locator', map: () => CustomLocatorMap()),
   UniqueKey(): MenuItem('Custom Scale Indicator', map: () => CustomScaleMap()),

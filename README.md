@@ -569,6 +569,7 @@ U.OpenStreetMap(
 
 Universe maps come with default controls: compass, locator, scale and location indicator. But we can override this controls with our own controls to make it align with our app theme.
 
+[Clean Map without Controls](example/lib/src/control/clean.dart)\
 [Map with Custom Compass](example/lib/src/control/compass.dart)\
 [Map with Custom Locator](example/lib/src/control/locator.dart)\
 [Map with Custom Scale Indicator](example/lib/src/control/scale.dart)\
