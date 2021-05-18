@@ -185,30 +185,30 @@ U.OpenStreetMap(
 
 ### Other Map Providers
 
-[Safecast Map](example/lib/src/map_provider/safecast.dart)
-[Cycl OSM Map](example/lib/src/map_provider/cyclosm.dart)
-[Freemap SK Map](example/lib/src/map_provider/freemapsk.dart)
-[MtbMap](example/lib/src/map_provider/mtbmap.dart)
-[NLS Map](example/lib/src/map_provider/nlsmap.dart)
-[Wikimedia Map](example/lib/src/map_provider/wikimedia.dart)
-[Open Maps](example/lib/src/map_provider/open.dart)
-[Stadia Map](example/lib/src/map_provider/stadia.dart)
-[Thunderforest Map](example/lib/src/map_provider/thunderforest.dart) (Need API Key)
-[Hydda Map](example/lib/src/map_provider/hydda.dart)
-[Jawg Map](example/lib/src/map_provider/jawg.dart) (Need Access Token)
-[MapTiler Map](example/lib/src/map_provider/maptiler.dart) (Need API Key)
-[Stamen Map](example/lib/src/map_provider/stamen.dart)
-[TomTom Map](example/lib/src/map_provider/tomtom.dart) (Need API Key)
-[ESRI Map](example/lib/src/map_provider/esri.dart)
-[CartoDB Map](example/lib/src/map_provider/cartodb.dart)
-[BasemapAT Map](example/lib/src/map_provider/basemapat.dart)
-[HikeBike Map](example/lib/src/map_provider/hikebike.dart)
-[NLMaps](example/lib/src/map_provider/nlmaps.dart)
-[OneMapSG](example/lib/src/map_provider/onemapsg.dart)
-[NASA GIBS Map](example/lib/src/map_provider/nasagibs.dart)
-[USGS Map](example/lib/src/map_provider/usgs.dart)
-[Waymarked Trails Map](example/lib/src/map_provider/waymarkedtrails.dart)
-[Geoportail France Map](example/lib/src/map_provider/geoportail.dart) (Need API Key)
+[Safecast Map](example/lib/src/map_provider/safecast.dart)\
+[Cycl OSM Map](example/lib/src/map_provider/cyclosm.dart)\
+[Freemap SK Map](example/lib/src/map_provider/freemapsk.dart)\
+[MtbMap](example/lib/src/map_provider/mtbmap.dart)\
+[NLS Map](example/lib/src/map_provider/nlsmap.dart)\
+[Wikimedia Map](example/lib/src/map_provider/wikimedia.dart)\
+[Open Maps](example/lib/src/map_provider/open.dart)\
+[Stadia Map](example/lib/src/map_provider/stadia.dart)\
+[Thunderforest Map](example/lib/src/map_provider/thunderforest.dart) (Need API Key)\
+[Hydda Map](example/lib/src/map_provider/hydda.dart)\
+[Jawg Map](example/lib/src/map_provider/jawg.dart) (Need Access Token)\
+[MapTiler Map](example/lib/src/map_provider/maptiler.dart) (Need API Key)\
+[Stamen Map](example/lib/src/map_provider/stamen.dart)\
+[TomTom Map](example/lib/src/map_provider/tomtom.dart) (Need API Key)\
+[ESRI Map](example/lib/src/map_provider/esri.dart)\
+[CartoDB Map](example/lib/src/map_provider/cartodb.dart)\
+[BasemapAT Map](example/lib/src/map_provider/basemapat.dart)\
+[HikeBike Map](example/lib/src/map_provider/hikebike.dart)\
+[NLMaps](example/lib/src/map_provider/nlmaps.dart)\
+[OneMapSG](example/lib/src/map_provider/onemapsg.dart)\
+[NASA GIBS Map](example/lib/src/map_provider/nasagibs.dart)\
+[USGS Map](example/lib/src/map_provider/usgs.dart)\
+[Waymarked Trails Map](example/lib/src/map_provider/waymarkedtrails.dart)\
+[Geoportail France Map](example/lib/src/map_provider/geoportail.dart) (Need API Key)\
 [HERE Map](example/lib/src/map_provider/here.dart) (Need App ID & App Code)
 
 ### Markers 
