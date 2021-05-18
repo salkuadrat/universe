@@ -37,10 +37,10 @@ Add Internet & Location permissions to your AndroidManifest.xml.
 
 ## Example Project
 
-There is a complete example project in the `example` folder.\
+There is a complete examples in the [example folder](example).\
 Check it out to learn the many use cases of using Universe library.
 
-You can also try a working example with [universe.apk](universe.apk).
+You can also try a working example by installing [universe.apk](universe.apk).
 
 ## Usage
 
