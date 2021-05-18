@@ -209,7 +209,7 @@ U.OpenStreetMap(
 [USGS Map](example/lib/src/map_provider/usgs.dart)\
 [Waymarked Trails Map](example/lib/src/map_provider/waymarkedtrails.dart)\
 [Geoportail France Map](example/lib/src/map_provider/geoportail.dart) (Need API Key)\
-[HERE Map](example/lib/src/map_provider/here.dart) (Need App ID & App Code)
+[HERE Map](example/lib/src/map_provider/here.dart) (Need App ID & Credentials Code)
 
 ### Markers 
 
