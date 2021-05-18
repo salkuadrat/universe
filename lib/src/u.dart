@@ -1,5 +1,6 @@
 import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:video_player/video_player.dart';
 
 import 'control/control.dart';
@@ -11,6 +12,10 @@ import 'tiles.dart';
 import 'shared.dart';
 import 'type.dart';
 
+/// The easy & flexible way to use interactive maps in Flutter.
+///
+/// U class is starting point of universe.
+///
 class U {
   // ignore: non_constant_identifier_names
   static C.MapController MapController() => C.MapController();

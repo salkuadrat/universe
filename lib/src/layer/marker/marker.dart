@@ -5,7 +5,8 @@ export 'marker.dart';
 export 'options.dart';
 export 'svg.dart';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../core/core.dart';
 import 'icon.dart';

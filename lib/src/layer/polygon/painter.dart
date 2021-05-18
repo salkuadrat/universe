@@ -1,7 +1,8 @@
 import 'dart:ui' as ui;
 import 'dart:math' as math;
 
-import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class PolygonPainter extends CustomPainter {
   final List<Offset>? points;

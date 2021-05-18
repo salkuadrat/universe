@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/widgets.dart';
+import 'package:extended_image/extended_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../core/core.dart';
 import '../../map/map.dart';
@@ -15,10 +16,10 @@ class ImageOverlay extends InteractiveLayer {
   final ImageProvider? imageProvider;
   final LatLngBounds bounds;
   final ImageProvider? imageError;
-  final double? opacity;
-  final double? rotation;
-  final BoxFit? fit;
-  final bool? gaplessPlayback;
+  final double opacity;
+  final double rotation;
+  final BoxFit fit;
+  final bool gaplessPlayback;
   final dynamic data;
   final InteractiveLayerOptions? options;
 
@@ -36,10 +37,10 @@ class ImageOverlay extends InteractiveLayer {
     dynamic image, {
     dynamic bounds,
     this.imageError,
-    this.opacity,
-    this.rotation,
-    this.fit,
-    this.gaplessPlayback,
+    this.opacity = 1.0,
+    this.rotation = 0.0,
+    this.fit = BoxFit.cover,
+    this.gaplessPlayback = true,
     this.data,
     this.options,
   })  : assert((image is String || image is ImageProvider) && bounds != null),
@@ -64,7 +65,6 @@ class ImageOverlay extends InteractiveLayer {
     final double left = topLeft.x;
     final width = bottomRight.x - topLeft.x;
     final height = bottomRight.y - topLeft.y;
-    final opacity = this.opacity ?? 1.0;
 
     return Positioned(
       top: top,
@@ -77,69 +77,69 @@ class ImageOverlay extends InteractiveLayer {
           position: bounds,
           data: data,
           options: options,
-          child: _image,
+          child: Transform.rotate(
+            angle: degToRadian(rotation),
+            child: _image,
+          ),
         ),
       ),
     );
   }
 
   Widget? get _image {
-    final angle = degToRadian(rotation!);
-
     if (isImage) {
       return image;
     }
 
     if (isProvider) {
-      return Transform.rotate(
-        angle: angle,
-        child: Image(
-          image: imageProvider!,
-          fit: fit,
-          gaplessPlayback: gaplessPlayback!,
-        ),
+      return ExtendedImage(
+        image: imageProvider!,
+        fit: fit,
+        gaplessPlayback: gaplessPlayback,
+        enableLoadState: false,
       );
     }
 
     if (isFile) {
-      return Image.file(imageFile!,
-          fit: fit, gaplessPlayback: gaplessPlayback!);
+      return ExtendedImage.file(
+        imageFile!,
+        fit: fit,
+        gaplessPlayback: gaplessPlayback,
+        enableLoadState: false,
+      );
     }
 
     if (isPath) {
       if (isNetworkPath) {
-        return CachedNetworkImage(
-          imageUrl: imagePath!,
-          imageBuilder: (_, imageProvider) => Transform.rotate(
-            angle: angle,
-            child: Image(
-              image: imageProvider,
-              fit: fit,
-              gaplessPlayback: gaplessPlayback!,
-            ),
-          ),
-          placeholder: (_, __) => Container(),
-          errorWidget: (_, __, ___) =>
-              imageError != null ? Image(image: imageError!) : Container(),
+        return ExtendedImage.network(
+          imagePath!,
+          fit: fit,
+          gaplessPlayback: gaplessPlayback,
+          enableLoadState: false,
         );
       }
 
       if (isFilePath) {
-        return Image.file(File(imagePath!),
-            fit: fit, gaplessPlayback: gaplessPlayback!);
+        return ExtendedImage.file(
+          File(imagePath!),
+          fit: fit,
+          gaplessPlayback: gaplessPlayback,
+          enableLoadState: false,
+        );
       }
 
       if (isAssetPath) {
-        return Image.asset(
+        return ExtendedImage.asset(
           imagePath!,
           fit: fit,
-          gaplessPlayback: gaplessPlayback!,
+          gaplessPlayback: gaplessPlayback,
+          enableLoadState: false,
         );
       }
     }
 
     if (imageError != null) {
-      return Image(image: imageError!);
+      return ExtendedImage(image: imageError!);
     }
 
     return Container();

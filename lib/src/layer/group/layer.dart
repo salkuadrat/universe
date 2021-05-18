@@ -1,6 +1,7 @@
-import 'package:flutter/widgets.dart';
-import 'package:universe/src/shared.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
+import '../../shared.dart';
 import '../../map/map.dart';
 import '../layer.dart';
 

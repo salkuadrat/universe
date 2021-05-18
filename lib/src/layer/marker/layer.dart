@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'dart:math' as math;
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/core.dart';
@@ -106,24 +107,29 @@ class MarkerLayer extends InteractiveLayer {
                   }
 
                   if (image.isProvider) {
-                    return Image(image: image.imageProvider!);
+                    return ExtendedImage(
+                        image: image.imageProvider!, enableLoadState: false);
                   }
 
                   if (image.isFile) {
-                    return Image.file(image.imageFile!);
+                    return ExtendedImage.file(image.imageFile!,
+                        enableLoadState: false);
                   }
 
                   if (image.isPath) {
                     if (image.isNetworkPath) {
-                      return CachedNetworkImage(imageUrl: image.imagePath!);
+                      return ExtendedImage.network(image.imagePath!,
+                          enableLoadState: false);
                     }
 
                     if (image.isFilePath) {
-                      return Image.file(File(image.imagePath!));
+                      return ExtendedImage.file(File(image.imagePath!),
+                          enableLoadState: false);
                     }
 
                     try {
-                      return Image.asset(image.imagePath!);
+                      return ExtendedImage.asset(image.imagePath!,
+                          enableLoadState: false);
                     } catch (e) {
                       log(e);
                       return Container();
