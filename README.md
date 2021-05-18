@@ -304,7 +304,6 @@ final _mapController = MapController();
 
 ```dart
 U.OpenStreetMap(
-  key: _mapKey,
   controller: _mapController,
   center: [51.555158, -0.108343],
   zoom: 15,
@@ -324,10 +323,10 @@ _mapController.positionStream?.listen((data) {
 ```
 
 [MapController](example/lib/src/controller/simple.dart)\
-[Move Map](example/lib/src/controller/move.dart)\
-[Zoom Map](example/lib/src/controller/zoom.dart)\
-[Rotate Map](example/lib/src/controller/rotate.dart)\
-[Find Location](example/lib/src/controller/locate.dart)
+[Move Map example](example/lib/src/controller/move.dart)\
+[Zoom Map example](example/lib/src/controller/zoom.dart)\
+[Rotate Map example](example/lib/src/controller/rotate.dart)\
+[Find Location example](example/lib/src/controller/locate.dart)
 
 ### Circle
 
