@@ -563,7 +563,7 @@ U.OpenStreetMap(
 )
 ```
 
-[Widget Overlay](example/lib/src/overlay/widget.dart)
+[Custom Widget Overlay example](example/lib/src/overlay/widget.dart)
 
 ### Custom Controls
 
