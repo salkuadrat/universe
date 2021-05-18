@@ -14,7 +14,8 @@ class _JawgMapState extends State<JawgMap> {
   Widget build(BuildContext context) {
     return U.JawgMap(
       // Please get and use your own API key from https://www.jawg.io
-      accessToken: 'XlZATO6aTUg6aQsBES8aebd7szoowRb2TUjE2aE7GVq4LrvKLu9evqYB7XTe1nLj',
+      accessToken:
+          'XlZATO6aTUg6aQsBES8aebd7szoowRb2TUjE2aE7GVq4LrvKLu9evqYB7XTe1nLj',
       center: [51.555158, -0.108343],
       type: type,
       zoom: 16,

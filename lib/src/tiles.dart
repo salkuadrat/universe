@@ -437,7 +437,8 @@ TileLayerOptions hydda(HyddaType type, TileLayerOptions options) {
   return opts;
 }
 
-TileLayerOptions jawg(JawgType type, TileLayerOptions options, String accessToken) {
+TileLayerOptions jawg(
+    JawgType type, TileLayerOptions options, String accessToken) {
   TileLayerOptions opts = options.copy(
     subdomains: 'abcd',
     attribution: '&copy; Jawg Maps, &copy; OpenStreetMap contributors',

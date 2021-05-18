@@ -53,7 +53,7 @@ class _LocationFinderMapState extends State<LocationFinderMap> {
           key: _mapKey,
           controller: _mapController,
           // set map center by location name (not latlng)
-          center: 'Emirates Stadium', 
+          center: 'Emirates Stadium',
           zoom: 16,
         ),
         Positioned(
