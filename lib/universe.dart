@@ -8,4 +8,3 @@ export 'src/type.dart';
 export 'src/u.dart';
 
 // TODO: create unit test for Distance, both Haversine and Vincenty
-// TODO: polygon & rectangle moving still laggy (check again polygon painter)

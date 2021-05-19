@@ -1,3 +1,11 @@
+## [0.0.5-nullsafety.2] - 19 May 2021
+
+* remove module android-X to support all platforms
+
+## [0.0.5-nullsafety.1] - 19 May 2021
+
+* explicitly add path_provider dependency to support all platforms
+
 ## [0.0.5-nullsafety] - 19 May 2021
 
 * change caching image from cache_network_image to extended_image

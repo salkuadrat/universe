@@ -1,11 +1,9 @@
 name: universe
 description: The easy & flexible way to use interactive maps in Flutter. Inspired by Leaflet.js.
-version: 0.0.5-nullsafety
+version: 0.0.5-nullsafety.2
 # author: Salman S
 homepage: https://salkuadrat.github.io/universe
 repository: https://github.com/salkuadrat/universe
-module:
-  androidX: true
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -28,6 +26,7 @@ dependencies:
   video_player: ^2.1.1
   provider: ^5.0.0
   flutter_geocoder: ^0.2.2-nullsafety
+  path_provider: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -38,4 +37,3 @@ flutter:
     - packages/universe/assets/marker.svg
     - packages/universe/assets/marker2.svg
     - packages/universe/assets/compass.svg
-    

@@ -1,5 +1,5 @@
 name: universe_example
-description: Example projects for using flutter map Universe.
+description: A complete example showing many use cases of using Universe package in Flutter.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+2
