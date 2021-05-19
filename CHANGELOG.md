@@ -1,3 +1,11 @@
+## [0.0.5-nullsafety.4] - 19 May 2021
+
+* remove environment flutter from pubspec to support all platforms
+
+## [0.0.5-nullsafety.3] - 19 May 2021
+
+* format all
+
 ## [0.0.5-nullsafety.2] - 19 May 2021
 
 * remove module android-X to support all platforms
