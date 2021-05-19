@@ -1,3 +1,7 @@
+## [0.0.5-nullsafety.5] - 19 May 2021
+
+* try setting the flutter version environment to ">=1.24.0-10.2.pre" (hopefully it can change the multiple platform supports score)
+
 ## [0.0.5-nullsafety.4] - 19 May 2021
 
 * remove environment flutter from pubspec to support all platforms
