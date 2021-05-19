@@ -11,7 +11,7 @@ import '../layer/layer.dart';
 
 class Scale extends MapLayer {
   final Alignment alignment;
-  final EdgeInsets margin;
+  final EdgeInsets? margin;
   final Color color;
   final double fontSize;
   final double strokeWidth;
@@ -19,7 +19,7 @@ class Scale extends MapLayer {
 
   Scale({
     this.alignment = Alignment.topLeft,
-    this.margin = const EdgeInsets.only(left: 15, top: 48),
+    this.margin,
     this.color = const Color(0xFF546E7A),
     this.strokeWidth = 2.0,
     this.fontSize = 12,
@@ -65,6 +65,10 @@ class Scale extends MapLayer {
     final distanceStr = distance > 999
         ? '${(distance / 1000).toStringAsFixed(0)} km'
         : '${distance.toStringAsFixed(0)} m';
+
+    final double viewTop = MediaQuery.of(context).viewPadding.top;
+    final EdgeInsets margin =
+        this.margin ?? EdgeInsets.only(top: viewTop + 12, left: 15);
 
     return Positioned.fill(
       child: Align(

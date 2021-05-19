@@ -9,16 +9,20 @@ import '../map/map.dart';
 class Compass extends MapLayer {
   final Widget? icon;
   final Alignment alignment;
-  final EdgeInsets margin;
+  final EdgeInsets? margin;
 
   Compass({
     this.icon,
     this.alignment = Alignment.topRight,
-    this.margin = const EdgeInsets.only(top: 52, right: 20),
+    this.margin,
   });
 
   @override
   Widget buildLayer(BuildContext context, MapStates map) {
+    final double viewTop = MediaQuery.of(context).viewPadding.top;
+    final EdgeInsets margin =
+        this.margin ?? EdgeInsets.only(top: viewTop + 15, right: 20);
+
     return Positioned.fill(
       child: Align(
         alignment: alignment,
