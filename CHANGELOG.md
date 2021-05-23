@@ -1,3 +1,7 @@
+## [0.0.6-nullsafety] - 20 May 2021
+
+* reorganize assets
+
 ## [0.0.5-nullsafety.6] - 20 May 2021
 
 * change default margin of compass and scale

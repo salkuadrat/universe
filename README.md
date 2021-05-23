@@ -10,7 +10,7 @@ Add dependency to your flutter project:
 
 ```yaml
 dependencies:
-  universe: ^0.0.5-nullsafety.6
+  universe: ^0.0.6-nullsafety
 ```
 
 ```yaml
@@ -22,7 +22,7 @@ dependencies:
 
 Then run `flutter pub get`.
 
-## Android Permissions
+## Permissions
 
 Add Internet & Location permissions to your AndroidManifest.xml.
 

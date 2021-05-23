@@ -239,7 +239,7 @@ const MarkerAlignment markerAlignDef = MarkerAlignment.top;
 const Color markerColorDef = Colors.lightBlue;
 
 const MarkerSvg markerDef =
-    const MarkerSvg('packages/universe/assets/marker2.svg');
+    const MarkerSvg('packages/universe/assets/marker.svg');
 
 const bool loopingVideoDef = true;
 
