@@ -10,7 +10,7 @@ Add dependency to your flutter project:
 
 ```yaml
 dependencies:
-  universe: ^0.0.6-nullsafety
+  universe: ^0.0.7-nullsafety
 ```
 
 ```yaml

@@ -1,3 +1,7 @@
+## [0.0.7-nullsafety] - 29 May 2021
+
+* Change into plugin to force support for ios
+
 ## [0.0.6-nullsafety] - 20 May 2021
 
 * reorganize assets
