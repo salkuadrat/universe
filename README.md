@@ -2,29 +2,28 @@
 
 The easy & flexible way to use interactive maps in Flutter. Inspired by [Leaflet.js](https://leafletjs.com/).
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot.jpg" alt="universe" width="400">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot.jpg" alt="universe" width="320">
 
 ## Getting Started
 
-Add dependency to your flutter project:
+Add dependency to your flutter project.
 
-```yaml
-dependencies:
-  universe: ^0.0.8-nullsafety
+```
+$ flutter pub add universe
 ```
 
+or
+
 ```yaml
 dependencies:
-  universe:
-    git: 
-      url: git://github.com/salkuadrat/universe.git
+  universe: ^1.0.0-nullsafety
 ```
 
 Then run `flutter pub get`.
 
 ## Permissions
 
-Add Internet & Location permissions to your AndroidManifest.xml.
+Add permissions to your AndroidManifest.xml.
 
 ```xml
 <manifest xmlns:android...>
@@ -37,10 +36,7 @@ Add Internet & Location permissions to your AndroidManifest.xml.
 
 ## Example Project
 
-There is a complete examples in the [example folder](example).\
-Check it out to learn the many use cases of using Universe library.
-
-You can also try a working example by installing [universe.apk](universe.apk).
+There is a complete examples in the [example folder](example) to learn the many use cases of using Universe library. You can also try a working example on your device: [universe.apk](universe.apk).
 
 ## Usage
 

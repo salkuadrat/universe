@@ -1,3 +1,7 @@
+## [1.0.0-nullsafety] - 08 June 2021
+
+* turn off logs
+
 ## [0.0.8-nullsafety] - 08 June 2021
 
 * add dispose to MapController
