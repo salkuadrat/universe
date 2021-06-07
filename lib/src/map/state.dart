@@ -1,142 +1,152 @@
-/* import 'dart:math' as math;
-import 'package:flutter/rendering.dart';
+import 'dart:async';
+import 'dart:math' as math;
+import 'package:curved_animation_controller/curved_animation_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_geocoder/geocoder.dart';
+import 'package:location/location.dart';
 
 import '../core/core.dart';
+import '../log.dart';
 import '../shared.dart';
-import 'map.dart';
+import 'controller/controller.dart';
+import 'interactive/interactive.dart';
+import 'options/options.dart';
 
-class MapState {
-  final MapController? controller;
-  final MapOptions? options;
-  final LatLng? center;
-  final double? zoom;
-  final double minZoom;
-  final double maxZoom;
-  final double rotation;
-  final Size? size;
+class MapState extends ChangeNotifier {
+  late MapController _originalController;
+  late MapOptions _originalOptions;
 
-  /// current user's location from MapManager locate()
-  LatLng? location;
-  bool? isLocating = false;
+  late MapController _controller;
+  late MapOptions _options;
+  late LatLng _center;
+  late double _zoom;
+  late double _minZoom;
+  late double _maxZoom;
+  late double _originalRotation;
+  late double _rotation;
+  late Size _size;
+  late bool _isLocating;
 
-  bool get isNotLocating => !isLocating!;
+  LatLng? _position;
+  Location? _location;
+  StreamSubscription? _locationSubs;
+  late StreamController<MapData> _positionStream;
 
-  Crs get crs => options!.crs;
+  late TickerProvider _vsync;
+  CurvedAnimationController? _rotateAnim;
+  CurvedAnimationController? _moveAnim;
+  CurvedAnimationController? _zoomAnim;
 
-  bool get hasCenter => center != null;
-  bool get canRotate => options!.canRotate;
-  bool get hasRotation => rotation > 0.0;
-  bool get showCenterMarker => options!.showCenterMarker;
-  bool get showLocationMarker => options!.showLocationMarker && location != null;
+  double _angle = 0.0;
+  double _angleStart = 0.0;
 
-  dynamic get centerMarker => options!.centerMarker;
-  dynamic get locationMarker => options!.locationMarker;
+  Function? _onAngleChanged;
+  //Function? _onTileChanged;
+  List<Function?> _onChangedListeners = [];
 
-  double get angle => degToRadian(rotation);
-  double get width => size!.width;
-  double get height => size!.height;
+  Function? get onTap => _options.onTap;
+  Function? get onLongPress => _options.onLongPress;
 
   MapState({
-    this.controller, 
-    this.options,
-    LatLng? center,
-    this.location,
-    this.isLocating,
-    double? zoom,
-    double? minZoom,
-    double? maxZoom,
-    double? rotation,
-    Size? size,
-  }) : 
-    this.center = center ?? options?.center,
-    this.zoom = zoom ?? options?.zoomOptions.zoom,
-    this.minZoom = minZoom ?? options?.zoomOptions.minZoom ?? minZoomDef,
-    this.maxZoom = maxZoom ?? options?.zoomOptions.maxZoom ?? maxZoomDef,
-    this.rotation = rotation ?? options?.rotation ?? 0.0,
-    this.size = size ?? options!.size;
+    required MapController controller,
+    required MapOptions options,
+  }) {
+    _originalController = controller;
+    _originalOptions = options;
+    _controller = controller;
+    _options = options;
+    _zoom = options.zoom;
+    _minZoom = options.minZoom;
+    _maxZoom = options.maxZoom;
+    _originalRotation = options.rotation;
+    _rotation = 0.0;
+    _size = options.size!;
+    _isLocating = false;
+    _onChangedListeners = [];
 
-  void init() {
-    assert(size != null);
-    assert(zoom != null);
-    assert(
-      options!.slideOnBoundaries || 
-      (options!.centerQuery != null && options!.centerQuery!.isNotEmpty) || 
-      (center != null && !isOutOfBounds(center))
-    );
-    assert(!options!.adaptiveBoundaries || size != null, 'Size must be set in order to enable adaptive boundaries.');
-    
-    controller?.onReady = options!.onReady;
-    controller?.onChanged = options!.onChanged;
+    // prepare for default center when the map uses a string centerQuery
+    _center = options.center ?? LatLng(0.0, 0.0);
+
+    _angle = degToRadian(_rotation);
+    _controller.onReady = options.onReady;
+    _controller.onChanged = options.onChanged;
+    _controller.map = this;
+
+    assert(options.slideOnBoundaries ||
+        (options.centerQuery != null && options.centerQuery!.isNotEmpty) ||
+        (options.center != null && !_isOutOfBounds(options.center)));
   }
-  
-  MapState copyWith({
-    MapController? controller,
-    LatLng? center,
-    LatLng? optionCenter,
-    LatLngBounds? bounds,
-    LatLng? location,
-    bool? isLocating,
-    double? zoom,
-    double? minZoom,
-    double? maxZoom,
-    double? rotation,
-    Size? size,
-  }) => MapState(
-    controller: controller ?? this.controller,
-    options: optionCenter != null 
-      ? this.options!.copyWith(center: optionCenter) 
-      : this.options,
-    center: center ?? this.center,
-    location: location ?? this.location,
-    isLocating: isLocating ?? this.isLocating,
-    zoom: zoom ?? this.zoom,
-    minZoom: minZoom ?? this.minZoom,
-    maxZoom: maxZoom ?? this.maxZoom, 
-    rotation: rotation ?? this.rotation,
-    size: size ?? this.size,
-  );
 
-  MapState withManager(MapStateManager manager) {
-    MapController controller = this.controller!;
-    //controller.manager = manager;
-    return copyWith(controller: controller);
+  StreamController<MapData> get positionStream => _positionStream;
+  MapController get controller => _controller;
+  MapOptions get options => _options;
+
+  Crs get crs => options.crs;
+  LatLng get center => _center;
+  double get zoom => _zoom;
+  double get minZoom => _minZoom;
+  double get maxZoom => _maxZoom;
+  double get rotation => _rotation;
+  double get originalRotation => _originalRotation;
+  Size get size => _size;
+
+  double get angle => _angle;
+  double get angleStart => _angleStart;
+
+  bool get isLocating => _isLocating;
+  bool get isNotLocating => !isLocating;
+  Location? get location => _location;
+  LatLng? get position => _position;
+
+  late SafeBounds _safeBoundsCache;
+  //late double _safeBoundsZoom;
+
+  bool get hasMaxBounds => _options.hasMaxBounds;
+  LatLng? get swBound => _options.maxBounds?.southWest;
+  LatLng? get neBound => _options.maxBounds?.northEast;
+
+  bool get canRotate => _options.canRotate;
+  bool get hasRotation => _rotation > 0.0;
+  bool get showCenterMarker => _options.showCenterMarker;
+  bool get showLocationMarker =>
+      _options.showLocationMarker && _position != null;
+
+  dynamic get centerMarker => _options.centerMarker;
+  dynamic get locationMarker => _options.locationMarker;
+
+  double get width => _size.width;
+  double get height => _size.height;
+
+  Size get _halfSize => _size / 2;
+  UPoint get _halfPoint => UPoint.from(_halfSize);
+
+  double get _widthInDegrees => _size.width * (360 / math.pow(2, _zoom + 8));
+  double get _heightInDegrees =>
+      (_size.height * 170.102258) / math.pow(2, _zoom + 8);
+
+  UPoint get centerPoint => getCenterPoint(_center, _zoom);
+  UPoint get pixelOrigin => getPixelOrigin(_center, _zoom);
+
+  UPoint getCenterPoint(LatLng? center, [double? zoom]) {
+    return project(center, zoom ?? _zoom);
   }
-  
-  MapState withMinZoom(double minZoom) => copyWith(minZoom: minZoom);
-  MapState withMaxZoom(double maxZoom) => copyWith(maxZoom: maxZoom);
-  MapState updateLocation(LatLng? location) => copyWith(location: location);
-  MapState startLocating() => copyWith(isLocating: true);
-  MapState stopLocating() => copyWith(isLocating: false);
-
-  //bool get hasBounds => options.hasBounds;
-  bool get hasMaxBounds => options!.hasMaxBounds;
-  LatLng? get swBound => options!.maxBounds?.southWest;
-  LatLng? get neBound => options!.maxBounds?.northEast;
-
-  Size get halfSize => size! / 2;
-  UPoint get halfPoint => UPoint.from(halfSize);
-  UPoint get centerPoint => project(center, zoom);
-  
-  /// Returns the projected pixel coordinates of the top left point of 
-  /// the map layer (useful in custom layer and overlay implementations).
-  UPoint get pixelOrigin => (centerPoint - halfPoint).round();
 
   UPoint getPixelOrigin(LatLng? center, [double? zoom]) {
-    final centerPoint = project(center, zoom ?? this.zoom);
-    return (centerPoint - halfPoint).round();
+    return (getCenterPoint(center, zoom) - _halfPoint).round();
   }
 
   Bounds? getPixelWorldBounds(double? zoom) {
-    return crs.getProjectedBounds(zoom ?? this.zoom);
+    return crs.getProjectedBounds(zoom ?? _zoom);
   }
 
-  Bounds get pixelBounds => getPixelBounds(center, zoom);
+  Bounds get pixelBounds => getPixelBounds(_center, _zoom);
 
-  Bounds getPixelBounds(LatLng? center, double? zoom) {
-    double scale = getZoomScale(zoom, this.zoom);
+  Bounds getPixelBounds(LatLng? center, double zoom) {
+    double scale = getZoomScale(zoom, _zoom);
 
-    UPoint centerPoint = project(center, zoom).floor();
-    UPoint offset = UPoint.from(halfSize / scale);
+    UPoint centerPoint = getCenterPoint(center, zoom).floor();
+    UPoint offset = UPoint.from(_halfSize / scale);
 
     return Bounds(centerPoint - offset, centerPoint + offset);
   }
@@ -149,32 +159,29 @@ class MapState {
       unproject(bounds.topRight),
     );
   }
-  
+
   LatLngBounds wrapLatLngBounds(LatLngBounds latlngBounds) {
     return crs.wrapLatLngBounds(latlngBounds);
   }
 
   double limitZoom([double? zoom]) {
-    return math.max(
-      minZoom, 
-      math.min(maxZoom, zoom ?? this.zoom!),
-    );
+    return math.max(minZoom, math.min(maxZoom, zoom ?? _zoom));
   }
 
   UPoint project(LatLng? latlng, [double? zoom]) {
-    return latlngToPoint(latlng, zoom ?? this.zoom);
+    return latlngToPoint(latlng, zoom ?? _zoom);
   }
 
   UPoint latlngToPoint(LatLng? latlng, [double? zoom]) {
-    return crs.latlngToPoint(latlng, zoom ?? this.zoom);
+    return crs.latlngToPoint(latlng, zoom ?? _zoom);
   }
 
   LatLng? unproject(UPoint point, [double? zoom]) {
-    return pointToLatLng(point, zoom ?? this.zoom);
+    return pointToLatLng(point, zoom ?? _zoom);
   }
 
   LatLng? pointToLatLng(UPoint point, [double? zoom]) {
-    return crs.pointToLatLng(point, zoom ?? this.zoom);
+    return crs.pointToLatLng(point, zoom ?? _zoom);
   }
 
   UPoint offsetToPoint(Offset offset) {
@@ -194,34 +201,34 @@ class MapState {
   }
 
   LatLng? offsetToLatLng(Offset offset, [double? width, double? height]) {
-    width ??= size!.width;
-    height ??= size!.height;
-    
+    width ??= size.width;
+    height ??= size.height;
+
     UPoint point = offsetToPoint(offset);
     UPoint centerPoint = project(center);
     UPoint diffPoint = UPoint(
-      (width / 2) - point.x, 
+      (width / 2) - point.x,
       (height / 2) - point.y,
     );
 
     return unproject(centerPoint - diffPoint);
   }
 
-  /// Returns the scale factor to be applied to a map transition 
-  /// from zoom level `fromZoom` to `toZoom`. 
-  /// 
+  /// Returns the scale factor to be applied to a map transition
+  /// from zoom level `fromZoom` to `toZoom`.
+  ///
   /// Used internally to help with zoom animations.
-  double getZoomScale(double? toZoom, [double? fromZoom]) {
-    return crs.scale(toZoom)! / crs.scale(fromZoom ?? this.zoom)!;
+  double getZoomScale(double toZoom, [double? fromZoom]) {
+    return crs.scale(toZoom)! / crs.scale(fromZoom ?? _zoom)!;
   }
 
-  /// Returns the zoom level that the map would end up at, 
-  /// if it is at `fromZoom` level and everything is scaled 
-  /// by a factor of `scale`. 
-  /// 
+  /// Returns the zoom level that the map would end up at,
+  /// if it is at `fromZoom` level and everything is scaled
+  /// by a factor of `scale`.
+  ///
   /// Inverse of [`getZoomScale`].
   double getScaleZoom(double scale, [double? fromZoom]) {
-    return crs.zoom(scale * crs.scale(fromZoom ?? this.zoom)!);   
+    return crs.zoom(scale * crs.scale(fromZoom ?? _zoom)!);
   }
 
   double getScaledZoom(double fromZoom, double scale) {
@@ -229,22 +236,22 @@ class MapState {
     return limitZoom(zoom);
   }
 
-  bool isEqualZoom(double zoom, [double maxMargin = 0.005]) {
-    return (this.zoom! - zoom).abs() <= maxMargin;
+  bool _isEqualZoom(double zoom, [double maxMargin = 0.005]) {
+    return (_zoom - zoom).abs() <= maxMargin;
   }
 
-  bool isNotEqualZoom(double zoom, [double maxMargin = 0.005]) {
-    return !isEqualZoom(zoom, maxMargin);
+  bool _isNotEqualZoom(double zoom, [double maxMargin = 0.005]) {
+    return !_isEqualZoom(zoom, maxMargin);
   }
 
-  MapData getBoundsCenterZoom(LatLngBounds bounds, FitBoundsOptions options) {
+  MapData _getBoundsCenterZoom(LatLngBounds bounds, FitBoundsOptions options) {
     UPoint paddingTL = UPoint(options.padding.left, options.padding.top);
     UPoint paddingBR = UPoint(options.padding.right, options.padding.bottom);
 
-    double zoom = getBoundsZoom(bounds, paddingTL + paddingBR); 
+    double zoom = _getBoundsZoom(bounds, paddingTL + paddingBR);
     zoom = math.min(options.maxZoom, zoom);
 
-    if(zoom == double.infinity) {
+    if (zoom == double.infinity) {
       return MapData(center: bounds.center, zoom: zoom);
     }
 
@@ -258,80 +265,62 @@ class MapState {
     return MapData(center: center, zoom: zoom);
   }
 
-  double getBoundsZoom(LatLngBounds bounds, UPoint padding, {bool inside=false}) {
-    double zoom = this.zoom ?? 0.0;
+  double _getBoundsZoom(LatLngBounds bounds, UPoint padding,
+      {bool inside = false}) {
+    double zoom = _zoom;
 
     LatLng nw = bounds.northWest;
     LatLng se = bounds.southEast;
 
-    Size size = this.size! - padding;
+    Size size = _size - padding;
     Size boundsSize = Bounds(project(se, zoom), project(nw, zoom)).size;
 
     double scaleX = size.width / boundsSize.width;
     double scaleY = size.height / boundsSize.height;
     double scale = inside ? math.max(scaleX, scaleY) : math.min(scaleX, scaleY);
-    
-    double minZoom = this.minZoom;
-    double maxZoom = this.maxZoom;
+
     zoom = getScaleZoom(scale, zoom);
-
-    return math.max(minZoom, math.min(maxZoom, zoom));
+    return math.max(_minZoom, math.min(_maxZoom, zoom));
   }
-  
-  double  get _widthInDegrees => 
-    size!.width * (360 / math.pow(2, zoom! + 8));
 
-  double get _heightInDegrees => 
-    (size!.height * 170.102258) / math.pow(2, zoom! + 8);
-  
-  SafeBounds? _safeBoundsCache;
-  double? _safeBoundsZoom;
-
-  SafeBounds? get _safeBounds {
-    if(_safeBoundsCache != null && _safeBoundsZoom == zoom) {
-      return _safeBoundsCache;
-    }
-
-    if(hasMaxBounds) {
+  SafeBounds get _safeBounds {
+    if (hasMaxBounds) {
       final halfHeight = _heightInDegrees / 2;
       final halfWidth = _widthInDegrees / 2;
-      
+
       final swLatitude = swBound!.lat + halfHeight;
       final swLongitude = swBound!.lng + halfWidth;
       final neLatitude = neBound!.lat - halfHeight;
       final neLongitude = neBound!.lng - halfWidth;
-      
+
       _safeBoundsCache = SafeBounds(
         LatLng(swLatitude, swLongitude),
         LatLng(neLatitude, neLongitude),
       );
-      
-      _safeBoundsZoom = zoom;
+
+      //_safeBoundsZoom = _zoom;
     }
 
     return _safeBoundsCache;
   }
 
-  //if center is out of bounds
-  bool isOutOfBounds(LatLng? center) {
-    if(center == null) {
+  bool _isOutOfBounds(LatLng? center) {
+    if (center == null) {
       return true;
     }
 
-    if(hasMaxBounds) {
-      if(options!.adaptiveBoundaries) {
-        return !_safeBounds!.contains(center);
+    if (hasMaxBounds) {
+      if (options.adaptiveBoundaries) {
+        return !_safeBounds.contains(center);
       }
 
-      bool isLatOutOfBounds =  
-        (center.lat < swBound!.lat) || 
-        (center.lat > neBound!.lat);
-      
-      bool isLngOutOfBounds = 
-        (center.lng < swBound!.lng) || 
-        (center.lng > neBound!.lng);
-      
-      if(isLatOutOfBounds || isLngOutOfBounds) {
+      bool isLatOutOfBounds =
+          (center.lat < swBound!.lat) || (center.lat > neBound!.lat);
+
+      bool isLngOutOfBounds =
+          (center.lng < swBound!.lng) || (center.lng > neBound!.lng);
+
+      if (isLatOutOfBounds || isLngOutOfBounds) {
         return true;
       }
     }
@@ -339,10 +328,10 @@ class MapState {
     return false;
   }
 
-  LatLng safeCenter(LatLng center, LatLng defaultCenter) {
-    if(hasMaxBounds) {
-      if (options!.adaptiveBoundaries) {
-        return _safeBounds!.containLatLng(center, defaultCenter);
+  LatLng _safeCenter(LatLng center, LatLng defaultCenter) {
+    if (hasMaxBounds) {
+      if (options.adaptiveBoundaries) {
+        return _safeBounds.containLatLng(center, defaultCenter);
       }
 
       return LatLng(
@@ -350,19 +339,441 @@ class MapState {
         center.lng.clamp(swBound!.lng, neBound!.lng),
       );
     }
-    
+
     return defaultCenter;
   }
 
-  void onTap(LatLng? location) {
-    options!.onTap?.call(location);
+  set onAngleChanged(Function onAngleChanged) {
+    _onAngleChanged = onAngleChanged;
+    notifyListeners();
   }
 
-  void onLongPress(LatLng? location) {
-    options!.onLongPress?.call(location);
+  void addChangedListener(Function listener) {
+    _onChangedListeners.add(listener);
   }
 
-  void onChanged(LatLng? center, double? zoom, double rotation) {
-    controller!.onChanged?.call(center, zoom, rotation);
+  void _callChangedListeners() {
+    _onChangedListeners.forEach((listener) => listener?.call());
   }
-} */
+
+  Future init(TickerProvider vsync, Function onAngleChanged) async {
+    log('MapStates init');
+
+    _vsync = vsync;
+    _onAngleChanged = onAngleChanged;
+    _positionStream = StreamController.broadcast(sync: true);
+
+    notifyListeners();
+
+    await _initLocation();
+
+    if (options.hasFitBounds) {
+      fitBounds(options.fitBounds, options.fitBoundsOptions);
+    } else if (options.hasCenterQuery) {
+      await _locateCenter(options.center);
+    } else if (options.hasCenter) {
+      move(options.center, options.zoom);
+    } else {
+      fitWorld();
+    }
+
+    controller.onReady?.call();
+    notifyListeners();
+  }
+
+  void _startLocating() {
+    _isLocating = true;
+    notifyListeners();
+  }
+
+  void _stopLocating() {
+    _isLocating = false;
+    notifyListeners();
+  }
+
+  Future _initLocation() async {
+    log('MapStates initLocation');
+
+    _location = new Location();
+
+    if (options.live) {
+      _startLocating();
+      await _initLocationSettings();
+
+      _locationSubs = _location?.onLocationChanged.listen((data) {
+        _stopLocating();
+
+        _position = LatLng(
+          data.latitude,
+          data.longitude,
+          data.altitude,
+        );
+
+        notifyListeners();
+
+        if (options.moveWhenLive) {
+          move(_position, 17.01122, true);
+        }
+      });
+    }
+  }
+
+  Future _initLocationSettings() async {
+    bool _serviceEnabled = await _location?.serviceEnabled() ?? false;
+
+    if (!_serviceEnabled) {
+      _serviceEnabled = await _location?.requestService() ?? false;
+
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    PermissionStatus? _permissionGranted = await _location?.hasPermission();
+
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await _location?.requestPermission();
+
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+  }
+
+  Future _locateCenter([LatLng? defaultCenter]) async {
+    log('MapStates locateCenter');
+
+    LatLng? center = await findLocation(options.centerQuery!) ?? defaultCenter;
+    double zoom = _zoom;
+
+    if (center != null) {
+      _center = center;
+      _options = _options.copyWith(center: center);
+
+      rotate(0.0, true);
+      await move(_center, zoom - 1.1);
+      await move(_center, zoom, true);
+    }
+  }
+
+  reset() {
+    log('MapStates reset');
+    _controller = _originalController;
+    _options = _originalOptions;
+    notifyListeners();
+  }
+
+  resize(double width, double height) {
+    log('MapStates resize');
+    _size = Size(width, height);
+    notifyListeners();
+  }
+
+  _move(LatLng center, double? zoom) {
+    zoom = limitZoom(zoom);
+
+    bool isZoomChanged = _isNotEqualZoom(zoom);
+    bool isCenterChanged = _center.notEqual(center);
+    bool isMapChanged = isZoomChanged || isCenterChanged;
+    bool isMapNotChanged = !isMapChanged;
+    bool boundsNotValid = hasMaxBounds && bounds.isNotValid;
+
+    // if not moved (center is not changed or bounds is not valid)
+    if (isMapNotChanged || boundsNotValid) {
+      return;
+    }
+
+    if (_isOutOfBounds(center)) {
+      if (!options.slideOnBoundaries) {
+        return;
+      }
+
+      center = _safeCenter(center, _center);
+      isCenterChanged = center.notEqual(_center);
+    }
+
+    _center = center;
+    _zoom = zoom;
+    _rotation = radianToDeg(_angle);
+
+    _callChangedListeners();
+    _controller.onChanged?.call(_center, _zoom, _rotation);
+    _positionStream.add(MapData(center: _center, zoom: _zoom));
+
+    notifyListeners();
+  }
+
+  Future move(dynamic center, double? zoom, [bool animate = false]) async {
+    log('MapStates move $center $zoom');
+
+    if (center is String) {
+      center = await findLocation(center);
+    } else {
+      center = LatLng.from(center);
+    }
+
+    if (center == null) {
+      return;
+    }
+
+    if (animate) {
+      _moveAnim = CurvedAnimationController.tween(
+        LatLngTween(begin: _center, end: center),
+        Duration(milliseconds: 250),
+        curve: Curves.ease,
+        vsync: _vsync,
+      );
+
+      _zoomAnim = CurvedAnimationController(
+        begin: _zoom,
+        end: zoom,
+        duration: Duration(milliseconds: 250),
+        curve: Curves.ease,
+        vsync: _vsync,
+      );
+
+      _moveAnim?.addListener(() {
+        _move(_moveAnim!.value, _zoom);
+      });
+
+      _zoomAnim?.addListener(() {
+        _zoom = _zoomAnim!.value;
+      });
+
+      _moveAnim?.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _moveAnim?.dispose();
+        }
+      });
+
+      _zoomAnim?.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _zoomAnim?.dispose();
+        }
+      });
+
+      _moveAnim
+        ?..reset()
+        ..start();
+      _zoomAnim
+        ?..reset()
+        ..start();
+    } else {
+      _move(center, zoom);
+    }
+  }
+
+  fitBounds(dynamic bounds, [FitBoundsOptions? options]) {
+    log('MapStates fitBounds');
+
+    LatLngBounds latlngBounds = LatLngBounds.from(bounds);
+
+    if (latlngBounds.isNotValid) {
+      throw Exception('Bounds are not valid');
+    }
+
+    final target =
+        _getBoundsCenterZoom(latlngBounds, options ?? FitBoundsOptions());
+
+    move(target.center, target.zoom, true);
+  }
+
+  fitWorld([FitBoundsOptions? options]) {
+    log('MapStates fitWorld');
+    fitBounds([
+      [-90.0, -180.0],
+      [90.0, 180.0]
+    ], options);
+  }
+
+  set minZoom(double minZoom) {
+    _minZoom = minZoom;
+    notifyListeners();
+
+    if (_zoom < minZoom) {
+      zoomTo(minZoom);
+    }
+  }
+
+  set maxZoom(double maxZoom) {
+    _maxZoom = maxZoom;
+    notifyListeners();
+
+    if (_zoom > maxZoom) {
+      zoomTo(maxZoom);
+    }
+  }
+
+  zoomIn([double zoomDelta = zoomDeltaDef]) {
+    zoomTo(_zoom + zoomDelta);
+  }
+
+  zoomOut([double zoomDelta = zoomDeltaDef]) {
+    zoomTo(_zoom - zoomDelta);
+  }
+
+  zoomTo(double zoom, [bool animate = false]) {
+    log('MapStates zoomTo $zoom');
+
+    if (animate) {
+      _zoomAnim = CurvedAnimationController(
+        begin: _zoom,
+        end: zoom,
+        duration: Duration(milliseconds: 250),
+        curve: Curves.ease,
+        vsync: _vsync,
+      );
+
+      _zoomAnim?.addListener(() {
+        _move(_center, _zoomAnim!.value);
+      });
+
+      _zoomAnim?.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _zoomAnim?.dispose();
+        }
+      });
+
+      _zoomAnim
+        ?..reset()
+        ..start();
+    } else {
+      _move(_center, zoom);
+    }
+  }
+
+  zoomAround(dynamic position, double zoom) {
+    UPoint halfSize = UPoint.from(_halfSize);
+    UPoint containerPoint;
+
+    double scale = getZoomScale(zoom);
+
+    if (position is UPoint) {
+      containerPoint = position;
+    } else if (position is LatLng) {
+      containerPoint = latlngToPoint(position);
+    } else {
+      position = LatLng.from(position);
+      containerPoint = latlngToPoint(position);
+    }
+
+    UPoint offset = (containerPoint - halfSize) * (1 - (1 / scale));
+    LatLng? center = pointToLatLng(halfSize + offset);
+    move(center, zoom);
+  }
+
+  set angle(angle) {
+    _angle = angle;
+    _rotation = radianToDeg(_angle);
+    _onAngleChanged?.call();
+    _callChangedListeners();
+    notifyListeners();
+  }
+
+  set rotation(rotation) {
+    _rotation = rotation;
+    _angle = degToRadian(_rotation);
+    _onAngleChanged?.call();
+    _callChangedListeners();
+    notifyListeners();
+  }
+
+  set angleStart(angleStart) {
+    _angleStart = angleStart;
+    notifyListeners();
+  }
+
+  rotate(double rotateTo, [bool animate = false, Function? onAnimateEnd]) {
+    log('MapStates rotate $rotateTo');
+
+    if (animate) {
+      _rotateAnim = CurvedAnimationController(
+        begin: normalizeDeg(_rotation),
+        end: normalizeDeg(rotateTo),
+        vsync: _vsync,
+        duration: Duration(milliseconds: 250),
+        curve: Curves.ease,
+      );
+
+      _rotateAnim?.addListener(() {
+        rotation = _rotateAnim!.value;
+      });
+
+      _rotateAnim?.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          onAnimateEnd?.call();
+          _rotateAnim?.dispose();
+        }
+      });
+
+      _rotateAnim
+        ?..reset()
+        ..start();
+    } else {
+      rotation = rotateTo;
+    }
+  }
+
+  // Find LatLng from location name
+  Future<LatLng?> findLocation(String query) async {
+    log('MapStates findLocation $query');
+
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+
+    if (addresses.isNotEmpty) {
+      var coordinates = addresses.first.coordinates;
+      return LatLng(coordinates.latitude, coordinates.longitude);
+    }
+
+    return null;
+  }
+
+  /// Tries to locate the current user location.
+  ///
+  /// Return LatLng location if found,
+  /// and optionally sets the map view to the user's location
+  /// (or stay in previous location if geolocation failed).
+  Future<LatLng?> locate([bool automove = false, double zoom = 17.0]) async {
+    log('MapStates locate');
+
+    _startLocating();
+    await _initLocationSettings();
+
+    try {
+      LocationData? data = await _location?.getLocation();
+      _stopLocating();
+
+      if (data != null) {
+        _position = LatLng(
+          data.latitude,
+          data.longitude,
+          data.altitude,
+        );
+
+        notifyListeners();
+
+        if (automove) {
+          await move(_position, zoom + 0.012, true);
+        }
+
+        return _position;
+      }
+    } catch (e) {
+      _stopLocating();
+      log(e);
+    }
+
+    return null;
+  }
+
+  @override
+  void dispose() {
+    log('MapStates dispose');
+    _rotateAnim?.dispose();
+    _moveAnim?.dispose();
+    _zoomAnim?.dispose();
+    _locationSubs?.cancel();
+    _positionStream.close();
+    super.dispose();
+  }
+}

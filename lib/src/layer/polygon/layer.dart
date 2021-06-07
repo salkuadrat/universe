@@ -24,19 +24,19 @@ class PolygonLayer extends PathLayer {
         super(key: key, options: options);
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     if (hasPolygons) return _polygons(context, map);
     if (hasPolygon) return _polygon(context, map, polygon!);
     return Container();
   }
 
-  Widget _polygons(BuildContext context, MapStates map) => Stack(
+  Widget _polygons(BuildContext context, MapState map) => Stack(
         children: [
           for (Polygon polygon in polygons) _polygon(context, map, polygon),
         ],
       );
 
-  Widget _polygon(BuildContext context, MapStates map, Polygon polygon) {
+  Widget _polygon(BuildContext context, MapState map, Polygon polygon) {
     if (polygon.isNotValid) {
       return Container();
     }
@@ -130,7 +130,7 @@ class PolygonLayer extends PathLayer {
     );
   }
 
-  List<Offset> _points(MapStates map, List<LatLng?> latlngs) {
+  List<Offset> _points(MapState map, List<LatLng?> latlngs) {
     List<Offset> points = [];
 
     for (LatLng? latlng in latlngs) {
@@ -142,7 +142,7 @@ class PolygonLayer extends PathLayer {
     return points;
   }
 
-  List<List<Offset>> _holesPoints(MapStates map, List<List<LatLng>>? holes) {
+  List<List<Offset>> _holesPoints(MapState map, List<List<LatLng>>? holes) {
     List<List<Offset>> holesPoints = [];
 
     if (holes != null && holes.isNotEmpty) {

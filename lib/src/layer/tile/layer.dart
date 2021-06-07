@@ -55,7 +55,8 @@ class TileLayer extends StatefulWidget {
 }
 
 class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
-  MapStates get map => Provider.of<MapStates>(context, listen: false);
+  MapState get map => Provider.of<MapState>(context, listen: false);
+  //late MapState map;
   MapController get controller => map.controller;
 
   TileLayerOptions get options => widget.options;
@@ -97,12 +98,12 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
   @override
   void initState() {
     log('TileLayer initState');
-
     _tiles = <String, Tile>{};
     _levels = <double, Level>{};
-
     super.initState();
-    map.addListener(_onMapChanged);
+    
+    //map = Provider.of<MapState>(context, listen: false);
+    map.addChangedListener(_onMapChanged);
 
     _refresh();
     _initSoftUpdate();
@@ -227,8 +228,11 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MapStates>(
-      builder: (_, map, __) => Stack(children: _children),
+    return Consumer<MapState>(
+      builder: (_, map, __) {
+        //this.map = map;
+        return Stack(children: _children);
+      },
     );
   }
 
@@ -244,28 +248,31 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
     if (tooBig) zoom = options.maxZoom!;
 
     if (_tileZoom == null) {
-      setState(() {
-        _tileZoom = zoom;
-        _refresh(map.center, zoom);
-        _setZoomTransforms(map.center, zoom);
-      });
+      if (mounted)
+        setState(() {
+          _tileZoom = zoom;
+          _refresh(map.center, zoom);
+          _setZoomTransforms(map.center, zoom);
+        });
     }
     // refresh map if it's zoomed
     else if ((zoom - _tileZoom!).abs() > 0.75) {
-      setState(() {
-        _refresh(map.center, zoom);
-        _update();
-        _setZoomTransforms(map.center, zoom);
-      });
+      if (mounted)
+        setState(() {
+          _refresh(map.center, zoom);
+          _update();
+          _setZoomTransforms(map.center, zoom);
+        });
     }
     // only update map if it's moved (change center)
     else {
-      setState(() {
-        // update map softly, based on tileUpdateInterval (default 200ms)
-        _softUpdate();
-        //_update();
-        _setZoomTransforms(map.center, map.zoom);
-      });
+      if (mounted)
+        setState(() {
+          // update map softly, based on tileUpdateInterval (default 200ms)
+          _softUpdate();
+          //_update();
+          _setZoomTransforms(map.center, map.zoom);
+        });
     }
   }
 

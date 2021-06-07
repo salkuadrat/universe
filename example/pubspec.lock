@@ -419,7 +419,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.7-nullsafety"
+    version: "0.0.8-nullsafety"
   vector_math:
     dependency: transitive
     description:

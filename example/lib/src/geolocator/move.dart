@@ -11,6 +11,12 @@ class _MoveGeolocatorMapState extends State<MoveGeolocatorMap> {
   final _mapController = MapController();
   final _locationName = 'Highbury Square';
 
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
   void _move() {
     // move map by location name
     _mapController.move(_locationName, zoom: 16.988, animate: true);

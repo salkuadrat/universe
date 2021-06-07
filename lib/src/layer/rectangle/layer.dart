@@ -25,20 +25,20 @@ class RectangleLayer extends ShapeLayer {
         super(key: key, options: options);
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     if (hasRectangles) return _rectangles(context, map);
     if (hasRectangle) return _rectangle(context, map, rectangle!);
     return Container();
   }
 
-  Widget _rectangles(BuildContext context, MapStates map) => Stack(
+  Widget _rectangles(BuildContext context, MapState map) => Stack(
         children: [
           for (Rectangle rectangle in rectangles)
             _rectangle(context, map, rectangle),
         ],
       );
 
-  Widget _rectangle(BuildContext context, MapStates map, Rectangle rectangle) {
+  Widget _rectangle(BuildContext context, MapState map, Rectangle rectangle) {
     if (rectangle.isNotValid) {
       return Container();
     }
@@ -133,7 +133,7 @@ class RectangleLayer extends ShapeLayer {
     );
   }
 
-  List<Offset> _points(MapStates map, List<LatLng?> latlngs) {
+  List<Offset> _points(MapState map, List<LatLng?> latlngs) {
     List<Offset> points = [];
 
     for (LatLng? latlng in latlngs) {
@@ -145,7 +145,7 @@ class RectangleLayer extends ShapeLayer {
     return points;
   }
 
-  List<List<Offset>> _holesPoints(MapStates map, List<List<LatLng>>? holes) {
+  List<List<Offset>> _holesPoints(MapState map, List<List<LatLng>>? holes) {
     List<List<Offset>> holesPoints = [];
 
     if (holes != null && holes.isNotEmpty) {

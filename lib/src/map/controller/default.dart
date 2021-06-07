@@ -3,7 +3,7 @@ import '../../shared.dart';
 import '../map.dart';
 
 class UMapController implements MapController {
-  MapStates? map;
+  MapState? map;
 
   @override
   bool get isReady => map != null;
@@ -126,5 +126,10 @@ class UMapController implements MapController {
     }
 
     return result;
+  }
+
+  @override
+  void dispose() {
+    map?.dispose();
   }
 }

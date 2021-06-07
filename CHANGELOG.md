@@ -1,3 +1,11 @@
+## [0.0.8-nullsafety] - 08 June 2021
+
+* add dispose to MapController
+* change MapStates into MapState
+* fixing multipe heroes problem caused by Compass & Locator
+* call MapState dispose properly
+* Fixing some leaks at TileLayer
+
 ## [0.0.7-nullsafety] - 29 May 2021
 
 * Change into plugin to force support for ios

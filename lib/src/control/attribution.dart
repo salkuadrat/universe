@@ -10,7 +10,7 @@ class Attribution extends MapLayer {
   Attribution(this.attribution);
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     return Positioned.fill(
       child: Align(
         alignment: Alignment.bottomLeft,

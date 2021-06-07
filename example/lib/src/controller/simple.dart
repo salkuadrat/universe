@@ -13,6 +13,12 @@ class _ControllerMapState extends State<ControllerMap> {
 
   MapData? _mapData;
 
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
   void _listenPositionStream() {
     if (mounted)
       setState(() {

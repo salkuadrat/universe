@@ -25,20 +25,20 @@ class PolylineLayer extends PathLayer {
         super(key: key, options: options);
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     if (hasPolylines) return _polylines(context, map);
     if (hasPolyline) return _polyline(context, map, polyline);
     return Container();
   }
 
-  Widget _polylines(BuildContext context, MapStates map) => Stack(
+  Widget _polylines(BuildContext context, MapState map) => Stack(
         children: [
           for (Polyline polyline in polylines)
             _polyline(context, map, polyline),
         ],
       );
 
-  Widget _polyline(BuildContext context, MapStates map, Polyline? polyline) {
+  Widget _polyline(BuildContext context, MapState map, Polyline? polyline) {
     if (options!.culling && polyline!.bounds.isNotOverlaps(map.bounds)) {
       return Container();
     }
@@ -104,7 +104,7 @@ class PolylineLayer extends PathLayer {
     );
   }
 
-  List<Offset> _points(MapStates map, List<LatLng> latlngs) {
+  List<Offset> _points(MapState map, List<LatLng> latlngs) {
     List<Offset> points = [];
 
     for (LatLng latlng in latlngs) {

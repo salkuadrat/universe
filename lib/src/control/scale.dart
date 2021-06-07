@@ -53,7 +53,7 @@ class Scale extends MapLayer {
   ];
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     final zoom = map.zoom.round();
     final center = map.center;
     final distance = scale[math.max(0, math.min(20, zoom + 2))].toDouble();

@@ -19,7 +19,7 @@ class Locator extends MapLayer {
   });
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     return Positioned.fill(
       child: Align(
         alignment: alignment,
@@ -29,6 +29,7 @@ class Locator extends MapLayer {
           height: 52,
           child: FittedBox(
             child: FloatingActionButton(
+              heroTag: null,
               backgroundColor: Colors.white,
               child: icon ??
                   Icon(

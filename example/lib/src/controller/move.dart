@@ -14,6 +14,12 @@ class _MoveControllerMapState extends State<MoveControllerMap> {
   List<double> _moveTarget = [51.556674, -0.106215];
   double _zoomTarget = 17;
 
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
   void _move() {
     // move to speficied latlng with zoom and animation
     _mapController.move(_moveTarget, zoom: _zoomTarget, animate: true);

@@ -22,7 +22,7 @@ class LocationIndicator extends MapLayer {
   });
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     if (map.location == null) {
       return Container();
     }

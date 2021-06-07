@@ -68,11 +68,13 @@ abstract class MapController {
     LengthUnit unit = LengthUnit.M,
   });
 
-  set map(MapStates? map);
+  void dispose();
+
+  set map(MapState? map);
 
   bool get isReady;
 
-  MapStates? get map;
+  MapState? get map;
 
   LatLngBounds? get bounds;
 

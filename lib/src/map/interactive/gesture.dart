@@ -39,7 +39,7 @@ class MapGestureDetector extends StatefulWidget {
 class _MapGestureDetectorState extends State<MapGestureDetector>
     with TickerProviderStateMixin
     implements MapGestureMixin {
-  MapStates get map => Provider.of<MapStates>(context, listen: false);
+  MapState get map => Provider.of<MapState>(context, listen: false);
 
   TapPositionController _tapPositionController = TapPositionController();
 

@@ -30,19 +30,19 @@ class MarkerLayer extends InteractiveLayer {
         super(key: key, options: options);
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     if (hasMarkers) return _markers(context, map);
     if (hasMarker) return _marker(context, map, marker!);
     return Container();
   }
 
-  Widget _markers(BuildContext context, MapStates map) => Stack(
+  Widget _markers(BuildContext context, MapState map) => Stack(
         children: [
           for (Marker marker in markers) _marker(context, map, marker),
         ],
       );
 
-  Widget _marker(BuildContext context, MapStates map, Marker marker) {
+  Widget _marker(BuildContext context, MapState map, Marker marker) {
     ThemeData theme = Theme.of(context);
 
     double width = marker.width ?? options!.width!;
@@ -222,7 +222,7 @@ class MarkerLayer extends InteractiveLayer {
   }
 
   bool _isInsideBounds(
-      MapStates map, Marker marker, double width, double height) {
+      MapState map, Marker marker, double width, double height) {
     final markerPoint = map.project(marker.latlng);
 
     final sw = UPoint(markerPoint.x + width, markerPoint.y - height);
@@ -233,7 +233,7 @@ class MarkerLayer extends InteractiveLayer {
   }
 
   bool _isOutOfBounds(
-      MapStates map, Marker marker, double width, double height) {
+      MapState map, Marker marker, double width, double height) {
     return !_isInsideBounds(map, marker, width, height);
   }
 }

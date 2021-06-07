@@ -68,7 +68,7 @@ class Universe extends StatelessWidget {
     }
 
     return ChangeNotifierProvider(
-      create: (_) => MapStates(
+      create: (_) => MapState(
         controller: controller ?? MapController(),
         options: mapOptions,
       ),
@@ -116,7 +116,7 @@ class _Map extends StatefulWidget {
 }
 
 class __MapState extends State<_Map> with TickerProviderStateMixin {
-  MapStates get map => Provider.of<MapStates>(context, listen: false);
+  MapState get map => Provider.of<MapState>(context, listen: false);
   bool get hasLayers => widget.layers.isNotEmpty;
 
   ValueNotifier<double> rotationNotifier = ValueNotifier(0.0);
@@ -140,6 +140,12 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
       _resize();
       map.rotate(map.originalRotation);
     });
+  }
+
+  @override
+  void dispose() {
+    map.dispose();
+    super.dispose();
   }
 
   void _resize() {
@@ -199,7 +205,7 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
     bool showScale = map.options.showScale;
     bool hasControls = widget.controls.isNotEmpty;
 
-    return Consumer<MapStates>(
+    return Consumer<MapState>(
       builder: (context, map, child) => Stack(
         children: [
           map.options.interactive

@@ -11,6 +11,12 @@ class _ZoomControllerMapState extends State<ZoomControllerMap> {
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
   void _zoom() {
     // zoom to zoom level 17 with animation
     _mapController.zoomTo(17, animate: true);

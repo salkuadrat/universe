@@ -13,7 +13,7 @@ class GroupLayer extends InteractiveLayer {
       : super(key: key, options: options);
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     return Transform.rotate(
       angle: degToRadian(options?.rotation ?? map.options.rotation),
       child: Opacity(

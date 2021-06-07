@@ -14,6 +14,12 @@ class _LocationFinderMapState extends State<LocationFinderMap> {
 
   bool _isSearching = false;
 
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
   void _startSearching() {
     setState(() {
       _isSearching = true;

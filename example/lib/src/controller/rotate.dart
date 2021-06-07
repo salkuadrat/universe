@@ -11,6 +11,12 @@ class _RotateControllerMapState extends State<RotateControllerMap> {
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
   void _rotate90() {
     _mapController.rotate(90, animate: true, onAnimateEnd: () {
       if (mounted) setState(() {});

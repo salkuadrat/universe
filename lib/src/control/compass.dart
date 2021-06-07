@@ -18,7 +18,7 @@ class Compass extends MapLayer {
   });
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     final double viewTop = MediaQuery.of(context).viewPadding.top;
     final EdgeInsets margin =
         this.margin ?? EdgeInsets.only(top: viewTop + 15, right: 20);
@@ -32,6 +32,7 @@ class Compass extends MapLayer {
           margin: margin,
           child: FittedBox(
             child: FloatingActionButton(
+              heroTag: null,
               onPressed: () => map.controller.rotate(0.0, animate: true),
               backgroundColor: Colors.white,
               child: Transform.rotate(

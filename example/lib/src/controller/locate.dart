@@ -13,6 +13,12 @@ class _LocateControllerMapState extends State<LocateControllerMap> {
 
   bool _isSearching = false;
 
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
   void _startSearching() {
     setState(() {
       _isSearching = true;

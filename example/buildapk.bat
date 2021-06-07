@@ -1,1 +1,2 @@
-flutter build apk
+cls
+flutter build apk --split-per-abi

@@ -23,19 +23,19 @@ class CircleLayer extends ShapeLayer {
         super(key: key, options: options);
 
   @override
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     if (hasCircles) return _circles(context, map);
     if (hasCircle) return _circle(context, map, circle!);
     return Container();
   }
 
-  Widget _circles(BuildContext context, MapStates map) => Stack(
+  Widget _circles(BuildContext context, MapState map) => Stack(
         children: [
           for (Circle circle in circles) _circle(context, map, circle),
         ],
       );
 
-  Widget _circle(BuildContext context, MapStates map, Circle circle) {
+  Widget _circle(BuildContext context, MapState map, Circle circle) {
     final scale = map.getZoomScale(map.zoom, map.zoom);
     final centerPoint = map.project(circle.latlng) * scale - map.pixelOrigin;
 

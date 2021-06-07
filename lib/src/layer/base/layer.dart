@@ -10,13 +10,13 @@ class MapLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MapStates>(
+    return Consumer<MapState>(
       builder: (context, map, child) => buildLayer(context, map),
     );
   }
 
   /// override this function for every map layers
-  Widget buildLayer(BuildContext context, MapStates map) {
+  Widget buildLayer(BuildContext context, MapState map) {
     return Container();
   }
 }
