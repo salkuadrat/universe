@@ -1,3 +1,7 @@
+## [1.0.1-nullsafety] - 08 June 2021
+
+* change image downloader at TileLayer from extended_image to cached_network_image
+
 ## [1.0.0-nullsafety] - 08 June 2021
 
 * turn off logs

@@ -16,7 +16,7 @@ or
 
 ```yaml
 dependencies:
-  universe: ^1.0.0-nullsafety
+  universe: ^1.0.1-nullsafety
 ```
 
 Then run `flutter pub get`.
