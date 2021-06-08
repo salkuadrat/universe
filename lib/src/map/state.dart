@@ -766,14 +766,17 @@ class MapState extends ChangeNotifier {
     return null;
   }
 
-  @override
-  void dispose() {
-    log('MapStates dispose');
+  void close() {
     _rotateAnim?.dispose();
     _moveAnim?.dispose();
     _zoomAnim?.dispose();
     _locationSubs?.cancel();
     _positionStream.close();
+  }
+
+  @override
+  void dispose() {
+    log('MapStates dispose');
     super.dispose();
   }
 }

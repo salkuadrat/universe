@@ -130,6 +130,6 @@ class UMapController implements MapController {
 
   @override
   void dispose() {
-    map?.dispose();
+    map?.close();
   }
 }

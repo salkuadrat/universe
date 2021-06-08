@@ -144,7 +144,7 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    map.dispose();
+    map.close();
     super.dispose();
   }
 
