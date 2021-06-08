@@ -1,3 +1,7 @@
+## [1.0.5-nullsafety] - 08 June 2021
+
+* Fixing animation dispose at MapState
+
 ## [1.0.4-nullsafety] - 08 June 2021
 
 * Fix MapState dispose

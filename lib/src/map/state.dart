@@ -767,9 +767,6 @@ class MapState extends ChangeNotifier {
   }
 
   void close() {
-    _rotateAnim?.dispose();
-    _moveAnim?.dispose();
-    _zoomAnim?.dispose();
     _locationSubs?.cancel();
     _positionStream.close();
   }

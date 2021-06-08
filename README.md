@@ -16,7 +16,7 @@ or
 
 ```yaml
 dependencies:
-  universe: ^1.0.4-nullsafety
+  universe: ^1.0.5-nullsafety
 ```
 
 Then run `flutter pub get`.
@@ -34,9 +34,9 @@ Add permissions to your AndroidManifest.xml.
 </manifest>
 ```
 
-## Example Project
+## Example
 
-There is a complete examples in the [example folder](example) to learn the many use cases of using Universe library. You can also try a working example on your device: [universe.apk](universe.apk).
+You can see complete examples in the [example folder](example) to learn the many use cases of using Universe library. You can also try a working example on your device: [universe.apk](universe.apk).
 
 ## Usage
 
