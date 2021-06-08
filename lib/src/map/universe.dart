@@ -116,10 +116,9 @@ class _Map extends StatefulWidget {
 }
 
 class __MapState extends State<_Map> with TickerProviderStateMixin {
-  MapState get map => Provider.of<MapState>(context, listen: false);
+  late MapState map;
+  late ValueNotifier<double> rotationNotifier;
   bool get hasLayers => widget.layers.isNotEmpty;
-
-  ValueNotifier<double> rotationNotifier = ValueNotifier(0.0);
 
   late double _width;
   late double _height;
@@ -128,12 +127,13 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
   @override
   void initState() {
     var self = this;
+    super.initState();
 
+    map = Provider.of<MapState>(context, listen: false);
+    rotationNotifier = ValueNotifier(0.0);
     _originalSize = Size(map.width, map.height);
     _width = map.width;
     _height = map.height;
-
-    super.initState();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       await map.init(self, _resize);
@@ -149,12 +149,12 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
   }
 
   void _resize() {
+    map = Provider.of<MapState>(context, listen: false);
     final size = projectedSize(_originalSize, map.angle);
 
     setState(() {
       _width = size.width;
       _height = size.height;
-
       rotationNotifier.value = map.angle;
     });
 
@@ -171,55 +171,58 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
           child: Stack(
             children: [
               ...widget.layers,
-              if (map.showLocationMarker) _locationMarker,
-              if (map.showCenterMarker) _centerMarker,
+              _locationMarker,
+              _centerMarker,
             ],
           ),
         ),
       );
 
-  get _centerMarker => MarkerLayer(
-        Marker(map.center),
-        options: MarkerLayerOptions(widget: map.centerMarker),
+  get _centerMarker => Consumer<MapState>(
+        builder: (_, map, __) => map.showLocationMarker
+            ? MarkerLayer(
+                Marker(map.center),
+                options: MarkerLayerOptions(widget: map.centerMarker),
+              )
+            : Container(),
       );
 
-  get _locationMarker => MarkerLayer(
-        Marker(map.position),
-        options: MarkerLayerOptions(widget: map.locationMarker),
+  get _locationMarker => Consumer<MapState>(
+        builder: (_, map, __) => map.showCenterMarker
+            ? MarkerLayer(
+                Marker(map.position),
+                options: MarkerLayerOptions(widget: map.locationMarker),
+              )
+            : Container(),
       );
-
-  get _locator =>
-      map.options.locator != null ? map.options.locator : C.Locator();
-
-  get _compass =>
-      map.options.compass != null ? map.options.compass : C.Compass();
-
-  get _scale => map.options.scale != null ? map.options.scale : C.Scale();
 
   @override
   Widget build(BuildContext context) {
-    bool showLocator = map.options.interactive && map.options.showLocator;
-    bool showCompass = map.options.interactive &&
-        map.options.canRotate &&
-        map.options.showCompass;
-    bool showScale = map.options.showScale;
-    bool hasControls = widget.controls.isNotEmpty;
-
     return Consumer<MapState>(
-      builder: (context, map, child) => Stack(
-        children: [
-          map.options.interactive
-              ? MapGestureDetector(child: _layers)
-              : _layers,
-          map.options.hideAttribution
-              ? Container()
-              : C.Attribution(widget.attribution),
-          if (showScale) _scale,
-          if (showLocator) _locator,
-          if (showCompass) _compass,
-          if (hasControls) ...widget.controls,
-        ],
-      ),
+      builder: (_, map, __) {
+        this.map = map;
+        bool showLocator = map.options.interactive && map.options.showLocator;
+        bool showCompass = map.options.interactive &&
+            map.options.canRotate &&
+            map.options.showCompass;
+        bool showScale = map.options.showScale;
+        bool hasControls = widget.controls.isNotEmpty;
+
+        return Stack(
+          children: [
+            map.options.interactive
+                ? MapGestureDetector(child: _layers)
+                : _layers,
+            map.options.hideAttribution
+                ? Container()
+                : C.Attribution(widget.attribution),
+            if (showScale) map.options.scale ?? C.Scale(),
+            if (showLocator) map.options.locator ?? C.Locator(),
+            if (showCompass) map.options.compass ?? C.Compass(),
+            if (hasControls) ...widget.controls,
+          ],
+        );
+      },
     );
   }
 }

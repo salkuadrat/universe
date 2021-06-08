@@ -55,8 +55,8 @@ class TileLayer extends StatefulWidget {
 }
 
 class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
-  MapState get map => Provider.of<MapState>(context, listen: false);
-  //late MapState map;
+  //MapState get map => Provider.of<MapState>(context, listen: false);
+  late MapState map;
   MapController get controller => map.controller;
 
   TileLayerOptions get options => widget.options;
@@ -102,11 +102,14 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
     _levels = <double, Level>{};
     super.initState();
 
-    //map = Provider.of<MapState>(context, listen: false);
-    map.addChangedListener(_onMapChanged);
+    map = Provider.of<MapState>(context, listen: false);
 
-    _refresh();
-    _initSoftUpdate();
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      //await Future.delayed(Duration(milliseconds: 250));
+      map.addChangedListener(_onMapChanged);
+      _refresh();
+      _initSoftUpdate();
+    });
   }
 
   bool get _hasUpdateStream => _softUpdateStream != null;
