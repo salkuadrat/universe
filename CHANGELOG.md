@@ -1,3 +1,7 @@
+## [1.0.3-nullsafety] - 08 June 2021
+
+* Fix centerMarker & locationMarker
+
 ## [1.0.2-nullsafety] - 08 June 2021
 
 * Smoothing tile layer
