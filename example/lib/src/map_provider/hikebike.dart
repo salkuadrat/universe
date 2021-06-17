@@ -13,9 +13,7 @@ class _HikeBikeMapState extends State<HikeBikeMap> {
     return U.OpenStreetMap(
       center: [50, 11],
       zoom: 6,
-      tiles: [
-        U.HikeBikeTileLayer()
-      ],
+      tiles: [U.HikeBikeTileLayer()],
     );
   }
 }

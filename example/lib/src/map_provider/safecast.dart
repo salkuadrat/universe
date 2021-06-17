@@ -8,9 +8,7 @@ class SafeCastMap extends StatelessWidget {
     return U.OpenStreetMap(
       center: [51.555158, -0.108343],
       zoom: 16,
-      tiles: [
-        U.SafeCastTileLayer()
-      ],
+      tiles: [U.SafeCastTileLayer()],
     );
   }
 }

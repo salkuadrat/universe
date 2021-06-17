@@ -22,6 +22,7 @@ dependencies:
   video_player: ^2.1.1
   provider: ^5.0.0
   flutter_geocoder: ^0.2.2-nullsafety
+  flutter_image: ^4.0.1
   
 dev_dependencies:
   flutter_test:

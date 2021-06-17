@@ -25,9 +25,7 @@ class _OpenMapState extends State<OpenMap> {
     return U.OpenStreetMap(
       center: center,
       zoom: 15,
-      tiles: [
-        U.OpenTileLayer(type: type)
-      ],
+      tiles: [U.OpenTileLayer(type: type)],
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

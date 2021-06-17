@@ -16,8 +16,11 @@ class _NLMapsState extends State<NLMaps> {
     return U.NLMaps(
       center: [52, 5],
       minZoom: 6,
-	    maxZoom: 19,
-	    maxBounds: LatLngBounds.from([[50.5, 3.25], [54, 7.6]]),
+      maxZoom: 19,
+      maxBounds: LatLngBounds.from([
+        [50.5, 3.25],
+        [54, 7.6]
+      ]),
       type: type,
       zoom: 11,
       controls: [

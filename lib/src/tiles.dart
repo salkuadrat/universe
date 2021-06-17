@@ -273,7 +273,8 @@ TileLayerOptions open(OpenType type, TileLayerOptions options) {
   return options;
 }
 
-TileLayerOptions stadia(StadiaType type, TileLayerOptions options, String apikey) {
+TileLayerOptions stadia(
+    StadiaType type, TileLayerOptions options, String apikey) {
   TileLayerOptions opts = options.copy(
     attribution:
         '&copy; Stadia Maps, &copy; OpenMapTiles, &copy; OpenStreetMap contributors',
@@ -900,7 +901,7 @@ TileLayerOptions hikebike(TileLayerOptions options) {
   TileLayerOptions opts = options.copy(
     attribution: 'Map data &copy; OpenStreetMap contributors',
   );
-  
+
   return opts.copy(
     templateUrl: 'https://{s}.tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png',
     maxZoom: 15,

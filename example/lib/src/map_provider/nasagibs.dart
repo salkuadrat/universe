@@ -16,11 +16,9 @@ class _NASAGIBSMapState extends State<NASAGIBSMap> {
     return U.OpenStreetMap(
       center: [51.555158, -0.108343],
       zoom: 4,
-	    minZoom: 1,
-	    maxZoom: 7,
-      tiles: [
-        U.NASAGIBSTileLayer(type: type)
-      ],
+      minZoom: 1,
+      maxZoom: 7,
+      tiles: [U.NASAGIBSTileLayer(type: type)],
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

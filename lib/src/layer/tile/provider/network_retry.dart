@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_image/flutter_image.dart';
 
 import '../../../core/core.dart';
-import '../../../network/network.dart';
 import '../../layer.dart';
 
 class NetworkRetryTileProvider extends DefaultTileProvider {

@@ -16,9 +16,7 @@ class _StamenMapState extends State<StamenMap> {
     return U.OpenStreetMap(
       center: [51.555158, -0.108343],
       zoom: 16,
-      tiles: [
-        U.StamenTileLayer(type: type)
-      ],
+      tiles: [U.StamenTileLayer(type: type)],
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

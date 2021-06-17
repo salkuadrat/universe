@@ -18,7 +18,7 @@ class _OpenWeatherMapState extends State<OpenWeatherMap> {
       zoom: 5,
       tiles: [
         U.OpenWeatherMapTileLayer(
-          type: type, 
+          type: type,
           apikey: '9de243494c0b295cca9337e1e96b00e2',
         ),
       ],

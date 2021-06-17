@@ -4518,7 +4518,8 @@ class U {
     required String apikey,
     L.TileLayerOptions? options,
   }) {
-    return L.TileLayer(options: stadia(type, options ?? L.TileLayerOptions(), apikey));
+    return L.TileLayer(
+        options: stadia(type, options ?? L.TileLayerOptions(), apikey));
   }
 
   /// Used to load and display tile layers from Thunderforest servers.
@@ -4886,8 +4887,7 @@ class U {
   static L.TileLayer HikeBikeTileLayer({
     L.TileLayerOptions? options,
   }) {
-    return L.TileLayer(
-        options: hikebike(options ?? L.TileLayerOptions()));
+    return L.TileLayer(options: hikebike(options ?? L.TileLayerOptions()));
   }
 
   /// Used to load and display tile layers from NLMaps servers.

@@ -132,6 +132,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.2-nullsafety"
+  flutter_image:
+    dependency: "direct main"
+    description:
+      name: flutter_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.1"
   flutter_svg:
     dependency: "direct main"
     description:
