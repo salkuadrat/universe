@@ -19,7 +19,6 @@ class _TomTomMapState extends State<TomTomMap> {
       center: [51.555158, -0.108343],
       type: type,
       zoom: 16,
-      onReady: () => print('Open Map is ready!'),
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

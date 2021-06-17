@@ -14,6 +14,8 @@ class _StadiaMapState extends State<StadiaMap> {
   @override
   Widget build(BuildContext context) {
     return U.StadiaMap(
+      // use your own api key from https://stadiamaps.com
+      apikey: '1ee476d7-6e86-4416-8f6c-b77b03b8f516',
       center: [51.555158, -0.108343],
       type: type,
       zoom: 16,

@@ -14,10 +14,12 @@ class _NLMapsState extends State<NLMaps> {
   @override
   Widget build(BuildContext context) {
     return U.NLMaps(
-      center: [51.555158, -0.108343],
+      center: [52, 5],
+      minZoom: 6,
+	    maxZoom: 19,
+	    maxBounds: LatLngBounds.from([[50.5, 3.25], [54, 7.6]]),
       type: type,
-      zoom: 16,
-      onReady: () => print('Open Map is ready!'),
+      zoom: 11,
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

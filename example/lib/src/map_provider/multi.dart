@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:universe/universe.dart';
 
+import '../shared.dart';
+
 class MultiLayerMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return U.OpenStreetMap(
-      type: OpenStreetMapType.HOT,
+    return U.MapBox(
+      accessToken: yourAccessTokenHere,
+      type: MapBoxType.Bright,
       center: [48.858236, 2.294477],
-      zoom: 12,
+      zoom: 13,
       tiles: [
         // add environmental measurements map layer from SafeCast (http://safecast.org/)
         U.TileLayer(

@@ -13,11 +13,12 @@ class _StamenMapState extends State<StamenMap> {
 
   @override
   Widget build(BuildContext context) {
-    return U.StamenMap(
+    return U.OpenStreetMap(
       center: [51.555158, -0.108343],
-      type: type,
       zoom: 16,
-      onReady: () => print('Open Map is ready!'),
+      tiles: [
+        U.StamenTileLayer(type: type)
+      ],
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

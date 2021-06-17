@@ -6,8 +6,8 @@ class CyclOSMMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return U.CyclOSMMap(
-      center: [51.555158, -0.108343],
-      zoom: 13,
+      center: [48.858236, 2.294477],
+      zoom: 10,
     );
   }
 }

@@ -13,12 +13,15 @@ class _OpenWeatherMapState extends State<OpenWeatherMap> {
 
   @override
   Widget build(BuildContext context) {
-    return U.OpenWeatherMap(
-      apikey: '',
+    return U.OpenStreetMap(
       center: [51.555158, -0.108343],
-      type: type,
-      zoom: 16,
-      onReady: () => print('Open Map is ready!'),
+      zoom: 5,
+      tiles: [
+        U.OpenWeatherMapTileLayer(
+          type: type, 
+          apikey: '9de243494c0b295cca9337e1e96b00e2',
+        ),
+      ],
       controls: [
         Align(
           alignment: Alignment.bottomLeft,
@@ -38,45 +41,21 @@ class _OpenWeatherMapState extends State<OpenWeatherMap> {
                   value: OpenWeatherMapType.Clouds,
                   child: Text('Clouds'),
                 ),
-                DropdownMenuItem(
-                  value: OpenWeatherMapType.CloudsClassic,
-                  child: Text('Clouds Classic'),
-                ),
-                DropdownMenuItem(
-                  value: OpenWeatherMapType.Precipitation,
-                  child: Text('Precipitation'),
-                ),
-                DropdownMenuItem(
-                  value: OpenWeatherMapType.PrecipitationClassic,
-                  child: Text('Precipitation Classic'),
-                ),
-                DropdownMenuItem(
-                  value: OpenWeatherMapType.Rain,
-                  child: Text('Rain'),
-                ),
-                DropdownMenuItem(
-                  value: OpenWeatherMapType.RainClassic,
-                  child: Text('Rain Classic'),
-                ),
+                /* DropdownMenuItem(
+                  value: OpenWeatherMapType.GlobalPrecipitation,
+                  child: Text('Global Precipitation'),
+                ), */
                 DropdownMenuItem(
                   value: OpenWeatherMapType.Pressure,
                   child: Text('Pressure'),
                 ),
                 DropdownMenuItem(
-                  value: OpenWeatherMapType.PressureContour,
-                  child: Text('Pressure Contour'),
-                ),
-                DropdownMenuItem(
-                  value: OpenWeatherMapType.Wind,
-                  child: Text('Wind'),
+                  value: OpenWeatherMapType.WindSpeed,
+                  child: Text('Wind Speed'),
                 ),
                 DropdownMenuItem(
                   value: OpenWeatherMapType.Temperature,
                   child: Text('Temperature'),
-                ),
-                DropdownMenuItem(
-                  value: OpenWeatherMapType.Snow,
-                  child: Text('Snow'),
                 ),
               ],
             ),

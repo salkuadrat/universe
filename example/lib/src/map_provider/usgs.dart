@@ -16,8 +16,7 @@ class _USGSMapState extends State<USGSMap> {
     return U.USGSMap(
       center: [51.555158, -0.108343],
       type: type,
-      zoom: 16,
-      onReady: () => print('Open Map is ready!'),
+      zoom: 8,
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

@@ -5,9 +5,12 @@ import 'package:universe/universe.dart';
 class SafeCastMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return U.SafeCastMap(
+    return U.OpenStreetMap(
       center: [51.555158, -0.108343],
       zoom: 16,
+      tiles: [
+        U.SafeCastTileLayer()
+      ],
     );
   }
 }

@@ -28,7 +28,6 @@ enum OpenStreetMapType {
 enum OpenType {
   OpenTopoMap,
   OpenSeaMap,
-  OpenPtMap,
   OpenRailwayMap,
   OpenFireMap,
   OpenSnowMap,
@@ -140,11 +139,6 @@ enum BasemapATType {
   Orthofoto,
 }
 
-enum HikeBikeType {
-  Default,
-  Hill,
-}
-
 enum NLMapsType {
   Default,
   Pastel,
@@ -172,16 +166,10 @@ enum JusticeMapType {
 
 enum OpenWeatherMapType {
   Clouds,
-  CloudsClassic,
-  Precipitation,
-  PrecipitationClassic,
-  Rain,
-  RainClassic,
+  GlobalPrecipitation,
   Pressure,
-  PressureContour,
-  Wind,
+  WindSpeed,
   Temperature,
-  Snow,
 }
 
 enum OneMapSGType {

@@ -18,8 +18,7 @@ class MarkerWidgetMap extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('ARS'),
-            SizedBox(height: 5),
-            Icon(Icons.location_on, color: Colors.red, size: 28)
+            Icon(Icons.location_on, color: Colors.red, size: 24)
           ],
         ),
       ),

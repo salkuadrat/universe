@@ -185,20 +185,6 @@ TileLayerOptions cyclosm(TileLayerOptions options) {
   );
 }
 
-TileLayerOptions freemapsk(TileLayerOptions options) {
-  return options.copy(
-    templateUrl: 'https://{s}.freemap.sk/T/{z}/{x}/{y}.jpeg',
-    attribution: '$osmAttrDef, vizualization CC-By-SA 2.0 Freemap.sk',
-    bounds: [
-      [47.204642, 15.996093],
-      [49.830896, 22.576904]
-    ],
-    subdomains: 'abcd',
-    maxZoom: 16,
-    minZoom: 8,
-  );
-}
-
 TileLayerOptions mtbmap(TileLayerOptions options) {
   return options.copy(
     templateUrl: 'http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png',
@@ -236,14 +222,6 @@ TileLayerOptions open(OpenType type, TileLayerOptions options) {
         attribution: 'Map data: &copy; OpenSeaMap contributors');
   }
 
-  if (type == OpenType.OpenPtMap) {
-    return options.copy(
-      templateUrl: 'http://openptmap.org/tiles/{z}/{x}/{y}.png',
-      attribution: 'Map data: &copy; OpenPtMap contributors',
-      maxZoom: 17,
-    );
-  }
-
   if (type == OpenType.OpenTopoMap) {
     return options.copy(
       templateUrl: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
@@ -264,7 +242,7 @@ TileLayerOptions open(OpenType type, TileLayerOptions options) {
 
   if (type == OpenType.OpenFireMap) {
     return options.copy(
-      templateUrl: 'http://openfiremap.org/hytiles/{z}/{x}/{y}.png',
+      templateUrl: 'http://www.openfiremap.de/hytiles/{z}/{x}/{y}.png',
       attribution: '$osmAttrDef | Map style: &copy; OpenFireMap (CC-BY-SA)',
       maxZoom: 19,
     );
@@ -281,7 +259,7 @@ TileLayerOptions open(OpenType type, TileLayerOptions options) {
 
   if (type == OpenType.OpenAIP) {
     return options.copy(
-      subdomains: '12',
+      subdomains: ['1', '2'],
       templateUrl:
           'http://{s}.tile.maps.openaip.net/geowebcache/service/tms/1.0.0/openaip_basemap@EPSG%3A900913@png/{z}/{x}/{y}.png',
       attribution: 'OpenAIP Data (CC-BY-NC-SA)',
@@ -295,7 +273,7 @@ TileLayerOptions open(OpenType type, TileLayerOptions options) {
   return options;
 }
 
-TileLayerOptions stadia(StadiaType type, TileLayerOptions options) {
+TileLayerOptions stadia(StadiaType type, TileLayerOptions options, String apikey) {
   TileLayerOptions opts = options.copy(
     attribution:
         '&copy; Stadia Maps, &copy; OpenMapTiles, &copy; OpenStreetMap contributors',
@@ -305,28 +283,28 @@ TileLayerOptions stadia(StadiaType type, TileLayerOptions options) {
   if (type == StadiaType.AlidadeSmooth) {
     return opts.copy(
       templateUrl:
-          'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+          'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=$apikey',
     );
   }
 
   if (type == StadiaType.AlidadeSmoothDark) {
     return opts.copy(
       templateUrl:
-          'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+          'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=$apikey',
     );
   }
 
   if (type == StadiaType.OSMBright) {
     return opts.copy(
       templateUrl:
-          'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png',
+          'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png?api_key=$apikey',
     );
   }
 
   if (type == StadiaType.OSMOutdoors) {
     return opts.copy(
       templateUrl:
-          'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png',
+          'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png?api_key=$apikey',
     );
   }
 
@@ -404,37 +382,6 @@ TileLayerOptions thunderforest(
   }
 
   return options;
-}
-
-TileLayerOptions hydda(HyddaType type, TileLayerOptions options) {
-  TileLayerOptions opts = options.copy(
-    attribution:
-        'Tiles courtesy of OpenStreetMap Sweden &mdash; Map Data &copy; OpenStreetMap contributors',
-    maxZoom: 20,
-  );
-
-  if (type == HyddaType.Full) {
-    return opts.copy(
-      templateUrl:
-          'https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == HyddaType.Base) {
-    return opts.copy(
-      templateUrl:
-          'https://{s}.tile.openstreetmap.se/hydda/base/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == HyddaType.RoadsLabels) {
-    return opts.copy(
-      templateUrl:
-          'https://{s}.tile.openstreetmap.se/hydda/roads_and_labels/{z}/{x}/{y}.png',
-    );
-  }
-
-  return opts;
 }
 
 TileLayerOptions jawg(
@@ -949,26 +896,15 @@ TileLayerOptions basemapat(BasemapATType type, TileLayerOptions options) {
   return opts;
 }
 
-TileLayerOptions hikebike(HikeBikeType type, TileLayerOptions options) {
+TileLayerOptions hikebike(TileLayerOptions options) {
   TileLayerOptions opts = options.copy(
     attribution: 'Map data &copy; OpenStreetMap contributors',
   );
-
-  if (type == HikeBikeType.Default) {
-    return opts.copy(
-      templateUrl: 'https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png',
-      maxZoom: 19,
-    );
-  }
-
-  if (type == HikeBikeType.Hill) {
-    return opts.copy(
-      templateUrl: 'https://tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png',
-      maxZoom: 15,
-    );
-  }
-
-  return opts;
+  
+  return opts.copy(
+    templateUrl: 'https://{s}.tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png',
+    maxZoom: 15,
+  );
 }
 
 TileLayerOptions nlmaps(NLMapsType type, TileLayerOptions options) {
@@ -1051,81 +987,6 @@ TileLayerOptions geoportail(
   return opts;
 }
 
-TileLayerOptions justice(JusticeMapType type, TileLayerOptions options) {
-  TileLayerOptions opts = options.copy(
-    attribution: 'Justice Map',
-    bounds: [
-      [14, -180],
-      [72, -56]
-    ],
-  );
-
-  if (type == JusticeMapType.Multi) {
-    return opts.copy(
-      templateUrl:
-          'http://www.justicemap.org/tile/county/multi/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == JusticeMapType.Income) {
-    return opts.copy(
-      templateUrl:
-          'http://www.justicemap.org/tile/county/income/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == JusticeMapType.Indian) {
-    return opts.copy(
-      templateUrl:
-          'http://www.justicemap.org/tile/county/indian/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == JusticeMapType.Asian) {
-    return opts.copy(
-      templateUrl:
-          'http://www.justicemap.org/tile/county/asian/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == JusticeMapType.Black) {
-    return opts.copy(
-      templateUrl:
-          'http://www.justicemap.org/tile/county/black/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == JusticeMapType.Hispanic) {
-    return opts.copy(
-      templateUrl:
-          'http://www.justicemap.org/tile/county/hispanic/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == JusticeMapType.Nonwhite) {
-    return opts.copy(
-      templateUrl:
-          'http://www.justicemap.org/tile/county/nonwhite/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == JusticeMapType.White) {
-    return opts.copy(
-      templateUrl:
-          'http://www.justicemap.org/tile/county/white/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == JusticeMapType.Plural) {
-    return opts.copy(
-      templateUrl:
-          'http://www.justicemap.org/tile/county/plural/{z}/{x}/{y}.png',
-    );
-  }
-
-  return opts;
-}
-
 TileLayerOptions openweather(
     OpenWeatherMapType type, TileLayerOptions options, String apikey) {
   TileLayerOptions opts = options.copy(
@@ -1137,122 +998,35 @@ TileLayerOptions openweather(
   if (type == OpenWeatherMapType.Clouds) {
     return opts.copy(
       templateUrl:
-          'http://{s}.tile.openweathermap.org/map/clouds/{z}/{x}/{y}.png?appid=$apikey',
+          'https://{s}.sat.owm.io/vane/2.0/weather/CL/{z}/{x}/{y}?appid=$apikey',
     );
   }
 
-  if (type == OpenWeatherMapType.CloudsClassic) {
+  if (type == OpenWeatherMapType.GlobalPrecipitation) {
     return opts.copy(
       templateUrl:
-          'http://{s}.tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png?appid=$apikey',
-    );
-  }
-
-  if (type == OpenWeatherMapType.Precipitation) {
-    return opts.copy(
-      templateUrl:
-          'http://{s}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png?appid=$apikey',
-    );
-  }
-
-  if (type == OpenWeatherMapType.PrecipitationClassic) {
-    return opts.copy(
-      templateUrl:
-          'http://{s}.tile.openweathermap.org/map/precipitation_cls/{z}/{x}/{y}.png?appid=$apikey',
-    );
-  }
-
-  if (type == OpenWeatherMapType.Rain) {
-    return opts.copy(
-      templateUrl:
-          'http://{s}.tile.openweathermap.org/map/rain/{z}/{x}/{y}.png?appid=$apikey',
-    );
-  }
-
-  if (type == OpenWeatherMapType.RainClassic) {
-    return opts.copy(
-      templateUrl:
-          'http://{s}.tile.openweathermap.org/map/rain_cls/{z}/{x}/{y}.png?appid=$apikey',
+          'https://{s}.sat.owm.io/maps/2.0/radar/{z}/{x}/{y}?appid=$apikey&day=',
     );
   }
 
   if (type == OpenWeatherMapType.Pressure) {
     return opts.copy(
       templateUrl:
-          'http://{s}.tile.openweathermap.org/map/pressure/{z}/{x}/{y}.png?appid=$apikey',
-    );
-  }
-
-  if (type == OpenWeatherMapType.PressureContour) {
-    return opts.copy(
-      templateUrl:
-          'http://{s}.tile.openweathermap.org/map/pressure_cntr/{z}/{x}/{y}.png?appid=$apikey',
-    );
-  }
-
-  if (type == OpenWeatherMapType.Wind) {
-    return opts.copy(
-      templateUrl:
-          'http://{s}.tile.openweathermap.org/map/wind/{z}/{x}/{y}.png?appid=$apikey',
+          'https://{s}.sat.owm.io/vane/2.0/weather/APM/{z}/{x}/{y}?appid=$apikey',
     );
   }
 
   if (type == OpenWeatherMapType.Temperature) {
     return opts.copy(
       templateUrl:
-          'http://{s}.tile.openweathermap.org/map/temp/{z}/{x}/{y}.png?appid=$apikey',
+          'https://{s}.sat.owm.io/vane/2.0/weather/TA2/{z}/{x}/{y}?appid=$apikey',
     );
   }
 
-  if (type == OpenWeatherMapType.Snow) {
+  if (type == OpenWeatherMapType.WindSpeed) {
     return opts.copy(
       templateUrl:
-          'http://{s}.tile.openweathermap.org/map/snow/{z}/{x}/{y}.png?appid=$apikey',
-    );
-  }
-
-  return opts;
-}
-
-TileLayerOptions onemapsg(OneMapSGType type, TileLayerOptions options) {
-  TileLayerOptions opts = options.copy(
-    attribution:
-        'New OneMap | Map data &copy; contributors, Singapore Land Authority',
-    maxZoom: 18,
-    minZoom: 11,
-    bounds: [
-      [1.56073, 104.11475],
-      [1.16, 103.502]
-    ],
-  );
-
-  if (type == OneMapSGType.Default) {
-    return opts.copy(
-      templateUrl: 'https://maps-{s}.onemap.sg/v3/Default/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == OneMapSGType.Night) {
-    return opts.copy(
-      templateUrl: 'https://maps-{s}.onemap.sg/v3/Night/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == OneMapSGType.Original) {
-    return opts.copy(
-      templateUrl: 'https://maps-{s}.onemap.sg/v3/Original/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == OneMapSGType.Grey) {
-    return opts.copy(
-      templateUrl: 'https://maps-{s}.onemap.sg/v3/Grey/{z}/{x}/{y}.png',
-    );
-  }
-
-  if (type == OneMapSGType.LandLot) {
-    return opts.copy(
-      templateUrl: 'https://maps-{s}.onemap.sg/v3/LandLot/{z}/{x}/{y}.png',
+          'https://{s}.sat.owm.io/vane/2.0/weather/WS10/{z}/{x}/{y}?appid=$apikey',
     );
   }
 
@@ -1273,7 +1047,7 @@ TileLayerOptions nasagibs(NASAGIBSType type, TileLayerOptions options) {
   if (type == NASAGIBSType.ModisTerraTrueColorCR) {
     return opts.copy(
       templateUrl:
-          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_TrueColor/default//GoogleMapsCompatible_Level/9/{z}/{y}/{x}.jpg',
+          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_TrueColor/default//GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg',
       maxZoom: 9,
     );
   }
@@ -1281,7 +1055,7 @@ TileLayerOptions nasagibs(NASAGIBSType type, TileLayerOptions options) {
   if (type == NASAGIBSType.ModisTerraBands367CR) {
     return opts.copy(
       templateUrl:
-          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_Bands367/default//GoogleMapsCompatible_Level/9/{z}/{y}/{x}.jpg',
+          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_Bands367/default//GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg',
       maxZoom: 9,
     );
   }
@@ -1289,7 +1063,7 @@ TileLayerOptions nasagibs(NASAGIBSType type, TileLayerOptions options) {
   if (type == NASAGIBSType.ViirsEarthAtNight2012) {
     return opts.copy(
       templateUrl:
-          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default//GoogleMapsCompatible_Level/8/{z}/{y}/{x}.jpg',
+          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default//GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg',
       maxZoom: 8,
     );
   }
@@ -1297,7 +1071,7 @@ TileLayerOptions nasagibs(NASAGIBSType type, TileLayerOptions options) {
   if (type == NASAGIBSType.ModisTerraLSTDay) {
     return opts.copy(
       templateUrl:
-          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_Land_Surface_Temp_Day/default//GoogleMapsCompatible_Level/7/{z}/{y}/{x}.png',
+          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_Land_Surface_Temp_Day/default//GoogleMapsCompatible_Level7/{z}/{y}/{x}.png',
       maxZoom: 7,
       opacity: 0.75,
     );
@@ -1306,7 +1080,7 @@ TileLayerOptions nasagibs(NASAGIBSType type, TileLayerOptions options) {
   if (type == NASAGIBSType.ModisTerraSnowCover) {
     return opts.copy(
       templateUrl:
-          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_Snow_Cover/default//GoogleMapsCompatible_Level/8/{z}/{y}/{x}.png',
+          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_Snow_Cover/default//GoogleMapsCompatible_Level8/{z}/{y}/{x}.png',
       maxZoom: 8,
       opacity: 0.75,
     );
@@ -1315,7 +1089,7 @@ TileLayerOptions nasagibs(NASAGIBSType type, TileLayerOptions options) {
   if (type == NASAGIBSType.ModisTerraAOD) {
     return opts.copy(
       templateUrl:
-          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_Aerosol/default//GoogleMapsCompatible_Level/6/{z}/{y}/{x}.png',
+          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_Aerosol/default//GoogleMapsCompatible_Level6/{z}/{y}/{x}.png',
       maxZoom: 6,
     );
   }
@@ -1323,7 +1097,7 @@ TileLayerOptions nasagibs(NASAGIBSType type, TileLayerOptions options) {
   if (type == NASAGIBSType.ModisTerraChlorophyll) {
     return opts.copy(
       templateUrl:
-          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_Chlorophyll_A/default//GoogleMapsCompatible_Level/7/{z}/{y}/{x}.png',
+          'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_Chlorophyll_A/default//GoogleMapsCompatible_Level7/{z}/{y}/{x}.png',
       maxZoom: 7,
       opacity: 0.75,
     );

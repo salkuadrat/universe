@@ -25,7 +25,6 @@ class _GoogleMapState extends State<GoogleMap> {
       type: type,
       zoom: 16,
       scale: _scale,
-      onReady: () => print('Google Map is ready!'),
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

@@ -31,7 +31,6 @@ class _MapBoxState extends State<MapBox> {
         type: type,
         zoom: 15,
         scale: _scale,
-        onReady: () => print('MapBox is ready!'),
         controls: [
           Align(
             alignment: Alignment.bottomLeft,

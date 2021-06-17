@@ -25,7 +25,6 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
       center: center,
       type: type,
       zoom: 15,
-      onReady: () => print('Open Street Map is ready!'),
       onTap: print,
       controls: [
         Align(

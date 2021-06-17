@@ -27,11 +27,9 @@ class MultiMarkerStylesMap extends StatelessWidget {
         // marker custom widget
         U.Marker([51.556669, -0.108123],
             widget: Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 Text('ARS'),
-                SizedBox(height: 5),
-                Icon(Icons.location_on, color: Colors.red, size: 28)
+                Icon(Icons.location_on, color: Colors.red, size: 24)
               ],
             )),
       ]),

@@ -55,10 +55,8 @@ class TileLayer extends StatefulWidget {
 }
 
 class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
-  //MapState get map => Provider.of<MapState>(context, listen: false);
-  late MapState map;
+  MapState get map => context.read<MapState>();
   MapController get controller => map.controller;
-
   TileLayerOptions get options => widget.options;
 
   Crs get crs => map.options.crs;
@@ -69,8 +67,8 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
   double? get minZoom => options.minZoom;
   double? get maxZoom => options.maxZoom;
 
-  late Map<String, Tile> _tiles;
-  late Map<double, Level> _levels;
+  Map<String, Tile> _tiles = <String, Tile>{};
+  Map<double, Level> _levels = <double, Level>{};
 
   Level? _level;
   double? _tileZoom;
@@ -98,17 +96,13 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
   @override
   void initState() {
     log('TileLayer initState');
-    _tiles = <String, Tile>{};
-    _levels = <double, Level>{};
     super.initState();
 
-    map = Provider.of<MapState>(context, listen: false);
+    _refresh();
+    _initSoftUpdate();
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      //await Future.delayed(Duration(milliseconds: 250));
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       map.addChangedListener(_onMapChanged);
-      _refresh();
-      _initSoftUpdate();
     });
   }
 
@@ -194,7 +188,7 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
   @override
   void dispose() {
     log('TileLayer dispose');
-    _removeAllTiles();
+    //_removeAllTiles();
     _softUpdateStream?.close();
     options.tileProvider?.dispose();
     super.dispose();
@@ -233,7 +227,6 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Consumer<MapState>(
       builder: (_, map, __) {
-        //this.map = map;
         return Stack(children: _children);
       },
     );
@@ -353,12 +346,12 @@ class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
       tileRange.topRight + UPoint(margin, -margin),
     );
 
-    // Sanity check: panic if the tile range contains Infinity somewhere.
     bool isFinite = (tileRange.min.x != double.negativeInfinity) &&
         (tileRange.min.y != double.negativeInfinity) &&
         (tileRange.max.x != double.infinity) &&
         (tileRange.max.y != double.infinity);
 
+    // Sanity check: panic if the tile range contains Infinity somewhere.
     if (!isFinite) {
       return;
     }

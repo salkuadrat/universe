@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:universe/universe.dart';
 
+import '../shared.dart';
+
 class MultiCircleStylesMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return U.OpenStreetMap(
+    return U.MapBox(
+      accessToken: yourAccessTokenHere,
       center: [-6.175329, 106.827253],
       zoom: 15,
       onReady: () => print('Map ready!'),

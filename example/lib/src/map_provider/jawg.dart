@@ -16,11 +16,10 @@ class _JawgMapState extends State<JawgMap> {
     return U.JawgMap(
       // Please get and use your own API key from https://www.jawg.io
       accessToken:
-          'XlZATO6aTUg6aQsBES8aebd7szoowRb2TUjE2aE7GVq4LrvKLu9evqYB7XTe1nLj',
+          'yN0ESgFsBwgdpSy0MoyaFsDI66mXptDz4cWH0wArMflMJCBK7TkuyjQY8OtqEViZ',
       center: [51.555158, -0.108343],
       type: type,
       zoom: 16,
-      onReady: () => print('Open Map is ready!'),
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

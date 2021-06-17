@@ -13,11 +13,14 @@ class _NASAGIBSMapState extends State<NASAGIBSMap> {
 
   @override
   Widget build(BuildContext context) {
-    return U.NASAGIBSMap(
+    return U.OpenStreetMap(
       center: [51.555158, -0.108343],
-      type: type,
-      zoom: 16,
-      onReady: () => print('Open Map is ready!'),
+      zoom: 4,
+	    minZoom: 1,
+	    maxZoom: 7,
+      tiles: [
+        U.NASAGIBSTileLayer(type: type)
+      ],
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

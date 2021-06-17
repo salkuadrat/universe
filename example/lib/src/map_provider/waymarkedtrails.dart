@@ -13,11 +13,12 @@ class _WaymarkedTrailsMapState extends State<WaymarkedTrailsMap> {
 
   @override
   Widget build(BuildContext context) {
-    return U.WaymarkedTrailsMap(
+    return U.OpenStreetMap(
       center: [51.555158, -0.108343],
-      type: type,
       zoom: 16,
-      onReady: () => print('Open Map is ready!'),
+      tiles: [
+        U.WaymarkedTrailsTileLayer(type: type),
+      ],
       controls: [
         Align(
           alignment: Alignment.bottomLeft,

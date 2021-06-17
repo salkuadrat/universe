@@ -11,13 +11,23 @@ class OpenMap extends StatefulWidget {
 class _OpenMapState extends State<OpenMap> {
   OpenType type = OpenType.OpenTopoMap;
 
+  bool get isSea => type == OpenType.OpenSeaMap;
+  bool get isFire => type == OpenType.OpenFireMap;
+
+  List get center {
+    if (isSea) return [54.1878, 12.0915];
+    if (isFire) return [48.136794, 11.574197];
+    return [51.555158, -0.108343];
+  }
+
   @override
   Widget build(BuildContext context) {
-    return U.OpenMap(
-      center: [51.555158, -0.108343],
-      type: type,
-      zoom: 16,
-      onReady: () => print('Open Map is ready!'),
+    return U.OpenStreetMap(
+      center: center,
+      zoom: 15,
+      tiles: [
+        U.OpenTileLayer(type: type)
+      ],
       controls: [
         Align(
           alignment: Alignment.bottomLeft,
@@ -42,10 +52,6 @@ class _OpenMapState extends State<OpenMap> {
                   child: Text('OpenSeaMap'),
                 ),
                 DropdownMenuItem(
-                  value: OpenType.OpenPtMap,
-                  child: Text('OpenPtMap'),
-                ),
-                DropdownMenuItem(
                   value: OpenType.OpenRailwayMap,
                   child: Text('OpenRailwayMap'),
                 ),
@@ -53,14 +59,14 @@ class _OpenMapState extends State<OpenMap> {
                   value: OpenType.OpenFireMap,
                   child: Text('OpenFireMap'),
                 ),
-                DropdownMenuItem(
+                /* DropdownMenuItem(
                   value: OpenType.OpenSnowMap,
                   child: Text('OpenSnowMap'),
                 ),
                 DropdownMenuItem(
                   value: OpenType.OpenAIP,
                   child: Text('OpenAIP'),
-                ),
+                ), */
               ],
             ),
           ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:universe/universe.dart';
 
+import '../shared.dart';
+
 class DataClassExample {
   final String id;
   final String name;
@@ -21,7 +23,8 @@ class MultiRectangleWithDataMap extends StatefulWidget {
 class _MultiRectangleWithDataMapState extends State<MultiRectangleWithDataMap> {
   @override
   Widget build(BuildContext context) {
-    return U.OpenStreetMap(
+    return U.MapBox(
+      accessToken: yourAccessTokenHere,
       center: [-6.175329, 106.827253],
       zoom: 15,
       rectangles: U.RectangleLayer(

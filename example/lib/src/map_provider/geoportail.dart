@@ -16,10 +16,9 @@ class _GeoportailFranceMapState extends State<GeoportailFranceMap> {
     return U.GeoportailFranceMap(
       // Please get and use your own API key from http://professionnels.ign.fr/ign/contrats/
       apikey: 'choisirgeoportail',
-      center: [51.555158, -0.108343],
+      center: [48.858236, 2.294477],
       type: type,
-      zoom: 16,
-      onReady: () => print('Open Map is ready!'),
+      zoom: 8,
       controls: [
         Align(
           alignment: Alignment.bottomLeft,
