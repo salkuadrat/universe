@@ -12,22 +12,31 @@ import 'tap_position.dart';
 
 /// list of methods to implements by MapGestureDetector
 abstract class MapGestureMixin {
+  /// When it's starting to scale
   void onScaleStart(ScaleStartDetails details);
 
+  /// When it's scaling
   void onScaleUpdate(ScaleUpdateDetails details);
 
+  /// When it's stop scaling
   void onScaleEnd(ScaleEndDetails details);
 
+  /// When user tap on this widget
   void onTap(TapPosition position);
 
+  /// When user long press on this widget
   void onLongPress(TapPosition position);
 
+  /// When user double tap on this widget
   void onDoubleTap(TapPosition tapPosition);
 
+  /// When user stop touching this widget
   void onTapUp(TapUpDetails details);
 }
 
+/// Widget to detect all gesture that happen on the map
 class MapGestureDetector extends StatefulWidget {
+  /// The widget below this widget in the tree
   final Widget? child;
 
   MapGestureDetector({Key? key, this.child}) : super(key: key);

@@ -8,20 +8,48 @@ import '../layer/layer.dart';
 import '../shared.dart';
 import 'map.dart';
 
+/// Main class of Map Universe
 class Universe extends StatelessWidget {
+  /// Map options
   final MapOptions options;
+
+  /// Map controller
   final MapController? controller;
+
+  /// Background color of this map.
   final Color? background;
+
+  /// Base tile layer of this map.
   final TileLayer? base;
+
+  /// List markers to show on this map.
   final MarkerLayer? markers;
+
+  /// List circles to show on this map.
   final CircleLayer? circles;
+
+  /// List polylines to show on this map.
   final PolylineLayer? polylines;
+
+  /// List polygons to show on this map.
   final PolygonLayer? polygons;
+
+  /// List rectangles to show on this map.
   final RectangleLayer? rectangles;
+
+  /// List of additional tile layers to show on this map.
   final List<TileLayer> tiles;
+
+  /// List image overlays to show on this map.
   final List<ImageOverlay> images;
+
+  /// List video overlays to show on this map.
   final List<VideoOverlay> videos;
+
+  /// List of additional custom layers to show on this map.
   final List<MapLayer> layers;
+
+  /// List of additional custom controls to show on this map.
   final List<Widget> controls;
 
   const Universe({
@@ -43,15 +71,34 @@ class Universe extends StatelessWidget {
   })  : assert(layers is List<MapLayer>),
         super(key: key);
 
+  /// Has base tile layer.
   bool get hasBase => base != null;
+
+  /// Has list circles.
   bool get hasCircles => circles != null;
+
+  /// Has list polylines.
   bool get hasPolylines => polylines != null;
+
+  /// Has list polygons.
   bool get hasPolygons => polygons != null;
+
+  /// Has list rectangles.
   bool get hasRectangles => rectangles != null;
+
+  /// Has additional tile layers.
   bool get hasTiles => tiles.isNotEmpty;
+
+  /// Has image overlays.
   bool get hasImages => images.isNotEmpty;
+
+  /// Has video overlays.
   bool get hasVideos => videos.isNotEmpty;
+
+  /// Has additional custom layers.
   bool get hasLayers => layers.isNotEmpty;
+
+  /// Has markers.
   bool get hasMarkers => markers != null;
 
   @override

@@ -9,12 +9,24 @@ import 'package:universe/src/shared.dart';
 import '../map/map.dart';
 import '../layer/layer.dart';
 
+/// Map Scale Layer
 class Scale extends MapLayer {
+  /// Alignment of this scale layer.
   final Alignment alignment;
+
+  /// Margin of this scale layer.
   final EdgeInsets? margin;
+
+  /// Scale color.
   final Color color;
+
+  /// Fontsize of scale text.
   final double fontSize;
+
+  /// Stroke width of scale stroke.
   final double strokeWidth;
+
+  /// Opacity of this scale layer.
   final double opacity;
 
   Scale({

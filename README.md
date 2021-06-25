@@ -16,7 +16,7 @@ or
 
 ```yaml
 dependencies:
-  universe: ^1.0.6-nullsafety
+  universe: ^1.0.7-nullsafety
 ```
 
 Then run `flutter pub get`.
@@ -248,9 +248,9 @@ Complete live maps examples:
 
 ### Live Maps Without AutoMoving
 
-The default behavior of Live Map will always move the center of the maps to user's current location. 
+The default behavior of Live Map is always move the center of the maps to user's current location. 
 
-If we want to go live (always searching for user's current location and show location indicator to that location), but don't want to move the center of the maps, we can set parameter moveWhenLive to false.
+If you want to go live (always searching for user's current location and show location indicator to that location), but don't want to move the center of the maps, you can set parameter moveWhenLive to false.
 
 ```dart
 U.GoogleMap(
@@ -268,6 +268,18 @@ U.GoogleMap(
 ```
 
 [Live Map without Auto Moving](example/lib/src/live/notmove.dart)
+
+### Live Stream Maps 
+
+We can let the map live while also listening to current user's location by subscribing to `liveStream` of `MapController`.
+
+```dart
+_liveSubs = _mapController.liveStream?.listen((latlng) { 
+  print('Current location: $latlng');
+});
+```
+
+See the complete example at [Live Stream Map](example/lib/src/live/stream.dart)
 
 ### Static Maps
 
@@ -302,7 +314,7 @@ U.OpenStreetMap(
 )
 ```
 
-And use the controller to listen the positionStream to get current position and current zoom of our map. We can also programmatically move, zoom, rotate or find location using the map controller.
+And use that controller to listen the positionStream to get current position and current zoom of our map. We can also programmatically move, zoom, rotate or find location using the map controller.
 
 ```dart
 // listen everytime the map data changes (move or zoom)

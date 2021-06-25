@@ -11,20 +11,26 @@ import 'crs.dart';
 
 /// Custom CRS
 class Proj4Crs extends BaseCrs {
+  /// Code of this CRS.
   @override
   final String code;
 
+  /// Projection value of this CRS.
   @override
   final Projection projection;
 
+  /// Transformation object of this CRS.
   @override
   final Transformation transformation;
 
+  /// Infinite
   @override
   final bool infinite;
 
+  /// Transformations list
   final List<Transformation>? transformations;
 
+  /// Scale list
   final List<double?> scales;
 
   Proj4Crs._({

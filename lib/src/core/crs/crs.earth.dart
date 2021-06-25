@@ -12,6 +12,7 @@ import 'crs.dart';
 class Earth extends BaseCrs {
   const Earth();
 
+  /// Code of this CRS.
   @override
   String get code => 'CRS.Earth';
 
@@ -20,6 +21,7 @@ class Earth extends BaseCrs {
   // see http://rosettacode.org/wiki/Haversine_formula
   static double R = 6371000.0;
 
+  /// Calculate distance from position to destination.
   @override
   double distance(LatLng position, LatLng destination) {
     double rad = PI / 180;
@@ -33,9 +35,11 @@ class Earth extends BaseCrs {
     return R * c;
   }
 
+  /// Bounds for latitude
   @override
   Tuple2<double, double> get latBounds => Tuple2(-90.0, 90.0);
 
+  /// Bounds for longitude
   @override
   Tuple2<double, double> get lngBounds => Tuple2(-180.0, 180.0);
 }

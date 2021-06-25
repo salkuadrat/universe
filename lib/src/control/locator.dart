@@ -5,10 +5,18 @@ import 'package:flutter/widgets.dart';
 import '../layer/layer.dart';
 import '../map/map.dart';
 
+/// Map Locator Layer
 class Locator extends MapLayer {
+  /// Widget to be used as locator icon.
   final Widget? icon;
+
+  /// Alignment of this locator layer.
   final Alignment alignment;
+
+  /// Margin of this locator layer.
   final EdgeInsets margin;
+
+  /// Target zoom level when locating user location.
   final double toZoom;
 
   const Locator({

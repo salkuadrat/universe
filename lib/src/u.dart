@@ -8,13 +8,39 @@ import 'core/core.dart';
 import 'layer/layer.dart' as L;
 import 'map/controller/controller.dart' as C;
 import 'map/map.dart';
-import 'tiles.dart';
 import 'shared.dart';
+import 'tiles/basemapat.dart';
+import 'tiles/cartodb.dart';
+import 'tiles/cyclosm.dart';
+import 'tiles/esri.dart';
+import 'tiles/geoportail.dart';
+import 'tiles/goole.dart';
+import 'tiles/here.dart';
+import 'tiles/herev3.dart';
+import 'tiles/hikebike.dart';
+import 'tiles/jawg.dart';
+import 'tiles/mapbox.dart';
+import 'tiles/maptiler.dart';
+import 'tiles/mtbmap.dart';
+import 'tiles/nasagibs.dart';
+import 'tiles/nlmaps.dart';
+import 'tiles/nls.dart';
+import 'tiles/open.dart';
+import 'tiles/openweather.dart';
+import 'tiles/osm.dart';
+import 'tiles/safecast.dart';
+import 'tiles/stadia.dart';
+import 'tiles/stamen.dart';
+import 'tiles/thunderforest.dart';
+import 'tiles/tomtom.dart';
+import 'tiles/usgs.dart';
+import 'tiles/waymarkedtrails.dart';
+import 'tiles/wikimedia.dart';
 import 'type.dart';
 
 /// The easy & flexible way to use interactive maps in Flutter.
 ///
-/// U class is starting point of universe.
+/// U class is the starting point of universe.
 ///
 class U {
   // ignore: non_constant_identifier_names
@@ -4228,7 +4254,12 @@ class U {
     GoogleMapType type = GoogleMapType.Street,
     L.TileLayerOptions? options,
   }) {
-    return L.TileLayer(options: google(type, options ?? L.TileLayerOptions()));
+    return L.TileLayer(
+      options: google(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from MapBox servers.
@@ -4271,7 +4302,12 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-        options: mapbox(type, options ?? L.TileLayerOptions(), accessToken));
+      options: mapbox(
+        type: type,
+        accessToken: accessToken,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from OpenStreetMap servers.
@@ -4306,10 +4342,11 @@ class U {
     L.TileLayerOptions? options,
     String apikey = '',
   }) {
-    options ??= L.TileLayerOptions();
-
     return L.TileLayer(
-      options: osm(type, options),
+      options: osm(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
     );
   }
 
@@ -4335,7 +4372,7 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-      options: safecast(options ?? L.TileLayerOptions()),
+      options: safecast(options: options ?? L.TileLayerOptions()),
     );
   }
 
@@ -4361,7 +4398,7 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-      options: cyclosm(options ?? L.TileLayerOptions()),
+      options: cyclosm(options: options ?? L.TileLayerOptions()),
     );
   }
 
@@ -4387,7 +4424,7 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-      options: mtbmap(options ?? L.TileLayerOptions()),
+      options: mtbmap(options: options ?? L.TileLayerOptions()),
     );
   }
 
@@ -4413,7 +4450,7 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-      options: nls(options ?? L.TileLayerOptions()),
+      options: nls(options: options ?? L.TileLayerOptions()),
     );
   }
 
@@ -4439,7 +4476,7 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-      options: wikimedia(options ?? L.TileLayerOptions()),
+      options: wikimedia(options: options ?? L.TileLayerOptions()),
     );
   }
 
@@ -4480,7 +4517,10 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-      options: open(type, options ?? L.TileLayerOptions()),
+      options: open(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
     );
   }
 
@@ -4519,7 +4559,12 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-        options: stadia(type, options ?? L.TileLayerOptions(), apikey));
+      options: stadia(
+        type: type,
+        apikey: apikey,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from Thunderforest servers.
@@ -4562,7 +4607,11 @@ class U {
     required String apikey,
   }) {
     return L.TileLayer(
-      options: thunderforest(type, options ?? L.TileLayerOptions(), apikey),
+      options: thunderforest(
+        type: type,
+        apikey: apikey,
+        options: options ?? L.TileLayerOptions(),
+      ),
     );
   }
 
@@ -4603,7 +4652,12 @@ class U {
     required String accessToken,
   }) {
     return L.TileLayer(
-        options: jawg(type, options ?? L.TileLayerOptions(), accessToken));
+      options: jawg(
+        type: type,
+        accessToken: accessToken,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from MapTiler servers.
@@ -4647,7 +4701,12 @@ class U {
     required String apikey,
   }) {
     return L.TileLayer(
-        options: maptiler(type, options ?? L.TileLayerOptions(), apikey));
+      options: maptiler(
+        type: type,
+        apikey: apikey,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from Stamen servers.
@@ -4692,7 +4751,12 @@ class U {
     required StamenType type,
     L.TileLayerOptions? options,
   }) {
-    return L.TileLayer(options: stamen(type, options ?? L.TileLayerOptions()));
+    return L.TileLayer(
+      options: stamen(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from TomTom Map servers.
@@ -4729,7 +4793,11 @@ class U {
     required String apikey,
   }) {
     return L.TileLayer(
-      options: tomtom(type, options ?? L.TileLayerOptions(), apikey),
+      options: tomtom(
+        type: type,
+        apikey: apikey,
+        options: options ?? L.TileLayerOptions(),
+      ),
     );
   }
 
@@ -4772,7 +4840,12 @@ class U {
     required EsriType type,
     L.TileLayerOptions? options,
   }) {
-    return L.TileLayer(options: esri(type, options ?? L.TileLayerOptions()));
+    return L.TileLayer(
+      options: esri(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from CartoDB servers.
@@ -4814,7 +4887,12 @@ class U {
     required CartoDBType type,
     L.TileLayerOptions? options,
   }) {
-    return L.TileLayer(options: cartodb(type, options ?? L.TileLayerOptions()));
+    return L.TileLayer(
+      options: cartodb(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from BasemapAT servers.
@@ -4854,7 +4932,11 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-        options: basemapat(type, options ?? L.TileLayerOptions()));
+      options: basemapat(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from HikeBike servers.
@@ -4887,7 +4969,9 @@ class U {
   static L.TileLayer HikeBikeTileLayer({
     L.TileLayerOptions? options,
   }) {
-    return L.TileLayer(options: hikebike(options ?? L.TileLayerOptions()));
+    return L.TileLayer(
+      options: hikebike(options: options ?? L.TileLayerOptions()),
+    );
   }
 
   /// Used to load and display tile layers from NLMaps servers.
@@ -4923,7 +5007,12 @@ class U {
     NLMapsType type = NLMapsType.Default,
     L.TileLayerOptions? options,
   }) {
-    return L.TileLayer(options: nlmaps(type, options ?? L.TileLayerOptions()));
+    return L.TileLayer(
+      options: nlmaps(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from Geoportail France Map servers.
@@ -4960,7 +5049,11 @@ class U {
     required String apikey,
   }) {
     return L.TileLayer(
-      options: geoportail(type, options ?? L.TileLayerOptions(), apikey),
+      options: geoportail(
+        type: type,
+        apikey: apikey,
+        options: options ?? L.TileLayerOptions(),
+      ),
     );
   }
 
@@ -5006,7 +5099,11 @@ class U {
     required String apikey,
   }) {
     return L.TileLayer(
-      options: openweather(type, options ?? L.TileLayerOptions(), apikey),
+      options: openweather(
+        type: type,
+        apikey: apikey,
+        options: options ?? L.TileLayerOptions(),
+      ),
     );
   }
 
@@ -5047,7 +5144,11 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-        options: nasagibs(type, options ?? L.TileLayerOptions()));
+      options: nasagibs(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from USGS servers.
@@ -5082,7 +5183,12 @@ class U {
     required USGSType type,
     L.TileLayerOptions? options,
   }) {
-    return L.TileLayer(options: usgs(type, options ?? L.TileLayerOptions()));
+    return L.TileLayer(
+      options: usgs(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from Waymarked Trails servers.
@@ -5121,7 +5227,11 @@ class U {
     L.TileLayerOptions? options,
   }) {
     return L.TileLayer(
-        options: waymarkedtrails(type, options ?? L.TileLayerOptions()));
+      options: waymarkedtrails(
+        type: type,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to load and display tile layers from HERE Map servers.
@@ -5188,10 +5298,25 @@ class U {
     required String appCode,
     String version = 'v3',
   }) {
+    if (version == 'v3') {
+      return L.TileLayer(
+        options: herev3(
+          type: type,
+          appId: appId,
+          appCode: appCode,
+          options: options ?? L.TileLayerOptions(),
+        ),
+      );
+    }
+
     return L.TileLayer(
-        options: version == 'v3'
-            ? herev3(type, options ?? L.TileLayerOptions(), appId, appCode)
-            : here(type, options ?? L.TileLayerOptions(), appId, appCode));
+      options: here(
+        type: type,
+        appId: appId,
+        appCode: appCode,
+        options: options ?? L.TileLayerOptions(),
+      ),
+    );
   }
 
   /// Used to display marker(s) at specified locations on map.

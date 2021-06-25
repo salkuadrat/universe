@@ -8,6 +8,7 @@ import '../../layer/layer.dart';
 import '../../shared.dart';
 import '../map.dart';
 
+/// Map options
 class MapOptions {
   /// The [Coordinate Reference System] to use.
   /// Don't change this if you're not sure what it means.
@@ -78,39 +79,79 @@ class MapOptions {
   /// Set it to [false] when you need static map.
   final bool interactive;
 
+  /// Hide attribution of this map.
   final bool hideAttribution;
 
   /// When this option is set, the map restricts the view to the given
   /// geographical bounds, bouncing the user back if the user tries to pan
   /// outside the view.
   final LatLngBounds? maxBounds;
+
+  /// When this options is set, the map will fit to the given bounds.
   final LatLngBounds? fitBounds;
+
+  /// Fit bounds options to be used when [fitBounds] is set to true.
   final FitBoundsOptions fitBoundsOptions;
+
+  /// Is map need to slide on boundaries.
   final bool slideOnBoundaries;
+
+  /// Is map an adaptive boundaries.
   final bool adaptiveBoundaries;
+
+  /// Callback function to be called when tap on this map.
   final Function(LatLng?)? onTap;
+
+  /// Callback function to be called when long press on this map.
   final Function(LatLng?)? onLongPress;
+
+  /// Callback function to be called when map state is changed.
   final MapChangedCallback? onChanged;
+
+  /// Callback function to be called when map is ready.
   final Function? onReady;
+
+  /// Attribution to show in this map.
   final String attribution;
 
+  /// Current zoom level of this map.
   double get zoom => zoomOptions.zoom;
+
+  /// Min zoom level of this map.
   double get minZoom => zoomOptions.minZoom;
+
+  /// Max zoom level of this map.
   double get maxZoom => zoomOptions.maxZoom;
+
+  /// Zoom delta of this map.
   double get zoomDelta => zoomOptions.zoomDelta;
 
+  /// Whether map size is already set.
   bool get hasSize => size != null;
+
+  /// Whether map size is not set yet.
   bool get noSize => size == null;
+
+  /// Whether max bounds of this map is set.
   bool get hasMaxBounds => maxBounds != null;
+
+  /// Whether fit bounds of this map is set.
   bool get hasFitBounds => fitBounds != null;
+
+  /// Whether custom location indicator for this map is set.
   bool get hasLocationIndicator => locationIndicator != null;
   //bool get hasBounds => bounds != null;
 
+  /// Whether center of this map is set.
   bool get hasCenter => center != null;
+
+  /// Whether center query (address or location name) of this map is set.
   bool get hasCenterQuery => centerQuery != null && centerQuery!.isNotEmpty;
 
+  /// Whether this map is not live
   bool get notLive => !live;
 
+  /// Whether rotation of this map is enabled.
   bool get canRotate => !disableRotation;
 
   MapOptions({

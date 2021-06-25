@@ -1,9 +1,17 @@
 import '../../shared.dart';
 
+/// Zoom options
 class ZoomOptions {
+  /// Initial zoom level.
   final double zoom;
+
+  /// Min zoom level.
   final double minZoom;
+
+  /// Max zoom level.
   final double maxZoom;
+
+  /// Zoom delta to be used when zoom in and zoom out.
   final double zoomDelta;
 
   ZoomOptions({

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+/// Used to detect tap position on the map
 class TapPositionDetector extends StatefulWidget {
   TapPositionDetector({
     Key? key,
@@ -19,12 +20,26 @@ class TapPositionDetector extends StatefulWidget {
   static const _DEFAULT_DELAY = Duration(milliseconds: 250);
   static const _DOUBLE_TAP_MAX_OFFSET = 48.0;
 
+  /// The widget below this widget in the tree
   final Widget? child;
+
+  /// How to behave during hit tests
   final HitTestBehavior? behavior;
+
+  /// Callback function to be called when tapped
   final ValueChanged<TapPosition>? onTap;
+
+  /// Callback function to be called when double tapped
   final ValueChanged<TapPosition>? onDoubleTap;
+
+  /// Callback function to be called when long pressed
   final ValueChanged<TapPosition>? onLongPress;
+
+  /// Delay to count two consecutive tap as a double tap
+  /// Default: 250ms
   final Duration doubleTapDelay;
+
+  /// TapPositionController
   final TapPositionController? controller;
 
   @override

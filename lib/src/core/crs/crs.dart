@@ -9,12 +9,23 @@ export 'crs.epsg4326.dart';
 export 'crs.simple.dart';
 export 'crs.proj4.dart';
 
+/// CRS colections
 class CRS {
-  //const CRS();
+  /// Base CRS
   static const Crs BASE = BaseCrs();
+
+  /// Simple CRS
   static const Crs SIMPLE = CrsSimple();
+
+  /// Earth CRS
   static const Crs EARTH = Earth();
+
+  /// EPSG4326 CRS
   static const Crs EPSG4326 = Epsg4326();
+
+  /// EPSG3857 CRS
   static const Crs EPSG3857 = Epsg3857();
+
+  /// EPSG3395 CRS
   static const Crs EPSG3395 = Epsg3395();
 }

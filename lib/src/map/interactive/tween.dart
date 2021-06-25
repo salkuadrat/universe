@@ -3,6 +3,10 @@ import 'package:flutter/cupertino.dart';
 
 import '../../core/latlng/latlng.dart';
 
+/// Tween animation between two [LatLng] values
+///
+/// [begin] - animate from this [LatLng] value
+/// [end] - animate to this [LatLng] value
 class LatLngTween extends Tween<LatLng> {
   LatLngTween({
     required LatLng? begin,

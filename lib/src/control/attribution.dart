@@ -4,7 +4,9 @@ import 'package:html_unescape/html_unescape.dart';
 import '../layer/layer.dart';
 import '../map/map.dart';
 
+/// Map Attribution Layer
 class Attribution extends MapLayer {
+  /// Attribution to show on the map.
   final String? attribution;
 
   Attribution(this.attribution);

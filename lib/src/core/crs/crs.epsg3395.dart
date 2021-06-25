@@ -12,13 +12,16 @@ class Epsg3395 extends Earth {
 
   static const double SCALE = 0.5 / (PI * Mercator.R);
 
+  /// Code of this CRS.
   @override
   String get code => 'EPSG:3395';
 
+  /// Projection value of this CRS.
   @override
   Projection get projection =>
       Mercator(latBounds: latBounds, lngBounds: latBounds);
 
+  /// Transformation object of this CRS.
   @override
   Transformation get transformation => Transformation(SCALE, 0.5, -SCALE, 0.5);
 }

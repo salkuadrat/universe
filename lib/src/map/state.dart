@@ -13,6 +13,7 @@ import 'controller/controller.dart';
 import 'interactive/interactive.dart';
 import 'options/options.dart';
 
+/// Global Map State
 class MapState extends ChangeNotifier {
   late MapController _originalController;
   late MapOptions _originalOptions;
@@ -32,6 +33,7 @@ class MapState extends ChangeNotifier {
   Location? _location;
   StreamSubscription? _locationSubs;
   late StreamController<MapData> _positionStream;
+  late StreamController<LatLng> _liveStream;
 
   late TickerProvider _vsync;
   CurvedAnimationController? _rotateAnim;
@@ -45,7 +47,10 @@ class MapState extends ChangeNotifier {
   //Function? _onTileChanged;
   List<Function?> _onChangedListeners = [];
 
+  /// Callback function to be called when tap on this map.
   Function? get onTap => _options.onTap;
+
+  /// Callback function to be called when long press on this map.
   Function? get onLongPress => _options.onLongPress;
 
   MapState({
@@ -78,44 +83,95 @@ class MapState extends ChangeNotifier {
         (options.center != null && !_isOutOfBounds(options.center)));
   }
 
+  /// Stream to listen to current data position of the map.
   StreamController<MapData> get positionStream => _positionStream;
+
+  /// Stream to listen to current live user position on the map
+  StreamController<LatLng> get liveStream => _liveStream;
+
+  /// Map controller.
   MapController get controller => _controller;
+
+  /// Map options.
   MapOptions get options => _options;
 
+  /// Crs of this map.
   Crs get crs => options.crs;
+
+  /// Current center of this map.
   LatLng get center => _center;
+
+  /// Current zoom level of this map.
   double get zoom => _zoom;
+
+  /// Min zoom level.
   double get minZoom => _minZoom;
+
+  /// Max zoom level.
   double get maxZoom => _maxZoom;
+
+  /// Current rotation degrees of this map.
   double get rotation => _rotation;
+
+  /// Original initial rotation of this map.
   double get originalRotation => _originalRotation;
+
+  /// Size of this map.
   Size get size => _size;
 
+  /// Current angle of this map (radian).
   double get angle => _angle;
+
+  /// Initial angle of this map (radian).
   double get angleStart => _angleStart;
 
+  /// Whether the map is currently searching for user location.
   bool get isLocating => _isLocating;
+
+  /// Whether the map is currently not searching user location.
   bool get isNotLocating => !isLocating;
+
+  /// Current user location.
   Location? get location => _location;
+
+  /// Current user position.
   LatLng? get position => _position;
 
   late SafeBounds _safeBoundsCache;
   //late double _safeBoundsZoom;
 
+  /// Whether max bounds of this map is set.
   bool get hasMaxBounds => _options.hasMaxBounds;
+
+  /// South west bound of this map.
   LatLng? get swBound => _options.maxBounds?.southWest;
+
+  /// North east bound of this map.
   LatLng? get neBound => _options.maxBounds?.northEast;
 
+  /// Whether user can rotate this map.
   bool get canRotate => _options.canRotate;
+
+  /// Whether the map is rotated.
   bool get hasRotation => _rotation > 0.0;
+
+  /// Whether the map is showing center marker.
   bool get showCenterMarker => _options.showCenterMarker;
+
+  /// Whether the map is showing location marker.
   bool get showLocationMarker =>
       _options.showLocationMarker && _position != null;
 
+  /// Center marker of this map.
   dynamic get centerMarker => _options.centerMarker;
+
+  /// Location marker of this map.
   dynamic get locationMarker => _options.locationMarker;
 
+  /// Map width
   double get width => _size.width;
+
+  /// Map height
   double get height => _size.height;
 
   Size get _halfSize => _size / 2;
@@ -125,23 +181,31 @@ class MapState extends ChangeNotifier {
   double get _heightInDegrees =>
       (_size.height * 170.102258) / math.pow(2, _zoom + 8);
 
+  /// Center point of this map.
   UPoint get centerPoint => getCenterPoint(_center, _zoom);
+
+  /// Pixel origin of this map.
   UPoint get pixelOrigin => getPixelOrigin(_center, _zoom);
 
+  /// Calculate center point from LatLng center position and zoom level.
   UPoint getCenterPoint(LatLng? center, [double? zoom]) {
     return project(center, zoom ?? _zoom);
   }
 
+  /// Calculate pixel origin from LatLng center position and zoom level.
   UPoint getPixelOrigin(LatLng? center, [double? zoom]) {
     return (getCenterPoint(center, zoom) - _halfPoint).round();
   }
 
+  /// Get pixel world bounds with a specified zoom.
   Bounds? getPixelWorldBounds(double? zoom) {
     return crs.getProjectedBounds(zoom ?? _zoom);
   }
 
+  /// Current pixel bounds.
   Bounds get pixelBounds => getPixelBounds(_center, _zoom);
 
+  /// Get pixel bounds based on specified center and zoom level.
   Bounds getPixelBounds(LatLng? center, double zoom) {
     double scale = getZoomScale(zoom, _zoom);
 
@@ -151,6 +215,7 @@ class MapState extends ChangeNotifier {
     return Bounds(centerPoint - offset, centerPoint + offset);
   }
 
+  /// Bounds of this map.
   LatLngBounds get bounds {
     final bounds = pixelBounds;
 
@@ -160,46 +225,57 @@ class MapState extends ChangeNotifier {
     );
   }
 
+  /// Wrap bounds
   LatLngBounds wrapLatLngBounds(LatLngBounds latlngBounds) {
     return crs.wrapLatLngBounds(latlngBounds);
   }
 
+  /// Limit zoom level of this map.
   double limitZoom([double? zoom]) {
     return math.max(minZoom, math.min(maxZoom, zoom ?? _zoom));
   }
 
+  /// Convert latlng position to physical point on screen.
   UPoint project(LatLng? latlng, [double? zoom]) {
     return latlngToPoint(latlng, zoom ?? _zoom);
   }
 
+  /// Convert latlng position to physical point on screen.
   UPoint latlngToPoint(LatLng? latlng, [double? zoom]) {
     return crs.latlngToPoint(latlng, zoom ?? _zoom);
   }
 
+  /// Convert physical point on screen to latlng position on the map.
   LatLng? unproject(UPoint point, [double? zoom]) {
     return pointToLatLng(point, zoom ?? _zoom);
   }
 
+  /// Convert physical point on screen to latlng position on the map.
   LatLng? pointToLatLng(UPoint point, [double? zoom]) {
     return crs.pointToLatLng(point, zoom ?? _zoom);
   }
 
+  /// Convert offset to point
   UPoint offsetToPoint(Offset offset) {
     return UPoint(offset.dx, offset.dy);
   }
 
+  /// Convert point to offset
   Offset pointToOffset(UPoint point) {
     return Offset(point.x, point.y);
   }
 
+  /// Convert offset to size
   Size offsetToSize(Offset offset) {
     return Size(offset.dx, offset.dy);
   }
 
+  /// Convert size to offset
   Offset sizeToOffset(Size size) {
     return Offset(size.width, size.height);
   }
 
+  /// Convert offset to latlng position on the map.
   LatLng? offsetToLatLng(Offset offset, [double? width, double? height]) {
     width ??= size.width;
     height ??= size.height;
@@ -215,7 +291,7 @@ class MapState extends ChangeNotifier {
   }
 
   /// Returns the scale factor to be applied to a map transition
-  /// from zoom level `fromZoom` to `toZoom`.
+  /// from zoom level [fromZoom] to [toZoom].
   ///
   /// Used internally to help with zoom animations.
   double getZoomScale(double toZoom, [double? fromZoom]) {
@@ -223,8 +299,8 @@ class MapState extends ChangeNotifier {
   }
 
   /// Returns the zoom level that the map would end up at,
-  /// if it is at `fromZoom` level and everything is scaled
-  /// by a factor of `scale`.
+  /// if it is at [fromZoom] level and everything is scaled
+  /// by a factor of [scale].
   ///
   /// Inverse of [`getZoomScale`].
   double getScaleZoom(double scale, [double? fromZoom]) {
@@ -356,12 +432,13 @@ class MapState extends ChangeNotifier {
     _onChangedListeners.forEach((listener) => listener?.call());
   }
 
-  Future init(TickerProvider vsync, Function onAngleChanged) async {
+  Future<void> init(TickerProvider vsync, Function onAngleChanged) async {
     log('MapStates init');
 
     _vsync = vsync;
     _onAngleChanged = onAngleChanged;
     _positionStream = StreamController.broadcast(sync: true);
+    _liveStream = StreamController.broadcast(sync: true);
 
     notifyListeners();
 
@@ -391,7 +468,7 @@ class MapState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future _initLocation() async {
+  Future<void> _initLocation() async {
     log('MapStates initLocation');
 
     _location = new Location();
@@ -400,25 +477,41 @@ class MapState extends ChangeNotifier {
       _startLocating();
       await _initLocationSettings();
 
-      _locationSubs = _location?.onLocationChanged.listen((data) {
-        _stopLocating();
+      _locationSubs = _location?.onLocationChanged.listen((latlng) {
+        if (latlng.latitude != null && latlng.longitude != null) {
+          _stopLocating();
 
-        _position = LatLng(
-          data.latitude,
-          data.longitude,
-          data.altitude,
-        );
+          _position = LatLng(
+            latlng.latitude,
+            latlng.longitude,
+            latlng.altitude,
+          );
 
-        notifyListeners();
+          notifyListeners();
 
-        if (options.moveWhenLive) {
-          move(_position, 17.01122, true);
+          _liveStream.add(_position!);
+
+          if (bounds.north != null &&
+              bounds.south != null &&
+              bounds.west != null &&
+              bounds.east != null) {
+            bool isInLatBounds = latlng.latitude! <= bounds.north! &&
+                latlng.latitude! >= bounds.south!;
+            bool isInLngBounds = latlng.longitude! >= bounds.west! &&
+                latlng.longitude! <= bounds.east!;
+            bool isInBounds = isInLatBounds && isInLngBounds;
+            bool notInBounds = !isInBounds;
+
+            if (notInBounds && options.moveWhenLive) {
+              move(_position, 17, true);
+            }
+          }
         }
       });
     }
   }
 
-  Future _initLocationSettings() async {
+  Future<void> _initLocationSettings() async {
     bool _serviceEnabled = await _location?.serviceEnabled() ?? false;
 
     if (!_serviceEnabled) {
@@ -440,7 +533,7 @@ class MapState extends ChangeNotifier {
     }
   }
 
-  Future _locateCenter([LatLng? defaultCenter]) async {
+  Future<void> _locateCenter([LatLng? defaultCenter]) async {
     log('MapStates locateCenter');
 
     LatLng? center = await findLocation(options.centerQuery!) ?? defaultCenter;
@@ -456,20 +549,20 @@ class MapState extends ChangeNotifier {
     }
   }
 
-  reset() {
+  void reset() {
     log('MapStates reset');
     _controller = _originalController;
     _options = _originalOptions;
     notifyListeners();
   }
 
-  resize(double width, double height) {
+  void resize(double width, double height) {
     log('MapStates resize');
     _size = Size(width, height);
     notifyListeners();
   }
 
-  _move(LatLng center, double? zoom) {
+  void _move(LatLng center, double? zoom) {
     zoom = limitZoom(zoom);
 
     bool isZoomChanged = _isNotEqualZoom(zoom);
@@ -503,7 +596,8 @@ class MapState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future move(dynamic center, double? zoom, [bool animate = false]) async {
+  Future<void> move(dynamic center, double? zoom,
+      [bool animate = false]) async {
     log('MapStates move $center $zoom');
 
     if (center is String) {
@@ -519,7 +613,7 @@ class MapState extends ChangeNotifier {
     if (animate) {
       _moveAnim = CurvedAnimationController.tween(
         LatLngTween(begin: _center, end: center),
-        Duration(milliseconds: 250),
+        Duration(milliseconds: 300),
         curve: Curves.ease,
         vsync: _vsync,
       );
@@ -527,7 +621,7 @@ class MapState extends ChangeNotifier {
       _zoomAnim = CurvedAnimationController(
         begin: _zoom,
         end: zoom,
-        duration: Duration(milliseconds: 250),
+        duration: Duration(milliseconds: 300),
         curve: Curves.ease,
         vsync: _vsync,
       );
@@ -563,7 +657,7 @@ class MapState extends ChangeNotifier {
     }
   }
 
-  fitBounds(dynamic bounds, [FitBoundsOptions? options]) {
+  void fitBounds(dynamic bounds, [FitBoundsOptions? options]) {
     log('MapStates fitBounds');
 
     LatLngBounds latlngBounds = LatLngBounds.from(bounds);
@@ -578,7 +672,7 @@ class MapState extends ChangeNotifier {
     move(target.center, target.zoom, true);
   }
 
-  fitWorld([FitBoundsOptions? options]) {
+  void fitWorld([FitBoundsOptions? options]) {
     log('MapStates fitWorld');
     fitBounds([
       [-90.0, -180.0],
@@ -604,15 +698,15 @@ class MapState extends ChangeNotifier {
     }
   }
 
-  zoomIn([double zoomDelta = zoomDeltaDef]) {
+  void zoomIn([double zoomDelta = zoomDeltaDef]) {
     zoomTo(_zoom + zoomDelta);
   }
 
-  zoomOut([double zoomDelta = zoomDeltaDef]) {
+  void zoomOut([double zoomDelta = zoomDeltaDef]) {
     zoomTo(_zoom - zoomDelta);
   }
 
-  zoomTo(double zoom, [bool animate = false]) {
+  void zoomTo(double zoom, [bool animate = false]) {
     log('MapStates zoomTo $zoom');
 
     if (animate) {
@@ -642,7 +736,7 @@ class MapState extends ChangeNotifier {
     }
   }
 
-  zoomAround(dynamic position, double zoom) {
+  void zoomAround(dynamic position, double zoom) {
     UPoint halfSize = UPoint.from(_halfSize);
     UPoint containerPoint;
 
@@ -683,7 +777,7 @@ class MapState extends ChangeNotifier {
     notifyListeners();
   }
 
-  rotate(double rotateTo, [bool animate = false, Function? onAnimateEnd]) {
+  void rotate(double rotateTo, [bool animate = false, Function? onAnimateEnd]) {
     log('MapStates rotate $rotateTo');
 
     if (animate) {
@@ -753,7 +847,7 @@ class MapState extends ChangeNotifier {
         notifyListeners();
 
         if (automove) {
-          await move(_position, zoom + 0.012, true);
+          await move(_position, zoom, true);
         }
 
         return _position;
@@ -766,11 +860,14 @@ class MapState extends ChangeNotifier {
     return null;
   }
 
+  /// close map state
   void close() {
     _locationSubs?.cancel();
     _positionStream.close();
+    _liveStream.close();
   }
 
+  /// dispose map state
   @override
   void dispose() {
     log('MapStates dispose');

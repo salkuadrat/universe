@@ -6,9 +6,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../layer/layer.dart';
 import '../map/map.dart';
 
+/// Map Compass Layer
 class Compass extends MapLayer {
+  /// Widget to be used as compass icon.
   final Widget? icon;
+
+  /// Alignment of this compass layer.
   final Alignment alignment;
+
+  /// Margin for this compasss layer.
   final EdgeInsets? margin;
 
   Compass({

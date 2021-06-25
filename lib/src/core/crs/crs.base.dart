@@ -13,10 +13,13 @@ import '../core.dart';
 abstract class Crs {
   const Crs();
 
+  /// Crs code
   String get code;
 
+  /// Crs projection
   Projection? get projection;
 
+  /// Crs transformation
   Transformation? get transformation;
 
   /// Projects latlng coordinates into pixel coordinates for a given zoom.

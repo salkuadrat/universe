@@ -27,6 +27,7 @@ import 'live/default.dart';
 import 'live/marker.dart';
 import 'live/simple.dart';
 import 'live/notmove.dart';
+import 'live/stream.dart';
 import 'map_provider/custom.dart';
 import 'map_provider/cyclosm.dart';
 import 'map_provider/google.dart';
@@ -209,6 +210,7 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Live Map with Marker', map: () => LiveMapWithMarker()),
   UniqueKey(): MenuItem('Live Map without Automoving',
       map: () => LiveMapWithoutAutoMoving()),
+  UniqueKey(): MenuItem('Live Stream Map', map: () => LiveStreamMap()),
   UniqueKey(): MenuItem('Clean Map Without Controls', map: () => CleanMap()),
   UniqueKey(): MenuItem('Custom Compass', map: () => CustomCompassMap()),
   UniqueKey(): MenuItem('Custom Locator', map: () => CustomLocatorMap()),

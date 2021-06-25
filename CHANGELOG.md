@@ -1,3 +1,7 @@
+## [1.0.7-nullsafety] - 26 June 2021
+
+* add live stream to always listen to user's current location when live
+
 ## [1.0.6-nullsafety] - 18 June 2021
 
 * pruning deprecated (unavailable) map providers
