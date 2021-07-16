@@ -92,20 +92,18 @@ class ImageOverlay extends InteractiveLayer {
     }
 
     if (isProvider) {
-      return ExtendedImage(
+      return Image(
         image: imageProvider!,
         fit: fit,
         gaplessPlayback: gaplessPlayback,
-        enableLoadState: false,
       );
     }
 
     if (isFile) {
-      return ExtendedImage.file(
+      return Image.file(
         imageFile!,
         fit: fit,
         gaplessPlayback: gaplessPlayback,
-        enableLoadState: false,
       );
     }
 
@@ -120,20 +118,18 @@ class ImageOverlay extends InteractiveLayer {
       }
 
       if (isFilePath) {
-        return ExtendedImage.file(
+        return Image.file(
           File(imagePath!),
           fit: fit,
           gaplessPlayback: gaplessPlayback,
-          enableLoadState: false,
         );
       }
 
       if (isAssetPath) {
-        return ExtendedImage.asset(
+        return Image.asset(
           imagePath!,
           fit: fit,
           gaplessPlayback: gaplessPlayback,
-          enableLoadState: false,
         );
       }
     }

@@ -67,6 +67,7 @@ class Marker {
 
   factory Marker.from(
     dynamic value, {
+    Key? key,
     num? size,
     num? width,
     num? height,

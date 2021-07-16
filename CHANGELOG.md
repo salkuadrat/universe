@@ -1,3 +1,7 @@
+## [1.0.8-nullsafety] - 17 July 2021
+
+* Fixing "flashed" marker & overlay image into gapless playback.
+
 ## [1.0.7-nullsafety] - 26 June 2021
 
 * add live stream to always listen to user's current location when live

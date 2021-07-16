@@ -229,7 +229,10 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
         builder: (_, map, __) => map.showCenterMarker
             ? MarkerLayer(
                 Marker(map.center),
-                options: MarkerLayerOptions(widget: map.centerMarker),
+                options: MarkerLayerOptions(
+                  size: map.options.centerMarkerSize,
+                  widget: map.centerMarker,
+                ),
               )
             : Container(),
       );
@@ -238,7 +241,10 @@ class __MapState extends State<_Map> with TickerProviderStateMixin {
         builder: (_, map, __) => map.showLocationMarker
             ? MarkerLayer(
                 Marker(map.position),
-                options: MarkerLayerOptions(widget: map.locationMarker),
+                options: MarkerLayerOptions(
+                  size: map.options.locationMarkerSize,
+                  widget: map.locationMarker,
+                ),
               )
             : Container(),
       );

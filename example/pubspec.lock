@@ -496,7 +496,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.0.7-nullsafety"
+    version: "1.0.8-nullsafety"
   uuid:
     dependency: transitive
     description:

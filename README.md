@@ -1,6 +1,8 @@
 # Universe
 
-The easy & flexible way to use interactive maps in Flutter. Inspired by [Leaflet.js](https://leafletjs.com/).
+The easy & flexible way to use interactive maps in Flutter.
+
+Supports OpenStreetMap, Google Maps, MapBox, and 21 other map providers.
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot.jpg" alt="universe" width="320">
 
@@ -16,14 +18,14 @@ or
 
 ```yaml
 dependencies:
-  universe: ^1.0.7-nullsafety
+  universe: ^1.0.8-nullsafety
 ```
 
 Then run `flutter pub get`.
 
 ## Permissions
 
-Add permissions to your AndroidManifest.xml.
+For androd, add permissions to your AndroidManifest.xml.
 
 ```xml
 <manifest xmlns:android...>
@@ -36,7 +38,7 @@ Add permissions to your AndroidManifest.xml.
 
 ## Example
 
-You can see complete examples in the [example folder](example) to learn the many use cases of using Universe library. You can also try a working example on your device: [universe.apk](universe.apk).
+You can see complete examples in the [example folder](example) to learn the many use cases of using Universe library. You can also try a working example on your device: [universe.apk](https://zcxwisajjsgvuivpvfyt.supabase.co/storage/v1/object/public/apk/universe.apk).
 
 ## Usage
 

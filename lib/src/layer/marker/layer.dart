@@ -43,8 +43,6 @@ class MarkerLayer extends InteractiveLayer {
       );
 
   Widget _marker(BuildContext context, MapState map, Marker marker) {
-    ThemeData theme = Theme.of(context);
-
     double width = marker.width ?? options!.width!;
     double height = marker.height ?? options!.height!;
     double opacity = marker.opacity ?? options!.opacity;
@@ -72,11 +70,6 @@ class MarkerLayer extends InteractiveLayer {
     double top = position.y - cleanHeight;
     double left = position.x - cleanWidth;
 
-    MarkerSvg? svg = marker.svg ?? options!.svg;
-    MarkerImage? image = marker.image ?? options!.image;
-    MarkerIcon? icon = marker.icon ?? options!.icon;
-    Widget? widget = marker.widget ?? options!.widget;
-
     return Positioned(
       width: width,
       height: height,
@@ -91,97 +84,115 @@ class MarkerLayer extends InteractiveLayer {
           options: options,
           child: Opacity(
             opacity: opacity,
-            child: LayoutBuilder(
-              builder: (_, __) {
-                if (icon != null) {
-                  return Icon(
-                    icon.icon,
-                    color: icon.color ?? theme.primaryColor,
-                    size: math.max(width, height),
-                  );
-                }
-
-                if (image != null) {
-                  if (image.isImage) {
-                    return image.image!;
-                  }
-
-                  if (image.isProvider) {
-                    return ExtendedImage(
-                        image: image.imageProvider!, enableLoadState: false);
-                  }
-
-                  if (image.isFile) {
-                    return ExtendedImage.file(image.imageFile!,
-                        enableLoadState: false);
-                  }
-
-                  if (image.isPath) {
-                    if (image.isNetworkPath) {
-                      return ExtendedImage.network(image.imagePath!,
-                          enableLoadState: false);
-                    }
-
-                    if (image.isFilePath) {
-                      return ExtendedImage.file(File(image.imagePath!),
-                          enableLoadState: false);
-                    }
-
-                    try {
-                      return ExtendedImage.asset(image.imagePath!,
-                          enableLoadState: false);
-                    } catch (e) {
-                      log(e);
-                      return Container();
-                    }
-                  }
-                }
-
-                if (widget != null) {
-                  return widget;
-                }
-
-                if (svg != null) {
-                  if (svg.isFile) {
-                    return SvgPicture.file(
-                      svg.svgFile!,
-                      color: svg.color ?? theme.primaryColor,
-                    );
-                  }
-
-                  if (svg.isPath) {
-                    if (svg.isNetworkPath) {
-                      return SvgPicture.network(
-                        svg.svgPath!,
-                        color: svg.color ?? theme.primaryColor,
-                      );
-                    }
-
-                    if (svg.isFilePath) {
-                      return SvgPicture.file(
-                        File(svg.svgPath!),
-                        color: svg.color ?? theme.primaryColor,
-                      );
-                    }
-
-                    try {
-                      return SvgPicture.asset(
-                        svg.svgPath!,
-                        color: svg.color ?? theme.primaryColor,
-                      );
-                    } catch (e) {
-                      log(e);
-                    }
-                  }
-                }
-
-                return Container();
-              },
-            ),
+            child: _markerWidget(context, marker),
           ),
         ),
       ),
     );
+  }
+
+  Widget _markerWidget(BuildContext context, Marker marker) {
+    ThemeData theme = Theme.of(context);
+
+    MarkerSvg? svg = marker.svg ?? options!.svg;
+    MarkerImage? image = marker.image ?? options!.image;
+    MarkerIcon? icon = marker.icon ?? options!.icon;
+    Widget? widget = marker.widget ?? options!.widget;
+
+    double width = marker.width ?? options!.width!;
+    double height = marker.height ?? options!.height!;
+
+    if (icon != null) {
+      return Icon(
+        icon.icon,
+        color: icon.color ?? theme.primaryColor,
+        size: math.max(width, height),
+      );
+    }
+
+    if (image != null) {
+      if (image.isImage) {
+        return image.image!;
+      }
+
+      if (image.isProvider) {
+        return Image(
+          image: image.imageProvider!,
+          gaplessPlayback: true,
+        );
+      }
+
+      if (image.isFile) {
+        return Image.file(
+          image.imageFile!,
+          gaplessPlayback: true,
+        );
+      }
+
+      if (image.isPath) {
+        if (image.isNetworkPath) {
+          return ExtendedImage.network(image.imagePath!,
+              enableLoadState: false, gaplessPlayback: true);
+        }
+
+        if (image.isFilePath) {
+          return Image.file(
+            File(image.imagePath!),
+            gaplessPlayback: true,
+          );
+        }
+
+        try {
+          return Image.asset(
+            image.imagePath!,
+            gaplessPlayback: true,
+          );
+        } catch (e) {
+          log(e);
+          return Container();
+        }
+      }
+    }
+
+    if (widget != null) {
+      return widget;
+    }
+
+    if (svg != null) {
+      if (svg.isFile) {
+        return SvgPicture.file(
+          svg.svgFile!,
+          color: svg.color ?? theme.primaryColor,
+        );
+      }
+
+      if (svg.isPath) {
+        if (svg.isNetworkPath) {
+          return SvgPicture.network(
+            svg.svgPath!,
+            color: svg.color ?? theme.primaryColor,
+          );
+        }
+
+        if (svg.isFilePath) {
+          return SvgPicture.file(
+            File(svg.svgPath!),
+            color: svg.color ?? theme.primaryColor,
+          );
+        }
+
+        try {
+          return SvgPicture.asset(
+            svg.svgPath!,
+            color: svg.color ?? theme.primaryColor,
+          );
+        } catch (e) {
+          log(e);
+        }
+      }
+    }
+
+    return Container();
   }
 
   double _topOffset(num height, MarkerAlignment align) {

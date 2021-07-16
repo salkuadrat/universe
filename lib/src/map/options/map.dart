@@ -36,9 +36,6 @@ class MapOptions {
 
   final dynamic locationMarker;
 
-  /// To define whether to show center marker (usually used for static map).
-  final bool showCenterMarker;
-
   /// Whether the map automatically search for live user's location
   final bool live;
 
@@ -50,11 +47,18 @@ class MapOptions {
   /// To define custom style and position of [Locator] on the screen.
   final Locator? locator;
 
+  /// To define whether to show center marker (usually used for static map).
+  final bool showCenterMarker;
+
+  final double centerMarkerSize;
+
   /// Whether to show location marker at the user's location
   /// when live or locate by [locator]
   ///
   /// Default to false when [showLocationIndicator] is true.
   final bool showLocationMarker;
+
+  final double locationMarkerSize;
 
   /// Whether to show location indicator at the user's location
   /// when live or locate by [locator]
@@ -162,12 +166,14 @@ class MapOptions {
     this.rotation = rotationDef,
     this.disableRotation = disableRotationDef,
     this.showCenterMarker = showCenterMarkerDef,
+    num? centerMarkerSize,
     this.centerMarker = markerDef,
     this.live = liveDef,
     this.moveWhenLive = moveWhenLiveDef,
     this.showLocator = showLocatorDef,
     this.locator,
     this.locationMarker = markerDef,
+    num? locationMarkerSize,
     this.showLocationMarker = showLocationMarkerDef,
     this.showLocationIndicator = showLocationIndicatorDef,
     this.locationIndicator,
@@ -198,6 +204,9 @@ class MapOptions {
                     (center.first is int || center.first is double)))
             ? LatLng.from(center)
             : null,
+        this.centerMarkerSize = centerMarkerSize?.toDouble() ?? markerSizeDef,
+        this.locationMarkerSize =
+            locationMarkerSize?.toDouble() ?? markerSizeDef,
         this.centerQuery = center is String ? center : null,
         this.zoomOptions = zoomOptions ?? ZoomOptions(),
         this.fitBoundsOptions = fitBoundsOptions ?? FitBoundsOptions();
@@ -210,12 +219,14 @@ class MapOptions {
     double? rotation,
     bool? disableRotation,
     bool? showCenterMarker,
+    num? centerMarkerSize,
     dynamic centerMarker,
     bool? live,
     bool? moveWhenLive,
     bool? showLocator,
     Locator? locator,
     dynamic locationMarker,
+    num? locationMarkerSize,
     bool? showLocationMarker,
     bool? showLocationIndicator,
     LocationIndicator? locationIndicator,
@@ -244,8 +255,11 @@ class MapOptions {
         rotation: rotation ?? this.rotation,
         disableRotation: disableRotation ?? this.disableRotation,
         showCenterMarker: showCenterMarker ?? this.showCenterMarker,
+        centerMarkerSize: centerMarkerSize?.toDouble() ?? this.centerMarkerSize,
         centerMarker: centerMarker ?? this.centerMarker,
         locationMarker: locationMarker ?? this.locationMarker,
+        locationMarkerSize:
+            locationMarkerSize?.toDouble() ?? this.locationMarkerSize,
         live: live ?? this.live,
         moveWhenLive: moveWhenLive ?? this.moveWhenLive,
         locator: locator ?? this.locator,

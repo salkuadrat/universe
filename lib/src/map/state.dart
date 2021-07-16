@@ -503,7 +503,7 @@ class MapState extends ChangeNotifier {
             bool notInBounds = !isInBounds;
 
             if (notInBounds && options.moveWhenLive) {
-              move(_position, 17, true);
+              move(_position, 17 - 0.02, true);
             }
           }
         }
@@ -847,7 +847,7 @@ class MapState extends ChangeNotifier {
         notifyListeners();
 
         if (automove) {
-          await move(_position, zoom, true);
+          await move(_position, zoom - 0.02, true);
         }
 
         return _position;
