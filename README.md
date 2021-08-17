@@ -5,6 +5,9 @@ Supports OpenStreetMap, Google Maps, MapBox and much more.
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot/universe.png" width="300" alt="universe">
 
+- [Starting](##starting)
+- [Configuration](##configuration)
+
 ## Starting
 
 ```
@@ -24,7 +27,7 @@ Add permissions to your android AndroidManifest.xml.
 </manifest>
 ```
 
-## Example
+## Complete Examples
 
 Learn complete examples in this [folder](example) for many use cases of using Universe. Or install the example apk and try it on your device: [universe.apk](https://zcxwisajjsgvuivpvfyt.supabase.co/storage/v1/object/public/apk/universe.apk).
 
