@@ -717,7 +717,7 @@ We can use geolocator to find position latlng from address string.
 
 [Map Geolocator: Find LatLng by Address](example/lib/src/geolocator/finder.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/geofind.png" width="200" alt="Geolocator Finder">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/geolocate.png" width="200" alt="Geolocator Finder">
 
 [Map Geolocator: Move by Address](example/lib/src/geolocator/move.dart)
 
