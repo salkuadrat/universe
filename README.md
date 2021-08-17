@@ -1,7 +1,7 @@
 # Universe
 
 The easy & flexible way to use interactive maps in Flutter.\
-Supports OpenStreetMap, Google Maps, MapBox and much more.\
+Supports OpenStreetMap, Google Maps, MapBox and much more.
 
 [Demo Universe.apk](https://zcxwisajjsgvuivpvfyt.supabase.co/storage/v1/object/public/apk/universe.apk)
 
