@@ -5,8 +5,11 @@ Supports OpenStreetMap, Google Maps, MapBox and much more.
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot/universe.png" width="300" alt="universe">
 
+[Demo Universe.apk](https://zcxwisajjsgvuivpvfyt.supabase.co/storage/v1/object/public/apk/universe.apk)\
+
 [Starting](#starting)\
 [Configuration](#configuration)\
+[Complete Examples](#complete-examples)\
 [Usage](#usage)
 - [Open Street Map](#openstreetmap)
 - [Google Maps](#google-maps)
