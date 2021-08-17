@@ -3,7 +3,7 @@
 The easy & flexible way to use interactive maps in Flutter.\
 Supports OpenStreetMap, Google Maps, MapBox and much more.
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/universe.png" width="280" alt="universe">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/universe.png" width="300" alt="universe">
 
 ## Starting
 
