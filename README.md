@@ -201,8 +201,6 @@ U.OpenStreetMap(
 
 ### Markers 
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/marker.png" width="200" alt="Marker">
-
 Here is a simple way of adding marker to universe maps.
 
 ```dart
@@ -326,8 +324,6 @@ Complete static maps examples:
 [Static Map with Rotation](example/lib/src/static/rotate.dart)
 
 ### MapController
-
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controller.png" width="200" alt="MapController">
 
 We can use custom controller in our universe maps.
 
