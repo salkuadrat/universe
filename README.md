@@ -5,8 +5,10 @@ Supports OpenStreetMap, Google Maps, MapBox and much more.
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot/universe.png" width="300" alt="universe">
 
-- [Starting](##starting)
-- [Configuration](##configuration)
+[Starting](#starting)
+[Configuration](#configuration)
+[Usage](#usage)
+- [Open Street Map](#openstreetmap)
 
 ## Starting
 
