@@ -1,0 +1,1 @@
+copy ".\build\app\outputs\flutter-apk\app.apk" ".\..\universe.apk"

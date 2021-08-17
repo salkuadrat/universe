@@ -57,7 +57,7 @@ class WMSTileLayerOptions extends TileLayerOptions {
     Function(Tile, dynamic)? onTileError,
     TileProvider? tileProvider,
     bool tms = tmsDef,
-    Map<String, String>? additionalOptions,
+    Map<String, dynamic> additionalOptions = const <String, dynamic>{},
     bool interactive = interactiveDef,
     String attribution = attributionDef,
     this.crs,
@@ -121,9 +121,12 @@ class WMSTileLayerOptions extends TileLayerOptions {
   @override
   String getTemplateUrl(Crs mapCrs, Coordinate? coordinate) {
     final crs = this.crs ?? mapCrs;
-    final tileWidth = tileSize.width.toDouble();
-    final tileHeight = tileSize.height.toDouble();
-    final tileSizePoint = UPoint(tileWidth, tileHeight);
+    final tileWidth = tileSize.width.toInt();
+    final tileHeight = tileSize.height.toInt();
+    final tileSizePoint = UPoint(
+      tileWidth.toDouble(),
+      tileHeight.toDouble(),
+    );
 
     final nwPoint = coordinate!.scaleBy(tileSizePoint);
     final sePoint = nwPoint + tileSizePoint;
@@ -141,8 +144,8 @@ class WMSTileLayerOptions extends TileLayerOptions {
         : [bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y];
 
     final buffer = StringBuffer(_baseUrl(crs));
-    buffer.write('&$paramWidth=${retinaMode! ? tileWidth * 2 : tileWidth}');
-    buffer.write('&$paramHeight=${retinaMode! ? tileHeight * 2 : tileHeight}');
+    buffer.write('&$paramWidth=${isRetinaMode ? tileWidth * 2 : tileWidth}');
+    buffer.write('&$paramHeight=${isRetinaMode ? tileHeight * 2 : tileHeight}');
     buffer.write('&$paramBbox=${bbox.join(',')}');
 
     return buffer.toString();
@@ -161,7 +164,7 @@ class WMSTileLayerOptions extends TileLayerOptions {
 
     additionalOptions?.forEach((key, value) {
       key = uppercase ? key.toUpperCase() : key;
-      buffer.write('&$key=${Uri.encodeComponent(value)}');
+      buffer.write('&$key=${Uri.encodeComponent(value.toString())}');
     });
 
     return buffer.toString();

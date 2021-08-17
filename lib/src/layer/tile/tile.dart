@@ -35,6 +35,8 @@ class Tile implements Comparable<Tile> {
   double? maxOpacity;
   Function(Coordinate?, Tile, dynamic)? onTileReady;
 
+  Function? _animationListener;
+
   Tile({
     this.coordinate,
     this.position,
@@ -91,15 +93,18 @@ class Tile implements Comparable<Tile> {
     _animController?.dispose();
   }
 
-  void show(
-      {Duration? duration,
-      required TickerProvider vsync,
-      double? from,
-      required Curve curve}) {
+  void show({
+    Duration? duration,
+    required TickerProvider vsync,
+    double? from,
+    required Curve curve,
+  }) {
     _animController?.removeStatusListener(_onAnimateEnd);
-
     _animController = CurvedAnimationController(
-        duration: duration, vsync: vsync, curve: curve);
+      duration: duration,
+      vsync: vsync,
+      curve: curve,
+    );
     _animController?.addStatusListener(_onAnimateEnd);
     _animController
       ?..reset()
@@ -107,11 +112,15 @@ class Tile implements Comparable<Tile> {
   }
 
   void addAnimationListener(Function listener) {
-    _animController?.addListener(listener);
+    removeAnimationListener();
+    _animationListener = listener;
+    _animController?.addListener(_animationListener!);
   }
 
-  void removeAnimationListener(Function listener) {
-    _animController?.removeListener(listener);
+  void removeAnimationListener() {
+    if (_animationListener != null) {
+      _animController?.removeListener(_animationListener!);
+    }
   }
 
   void _onAnimateEnd(AnimationStatus status) {
@@ -130,7 +139,10 @@ class Tile implements Comparable<Tile> {
     log('on Tile Error');
     this.isLoadError = true;
     onTileReady?.call(
-        coordinate, this, error ?? "Unknown error during loadTileImage");
+      coordinate,
+      this,
+      error ?? "Unknown error during loadTileImage",
+    );
   }
 
   @override

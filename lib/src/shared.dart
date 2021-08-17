@@ -330,7 +330,7 @@ const int updateTileIntervalDef = 200;
 const int tileFadeInDurationDef = 50;
 
 /// default tile fade in curve
-const Curve tileFadeInCurveDef = Curves.fastLinearToSlowEaseIn;
+const Curve tileFadeInCurveDef = Curves.easeOutQuint;
 
 /// default tile fade in initial value
 const double tileFadeInStartDef = 0.0;
@@ -342,15 +342,15 @@ const double tileFadeInStartWhenOverrideDef = 0.25;
 const bool overrideTilesWhenUrlChangesDef = true;
 
 /// default Tile Provider
-const TileProvider tileProviderDef = const CachedNetworkTileProvider();
+const TileProvider tileProviderDef = const NetworkRetryTileProvider();
 
-/// default is using retina mode
+/// default retina mode
 const bool retinaModeDef = false;
 
-/// default is tms map
+/// default tms map
 const bool tmsDef = false;
 
-/// default is hide attribution
+/// default hide attribution
 const bool hideAttributionDef = false;
 
 /// default overlay opacity
@@ -383,3 +383,5 @@ const bool loopingVideoDef = true;
 
 /// Attribution for OpenStreetMap
 const String osmAttrDef = 'Map Data &copy; OpenStreetMap contributors';
+
+const double zoomDiffToUpdateTiles = 0.6;

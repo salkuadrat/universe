@@ -1,31 +1,19 @@
 # Universe
 
-The easy & flexible way to use interactive maps in Flutter.
+The easy & flexible way to use interactive maps in Flutter.\
+Supports OpenStreetMap, Google Maps, MapBox and much more.\
 
-Supports OpenStreetMap, Google Maps, MapBox, and 21 other map providers.
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/universe.png" alt="universe">
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot.jpg" alt="universe" width="320">
-
-## Getting Started
-
-Add dependency to your flutter project.
+## Starting
 
 ```
 $ flutter pub add universe
 ```
 
-or
+## Configuration
 
-```yaml
-dependencies:
-  universe: ^1.0.8-nullsafety
-```
-
-Then run `flutter pub get`.
-
-## Permissions
-
-For androd, add permissions to your AndroidManifest.xml.
+Add permissions to your android AndroidManifest.xml.
 
 ```xml
 <manifest xmlns:android...>
@@ -38,17 +26,15 @@ For androd, add permissions to your AndroidManifest.xml.
 
 ## Example
 
-You can see complete examples in the [example folder](example) to learn the many use cases of using Universe library. You can also try a working example on your device: [universe.apk](https://zcxwisajjsgvuivpvfyt.supabase.co/storage/v1/object/public/apk/universe.apk).
+Learn complete examples in this [folder](example) for many use cases of using Universe. Or install the example apk and try it on your device: [universe.apk](https://zcxwisajjsgvuivpvfyt.supabase.co/storage/v1/object/public/apk/universe.apk).
 
 ## Usage
 
-Inspired by the simplicity of Leaflet.js, we can add maps functionality to our flutter project with as simple as adding this lines of code:
+Inspired by the simplicity of Leaflet.js, we can integrate maps in our flutter project with as simple as adding these lines of code.
 
 ```dart
 import 'package:universe/universe.dart';
-```
 
-```dart
 U.OpenStreetMap(
   center: [-6.175329, 106.827253],
   type: OpenStreetMapType.HOT,
@@ -57,6 +43,8 @@ U.OpenStreetMap(
 ```
 
 ### OpenStreetMap
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/osm.png" alt="OpenStreetMap">
 
 ```dart
 U.OpenStreetMap(
@@ -88,6 +76,8 @@ OpenStreetMapType.BZH
 
 ### Google Maps 
 
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/gmaps.png" alt="Google Maps">
+
 ```dart
 U.GoogleMap(
   center: [-6.175329, 106.827253],
@@ -109,6 +99,8 @@ GoogleMapType.Terrain
 
 
 ### MapBox
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/mapbox.png" alt="MapBox">
 
 ```dart
 U.MapBox(
@@ -154,6 +146,8 @@ U.Map(
 [Complete Custom Map example](example/lib/src/map_provider/custom.dart)
 
 ### Multi TileLayer Maps
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/multilayer.png" alt="Multi TileLayer">
 
 We can create maps with multiple tile layers. Here is an example of using Humanitarian OpenStreetMap combined with map tiles from SafeCast and OpenRailwayMap.
 
@@ -207,7 +201,9 @@ U.OpenStreetMap(
 
 ### Markers 
 
-Here is a simple example of adding a marker to universe maps.
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/marker.png" alt="Marker">
+
+Here is a simple way of adding marker to universe maps.
 
 ```dart
 U.OpenStreetMap(
@@ -221,15 +217,44 @@ U.OpenStreetMap(
 Complete marker examples:
 
 [Simple Marker](example/lib/src/marker/default.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/marker.png" alt="Simple Marker">
+
 [Marker with Data](example/lib/src/marker/data.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerdata.png" alt="Marker with Data">
+
 [Multiple Marker](example/lib/src/marker/multi.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermulti.png" alt="Multiple Marker">
+
 [Multiple Marker with Different Styles](example/lib/src/marker/multistyles.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermultistyles.png" alt="Multiple Marker Styles">
+
 [Multiple Marker with Data](example/lib/src/marker/multidata.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermultidata.png" alt="Multiple Marker with Data">
+
 [Marker Icon](example/lib/src/marker/icon.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markericon.png" alt="Marker Icon">
+
 [Marker Image](example/lib/src/marker/image.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerimage.png" alt="Marker Image">
+
 [Marker SVG](example/lib/src/marker/svg.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markersvg.png" alt="Marker SVG">
+
 [Marker Widget](example/lib/src/marker/widget.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerwidget.png" alt="Marker Widget">
+
 [Tap to Add Marker](example/lib/src/marker/add.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markeradd.png" alt="Tap to Add Marker">
 
 ### Live Maps
 
@@ -302,6 +327,8 @@ Complete static maps examples:
 
 ### MapController
 
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controller.png" alt="MapController">
+
 We can use custom controller in our universe maps.
 
 ```dart
@@ -329,10 +356,24 @@ _mapController.positionStream?.listen((data) {
 ```
 
 [MapController](example/lib/src/controller/simple.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controller.png" alt="MapController">
+
 [Move Map example](example/lib/src/controller/move.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllermove.png" alt="MapController Move">
+
 [Zoom Map example](example/lib/src/controller/zoom.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerzoom.png" alt="MapController Zoom">
+
 [Rotate Map example](example/lib/src/controller/rotate.dart)\
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerrotate.png" alt="MapController Rotate">
+
 [Find Location example](example/lib/src/controller/locate.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerlocate.png" alt="MapController Find Location">
 
 ### Circle
 

@@ -1,3 +1,16 @@
+## [1.1.0-nullsafety] - 17 August 2021
+
+* Improving tile layer rendering by:
+  - Change default tile provider to NetworkRetryTileProvider
+  - Change default tileFadeInCurveDef to Curves.easeOutQuint
+  - Clearing unnecessary sort computation in TileLayer
+  - Improving calculations of _setZoomTransforms
+  - Clearing unneceassary double call to _setZoomTransforms
+  - Improving calculations inside didUpdateWidget
+
+* Improving documentation
+* Fixing bugs on WMSTileLayer rendering
+
 ## [1.0.8-nullsafety] - 17 July 2021
 
 * Fixing "flashed" marker & overlay image into gapless playback.

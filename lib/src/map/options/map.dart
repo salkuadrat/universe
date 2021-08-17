@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 import '../../control/control.dart';
 import '../../core/crs/crs.dart';
 import '../../core/geometry/size.dart';

@@ -55,6 +55,7 @@ import 'map_provider/trails.dart';
 import 'map_provider/geoportail.dart';
 import 'map_provider/here.dart';
 import 'map_provider/wikimedia.dart';
+import 'map_provider/wms.dart';
 import 'marker/add.dart';
 import 'marker/data.dart';
 import 'marker/default.dart';
@@ -137,6 +138,7 @@ Map<Key, MenuItem> menus = {
       MenuItem('Geoportail France Map', map: () => GeoportailFranceMap()),
   UniqueKey(): MenuItem('Wikimedia Map', map: () => WikimediaMap()),
   UniqueKey(): MenuItem('HERE Map', map: () => HereMap()),
+  UniqueKey(): MenuItem('WMS Map', map: () => WmsMap()),
   UniqueKey(): MenuItem('Static Map', map: () => StaticMap()),
   UniqueKey():
       MenuItem('Static Map with Marker', map: () => StaticMapWithMarker()),

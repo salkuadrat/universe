@@ -4190,7 +4190,7 @@ class U {
     bool tms = tmsDef,
     bool interactive = interactiveDef,
     String attribution = attributionDef,
-    additionalOptions = const <String, dynamic>{},
+    dynamic additionalOptions = const <String, dynamic>{},
   }) {
     return L.TileLayer(
       options: L.TileLayerOptions(
@@ -4222,7 +4222,7 @@ class U {
   ///
   /// ```dart
   /// U.WMSTileLayer(
-  ///   templateUrl: 'http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi',
+  ///   'http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi',
   ///   attribution: 'Weather data &copy; 2012 IEM Nexrad',
   ///   layers: 'nexrad-n0r-900913',
   ///   format: 'image/png',
@@ -4276,7 +4276,7 @@ class U {
     String version = '1.1.1',
     bool transparent = false,
     bool uppercase = false,
-    additionalOptions = const <String, dynamic>{},
+    dynamic additionalOptions = const <String, dynamic>{},
   }) {
     return L.TileLayer(
       options: L.WMSTileLayerOptions(
@@ -6346,8 +6346,12 @@ class U {
     DistanceAlgorithmType algorithm = DistanceAlgorithmType.Haversine,
     LengthUnit unit = LengthUnit.M,
   }) {
-    double distance =
-        distanceBetween(fromCenter, location, algorithm: algorithm, unit: unit);
+    double distance = distanceBetween(
+      fromCenter,
+      location,
+      algorithm: algorithm,
+      unit: unit,
+    );
     return distance <= radius;
   }
 

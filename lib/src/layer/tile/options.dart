@@ -147,6 +147,8 @@ class TileLayerOptions extends InteractiveLayerOptions {
   bool get hasMaxNativeZoom => maxNativeZoom != null;
   bool get hasBounds => bounds != null;
 
+  bool get isRetinaMode => retinaMode != null && retinaMode!;
+
   String? getBaseUrl(Crs crs) => templateUrl;
   String? getTemplateUrl(Crs crs, Coordinate? coordinate) => templateUrl;
 

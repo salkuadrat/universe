@@ -22,15 +22,14 @@ class _TileImageState extends State<TileImage> {
 
   @override
   void dispose() {
-    widget.tile.removeAnimationListener(_refresh);
+    widget.tile.removeAnimationListener();
     super.dispose();
   }
 
   @override
   void didUpdateWidget(TileImage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    oldWidget.tile.removeAnimationListener(_refresh);
-    widget.tile.removeAnimationListener(_refresh);
+    oldWidget.tile.removeAnimationListener();
     widget.tile.addAnimationListener(_refresh);
   }
 
@@ -46,11 +45,18 @@ class _TileImageState extends State<TileImage> {
         filterQuality: FilterQuality.medium,
       );
 
-  Widget get _tile => Image(
+  Widget get _tile {
+    try {
+      return Image(
         image: widget.tile.imageProvider!,
         fit: BoxFit.fill,
         filterQuality: FilterQuality.high,
+        //gaplessPlayback: true,
       );
+    } on Exception {
+      return isShowError ? _errorTile : Container();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

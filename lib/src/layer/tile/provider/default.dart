@@ -22,8 +22,12 @@ class DefaultTileProvider extends TileProvider {
   }
 
   @override
-  String getTileUrl(String? templateUrl, Bounds? globalTileRange,
-      Coordinate coordinate, TileLayerOptions? options) {
+  String getTileUrl(
+    String? templateUrl,
+    Bounds? globalTileRange,
+    Coordinate coordinate,
+    TileLayerOptions? options,
+  ) {
     //final templateUrl = options.getTemplateUrl(crs, coordinate);
     final zoom = _getZoomForUrl(coordinate, options!);
     final x = coordinate.x.round();
@@ -36,7 +40,7 @@ class DefaultTileProvider extends TileProvider {
       'x': x.toString(),
       'y': options.tms ? inverseY.toString() : y.toString(),
       'z': z.toString(),
-      'r': options.retinaMode! ? '@2x' : '',
+      'r': options.isRetinaMode ? '@2x' : '',
       '-y': inverseY.toString(),
     }..addAll(options.additionalOptions!);
 
@@ -44,9 +48,12 @@ class DefaultTileProvider extends TileProvider {
   }
 
   @override
-  ImageProvider getImage(String? templateUrl, Bounds? globalTileRange,
-          Coordinate coordinate, TileLayerOptions? options) =>
-      throw UnimplementedError();
+  ImageProvider getImage(
+    String? templateUrl,
+    Bounds? globalTileRange,
+    Coordinate coordinate,
+    TileLayerOptions? options,
+  ) => throw UnimplementedError();
 
   @override
   String getSubdomain(Coordinate coordinate, TileLayerOptions options) {
