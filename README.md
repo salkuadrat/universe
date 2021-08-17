@@ -7,7 +7,7 @@ Supports OpenStreetMap, Google Maps, MapBox and much more.
 
 [Starting](#starting)\
 [Configuration](#configuration)\
-[Usage](#usage)\
+[Usage](#usage)
 - [Open Street Map](#openstreetmap)
 - [Google Maps](#google-maps)
 - [MapBox](#mapbox)
