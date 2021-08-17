@@ -8,8 +8,8 @@
   - Clearing unneceassary double call to _setZoomTransforms
   - Improving calculations inside didUpdateWidget
 
-* Improving documentation
 * Fixing bugs on WMSTileLayer rendering
+* Improving documentation
 
 ## [1.0.8-nullsafety] - 17 July 2021
 
