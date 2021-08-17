@@ -53,7 +53,8 @@ class DefaultTileProvider extends TileProvider {
     Bounds? globalTileRange,
     Coordinate coordinate,
     TileLayerOptions? options,
-  ) => throw UnimplementedError();
+  ) =>
+      throw UnimplementedError();
 
   @override
   String getSubdomain(Coordinate coordinate, TileLayerOptions options) {
