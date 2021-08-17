@@ -5,10 +5,37 @@ Supports OpenStreetMap, Google Maps, MapBox and much more.
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot/universe.png" width="300" alt="universe">
 
-[Starting](#starting)
-[Configuration](#configuration)
-[Usage](#usage)
+[Starting](#starting)\
+[Configuration](#configuration)\
+[Usage](#usage)\
 - [Open Street Map](#openstreetmap)
+- [Google Maps](#google-maps)
+- [MapBox](#mapbox)
+- [Custom Map Provider](#custom-map-provider)
+- [Multi TileLayer Maps](#multi-tilelayer-maps)
+- [Other Map Providers](#other-map-providers)
+- [Marker](#markers)
+- [Live Maps](#live-maps)
+- [Live Stream Maps](#live-stream-maps)
+- [Static Maps](#static-maps)
+- [MapController](#mapcontroller)
+- [Circle](#circle)
+- [Polyline](#polyline)
+- [Polygon](#polygon)
+- [Rectangle](#rectangle)
+- [Image Overlay](#image-overlay)
+- [Video Overlay](#video-overlay)
+- [Custom Widget Overlay](#custom-widget-overlay)
+- [Clean Map Without Controls](#custom-controls)
+- [Custom Compass](#custom-controls)
+- [Custom Locator](#custom-controls)
+- [Custom Scale Indicator](#custom-controls)
+- [Custom Location Indicator](#custom-controls)
+- [Custom Tile Provider](#custom-tileprovider)
+- [Geolocator: Center by Address](#geolocator)
+- [Geolocator: Find LatLng of Address](#geolocator)
+- [Geolocator: Move to Address](#geolocator)
+- [Others](#other-examples)
 
 ## Starting
 
@@ -720,11 +747,11 @@ We can use geolocator to find position latlng from address string.
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot/geocenter.png" width="200" alt="Geolocator Center">
 
-[Map Geolocator: Find LatLng by Address](example/lib/src/geolocator/finder.dart)
+[Map Geolocator: Find LatLng of Address](example/lib/src/geolocator/finder.dart)
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot/geolocate.png" width="200" alt="Geolocator Finder">
 
-[Map Geolocator: Move by Address](example/lib/src/geolocator/move.dart)
+[Map Geolocator: Move to Address](example/lib/src/geolocator/move.dart)
 
 <img src="https://github.com/salkuadrat/universe/raw/master/screenshot/geomove.png" width="200" alt="Geolocator Move">
 
