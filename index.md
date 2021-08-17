@@ -1,38 +1,58 @@
-Inspired by the simplicity of Leaflet.js, we can add maps functionality to our flutter project with as simple as adding this lines of code:
+# Universe
+
+The easy & flexible way to use interactive maps in Flutter.\
+Supports OpenStreetMap, Google Maps, MapBox and much more.
+
+[Demo Universe.apk](https://zcxwisajjsgvuivpvfyt.supabase.co/storage/v1/object/public/apk/universe.apk)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/universe.png" width="300" alt="universe">
+
+[Starting](#starting)\
+[Configuration](#configuration)\
+[Complete Examples](#complete-examples)\
+[Usage](#usage)
+- [Open Street Map](#openstreetmap)
+- [Google Maps](#google-maps)
+- [MapBox](#mapbox)
+- [Custom Map Provider](#custom-map-provider)
+- [Multi TileLayer Maps](#multi-tilelayer-maps)
+- [Other Map Providers](#other-map-providers)
+- [Marker](#markers)
+- [Live Maps](#live-maps)
+- [Live Stream Maps](#live-stream-maps)
+- [Static Maps](#static-maps)
+- [MapController](#mapcontroller)
+- [MapController Move](#mapcontroller)
+- [MapController Zoom](#mapcontroller)
+- [MapController Rotate](#mapcontroller)
+- [MapController Find Location](#mapcontroller)
+- [Circle](#circle)
+- [Polyline](#polyline)
+- [Polygon](#polygon)
+- [Rectangle](#rectangle)
+- [Image Overlay](#image-overlay)
+- [Video Overlay](#video-overlay)
+- [Custom Widget Overlay](#custom-widget-overlay)
+- [Clean Map Without Controls](#custom-controls)
+- [Custom Compass](#custom-controls)
+- [Custom Locator](#custom-controls)
+- [Custom Scale Indicator](#custom-controls)
+- [Custom Location Indicator](#custom-controls)
+- [Custom Tile Provider](#custom-tileprovider)
+- [Geolocator: Center by Address](#geolocator)
+- [Geolocator: Find LatLng of Address](#geolocator)
+- [Geolocator: Move to Address](#geolocator)
+- [Others](#other-examples)
+
+## Starting
 
 ```
-import 'package:universe/universe.dart';
+$ flutter pub add universe
 ```
 
-```
-U.OpenStreetMap(
-  center: [-6.175329, 106.827253],
-  type: OpenStreetMapType.HOT,
-  zoom: 15,
-)
-```
+## Configuration
 
-## Getting Started
-
-Add dependency to your flutter project:
-
-```yaml
-dependencies:
-  universe: ^0.0.5-nullsafety.4
-```
-
-```yaml
-dependencies:
-  universe:
-    git: 
-      url: git://github.com/salkuadrat/universe.git
-```
-
-Then run `flutter pub get`.
-
-## Android Permissions
-
-Add Internet & Location permissions to your AndroidManifest.xml.
+Add permissions to your android AndroidManifest.xml.
 
 ```xml
 <manifest xmlns:android...>
@@ -43,7 +63,27 @@ Add Internet & Location permissions to your AndroidManifest.xml.
 </manifest>
 ```
 
+## Complete Examples
+
+Learn complete examples in this [folder](example) for many use cases of using Universe. Or install the example apk and try it on your device: [universe.apk](https://zcxwisajjsgvuivpvfyt.supabase.co/storage/v1/object/public/apk/universe.apk).
+
+## Usage
+
+Inspired by the simplicity of Leaflet.js, we can integrate maps in our flutter project with as simple as adding these lines of code.
+
+```dart
+import 'package:universe/universe.dart';
+
+U.OpenStreetMap(
+  center: [-6.175329, 106.827253],
+  type: OpenStreetMapType.HOT,
+  zoom: 15,
+)
+```
+
 ### OpenStreetMap
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/osm.png" width="200" alt="OpenStreetMap">
 
 ```dart
 U.OpenStreetMap(
@@ -70,10 +110,12 @@ OpenStreetMapType.HOT
 OpenStreetMapType.BZH
 ```
 
-[Complete OpenStreetMap example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/osm.dart)
+[Complete OpenStreetMap example](example/lib/src/map_provider/osm.dart)
 
 
 ### Google Maps 
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/gmaps.png" width="200" alt="Google Maps">
 
 ```dart
 U.GoogleMap(
@@ -92,10 +134,12 @@ GoogleMapType.Hybrid
 GoogleMapType.Terrain
 ```
 
-[Complete Google Maps example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/google.dart)
+[Complete Google Maps example](example/lib/src/map_provider/google.dart)
 
 
 ### MapBox
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/mapbox.png" width="200" alt="MapBox">
 
 ```dart
 U.MapBox(
@@ -122,7 +166,7 @@ MapBoxType.Light
 MapBoxType.Bright
 ```
 
-[Complete MapBox example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/mapbox.dart)
+[Complete MapBox example](example/lib/src/map_provider/mapbox.dart)
 
 ### Custom Map Provider
 
@@ -138,9 +182,11 @@ U.Map(
 )
 ```
 
-[Complete Custom Map example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/custom.dart)
+[Complete Custom Map example](example/lib/src/map_provider/custom.dart)
 
 ### Multi TileLayer Maps
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/multilayer.png" width="200" alt="Multi TileLayer">
 
 We can create maps with multiple tile layers. Here is an example of using Humanitarian OpenStreetMap combined with map tiles from SafeCast and OpenRailwayMap.
 
@@ -166,39 +212,35 @@ U.OpenStreetMap(
 )
 ```
 
-[Multi TileLayer Maps example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/multi.dart)
+[Multi TileLayer Maps example](example/lib/src/map_provider/multi.dart)
 
 ### Other Map Providers
 
-[Safecast Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/safecast.dart)\
-[Cycl OSM Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/cyclosm.dart)\
-[Freemap SK Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/freemapsk.dart)\
-[MtbMap](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/mtbmap.dart)\
-[NLS Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/nlsmap.dart)\
-[Wikimedia Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/wikimedia.dart)\
-[Open Maps](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/open.dart)\
-[Stadia Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/stadia.dart)\
+[Open Maps](example/lib/src/map_provider/open.dart)\
+[Safecast Map](example/lib/src/map_provider/safecast.dart)\
+[CyclOSM Map](example/lib/src/map_provider/cyclosm.dart)\
+[Stadia Map](example/lib/src/map_provider/stadia.dart) (Need API Key)\
 [Thunderforest Map](example/lib/src/map_provider/thunderforest.dart) (Need API Key)\
-[Hydda Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/hydda.dart)\
-[Jawg Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/jawg.dart) (Need Access Token)\
-[MapTiler Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/maptiler.dart) (Need API Key)\
-[Stamen Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/stamen.dart)\
-[TomTom Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/tomtom.dart) (Need API Key)\
-[ESRI Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/esri.dart)\
-[CartoDB Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/cartodb.dart)\
-[BasemapAT Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/basemapat.dart)\
-[HikeBike Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/hikebike.dart)\
-[NLMaps](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/nlmaps.dart)\
-[OneMapSG](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/onemapsg.dart)\
-[NASA GIBS Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/nasagibs.dart)\
-[USGS Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/usgs.dart)\
-[Waymarked Trails Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/waymarkedtrails.dart)\
-[Geoportail France Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/geoportail.dart) (Need API Key)\
-[HERE Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/map_provider/here.dart) (Need App ID & Credentials Code)
+[Jawg Map](example/lib/src/map_provider/jawg.dart) (Need Access Token)\
+[MapTiler Map](example/lib/src/map_provider/maptiler.dart) (Need API Key)\
+[Stamen Map](example/lib/src/map_provider/stamen.dart)\
+[TomTom Map](example/lib/src/map_provider/tomtom.dart) (Need API Key)\
+[ESRI Map](example/lib/src/map_provider/esri.dart)\
+[CartoDB Map](example/lib/src/map_provider/cartodb.dart)\
+[BasemapAT Map](example/lib/src/map_provider/basemapat.dart)\
+[HikeBike Map](example/lib/src/map_provider/hikebike.dart)\
+[NLMaps](example/lib/src/map_provider/nlmaps.dart)\
+[NLS Map](example/lib/src/map_provider/nlsmap.dart)\
+[NASA GIBS Map](example/lib/src/map_provider/nasagibs.dart)\
+[USGS Map](example/lib/src/map_provider/usgs.dart)\
+[Waymarked Trails Map](example/lib/src/map_provider/waymarkedtrails.dart)\
+[Geoportail France Map](example/lib/src/map_provider/geoportail.dart) (Need API Key)\
+[Wikimedia Map](example/lib/src/map_provider/wikimedia.dart)\
+[HERE Map](example/lib/src/map_provider/here.dart) (Need App ID & Credentials Code)
 
 ### Markers 
 
-Here is a simple example of adding a marker to universe maps.
+Here is a simple way of adding marker to universe maps.
 
 ```dart
 U.OpenStreetMap(
@@ -211,16 +253,45 @@ U.OpenStreetMap(
 
 Complete marker examples:
 
-[Simple Marker](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/default.dart)\
-[Marker with Data](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/data.dart)\
-[Multiple Marker](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/multi.dart)\
-[Multiple Marker with Different Styles](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/multistyles.dart)\
-[Multiple Marker with Data](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/multidata.dart)\
-[Marker Icon](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/icon.dart)\
-[Marker Image](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/image.dart)\
-[Marker SVG](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/svg.dart)\
-[Marker Widget](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/widget.dart)\
-[Tap to Add Marker](https://github.com/salkuadrat/universe/blob/master/example/lib/src/marker/add.dart)
+[Simple Marker](example/lib/src/marker/default.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/marker.png" width="200" alt="Simple Marker">
+
+[Marker with Data](example/lib/src/marker/data.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerdata.png" width="200" alt="Marker with Data">
+
+[Multiple Marker](example/lib/src/marker/multi.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermulti.png" width="200" alt="Multiple Marker">
+
+[Multiple Marker with Different Styles](example/lib/src/marker/multistyles.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermultistyles.png" width="200" alt="Multiple Marker Styles">
+
+[Multiple Marker with Data](example/lib/src/marker/multidata.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermultidata.png" width="200" alt="Multiple Marker with Data">
+
+[Marker Icon](example/lib/src/marker/icon.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markericon.png" width="200" alt="Marker Icon">
+
+[Marker Image](example/lib/src/marker/image.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerimage.png" width="200" alt="Marker Image">
+
+[Marker SVG](example/lib/src/marker/svg.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markersvg.png" width="200" alt="Marker SVG">
+
+[Marker Widget](example/lib/src/marker/widget.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerwidget.png" width="200" alt="Marker Widget">
+
+[Tap to Add Marker](example/lib/src/marker/add.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markeradd.png" width="200" alt="Tap to Add Marker">
 
 ### Live Maps
 
@@ -235,15 +306,15 @@ U.OpenStreetMap(
 
 Complete live maps examples:
 
-[Default Live Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/live/default.dart)\
-[Simple Live Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/live/simple.dart)\
-[Live Map with Location Marker](https://github.com/salkuadrat/universe/blob/master/example/lib/src/live/marker.dart)
+[Default Live Map](example/lib/src/live/default.dart)\
+[Simple Live Map](example/lib/src/live/simple.dart)\
+[Live Map with Location Marker](example/lib/src/live/marker.dart)
 
 ### Live Maps Without AutoMoving
 
-The default behavior of Live Map will always move the center of the maps to user's current location. 
+The default behavior of Live Map is always move the center of the maps to user's current location. 
 
-If we want to go live (always searching for user's current location and show location indicator to that location), but don't want to move the center of the maps, we can set parameter moveWhenLive to false.
+If you want to go live (always searching for user's current location and show location indicator to that location), but don't want to move the center of the maps, you can set parameter moveWhenLive to false.
 
 ```dart
 U.GoogleMap(
@@ -260,7 +331,19 @@ U.GoogleMap(
 )
 ```
 
-[Live Map without Auto Moving](https://github.com/salkuadrat/universe/blob/master/example/lib/src/live/notmove.dart)
+[Live Map without Auto Moving](example/lib/src/live/notmove.dart)
+
+### Live Stream Maps 
+
+We can let the map live while also listening to current user's location by subscribing to `liveStream` of `MapController`.
+
+```dart
+_liveSubs = _mapController.liveStream?.listen((latlng) { 
+  print('Current location: $latlng');
+});
+```
+
+See the complete example at [Live Stream Map](example/lib/src/live/stream.dart)
 
 ### Static Maps
 
@@ -275,9 +358,9 @@ U.OpenStreetMap(
 
 Complete static maps examples:
 
-[Simple Static Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/static/simple.dart)\
-[Static Map with Marker](https://github.com/salkuadrat/universe/blob/master/example/lib/src/static/marker.dart)\
-[Static Map with Rotation](https://github.com/salkuadrat/universe/blob/master/example/lib/src/static/rotate.dart)
+[Simple Static Map](example/lib/src/static/simple.dart)\
+[Static Map with Marker](example/lib/src/static/marker.dart)\
+[Static Map with Rotation](example/lib/src/static/rotate.dart)
 
 ### MapController
 
@@ -295,7 +378,7 @@ U.OpenStreetMap(
 )
 ```
 
-And use the controller to listen the positionStream to get current position and current zoom of our map. We can also programmatically move, zoom, rotate or find location using the map controller.
+And use that controller to listen the positionStream to get current position and current zoom of our map. We can also programmatically move, zoom, rotate or find location using the map controller.
 
 ```dart
 // listen everytime the map data changes (move or zoom)
@@ -307,11 +390,25 @@ _mapController.positionStream?.listen((data) {
 });
 ```
 
-[MapController](https://github.com/salkuadrat/universe/blob/master/example/lib/src/controller/simple.dart)\
-[Move Map example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/controller/move.dart)\
-[Zoom Map example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/controller/zoom.dart)\
-[Rotate Map example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/controller/rotate.dart)\
-[Find Location example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/controller/locate.dart)
+[MapController](example/lib/src/controller/simple.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controller.png" width="200" alt="MapController">
+
+[Move Map example](example/lib/src/controller/move.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllermove.png" width="200" alt="MapController Move">
+
+[Zoom Map example](example/lib/src/controller/zoom.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerzoom.png" width="200" alt="MapController Zoom">
+
+[Rotate Map example](example/lib/src/controller/rotate.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerrotate.png" width="200" alt="MapController Rotate">
+
+[Find Location example](example/lib/src/controller/locate.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerlocate.png" width="200" alt="MapController Find Location">
 
 ### Circle
 
@@ -331,12 +428,29 @@ U.OpenStreetMap(
 
 Complete circle examples:
 
-[Circle](https://github.com/salkuadrat/universe/blob/master/example/lib/src/circle/simple.dart)\
-[Custom Circle](https://github.com/salkuadrat/universe/blob/master/example/lib/src/circle/custom.dart)\
-[Multiple Circles](https://github.com/salkuadrat/universe/blob/master/example/lib/src/circle/multi.dart)\
-[Multiple Circles with Different Styles](https://github.com/salkuadrat/universe/blob/master/example/lib/src/circle/multistyles.dart)\
-[Circle with Data](https://github.com/salkuadrat/universe/blob/master/example/lib/src/circle/data.dart)\
-[Multiple Circles with Data](https://github.com/salkuadrat/universe/blob/master/example/lib/src/circle/multidata.dart)
+[Simple Circle](example/lib/src/circle/simple.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/circle.png" width="200" alt="Simple Circle">
+
+[Custom Circle](example/lib/src/circle/custom.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/circlecustom.png" width="200" alt="Custom Circle">
+
+[Multiple Circles](example/lib/src/circle/multi.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/circlemulti.png" width="200" alt="Multiple Circle">
+
+[Multiple Circles with Different Styles](example/lib/src/circle/multistyles.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/circlemultistyles.png" width="200" alt="Multiple Circle Styles">
+
+[Circle with Data](example/lib/src/circle/data.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/circledata.png" width="200" alt="Circle Data">
+
+[Multiple Circles with Data](example/lib/src/circle/multidata.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/circlemultidata.png" width="200" alt="Multiple Circle Data">
 
 ### Polyline
 
@@ -361,10 +475,21 @@ U.OpenStreetMap(
 
 Complete polyline examples:
 
-[Polyline](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polyline/simple.dart)\
-[Custom Polyline](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polyline/custom.dart)\
-[Multiple Polylines](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polyline/multi.dart)\
-[Multiple Polylines with Different Styles](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polyline/multistyles.dart)
+[Polyline](example/lib/src/polyline/simple.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polyline.png" width="200" alt="Polyline">
+
+[Custom Polyline](example/lib/src/polyline/custom.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polylinecustom.png" width="200" alt="Custom Polyline">
+
+[Multiple Polylines](example/lib/src/polyline/multi.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polylinemulti.png" width="200" alt="Multiple Polyline">
+
+[Multiple Polylines with Different Styles](example/lib/src/polyline/multistyles.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polylinemultistyles.png" width="200" alt="Multiple Polyline Styles">
 
 ### Polygon
 
@@ -417,12 +542,29 @@ U.OpenStreetMap(
 
 Complete polygon examples:
 
-[Polygon](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polygon/simple.dart)\
-[Custom Polygon](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polygon/custom.dart)\
-[Multiple Polygons](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polygon/multi.dart)\
-[Multiple Polygons with Diffrent Styles](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polygon/multistyles.dart)\
-[Polygon with Data](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polygon/data.dart)\
-[Multiple Polygons with Data](https://github.com/salkuadrat/universe/blob/master/example/lib/src/polygon/multidata.dart)
+[Polygon](example/lib/src/polygon/simple.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polygon.png" width="200" alt="Polygon">
+
+[Custom Polygon](example/lib/src/polygon/custom.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polygoncustom.png" width="200" alt="Custom Polygon">
+
+[Multiple Polygons](example/lib/src/polygon/multi.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polygonmulti.png" width="200" alt="Multiple Polygon">
+
+[Multiple Polygons with Diffrent Styles](example/lib/src/polygon/multistyles.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polygonmultistyles.png" width="200" alt="Multiple Polygon">
+
+[Polygon with Data](example/lib/src/polygon/data.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polygondata.png" width="200" alt="Polygon Data">
+
+[Multiple Polygons with Data](example/lib/src/polygon/multidata.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/polygonmultidata.png" width="200" alt="Multiple Polygon Data">
 
 ### Rectangle
 
@@ -444,14 +586,33 @@ U.OpenStreetMap(
 
 Complete rectangle examples:
 
-[Rectangle](https://github.com/salkuadrat/universe/blob/master/example/lib/src/rectangle/simple.dart)\
-[Custom Rectangle](https://github.com/salkuadrat/universe/blob/master/example/lib/src/rectangle/custom.dart)\
-[Multiple Rectangles](https://github.com/salkuadrat/universe/blob/master/example/lib/src/rectangle/multi.dart)\
-[Multiple Rectangles with Different Styles](https://github.com/salkuadrat/universe/blob/master/example/lib/src/rectangle/multistyles.dart)\
-[Rectangle with Data](https://github.com/salkuadrat/universe/blob/master/example/lib/src/rectangle/data.dart)\
-[Multiple Rectangles with Data](https://github.com/salkuadrat/universe/blob/master/example/lib/src/rectangle/multidata.dart)
+[Rectangle](example/lib/src/rectangle/simple.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/rectangle.png" width="200" alt="Rectangle">
+
+[Custom Rectangle](example/lib/src/rectangle/custom.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/rectanglecustom.png" width="200" alt="Custom Rectangle">
+
+[Multiple Rectangles](example/lib/src/rectangle/multi.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/rectanglemulti.png" width="200" alt="Multiple Rectangle">
+
+[Multiple Rectangles with Different Styles](example/lib/src/rectangle/multistyles.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/rectanglemultistyles.png" width="200" alt="Multiple Rectangle Styles">
+
+[Rectangle with Data](example/lib/src/rectangle/data.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/rectangledata.png" width="200" alt="Rectangle Data">
+
+[Multiple Rectangles with Data](example/lib/src/rectangle/multidata.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/rectanglemultidata.png" width="200" alt="Multiple Rectangle Data">
 
 ### Image Overlay
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/overlayimage.png" width="200" alt="Image Overlay">
 
 Here is an example of painting an image overlay to universe maps.
 
@@ -485,9 +646,11 @@ U.OpenStreetMap(
 )
 ```
 
-[Image Overlay example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/overlay/image.dart)
+[Image Overlay example](example/lib/src/overlay/image.dart)
 
 ### Video Overlay
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/overlayvideo.png" width="200" alt="Video Overlay">
 
 Here is an example of painting a video overlay to universe maps.
 
@@ -508,9 +671,11 @@ U.GoogleMap(
 )
 ```
 
-[Video Overlay example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/overlay/video.dart)
+[Video Overlay example](example/lib/src/overlay/video.dart)
 
 ### Custom Widget Overlay
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/overlaywidget.png" width="200" alt="Widget Overlay">
 
 Here is an example of painting a custom widget overlay to universe maps.
 
@@ -548,38 +713,60 @@ U.OpenStreetMap(
 )
 ```
 
-[Custom Widget Overlay example](https://github.com/salkuadrat/universe/blob/master/example/lib/src/overlay/widget.dart)
+[Custom Widget Overlay example](example/lib/src/overlay/widget.dart)
 
 ### Custom Controls
 
 Universe maps come with default controls: compass, locator, scale and location indicator. But we can override this controls with our own controls to make it align with our app theme.
 
-[Clean Map without Controls](https://github.com/salkuadrat/universe/blob/master/example/lib/src/control/clean.dart)\
-[Map with Custom Compass](https://github.com/salkuadrat/universe/blob/master/example/lib/src/control/compass.dart)\
-[Map with Custom Locator](https://github.com/salkuadrat/universe/blob/master/example/lib/src/control/locator.dart)\
-[Map with Custom Scale Indicator](https://github.com/salkuadrat/universe/blob/master/example/lib/src/control/scale.dart)\
-[Map with Custom Location Indicator](https://github.com/salkuadrat/universe/blob/master/example/lib/src/control/location_indicator.dart)
+[Clean Map without Controls](example/lib/src/control/clean.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/clean.png" width="200" alt="Clean Map">
+
+[Map with Custom Compass](example/lib/src/control/compass.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/compass.png" width="200" alt="Custom Compass">
+
+[Map with Custom Locator](example/lib/src/control/locator.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/locator.png" width="200" alt="Custom Locator">
+
+[Map with Custom Scale Indicator](example/lib/src/control/scale.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/scale.png" width="200" alt="Custom Scale Indicator">
+
+[Map with Custom Location Indicator](example/lib/src/control/location_indicator.dart)
 
 ### Custom TileProvider
 
-[NetworkTileProvider](https://github.com/salkuadrat/universe/blob/master/example/lib/src/tile_provider/network.dart)\
-[NetworkRetryTileProvider](https://github.com/salkuadrat/universe/blob/master/example/lib/src/tile_provider/retry.dart)\
-[CachedNetworkTileProvider](https://github.com/salkuadrat/universe/blob/master/example/lib/src/tile_provider/cached.dart)\
-[Offline AssetTileProvider](https://github.com/salkuadrat/universe/blob/master/example/lib/src/tile_provider/asset.dart)
+[NetworkTileProvider](example/lib/src/tile_provider/network.dart)\
+[NetworkRetryTileProvider](example/lib/src/tile_provider/retry.dart)\
+[CachedNetworkTileProvider](example/lib/src/tile_provider/cached.dart)\
+[Offline AssetTileProvider](example/lib/src/tile_provider/asset.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/offline.png" width="200" alt="Offline AssetTileProvider">
 
 ### Geolocator
 
-We can use geolocator to find latlng position from an address.
+We can use geolocator to find position latlng from address string.
 
-[Map Geolocator: Center by Address](https://github.com/salkuadrat/universe/blob/master/example/lib/src/geolocator/center.dart)\
-[Map Geolocator: Find LatLng by Address](https://github.com/salkuadrat/universe/blob/master/example/lib/src/geolocator/finder.dart)\
-[Map Geolocator: Move by Address](https://github.com/salkuadrat/universe/blob/master/example/lib/src/geolocator/move.dart)
+[Map Geolocator: Center by Address](example/lib/src/geolocator/center.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/geocenter.png" width="200" alt="Geolocator Center">
+
+[Map Geolocator: Find LatLng of Address](example/lib/src/geolocator/finder.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/geolocate.png" width="200" alt="Geolocator Finder">
+
+[Map Geolocator: Move to Address](example/lib/src/geolocator/move.dart)
+
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/geomove.png" width="200" alt="Geolocator Move">
 
 ### Other Examples 
 
-[Complex Map](https://github.com/salkuadrat/universe/blob/master/example/lib/src/home.dart)
+[Complex Map](example/lib/src/home.dart)
 
-[Map with Initial Rotation](https://github.com/salkuadrat/universe/blob/master/example/lib/src/rotation/initial.dart)\
-[Map with Disabled Rotation](https://github.com/salkuadrat/universe/blob/master/example/lib/src/rotation/disable.dart)\
-[Map with MaxBounds](https://github.com/salkuadrat/universe/blob/master/example/lib/src/bounds/maxbounds.dart)\
-[Map with FitBounds](https://github.com/salkuadrat/universe/blob/master/example/lib/src/bounds/fitbounds.dart)
+[Map with Initial Rotation](example/lib/src/rotation/initial.dart)\
+[Map with Disabled Rotation](example/lib/src/rotation/disable.dart)\
+[Map with MaxBounds](example/lib/src/bounds/maxbounds.dart)\
+[Map with FitBounds](example/lib/src/bounds/fitbounds.dart)
