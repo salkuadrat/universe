@@ -5,7 +5,7 @@
   - Change default tileFadeInCurveDef to Curves.easeOutQuint
   - Clearing unnecessary sort computation in TileLayer
   - Improving calculations of _setZoomTransforms
-  - Clearing unneceassary double call to _setZoomTransforms
+  - Clearing unnecessary double call to _setZoomTransforms
   - Improving calculations inside didUpdateWidget
 
 * Fixing bugs on WMSTileLayer rendering
