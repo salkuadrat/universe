@@ -44,7 +44,7 @@ U.OpenStreetMap(
 
 ### OpenStreetMap
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/osm.png" alt="OpenStreetMap">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/osm.png" width="200" alt="OpenStreetMap">
 
 ```dart
 U.OpenStreetMap(
@@ -76,7 +76,7 @@ OpenStreetMapType.BZH
 
 ### Google Maps 
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/gmaps.png" alt="Google Maps">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/gmaps.png" width="200" alt="Google Maps">
 
 ```dart
 U.GoogleMap(
@@ -100,7 +100,7 @@ GoogleMapType.Terrain
 
 ### MapBox
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/mapbox.png" alt="MapBox">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/mapbox.png" width="200" alt="MapBox">
 
 ```dart
 U.MapBox(
@@ -147,7 +147,7 @@ U.Map(
 
 ### Multi TileLayer Maps
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/multilayer.png" alt="Multi TileLayer">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/multilayer.png" width="200" alt="Multi TileLayer">
 
 We can create maps with multiple tile layers. Here is an example of using Humanitarian OpenStreetMap combined with map tiles from SafeCast and OpenRailwayMap.
 
@@ -201,7 +201,7 @@ U.OpenStreetMap(
 
 ### Markers 
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/marker.png" alt="Marker">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/marker.png" width="200" alt="Marker">
 
 Here is a simple way of adding marker to universe maps.
 
@@ -216,45 +216,45 @@ U.OpenStreetMap(
 
 Complete marker examples:
 
-[Simple Marker](example/lib/src/marker/default.dart)\
+[Simple Marker](example/lib/src/marker/default.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/marker.png" alt="Simple Marker">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/marker.png" width="200" alt="Simple Marker">
 
-[Marker with Data](example/lib/src/marker/data.dart)\
+[Marker with Data](example/lib/src/marker/data.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerdata.png" alt="Marker with Data">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerdata.png" width="200" alt="Marker with Data">
 
-[Multiple Marker](example/lib/src/marker/multi.dart)\
+[Multiple Marker](example/lib/src/marker/multi.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermulti.png" alt="Multiple Marker">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermulti.png" width="200" alt="Multiple Marker">
 
-[Multiple Marker with Different Styles](example/lib/src/marker/multistyles.dart)\
+[Multiple Marker with Different Styles](example/lib/src/marker/multistyles.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermultistyles.png" alt="Multiple Marker Styles">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermultistyles.png" width="200" alt="Multiple Marker Styles">
 
-[Multiple Marker with Data](example/lib/src/marker/multidata.dart)\
+[Multiple Marker with Data](example/lib/src/marker/multidata.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermultidata.png" alt="Multiple Marker with Data">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markermultidata.png" width="200" alt="Multiple Marker with Data">
 
-[Marker Icon](example/lib/src/marker/icon.dart)\
+[Marker Icon](example/lib/src/marker/icon.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markericon.png" alt="Marker Icon">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markericon.png" width="200" alt="Marker Icon">
 
-[Marker Image](example/lib/src/marker/image.dart)\
+[Marker Image](example/lib/src/marker/image.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerimage.png" alt="Marker Image">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerimage.png" width="200" alt="Marker Image">
 
-[Marker SVG](example/lib/src/marker/svg.dart)\
+[Marker SVG](example/lib/src/marker/svg.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markersvg.png" alt="Marker SVG">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markersvg.png" width="200" alt="Marker SVG">
 
-[Marker Widget](example/lib/src/marker/widget.dart)\
+[Marker Widget](example/lib/src/marker/widget.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerwidget.png" alt="Marker Widget">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markerwidget.png" width="200" alt="Marker Widget">
 
 [Tap to Add Marker](example/lib/src/marker/add.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markeradd.png" alt="Tap to Add Marker">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/markeradd.png" width="200" alt="Tap to Add Marker">
 
 ### Live Maps
 
@@ -327,7 +327,7 @@ Complete static maps examples:
 
 ### MapController
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controller.png" alt="MapController">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controller.png" width="200" alt="MapController">
 
 We can use custom controller in our universe maps.
 
@@ -355,25 +355,25 @@ _mapController.positionStream?.listen((data) {
 });
 ```
 
-[MapController](example/lib/src/controller/simple.dart)\
+[MapController](example/lib/src/controller/simple.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controller.png" alt="MapController">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controller.png" width="200" alt="MapController">
 
-[Move Map example](example/lib/src/controller/move.dart)\
+[Move Map example](example/lib/src/controller/move.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllermove.png" alt="MapController Move">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllermove.png" width="200" alt="MapController Move">
 
-[Zoom Map example](example/lib/src/controller/zoom.dart)\
+[Zoom Map example](example/lib/src/controller/zoom.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerzoom.png" alt="MapController Zoom">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerzoom.png" width="200" alt="MapController Zoom">
 
-[Rotate Map example](example/lib/src/controller/rotate.dart)\
+[Rotate Map example](example/lib/src/controller/rotate.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerrotate.png" alt="MapController Rotate">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerrotate.png" width="200" alt="MapController Rotate">
 
 [Find Location example](example/lib/src/controller/locate.dart)
 
-<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerlocate.png" alt="MapController Find Location">
+<img src="https://github.com/salkuadrat/universe/raw/master/screenshot/controllerlocate.png" width="200" alt="MapController Find Location">
 
 ### Circle
 
