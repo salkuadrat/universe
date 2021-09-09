@@ -14,7 +14,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.1"
+    version: "2.8.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -28,7 +28,21 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.1.0"
+  cached_network_image_platform_interface:
+    dependency: transitive
+    description:
+      name: cached_network_image_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  cached_network_image_web:
+    dependency: transitive
+    description:
+      name: cached_network_image_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   characters:
     dependency: transitive
     description:
@@ -42,7 +56,7 @@ packages:
       name: charcode
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.3.1"
   clock:
     dependency: transitive
     description:
@@ -70,14 +84,14 @@ packages:
       name: curved_animation_controller
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.0+1"
   extended_image:
     dependency: "direct main"
     description:
       name: extended_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.0"
+    version: "4.2.1"
   extended_image_library:
     dependency: transitive
     description:
@@ -125,20 +139,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1"
-  flutter_geocoder:
-    dependency: "direct main"
-    description:
-      name: flutter_geocoder
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.2-nullsafety"
   flutter_image:
     dependency: "direct main"
     description:
       name: flutter_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.1.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -156,6 +163,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  geocode:
+    dependency: "direct main"
+    description:
+      name: geocode
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   html_unescape:
     dependency: "direct main"
     description:
@@ -218,21 +232,21 @@ packages:
       name: location
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.1"
+    version: "4.3.0"
   location_platform_interface:
     dependency: transitive
     description:
       name: location_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.3.0"
   location_web:
     dependency: transitive
     description:
       name: location_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.1.1"
   logging:
     dependency: "direct main"
     description:
@@ -253,7 +267,7 @@ packages:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0"
+    version: "1.7.0"
   mgrs_dart:
     dependency: transitive
     description:
@@ -379,7 +393,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "6.0.0"
   quiver:
     dependency: transitive
     description:
@@ -461,7 +475,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.2"
   tuple:
     dependency: "direct main"
     description:
@@ -503,7 +517,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.15"
   video_player_platform_interface:
     dependency: transitive
     description:

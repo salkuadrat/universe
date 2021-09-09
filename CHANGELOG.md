@@ -1,3 +1,14 @@
+## [1.1.1-nullsafety] - 09 September 2021
+
+* Use background location for live map stream
+* Change package for geocoding findLocation from flutter_geocoder to geocode
+* Update dependency extended_image to version 4.2.1
+* Update dependency cached_network_image to version 3.1.0
+* Update dependency video_player to version 2.1.15
+* Update dependency provider to version 6.0.0
+* Update dependency flutter_image to version 4.1.0
+* Fixing Mercator Projection
+
 ## [1.1.0-nullsafety] - 17 August 2021
 
 * Improving tile layer rendering by:

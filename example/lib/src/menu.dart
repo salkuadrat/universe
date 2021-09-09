@@ -44,43 +44,45 @@ class _AppMenuState extends State<AppMenu> {
               onTap: () => Navigator.pop(context),
             ),
           ),
-          Container(
-            height: 420,
-            padding: EdgeInsets.only(top: 15),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(top: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
               ),
-            ),
-            child: ScrollablePositionedList.builder(
-              itemScrollController: itemScrollController,
-              itemCount: menus.keys.length,
-              itemBuilder: (_, index) {
-                final key = menus.keys.elementAt(index);
-                final chosen = key == widget.value;
+              child: ScrollablePositionedList.builder(
+                itemScrollController: itemScrollController,
+                itemCount: menus.keys.length,
+                itemBuilder: (_, index) {
+                  final key = menus.keys.elementAt(index);
+                  final chosen = key == widget.value;
 
-                return InkWell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 13, horizontal: 18),
-                    child: Text(
-                      menus[key]!.name,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: chosen
-                            ? Theme.of(context).primaryColor
-                            : Color(0xFF454545),
+                  return InkWell(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 13, horizontal: 18),
+                      child: Text(
+                        menus[key]!.name,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: chosen
+                              ? Theme.of(context).primaryColor
+                              : Color(0xFF454545),
+                        ),
                       ),
                     ),
-                  ),
-                  onTap: () async {
-                    Navigator.pop(context);
-                    await Future.delayed(Duration(milliseconds: 200));
-                    widget.onChanged.call(menus.keys.elementAt(index));
-                  },
-                );
-              },
+                    onTap: () async {
+                      Navigator.pop(context);
+                      await Future.delayed(Duration(milliseconds: 200));
+                      widget.onChanged.call(menus.keys.elementAt(index));
+                    },
+                  );
+                },
+              ),
             ),
           )
         ],

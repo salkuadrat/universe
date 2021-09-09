@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:curved_animation_controller/curved_animation_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_geocoder/geocoder.dart';
+import 'package:geocode/geocode.dart';
 import 'package:location/location.dart';
 
 import '../core/core.dart';
@@ -475,6 +475,8 @@ class MapState extends ChangeNotifier {
 
     if (options.live) {
       _startLocating();
+      _location?.enableBackgroundMode(enable: true);
+
       await _initLocationSettings();
 
       _locationSubs = _location?.onLocationChanged.listen((latlng) {
@@ -808,16 +810,17 @@ class MapState extends ChangeNotifier {
     }
   }
 
-  // Find LatLng from location name
-  Future<LatLng?> findLocation(String query) async {
-    log('MapStates findLocation $query');
+  // Find LatLng from location address
+  Future<LatLng?> findLocation(String address) async {
+    log('MapStates findLocation $address');
 
-    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    GeoCode geoCode = GeoCode();
 
-    if (addresses.isNotEmpty) {
-      var coordinates = addresses.first.coordinates;
+    try {
+      Coordinates coordinates =
+          await geoCode.forwardGeocoding(address: address);
       return LatLng(coordinates.latitude, coordinates.longitude);
-    }
+    } catch (e) {}
 
     return null;
   }

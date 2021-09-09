@@ -9,9 +9,10 @@ class Mercator extends Projection {
   static const double R_MINOR = POLAR_RADIUS;
   static const double MAX_LATITUDE = 85.0511287798;
 
-  const Mercator(
-      {Tuple2<double, double>? latBounds, Tuple2<double, double>? lngBounds})
-      : super(latBounds: latBounds, lngBounds: lngBounds);
+  const Mercator({
+    Tuple2<double, double>? latBounds,
+    Tuple2<double, double>? lngBounds,
+  }) : super(latBounds: latBounds, lngBounds: lngBounds);
 
   @override
   Bounds get bounds => Bounds(
@@ -41,11 +42,13 @@ class Mercator extends Projection {
     double e = Math.sqrt(1 - tmp * tmp);
     double ts = Math.exp(-point.y / R);
     double phi = PI / 2 - 2 * Math.atan(ts);
+    double dphi = 0.1;
+    double con = 0;
 
-    for (int i = 0, dphi = 0.1 as int, con; i < 15 && dphi.abs() > 1e-7; i++) {
-      con = e * Math.sin(phi) as int;
-      con = Math.pow((1 - con) / (1 + con), e / 2) as int;
-      dphi = PI / 2 - 2 * Math.atan(ts * con) - phi as int;
+    for (int i = 0; i < 15 && dphi.abs() > 1e-7; i++) {
+      con = e * Math.sin(phi);
+      con = Math.pow((1 - con) / (1 + con), e / 2) as double;
+      dphi = PI / 2 - 2 * Math.atan(ts * con) - phi;
       phi += dphi;
     }
 
