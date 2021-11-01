@@ -1,3 +1,7 @@
+## [1.1.2-nullsafety] - 01 November 2021 
+
+* Update all dependencies
+
 ## [1.1.1-nullsafety] - 09 September 2021
 
 * Use background location for live map stream
