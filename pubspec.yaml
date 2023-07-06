@@ -13,7 +13,7 @@ dependencies:
   logging: ^1.0.2
   vector_math: ^2.1.1
   proj4dart: ^2.0.0
-  flutter_svg: ^0.23.0+1
+  flutter_svg: ^2.0.7
   html_unescape: ^2.0.0
   provider: ^6.0.1
   location: ^4.3.0
