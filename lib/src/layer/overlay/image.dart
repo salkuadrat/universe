@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import '../../core/core.dart';
 import '../../map/map.dart';
 import '../../shared.dart';
 import '../layer.dart';
+import 'dart:io';
 
 class ImageOverlay extends InteractiveLayer {
   final String? imagePath;
