@@ -11,7 +11,7 @@ import '../layer.dart';
 
 class ImageOverlay extends InteractiveLayer {
   final String? imagePath;
-  // final File? imageFile;
+  final File? imageFile;
   final Image? image;
   final ImageProvider? imageProvider;
   final LatLngBounds bounds;
@@ -30,7 +30,7 @@ class ImageOverlay extends InteractiveLayer {
       (imagePath!.startsWith('http://') || imagePath!.startsWith('https://'));
   bool get isFilePath => isPath && File(imagePath!).existsSync();
   bool get isAssetPath => isPath && imagePath!.startsWith('assets/');
- // bool get isFile => imageFile != null;
+  bool get isFile => imageFile != null;
   bool get isImage => image != null;
 
   ImageOverlay(
@@ -45,7 +45,7 @@ class ImageOverlay extends InteractiveLayer {
     this.options,
   })  : assert((image is String || image is ImageProvider) && bounds != null),
         this.imagePath = image is String ? image : null,
-//this.imageFile = image is File ? image : null,
+this.imageFile = image is File ? image : null,
         this.imageProvider = image is ImageProvider ? image : null,
         this.image = image is Image ? image : null,
         this.bounds = LatLngBounds.from(bounds),
@@ -99,13 +99,13 @@ class ImageOverlay extends InteractiveLayer {
       );
     }
 
-    // if (isFile) {
-    //   return Image.file(
-    //     imageFile!,
-    //     fit: fit,
-    //     gaplessPlayback: gaplessPlayback,
-    //   );
-    // }
+    if (isFile) {
+      return Image.file(
+        imageFile!,
+        fit: fit,
+        gaplessPlayback: gaplessPlayback,
+      );
+    }
 
     if (isPath) {
       if (isNetworkPath) {
@@ -125,14 +125,14 @@ class ImageOverlay extends InteractiveLayer {
         );
       }
 
-    //   if (isAssetPath) {
-    //     return Image.asset(
-    //       imagePath!,
-    //       fit: fit,
-    //       gaplessPlayback: gaplessPlayback,
-    //     );
-    //   }
-    // }
+      if (isAssetPath) {
+        return Image.asset(
+          imagePath!,
+          fit: fit,
+          gaplessPlayback: gaplessPlayback,
+        );
+      }
+    }
 
     if (imageError != null) {
       return ExtendedImage(image: imageError!);
