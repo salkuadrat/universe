@@ -2,6 +2,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:universe/universe.dart';
 
 import '../../core/core.dart';
 import '../../map/map.dart';
@@ -27,25 +28,25 @@ class ImageOverlay extends InteractiveLayer {
   bool get isProvider => imageProvider != null;
   bool get isNetworkPath =>
       isPath &&
-      (imagePath!.startsWith('http://') || imagePath!.startsWith('https://'));
+          (imagePath!.startsWith('http://') || imagePath!.startsWith('https://'));
   bool get isFilePath => isPath && File(imagePath!).existsSync();
   bool get isAssetPath => isPath && imagePath!.startsWith('assets/');
   bool get isFile => imageFile != null;
   bool get isImage => image != null;
 
   ImageOverlay(
-    dynamic image, {
-    dynamic bounds,
-    this.imageError,
-    this.opacity = 1.0,
-    this.rotation = 0.0,
-    this.fit = BoxFit.cover,
-    this.gaplessPlayback = true,
-    this.data,
-    this.options,
-  })  : assert((image is String || image is ImageProvider) && bounds != null),
+      dynamic image, {
+        dynamic bounds,
+        this.imageError,
+        this.opacity = 1.0,
+        this.rotation = 0.0,
+        this.fit = BoxFit.cover,
+        this.gaplessPlayback = true,
+        this.data,
+        this.options,
+      })  : assert((image is String || image is ImageProvider) && bounds != null),
         this.imagePath = image is String ? image : null,
-this.imageFile = image is File ? image : null,
+        this.imageFile = image is File ? image : null,
         this.imageProvider = image is ImageProvider ? image : null,
         this.image = image is Image ? image : null,
         this.bounds = LatLngBounds.from(bounds),
@@ -116,6 +117,7 @@ this.imageFile = image is File ? image : null,
           enableLoadState: false,
         );
       }
+    }
 
       if (isFilePath) {
         return Image.file(
@@ -132,7 +134,7 @@ this.imageFile = image is File ? image : null,
           gaplessPlayback: gaplessPlayback,
         );
       }
-    }
+    
 
     if (imageError != null) {
       return ExtendedImage(image: imageError!);
