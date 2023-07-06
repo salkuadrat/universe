@@ -1,14 +1,13 @@
+import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:universe/universe.dart';
 
 import '../../core/core.dart';
 import '../../map/map.dart';
 import '../../shared.dart';
 import '../layer.dart';
-import 'dart:io';
 
 class ImageOverlay extends InteractiveLayer {
   final String? imagePath;
@@ -28,23 +27,23 @@ class ImageOverlay extends InteractiveLayer {
   bool get isProvider => imageProvider != null;
   bool get isNetworkPath =>
       isPath &&
-          (imagePath!.startsWith('http://') || imagePath!.startsWith('https://'));
+      (imagePath!.startsWith('http://') || imagePath!.startsWith('https://'));
   bool get isFilePath => isPath && File(imagePath!).existsSync();
   bool get isAssetPath => isPath && imagePath!.startsWith('assets/');
   bool get isFile => imageFile != null;
   bool get isImage => image != null;
 
   ImageOverlay(
-      dynamic image, {
-        dynamic bounds,
-        this.imageError,
-        this.opacity = 1.0,
-        this.rotation = 0.0,
-        this.fit = BoxFit.cover,
-        this.gaplessPlayback = true,
-        this.data,
-        this.options,
-      })  : assert((image is String || image is ImageProvider) && bounds != null),
+    dynamic image, {
+    dynamic bounds,
+    this.imageError,
+    this.opacity = 1.0,
+    this.rotation = 0.0,
+    this.fit = BoxFit.cover,
+    this.gaplessPlayback = true,
+    this.data,
+    this.options,
+  })  : assert((image is String || image is ImageProvider) && bounds != null),
         this.imagePath = image is String ? image : null,
         this.imageFile = image is File ? image : null,
         this.imageProvider = image is ImageProvider ? image : null,
@@ -117,7 +116,6 @@ class ImageOverlay extends InteractiveLayer {
           enableLoadState: false,
         );
       }
-    }
 
       if (isFilePath) {
         return Image.file(
@@ -134,7 +132,7 @@ class ImageOverlay extends InteractiveLayer {
           gaplessPlayback: gaplessPlayback,
         );
       }
-    
+    }
 
     if (imageError != null) {
       return ExtendedImage(image: imageError!);
