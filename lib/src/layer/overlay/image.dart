@@ -99,13 +99,13 @@ class ImageOverlay extends InteractiveLayer {
       );
     }
 
-    if (isFile) {
-      return Image.file(
-        imageFile!,
-        fit: fit,
-        gaplessPlayback: gaplessPlayback,
-      );
-    }
+    // if (isFile) {
+    //   return Image.file(
+    //     imageFile!,
+    //     fit: fit,
+    //     gaplessPlayback: gaplessPlayback,
+    //   );
+    // }
 
     if (isPath) {
       if (isNetworkPath) {
@@ -125,14 +125,14 @@ class ImageOverlay extends InteractiveLayer {
         );
       }
 
-      if (isAssetPath) {
-        return Image.asset(
-          imagePath!,
-          fit: fit,
-          gaplessPlayback: gaplessPlayback,
-        );
-      }
-    }
+    //   if (isAssetPath) {
+    //     return Image.asset(
+    //       imagePath!,
+    //       fit: fit,
+    //       gaplessPlayback: gaplessPlayback,
+    //     );
+    //   }
+    // }
 
     if (imageError != null) {
       return ExtendedImage(image: imageError!);
