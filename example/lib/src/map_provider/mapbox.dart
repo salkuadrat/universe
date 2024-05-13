@@ -8,10 +8,10 @@ class MapBox extends StatefulWidget {
   const MapBox({super.key});
 
   @override
-  MapBoxState createState() => MapBoxState();
+  State<MapBox> createState() => _MapBoxState();
 }
 
-class MapBoxState extends State<MapBox> {
+class _MapBoxState extends State<MapBox> {
   MapBoxType type = MapBoxType.Street;
 
   Scale get _scale {

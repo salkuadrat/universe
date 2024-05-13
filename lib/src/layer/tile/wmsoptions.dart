@@ -145,7 +145,7 @@ class WMSTileLayerOptions extends TileLayerOptions {
         : [bounds.min.x, bounds.min.y, bounds.max.x, bounds.max.y];
 
     final buffer = StringBuffer(_baseUrl(crs));
-    
+
     buffer.write('&$paramWidth=${isRetinaMode ? tileWidth * 2 : tileWidth}');
     buffer.write('&$paramHeight=${isRetinaMode ? tileHeight * 2 : tileHeight}');
     buffer.write('&$paramBbox=${bbox.join(',')}');

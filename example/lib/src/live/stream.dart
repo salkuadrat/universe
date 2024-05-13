@@ -6,13 +6,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:universe/universe.dart';
 
 class LiveStreamMap extends StatefulWidget {
-  const LiveStreamMap({Key? key}) : super(key: key);
+  const LiveStreamMap({super.key});
 
   @override
-  LiveStreamMapState createState() => LiveStreamMapState();
+  State<LiveStreamMap> createState() => _LiveStreamMapState();
 }
 
-class LiveStreamMapState extends State<LiveStreamMap> {
+class _LiveStreamMapState extends State<LiveStreamMap> {
   final MapController _mapController = MapController();
   StreamSubscription<LatLng>? _liveSubs;
 

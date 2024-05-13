@@ -6,10 +6,10 @@ class WaymarkedTrailsMap extends StatefulWidget {
   const WaymarkedTrailsMap({super.key});
 
   @override
-  WaymarkedTrailsMapState createState() => WaymarkedTrailsMapState();
+  State<WaymarkedTrailsMap> createState() => _WaymarkedTrailsMapState();
 }
 
-class WaymarkedTrailsMapState extends State<WaymarkedTrailsMap> {
+class _WaymarkedTrailsMapState extends State<WaymarkedTrailsMap> {
   WaymarkedTrailsType type = WaymarkedTrailsType.Cycling;
 
   @override

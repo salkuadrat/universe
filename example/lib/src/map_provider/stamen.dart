@@ -6,10 +6,10 @@ class StamenMap extends StatefulWidget {
   const StamenMap({super.key});
 
   @override
-  StamenMapState createState() => StamenMapState();
+  State<StamenMap> createState() => _StamenMapState();
 }
 
-class StamenMapState extends State<StamenMap> {
+class _StamenMapState extends State<StamenMap> {
   StamenType type = StamenType.Toner;
 
   @override

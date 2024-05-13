@@ -6,10 +6,10 @@ class JawgMap extends StatefulWidget {
   const JawgMap({super.key});
 
   @override
-  JawgMapState createState() => JawgMapState();
+  State<JawgMap> createState() => _JawgMapState();
 }
 
-class JawgMapState extends State<JawgMap> {
+class _JawgMapState extends State<JawgMap> {
   JawgType type = JawgType.Streets;
 
   @override

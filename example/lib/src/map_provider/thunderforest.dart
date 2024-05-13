@@ -6,10 +6,10 @@ class ThunderforestMap extends StatefulWidget {
   const ThunderforestMap({super.key});
 
   @override
-  ThunderforestMapState createState() => ThunderforestMapState();
+  State<ThunderforestMap> createState() => _ThunderforestMapState();
 }
 
-class ThunderforestMapState extends State<ThunderforestMap> {
+class _ThunderforestMapState extends State<ThunderforestMap> {
   ThunderforestType type = ThunderforestType.Outdoors;
 
   @override

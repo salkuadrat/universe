@@ -6,10 +6,10 @@ class NASAGIBSMap extends StatefulWidget {
   const NASAGIBSMap({super.key});
 
   @override
-  NASAGIBSMapState createState() => NASAGIBSMapState();
+  State<NASAGIBSMap> createState() => _NASAGIBSMapState();
 }
 
-class NASAGIBSMapState extends State<NASAGIBSMap> {
+class _NASAGIBSMapState extends State<NASAGIBSMap> {
   NASAGIBSType type = NASAGIBSType.ModisTerraTrueColorCR;
 
   @override

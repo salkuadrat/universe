@@ -7,7 +7,7 @@ class LocationFinderMap extends StatefulWidget {
   const LocationFinderMap({super.key});
 
   @override
-  _LocationFinderMapState createState() => _LocationFinderMapState();
+  State<LocationFinderMap> createState() => _LocationFinderMapState();
 }
 
 class _LocationFinderMapState extends State<LocationFinderMap> {

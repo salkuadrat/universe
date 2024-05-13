@@ -5,10 +5,10 @@ class LocateControllerMap extends StatefulWidget {
   const LocateControllerMap({super.key});
 
   @override
-  LocateControllerMapState createState() => LocateControllerMapState();
+  State<LocateControllerMap> createState() => _LocateControllerMapState();
 }
 
-class LocateControllerMapState extends State<LocateControllerMap> {
+class _LocateControllerMapState extends State<LocateControllerMap> {
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 

@@ -16,7 +16,7 @@ class WidgetOverlay extends InteractiveLayer {
   final InteractiveLayerOptions? options;
 
   WidgetOverlay({
-    Key? key, 
+    Key? key,
     this.child,
     required dynamic bounds,
     this.opacity,

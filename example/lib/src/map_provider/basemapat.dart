@@ -6,10 +6,10 @@ class BasemapATMap extends StatefulWidget {
   const BasemapATMap({super.key});
 
   @override
-  BasemapATMapState createState() => BasemapATMapState();
+  State<BasemapATMap> createState() => _BasemapATMapState();
 }
 
-class BasemapATMapState extends State<BasemapATMap> {
+class _BasemapATMapState extends State<BasemapATMap> {
   BasemapATType type = BasemapATType.Default;
 
   @override

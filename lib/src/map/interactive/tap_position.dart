@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 /// Used to detect tap position on the map
 class TapPositionDetector extends StatefulWidget {
   const TapPositionDetector({
-    Key? key,
+    super.key,
     this.child,
     this.onTap,
     this.onDoubleTap,
@@ -17,7 +17,7 @@ class TapPositionDetector extends StatefulWidget {
     this.doubleTapDelay = _DEFAULT_DELAY,
     this.behavior,
     this.controller,
-  }) : super(key: key);
+  });
 
   static const _DEFAULT_DELAY = Duration(milliseconds: 250);
   static const _DOUBLE_TAP_MAX_OFFSET = 48.0;
@@ -45,10 +45,10 @@ class TapPositionDetector extends StatefulWidget {
   final TapPositionController? controller;
 
   @override
-  TapPositionDetectorState createState() => TapPositionDetectorState();
+  State<TapPositionDetector> createState() => _TapPositionDetectorState();
 }
 
-class TapPositionDetectorState extends State<TapPositionDetector> {
+class _TapPositionDetectorState extends State<TapPositionDetector> {
   final StreamController<TapDownDetails?> _controller = StreamController();
 
   Stream<TapDownDetails?> get _stream => _controller.stream;
@@ -200,7 +200,7 @@ class TapPosition {
 }
 
 class TapPositionController {
-  TapPositionDetectorState? _state;
+  _TapPositionDetectorState? _state;
 
   void onTap() => _state?._onTapEvent();
 

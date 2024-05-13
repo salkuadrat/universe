@@ -25,7 +25,8 @@ class Epsg3857 extends Earth {
 
   /// Transformation object of this CRS.
   @override
-  Transformation get transformation => const Transformation(SCALE, 0.5, -SCALE, 0.5);
+  Transformation get transformation =>
+      const Transformation(SCALE, 0.5, -SCALE, 0.5);
 
   // Epsg3857 latitude limits: https://epsg.io/3857
   // @override

@@ -1,7 +1,7 @@
 name: example
 description: A complete example showing many use cases of using Universe package in Flutter.
 publish_to: 'none'
-version: 2.0.0
+version: 2.0.1
 
 environment:
   sdk: '>=3.1.0 <4.0.0'

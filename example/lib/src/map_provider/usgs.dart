@@ -6,10 +6,10 @@ class USGSMap extends StatefulWidget {
   const USGSMap({super.key});
 
   @override
-  USGSMapState createState() => USGSMapState();
+  State<USGSMap> createState() => _USGSMapState();
 }
 
-class USGSMapState extends State<USGSMap> {
+class _USGSMapState extends State<USGSMap> {
   USGSType type = USGSType.Topo;
 
   @override

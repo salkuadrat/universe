@@ -5,10 +5,10 @@ class RotateControllerMap extends StatefulWidget {
   const RotateControllerMap({super.key});
 
   @override
-  RotateControllerMapState createState() => RotateControllerMapState();
+  State<RotateControllerMap> createState() => _RotateControllerMapState();
 }
 
-class RotateControllerMapState extends State<RotateControllerMap> {
+class _RotateControllerMapState extends State<RotateControllerMap> {
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 

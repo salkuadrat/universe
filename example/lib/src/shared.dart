@@ -111,14 +111,16 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('MapBox', map: () => const MapBox()),
   UniqueKey(): MenuItem('Open Street Map', map: () => const OpenStreetMap()),
   UniqueKey(): MenuItem('Google Map', map: () => const GoogleMap()),
-  UniqueKey(): MenuItem('Custom Map Provider', map: () => const CustomMapProvider()),
+  UniqueKey():
+      MenuItem('Custom Map Provider', map: () => const CustomMapProvider()),
   UniqueKey(): MenuItem('Muti Layers Map', map: () => const MultiLayerMap()),
   //UniqueKey(): MenuItem('Non Geographical Map', map: () => NonGeographicalMap()),
   UniqueKey(): MenuItem('Open Maps', map: () => const OpenMap()),
   UniqueKey(): MenuItem('SafeCast Map', map: () => const SafeCastMap()),
   UniqueKey(): MenuItem('CyclOSM Map', map: () => const CyclOSMMap()),
   UniqueKey(): MenuItem('Stadia Map', map: () => const StadiaMap()),
-  UniqueKey(): MenuItem('Thunderforest Map', map: () => const ThunderforestMap()),
+  UniqueKey():
+      MenuItem('Thunderforest Map', map: () => const ThunderforestMap()),
   UniqueKey(): MenuItem('Jawg Map', map: () => const JawgMap()),
   UniqueKey(): MenuItem('Map Tiler', map: () => const MapTiler()),
   UniqueKey(): MenuItem('Stamen Map', map: () => const StamenMap()),
@@ -140,18 +142,19 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('HERE Map', map: () => const HereMap()),
   UniqueKey(): MenuItem('WMS Map', map: () => const WmsMap()),
   UniqueKey(): MenuItem('Static Map', map: () => const StaticMap()),
-  UniqueKey():
-      MenuItem('Static Map with Marker', map: () => const StaticMapWithMarker()),
+  UniqueKey(): MenuItem('Static Map with Marker',
+      map: () => const StaticMapWithMarker()),
   UniqueKey():
       MenuItem('Static Map with Rotation', map: () => const RotateStaticMap()),
-  UniqueKey():
-      MenuItem('Map with Initial Rotation', map: () => const InitialRotationMap()),
-  UniqueKey():
-      MenuItem('Map with Disable Rotation', map: () => const DisableRotationMap()),
+  UniqueKey(): MenuItem('Map with Initial Rotation',
+      map: () => const InitialRotationMap()),
+  UniqueKey(): MenuItem('Map with Disable Rotation',
+      map: () => const DisableRotationMap()),
   UniqueKey(): MenuItem('Map with MaxBounds', map: () => const MaxBoundsMap()),
   UniqueKey(): MenuItem('Map with FitBounds', map: () => const FitBoundsMap()),
   UniqueKey(): MenuItem('Marker', map: () => const DefaultMarkerMap()),
-  UniqueKey(): MenuItem('Marker with Data', map: () => const MarkerWithDataMap()),
+  UniqueKey():
+      MenuItem('Marker with Data', map: () => const MarkerWithDataMap()),
   UniqueKey(): MenuItem('Multiple Marker', map: () => const MultiMarkerMap()),
   UniqueKey(): MenuItem('Multiple Marker with Different Styles',
       map: () => const MultiMarkerStylesMap()),
@@ -163,8 +166,10 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Marker Widget', map: () => const MarkerWidgetMap()),
   UniqueKey(): MenuItem('Tap to Add Marker', map: () => const AddMarkerMap()),
   UniqueKey(): MenuItem('MapController', map: () => const ControllerMap()),
-  UniqueKey(): MenuItem('MapController: Move', map: () => const MoveControllerMap()),
-  UniqueKey(): MenuItem('MapController: Zoom', map: () => const ZoomControllerMap()),
+  UniqueKey():
+      MenuItem('MapController: Move', map: () => const MoveControllerMap()),
+  UniqueKey():
+      MenuItem('MapController: Zoom', map: () => const ZoomControllerMap()),
   UniqueKey():
       MenuItem('MapController: Rotate', map: () => const RotateControllerMap()),
   UniqueKey(): MenuItem('MapController: Find Location',
@@ -174,25 +179,32 @@ Map<Key, MenuItem> menus = {
   UniqueKey(): MenuItem('Multiple Circles', map: () => const MultiCircleMap()),
   UniqueKey(): MenuItem('Multiple Circles with Different Styles',
       map: () => const MultiCircleStylesMap()),
-  UniqueKey(): MenuItem('Circle with Data', map: () => const CircleWithDataMap()),
+  UniqueKey():
+      MenuItem('Circle with Data', map: () => const CircleWithDataMap()),
   UniqueKey(): MenuItem('Multiple Circles with Data',
       map: () => const MultiCircleWithDataMap()),
   UniqueKey(): MenuItem('Polyline', map: () => const PolylineMap()),
-  UniqueKey(): MenuItem('Custom Polyline', map: () => const CustomPolylineMap()),
-  UniqueKey(): MenuItem('Multiple Polylines', map: () => const MultiPolylineMap()),
+  UniqueKey():
+      MenuItem('Custom Polyline', map: () => const CustomPolylineMap()),
+  UniqueKey():
+      MenuItem('Multiple Polylines', map: () => const MultiPolylineMap()),
   UniqueKey(): MenuItem('Multiple Polylines with Different Styles',
       map: () => const MultiPolylineStylesMap()),
   UniqueKey(): MenuItem('Polygon', map: () => const PolygonMap()),
   UniqueKey(): MenuItem('Custom Polygon', map: () => const CustomPolygonMap()),
-  UniqueKey(): MenuItem('Multiple Polygons', map: () => const MultiPolygonMap()),
+  UniqueKey():
+      MenuItem('Multiple Polygons', map: () => const MultiPolygonMap()),
   UniqueKey(): MenuItem('Multiple Polygons with Different Styles',
       map: () => const MultiPolygonStylesMap()),
-  UniqueKey(): MenuItem('Polygon with Data', map: () => const PolygonWithDataMap()),
+  UniqueKey():
+      MenuItem('Polygon with Data', map: () => const PolygonWithDataMap()),
   UniqueKey(): MenuItem('Multiple Polygons with Data',
       map: () => const MultiPolygonWithDataMap()),
   UniqueKey(): MenuItem('Rectangle', map: () => const RectangleMap()),
-  UniqueKey(): MenuItem('Custom Rectangle', map: () => const CustomRectangleMap()),
-  UniqueKey(): MenuItem('Multiple Rectangles', map: () => const MultiRectangleMap()),
+  UniqueKey():
+      MenuItem('Custom Rectangle', map: () => const CustomRectangleMap()),
+  UniqueKey():
+      MenuItem('Multiple Rectangles', map: () => const MultiRectangleMap()),
   UniqueKey(): MenuItem('Multiple Rectangles with Different Styles',
       map: () => const MultiRectangleStylesMap()),
   UniqueKey():
@@ -209,20 +221,25 @@ Map<Key, MenuItem> menus = {
       map: () => const AssetTileMap()),
   UniqueKey(): MenuItem('Live Map', map: () => const LiveMap()),
   UniqueKey(): MenuItem('Simple Live Map', map: () => const SimpleLiveMap()),
-  UniqueKey(): MenuItem('Live Map with Marker', map: () => const LiveMapWithMarker()),
+  UniqueKey():
+      MenuItem('Live Map with Marker', map: () => const LiveMapWithMarker()),
   UniqueKey(): MenuItem('Live Map without Automoving',
       map: () => const LiveMapWithoutAutoMoving()),
   UniqueKey(): MenuItem('Live Stream Map', map: () => const LiveStreamMap()),
-  UniqueKey(): MenuItem('Clean Map Without Controls', map: () => const CleanMap()),
+  UniqueKey():
+      MenuItem('Clean Map Without Controls', map: () => const CleanMap()),
   UniqueKey(): MenuItem('Custom Compass', map: () => const CustomCompassMap()),
   UniqueKey(): MenuItem('Custom Locator', map: () => const CustomLocatorMap()),
-  UniqueKey(): MenuItem('Custom Scale Indicator', map: () => const CustomScaleMap()),
+  UniqueKey():
+      MenuItem('Custom Scale Indicator', map: () => const CustomScaleMap()),
   UniqueKey(): MenuItem('Custom Location Indicator',
       map: () => const CustomLocationIndicatorMap()),
-  UniqueKey(): MenuItem('Geolocator: Center Map', map: () => const GeolocatorMap()),
+  UniqueKey():
+      MenuItem('Geolocator: Center Map', map: () => const GeolocatorMap()),
   UniqueKey(): MenuItem('Geolocator: Find LatLng Location',
       map: () => const LocationFinderMap()),
-  UniqueKey(): MenuItem('Geolocator: Move Map', map: () => const MoveGeolocatorMap()),
+  UniqueKey():
+      MenuItem('Geolocator: Move Map', map: () => const MoveGeolocatorMap()),
   UniqueKey(): MenuItem('Image Overlay', map: () => const ImageOverlayMap()),
   UniqueKey(): MenuItem('Widget Overlay', map: () => const WidgetOverlayMap()),
   UniqueKey(): MenuItem('Video Overlay', map: () => const VideoOverlayMap()),

@@ -76,7 +76,7 @@ String decimal2sexagesimal(double decimal) {
 
   int minFraction = minParts[1];
   double seconds = (double.parse("0.$minFraction") * 60);
-  
+
   seconds = round(seconds, decimals: 2);
 
   return "$degree° ${minutes.floor()}' ${seconds.toStringAsFixed(2)}\"";
@@ -133,7 +133,7 @@ Size projectedSize(Size size, double angle) {
   final oHeight = size.height;
 
   const rad90 = PI / 2;
-  
+
   final sinangle = math.sin(angle).abs();
   final sinrest = math.sin(rad90 - angle).abs();
 

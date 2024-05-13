@@ -5,10 +5,10 @@ class RectangleWithDataMap extends StatefulWidget {
   const RectangleWithDataMap({super.key});
 
   @override
-  RectangleWithDataMapState createState() => RectangleWithDataMapState();
+  State<RectangleWithDataMap> createState() => _RectangleWithDataMapState();
 }
 
-class RectangleWithDataMapState extends State<RectangleWithDataMap> {
+class _RectangleWithDataMapState extends State<RectangleWithDataMap> {
   @override
   Widget build(BuildContext context) {
     return U.OpenStreetMap(

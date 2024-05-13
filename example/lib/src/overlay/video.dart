@@ -8,10 +8,10 @@ class VideoOverlayMap extends StatefulWidget {
   const VideoOverlayMap({super.key});
 
   @override
-  VideoOverlayMapState createState() => VideoOverlayMapState();
+  State<VideoOverlayMap> createState() => _VideoOverlayMapState();
 }
 
-class VideoOverlayMapState extends State<VideoOverlayMap> {
+class _VideoOverlayMapState extends State<VideoOverlayMap> {
   VideoPlayerController? _videoController;
 
   void _toggleVideo() {

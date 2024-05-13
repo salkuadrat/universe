@@ -203,8 +203,7 @@ class MapOptions {
             ? LatLng.from(center)
             : null,
         centerMarkerSize = centerMarkerSize?.toDouble() ?? markerSizeDef,
-        locationMarkerSize =
-            locationMarkerSize?.toDouble() ?? markerSizeDef,
+        locationMarkerSize = locationMarkerSize?.toDouble() ?? markerSizeDef,
         centerQuery = center is String ? center : null,
         zoomOptions = zoomOptions ?? ZoomOptions(),
         fitBoundsOptions = fitBoundsOptions ?? const FitBoundsOptions();

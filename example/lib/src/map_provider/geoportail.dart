@@ -6,10 +6,10 @@ class GeoportailFranceMap extends StatefulWidget {
   const GeoportailFranceMap({super.key});
 
   @override
-  GeoportailFranceMapState createState() => GeoportailFranceMapState();
+  State<GeoportailFranceMap> createState() => _GeoportailFranceMapState();
 }
 
-class GeoportailFranceMapState extends State<GeoportailFranceMap> {
+class _GeoportailFranceMapState extends State<GeoportailFranceMap> {
   GeoportailFranceType type = GeoportailFranceType.Plan;
 
   @override

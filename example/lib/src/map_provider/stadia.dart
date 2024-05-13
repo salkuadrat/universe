@@ -6,10 +6,10 @@ class StadiaMap extends StatefulWidget {
   const StadiaMap({super.key});
 
   @override
-  StadiaMapState createState() => StadiaMapState();
+  State<StadiaMap> createState() => _StadiaMapState();
 }
 
-class StadiaMapState extends State<StadiaMap> {
+class _StadiaMapState extends State<StadiaMap> {
   StadiaType type = StadiaType.OSMOutdoors;
 
   @override

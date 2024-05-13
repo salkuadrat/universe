@@ -6,10 +6,10 @@ class NLMaps extends StatefulWidget {
   const NLMaps({super.key});
 
   @override
-  NLMapsState createState() => NLMapsState();
+  State<NLMaps> createState() => _NLMapsState();
 }
 
-class NLMapsState extends State<NLMaps> {
+class _NLMapsState extends State<NLMaps> {
   NLMapsType type = NLMapsType.Default;
 
   @override

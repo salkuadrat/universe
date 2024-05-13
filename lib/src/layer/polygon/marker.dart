@@ -15,7 +15,7 @@ class Polygon extends Polyline {
 
   @override
   bool get isEmpty => latlngs.isEmpty;
-  
+
   @override
   bool get isNotEmpty => latlngs.isNotEmpty;
 

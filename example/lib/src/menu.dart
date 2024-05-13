@@ -9,17 +9,17 @@ class AppMenu extends StatefulWidget {
   final Function(Key) onChanged;
 
   const AppMenu({
-    Key? key,
+    super.key,
     required this.value,
     required this.items,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
-  AppMenuState createState() => AppMenuState();
+  State<AppMenu> createState() => _AppMenuState();
 }
 
-class AppMenuState extends State<AppMenu> {
+class _AppMenuState extends State<AppMenu> {
   final ItemScrollController itemScrollController = ItemScrollController();
 
   int get chosenIndex {

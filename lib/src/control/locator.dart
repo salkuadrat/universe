@@ -18,7 +18,7 @@ class Locator extends MapLayer {
   final double toZoom;
 
   const Locator({
-    super.key, 
+    super.key,
     this.icon,
     this.alignment = Alignment.bottomRight,
     this.margin = const EdgeInsets.only(right: 20, bottom: 24),

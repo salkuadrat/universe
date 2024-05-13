@@ -6,10 +6,10 @@ class AddMarkerMap extends StatefulWidget {
   const AddMarkerMap({super.key});
 
   @override
-  AddMarkerMapState createState() => AddMarkerMapState();
+  State<AddMarkerMap> createState() => _AddMarkerMapState();
 }
 
-class AddMarkerMapState extends State<AddMarkerMap> {
+class _AddMarkerMapState extends State<AddMarkerMap> {
   final _mapKey = UniqueKey();
 
   List<Marker> markers = [];

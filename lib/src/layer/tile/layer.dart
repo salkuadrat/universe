@@ -46,15 +46,15 @@ class TileLayer extends StatefulWidget {
   final TileLayerOptions options;
 
   const TileLayer({
-    Key? key,
+    super.key,
     required this.options,
-  }) : super(key: key);
+  });
 
   @override
-  TileLayerState createState() => TileLayerState();
+  State<TileLayer> createState() => _TileLayerState();
 }
 
-class TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
+class _TileLayerState extends State<TileLayer> with TickerProviderStateMixin {
   MapState get map => context.read<MapState>();
   MapController get controller => map.controller;
   TileLayerOptions get options => widget.options;

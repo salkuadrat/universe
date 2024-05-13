@@ -208,8 +208,9 @@ class Path<T extends LatLng> {
         remainingSteps = round(
               fullSteps > 0 ? steps % fullSteps : steps,
               decimals: 6,
-            ) * stepDistance;
-        
+            ) *
+            stepDistance;
+
         baseStep = tempCoordinates[index];
 
         for (int stepCounter = 0; stepCounter < fullSteps; stepCounter++) {

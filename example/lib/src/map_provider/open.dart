@@ -6,10 +6,10 @@ class OpenMap extends StatefulWidget {
   const OpenMap({super.key});
 
   @override
-  OpenMapState createState() => OpenMapState();
+  State<OpenMap> createState() => _OpenMapState();
 }
 
-class OpenMapState extends State<OpenMap> {
+class _OpenMapState extends State<OpenMap> {
   OpenType type = OpenType.OpenTopoMap;
 
   bool get isSea => type == OpenType.OpenSeaMap;

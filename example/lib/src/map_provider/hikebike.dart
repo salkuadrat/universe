@@ -6,10 +6,10 @@ class HikeBikeMap extends StatefulWidget {
   const HikeBikeMap({super.key});
 
   @override
-  HikeBikeMapState createState() => HikeBikeMapState();
+  State<HikeBikeMap> createState() => _HikeBikeMapState();
 }
 
-class HikeBikeMapState extends State<HikeBikeMap> {
+class _HikeBikeMapState extends State<HikeBikeMap> {
   @override
   Widget build(BuildContext context) {
     return U.OpenStreetMap(

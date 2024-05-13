@@ -6,10 +6,10 @@ class TomTomMap extends StatefulWidget {
   const TomTomMap({super.key});
 
   @override
-  TomTomMapState createState() => TomTomMapState();
+  State<TomTomMap> createState() => _TomTomMapState();
 }
 
-class TomTomMapState extends State<TomTomMap> {
+class _TomTomMapState extends State<TomTomMap> {
   TomTomType type = TomTomType.Basic;
 
   @override

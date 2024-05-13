@@ -24,5 +24,6 @@ class Epsg3395 extends Earth {
 
   /// Transformation object of this CRS.
   @override
-  Transformation get transformation => const Transformation(SCALE, 0.5, -SCALE, 0.5);
+  Transformation get transformation =>
+      const Transformation(SCALE, 0.5, -SCALE, 0.5);
 }

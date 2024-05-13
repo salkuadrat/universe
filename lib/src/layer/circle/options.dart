@@ -75,7 +75,7 @@ class CircleLayerOptions extends ShapeLayerOptions {
           onSecondaryLongPressUp: onSecondaryLongPressUp,
           onSecondaryLongPressEnd: onSecondaryLongPressEnd,
         );
-  
+
   CircleLayerOptions copy({
     bool? stroke,
     Color? strokeColor,

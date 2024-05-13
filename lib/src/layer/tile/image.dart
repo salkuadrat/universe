@@ -8,16 +8,16 @@ class TileImage extends StatefulWidget {
   final ImageProvider? errorImage;
 
   const TileImage({
-    Key? key,
+    super.key,
     required this.tile,
     this.errorImage,
-  }) : super(key: key);
+  });
 
   @override
-  TileImageState createState() => TileImageState();
+  State<TileImage> createState() => _TileImageState();
 }
 
-class TileImageState extends State<TileImage> {
+class _TileImageState extends State<TileImage> {
   @override
   void initState() {
     super.initState();

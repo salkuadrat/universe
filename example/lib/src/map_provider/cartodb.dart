@@ -6,10 +6,10 @@ class CartoDBMap extends StatefulWidget {
   const CartoDBMap({super.key});
 
   @override
-  CartoDBMapState createState() => CartoDBMapState();
+  State<CartoDBMap> createState() => _CartoDBMapState();
 }
 
-class CartoDBMapState extends State<CartoDBMap> {
+class _CartoDBMapState extends State<CartoDBMap> {
   CartoDBType type = CartoDBType.Positron;
 
   @override

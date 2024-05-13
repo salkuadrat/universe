@@ -6,10 +6,10 @@ class OpenStreetMap extends StatefulWidget {
   const OpenStreetMap({super.key});
 
   @override
-  OpenStreetMapState createState() => OpenStreetMapState();
+  State<OpenStreetMap> createState() => _OpenStreetMapState();
 }
 
-class OpenStreetMapState extends State<OpenStreetMap> {
+class _OpenStreetMapState extends State<OpenStreetMap> {
   OpenStreetMapType type = OpenStreetMapType.HOT;
 
   get center {

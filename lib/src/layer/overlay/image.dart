@@ -32,8 +32,9 @@ class ImageOverlay extends InteractiveLayer {
   bool get isFile => imageFile != null;
   bool get isImage => image != null;
 
-  ImageOverlay(dynamic image, {
-    Key? key, 
+  ImageOverlay(
+    dynamic image, {
+    Key? key,
     dynamic bounds,
     this.imageError,
     this.opacity = 1.0,

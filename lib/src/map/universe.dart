@@ -153,14 +153,13 @@ class _Map extends StatefulWidget {
   final String? attribution;
 
   const _Map({
-    Key? key,
     this.layers = const [],
     this.controls = const [],
     this.attribution,
-  }) : super(key: key);
+  });
 
   @override
-  __MapState createState() => __MapState();
+  State<_Map> createState() => __MapState();
 }
 
 class __MapState extends State<_Map> with TickerProviderStateMixin {

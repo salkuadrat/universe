@@ -6,10 +6,10 @@ class HereMap extends StatefulWidget {
   const HereMap({super.key});
 
   @override
-  HereMapMapState createState() => HereMapMapState();
+  State<HereMap> createState() => _HereMapMapState();
 }
 
-class HereMapMapState extends State<HereMap> {
+class _HereMapMapState extends State<HereMap> {
   HereType type = HereType.BasicMap;
 
   @override

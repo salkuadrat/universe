@@ -11,10 +11,10 @@ class App extends StatefulWidget {
   const App({super.key});
 
   @override
-  AppState createState() => AppState();
+  State<App> createState() => _AppState();
 }
 
-class AppState extends State<App> {
+class _AppState extends State<App> {
   Key _key = menus.keys.first;
 
   Widget get map => menus[_key]!.map();

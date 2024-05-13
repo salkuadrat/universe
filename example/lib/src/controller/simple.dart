@@ -5,10 +5,10 @@ class ControllerMap extends StatefulWidget {
   const ControllerMap({super.key});
 
   @override
-  ControllerMapState createState() => ControllerMapState();
+  State<ControllerMap> createState() => _ControllerMapState();
 }
 
-class ControllerMapState extends State<ControllerMap> {
+class _ControllerMapState extends State<ControllerMap> {
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 

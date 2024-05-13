@@ -6,10 +6,10 @@ class OpenWeatherMap extends StatefulWidget {
   const OpenWeatherMap({super.key});
 
   @override
-  OpenWeatherMapState createState() => OpenWeatherMapState();
+  State<OpenWeatherMap> createState() => _OpenWeatherMapState();
 }
 
-class OpenWeatherMapState extends State<OpenWeatherMap> {
+class _OpenWeatherMapState extends State<OpenWeatherMap> {
   OpenWeatherMapType type = OpenWeatherMapType.Clouds;
 
   @override

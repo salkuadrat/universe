@@ -6,10 +6,10 @@ class MapTiler extends StatefulWidget {
   const MapTiler({super.key});
 
   @override
-  MapTilerState createState() => MapTilerState();
+  State<MapTiler> createState() => _MapTilerState();
 }
 
-class MapTilerState extends State<MapTiler> {
+class _MapTilerState extends State<MapTiler> {
   MapTilerType type = MapTilerType.Default;
 
   @override

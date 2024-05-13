@@ -6,10 +6,10 @@ class GoogleMap extends StatefulWidget {
   const GoogleMap({super.key});
 
   @override
-  GoogleMapState createState() => GoogleMapState();
+  State<GoogleMap> createState() => _GoogleMapState();
 }
 
-class GoogleMapState extends State<GoogleMap> {
+class _GoogleMapState extends State<GoogleMap> {
   GoogleMapType type = GoogleMapType.Street;
 
   Scale get _scale {

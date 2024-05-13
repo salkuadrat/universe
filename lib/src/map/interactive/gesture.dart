@@ -39,15 +39,15 @@ class MapGestureDetector extends StatefulWidget {
   final Widget? child;
 
   const MapGestureDetector({
-    Key? key,
+    super.key,
     this.child,
-  }) : super(key: key);
+  });
 
   @override
-  MapGestureDetectorState createState() => MapGestureDetectorState();
+  State<MapGestureDetector> createState() => _MapGestureDetectorState();
 }
 
-class MapGestureDetectorState extends State<MapGestureDetector>
+class _MapGestureDetectorState extends State<MapGestureDetector>
     with TickerProviderStateMixin
     implements MapGestureMixin {
   MapState get map => Provider.of<MapState>(context, listen: false);

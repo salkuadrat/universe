@@ -6,10 +6,10 @@ class EsriMap extends StatefulWidget {
   const EsriMap({super.key});
 
   @override
-  EsriMapState createState() => EsriMapState();
+  State<EsriMap> createState() => _EsriMapState();
 }
 
-class EsriMapState extends State<EsriMap> {
+class _EsriMapState extends State<EsriMap> {
   EsriType type = EsriType.WorldStreetMap;
 
   @override

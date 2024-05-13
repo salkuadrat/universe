@@ -53,20 +53,20 @@ class AnimatedIndicator extends StatefulWidget {
   double get insideRadius => radius! - ringRadius!;
 
   const AnimatedIndicator({
-    Key? key,
+    super.key,
     this.location,
     this.radius,
     this.overlayRadius,
     this.ringRadius,
     this.color,
     this.animate = true,
-  }) : super(key: key);
+  });
 
   @override
-  AnimatedIndicatorState createState() => AnimatedIndicatorState();
+  State<AnimatedIndicator> createState() => _AnimatedIndicatorState();
 }
 
-class AnimatedIndicatorState extends State<AnimatedIndicator>
+class _AnimatedIndicatorState extends State<AnimatedIndicator>
     with SingleTickerProviderStateMixin {
   CurvedAnimationController? _animation;
 

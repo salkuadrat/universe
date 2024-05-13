@@ -5,10 +5,10 @@ class ZoomControllerMap extends StatefulWidget {
   const ZoomControllerMap({super.key});
 
   @override
-  ZoomControllerMapState createState() => ZoomControllerMapState();
+  State<ZoomControllerMap> createState() => _ZoomControllerMapState();
 }
 
-class ZoomControllerMapState extends State<ZoomControllerMap> {
+class _ZoomControllerMapState extends State<ZoomControllerMap> {
   final _mapKey = UniqueKey();
   final _mapController = MapController();
 

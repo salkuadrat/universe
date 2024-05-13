@@ -17,11 +17,11 @@ class MultiRectangleWithDataMap extends StatefulWidget {
   const MultiRectangleWithDataMap({super.key});
 
   @override
-  MultiRectangleWithDataMapState createState() =>
-      MultiRectangleWithDataMapState();
+  State<MultiRectangleWithDataMap> createState() =>
+      _MultiRectangleWithDataMapState();
 }
 
-class MultiRectangleWithDataMapState extends State<MultiRectangleWithDataMap> {
+class _MultiRectangleWithDataMapState extends State<MultiRectangleWithDataMap> {
   @override
   Widget build(BuildContext context) {
     return U.MapBox(

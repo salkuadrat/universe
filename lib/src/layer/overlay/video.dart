@@ -75,19 +75,19 @@ class VideoOverlayPlayer extends StatefulWidget {
 
   const VideoOverlayPlayer(
     this.url, {
-    Key? key,
+    super.key,
     required this.bounds,
     this.data,
     required this.looping,
     required this.options,
     this.onReady,
-  }) : super(key: key);
+  });
 
   @override
-  VideoOverlayPlayerState createState() => VideoOverlayPlayerState();
+  State<VideoOverlayPlayer> createState() => _VideoOverlayPlayerState();
 }
 
-class VideoOverlayPlayerState extends State<VideoOverlayPlayer> {
+class _VideoOverlayPlayerState extends State<VideoOverlayPlayer> {
   MapState get map => Provider.of<MapState>(context, listen: false);
 
   late VideoPlayerController _videoController;

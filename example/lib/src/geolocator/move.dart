@@ -7,7 +7,7 @@ class MoveGeolocatorMap extends StatefulWidget {
   const MoveGeolocatorMap({super.key});
 
   @override
-  _MoveGeolocatorMapState createState() => _MoveGeolocatorMapState();
+  State<MoveGeolocatorMap> createState() => _MoveGeolocatorMapState();
 }
 
 class _MoveGeolocatorMapState extends State<MoveGeolocatorMap> {

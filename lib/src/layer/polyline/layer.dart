@@ -24,8 +24,7 @@ class PolylineLayer extends PathLayer {
   })  : assert(polyline is Polyline ||
             (polyline is List<Polyline> && polyline.length > 0)),
         polyline = polyline is Polyline ? polyline : null,
-        polylines =
-            polyline is List<Polyline> ? polyline : const <Polyline>[],
+        polylines = polyline is List<Polyline> ? polyline : const <Polyline>[],
         super(key: key, options: options);
 
   @override

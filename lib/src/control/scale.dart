@@ -30,7 +30,7 @@ class Scale extends MapLayer {
   final double opacity;
 
   Scale({
-    super.key, 
+    super.key,
     this.alignment = Alignment.topLeft,
     this.margin,
     this.color = const Color(0xFF546E7A),
