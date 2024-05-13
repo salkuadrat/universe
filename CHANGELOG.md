@@ -1,3 +1,8 @@
+## [2.0.1] - 13 May 2024
+
+* Refactor StatefulWidget classes
+* Reformat all files
+
 ## [2.0.0] - 12 May 2024
 
 * Update all dependencies
